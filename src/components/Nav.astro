@@ -1,0 +1,76 @@
+---
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+
+const links = [
+  { href: '/rd-advisory', label: 'R&D Advisory' },
+  { href: '/implementation', label: 'Implementation' },
+  { href: '/consulting', label: 'Consulting' },
+  { href: '/insights', label: 'Insights' },
+  { href: '/about', label: 'About' },
+];
+---
+
+<nav class="fixed w-full top-0 z-50 bg-surface/80 backdrop-blur-xl border-b border-outline-variant/30">
+  <div class="flex justify-between items-center max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop h-20">
+    <a href="/" class="flex items-center gap-2 hover:opacity-90 transition-opacity">
+      <span class="font-headline-md text-headline-md font-bold tracking-tighter text-on-surface">Latent Sig</span>
+    </a>
+    <div class="hidden md:flex items-center gap-gutter">
+      {
+        links.map((l) => (
+          <a
+            href={l.href}
+            class={`font-label-md text-label-md transition-colors duration-200 ${
+              path === l.href
+                ? 'text-primary'
+                : 'text-on-surface-variant hover:text-primary'
+            }`}
+          >
+            {l.label}
+          </a>
+        ))
+      }
+    </div>
+    <a
+      href="/contact"
+      class="hidden sm:inline-flex bg-primary-container text-on-primary-container px-6 py-2.5 rounded-lg font-label-md text-label-md font-bold hover:brightness-110 transition-all"
+    >
+      Get a Consultation
+    </a>
+    <button id="mobile-menu-toggle" class="md:hidden text-on-surface" aria-label="Toggle menu">
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+  </div>
+  <div id="mobile-menu" class="md:hidden hidden border-t border-outline-variant/30 bg-surface">
+    <div class="flex flex-col px-margin-mobile py-4 gap-3">
+      {
+        links.map((l) => (
+          <a
+            href={l.href}
+            class={`font-label-md text-label-md py-2 ${
+              path === l.href ? 'text-primary' : 'text-on-surface-variant'
+            }`}
+          >
+            {l.label}
+          </a>
+        ))
+      }
+      <a
+        href="/contact"
+        class="mt-2 bg-primary-container text-on-primary-container px-6 py-3 rounded-lg font-label-md text-label-md font-bold text-center"
+      >
+        Get a Consultation
+      </a>
+    </div>
+  </div>
+</nav>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('mobile-menu-toggle');
+    const menu = document.getElementById('mobile-menu');
+    if (btn && menu) {
+      btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+    }
+  });
+</script>

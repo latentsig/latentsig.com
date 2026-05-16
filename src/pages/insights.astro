@@ -1,0 +1,145 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const posts = [
+  {
+    tag: 'Engineering',
+    tagColor: 'tertiary',
+    readTime: '8 min',
+    title: 'Quantization without tears: a production checklist',
+    excerpt: 'INT8 in prod is a workflow, not a switch. The five steps we run before any model ships at reduced precision.',
+    author: 'Latent Sig Eng',
+  },
+  {
+    tag: 'Strategy',
+    tagColor: 'secondary',
+    readTime: '6 min',
+    title: 'Why your AI roadmap should be three lanes, not one',
+    excerpt: 'Research, integration, and operations move on different clocks. Treating them as one program is how teams stall.',
+    author: 'Latent Sig Advisory',
+  },
+  {
+    tag: 'Research',
+    tagColor: 'primary',
+    readTime: '12 min',
+    title: 'Evaluating retrieval: beyond top-k accuracy',
+    excerpt: 'The metrics that actually correlate with downstream LLM quality — and the ones the leaderboards keep rewarding instead.',
+    author: 'Latent Sig Research',
+  },
+];
+---
+
+<Layout title="Insights & Research — Latent Sig" description="Engineering Journal: notes from the confluence of frontier AI theory and production practice.">
+  <!-- Hero -->
+  <section class="relative overflow-hidden bg-grid-pattern">
+    <div class="absolute inset-0 bg-gradient-to-b from-surface/40 via-surface/70 to-surface"></div>
+    <div class="relative max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop py-24">
+      <div class="flex flex-col gap-6 max-w-4xl">
+        <div class="inline-flex self-start items-center gap-3 px-4 py-1.5 rounded-full border border-outline-variant/40 bg-surface-container-low text-primary">
+          <span class="material-symbols-outlined text-base">menu_book</span>
+          <span class="font-label-sm text-label-sm tracking-widest uppercase">Engineering Journal</span>
+        </div>
+        <h1 class="font-headline-xl text-headline-xl-mobile md:text-headline-xl text-on-surface leading-tight">Insights &amp; Research</h1>
+        <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+          Exploring the confluence of frontier AI theory and the engineering realities of shipping it. Field notes, benchmarks, and the occasional opinion.
+        </p>
+        <div class="flex flex-wrap gap-2 pt-4">
+          <button class="px-4 py-2 border border-primary bg-primary/10 text-primary rounded-lg font-label-md text-label-md">All</button>
+          <button class="px-4 py-2 border border-outline-variant/40 text-on-surface-variant rounded-lg font-label-md text-label-md hover:border-primary hover:text-primary transition-colors">R&amp;D</button>
+          <button class="px-4 py-2 border border-outline-variant/40 text-on-surface-variant rounded-lg font-label-md text-label-md hover:border-primary hover:text-primary transition-colors">Implementation</button>
+          <button class="px-4 py-2 border border-outline-variant/40 text-on-surface-variant rounded-lg font-label-md text-label-md hover:border-primary hover:text-primary transition-colors">Case Studies</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured -->
+  <section class="py-24 bg-surface">
+    <div class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop">
+      <span class="text-primary font-label-md text-label-md font-bold tracking-widest uppercase mb-8 block">Featured</span>
+      <div class="grid grid-cols-12 gap-gutter">
+        <div class="col-span-12 md:col-span-6 bg-surface-container-low border border-outline-variant/30 rounded-2xl overflow-hidden relative min-h-[400px]">
+          <div class="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-secondary/10"></div>
+          <div class="absolute inset-0 dot-grid-bg opacity-50"></div>
+          <div class="absolute bottom-0 inset-x-0 h-1/2 bg-gradient-to-t from-surface to-transparent"></div>
+        </div>
+        <div class="col-span-12 md:col-span-6 flex flex-col gap-6 justify-center">
+          <div class="flex items-center gap-3">
+            <span class="px-3 py-1 bg-primary/10 border border-primary/30 rounded text-primary font-label-sm text-label-sm">FEATURED RESEARCH</span>
+            <span class="font-label-sm text-label-sm text-on-surface-variant">14 min read</span>
+          </div>
+          <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">Latent Signals: what model internals tell us before the loss curve does</h2>
+          <p class="font-body-lg text-body-lg text-on-surface-variant">A practical primer on activation probing during fine-tuning runs — and the early signals that predict whether your model is actually learning what you think it is.</p>
+          <div class="flex items-center gap-3 pt-2">
+            <div class="w-10 h-10 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center">
+              <span class="material-symbols-outlined text-primary text-base">person</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="font-label-md text-label-md text-on-surface">Latent Sig Research</span>
+              <span class="font-label-sm text-label-sm text-on-surface-variant">May 2026</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Grid -->
+  <section class="py-24 bg-surface-container-lowest">
+    <div class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop">
+      <div class="grid grid-cols-12 gap-gutter">
+        {
+          posts.map((p) => (
+            <article class="col-span-12 md:col-span-4 bg-surface-container-low border border-outline-variant/30 rounded-2xl overflow-hidden hover:border-primary transition-all flex flex-col">
+              <div class={`h-48 relative overflow-hidden bg-gradient-to-br ${p.tagColor === 'primary' ? 'from-primary/20 to-surface-container' : p.tagColor === 'secondary' ? 'from-secondary/20 to-surface-container' : 'from-tertiary/20 to-surface-container'}`}>
+                <div class="absolute inset-0 dot-grid-bg opacity-50" />
+              </div>
+              <div class="p-6 flex flex-col gap-4 flex-1">
+                <div class="flex items-center gap-3">
+                  <span
+                    class={`px-3 py-1 rounded font-label-sm text-label-sm border ${
+                      p.tagColor === 'primary'
+                        ? 'bg-primary/10 border-primary/30 text-primary'
+                        : p.tagColor === 'secondary'
+                          ? 'bg-secondary/10 border-secondary/30 text-secondary'
+                          : 'bg-tertiary/10 border-tertiary/30 text-tertiary'
+                    }`}
+                  >
+                    {p.tag}
+                  </span>
+                  <span class="font-label-sm text-label-sm text-on-surface-variant">{p.readTime}</span>
+                </div>
+                <h3 class="font-headline-sm text-headline-sm text-on-surface">{p.title}</h3>
+                <p class="font-body-md text-body-md text-on-surface-variant line-clamp-3 flex-1">{p.excerpt}</p>
+                <div class="flex items-center gap-2 pt-2 border-t border-outline-variant/20">
+                  <span class="material-symbols-outlined text-on-surface-variant text-base">person</span>
+                  <span class="font-label-sm text-label-sm text-on-surface-variant">{p.author}</span>
+                </div>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="py-32 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-primary/10 via-surface to-secondary/10"></div>
+    <div class="absolute -top-32 -left-32 w-96 h-96 bg-primary/20 rounded-full blur-[120px]"></div>
+    <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-secondary/20 rounded-full blur-[120px]"></div>
+    <div class="relative max-w-3xl mx-auto px-margin-mobile text-center flex flex-col items-center gap-8">
+      <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">Notes from the lab, in your inbox.</h2>
+      <p class="font-body-lg text-body-lg text-on-surface-variant">Roughly monthly. Engineering, no marketing.</p>
+      <form class="w-full max-w-md flex flex-col sm:flex-row gap-3" onsubmit="event.preventDefault();">
+        <input
+          type="email"
+          required
+          placeholder="you@company.com"
+          class="flex-1 px-4 py-3 bg-surface-container border border-outline-variant/40 rounded-lg text-on-surface font-body-md text-body-md focus:outline-none focus:border-primary"
+        />
+        <button class="px-6 py-3 bg-primary text-on-primary font-label-md text-label-md font-bold rounded-lg hover:brightness-110 transition-all">Subscribe</button>
+      </form>
+    </div>
+  </section>
+</Layout>

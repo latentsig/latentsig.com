@@ -1,0 +1,53 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="w-full bg-surface-container-lowest border-t border-outline-variant/20">
+  <div class="grid grid-cols-12 gap-gutter max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop py-16">
+    <div class="col-span-12 md:col-span-4 flex flex-col gap-6">
+      <span class="font-headline-sm text-headline-sm font-bold text-on-surface">Latent Sig</span>
+      <p class="font-body-md text-body-md text-on-surface-variant opacity-80">
+        High-performance AI engineering for the enterprise. Bridging latent
+        capability with industrial reality.
+      </p>
+      <div class="flex gap-4">
+        <a
+          class="w-10 h-10 flex items-center justify-center rounded-full border border-outline-variant/30 text-on-surface-variant hover:text-primary hover:border-primary transition-colors"
+          href="https://github.com/latentsig"
+          target="_blank"
+          rel="noopener"
+          aria-label="GitHub"
+        >
+          <span class="material-symbols-outlined">code</span>
+        </a>
+        <a
+          class="w-10 h-10 flex items-center justify-center rounded-full border border-outline-variant/30 text-on-surface-variant hover:text-primary hover:border-primary transition-colors"
+          href="mailto:hello@latentsig.com"
+          aria-label="Email"
+        >
+          <span class="material-symbols-outlined">mail</span>
+        </a>
+      </div>
+    </div>
+    <div class="col-span-6 md:col-span-2 flex flex-col gap-4">
+      <h4 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider">Services</h4>
+      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="/rd-advisory">R&amp;D Advisory</a>
+      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="/implementation">Implementation</a>
+      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="/consulting">Consulting</a>
+    </div>
+    <div class="col-span-6 md:col-span-2 flex flex-col gap-4">
+      <h4 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider">Company</h4>
+      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="/about">About</a>
+      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="/insights">Insights</a>
+      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="/contact">Contact</a>
+    </div>
+    <div class="col-span-12 md:col-span-4 flex flex-col gap-4">
+      <h4 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider">Legal</h4>
+      <div class="flex gap-6">
+        <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a>
+        <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Service</a>
+      </div>
+      <p class="font-label-sm text-label-sm text-on-surface-variant mt-4 opacity-80">© {year} Latent Sig. All rights reserved.</p>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,92 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="About — Latent Sig" description="About Latent Sig: researchers and engineers bridging frontier AI and production reality.">
+  <!-- Hero -->
+  <section class="relative overflow-hidden bg-grid-pattern">
+    <div class="absolute inset-0 bg-gradient-to-b from-surface/40 via-surface/70 to-surface"></div>
+    <div class="relative max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop py-24">
+      <div class="flex flex-col gap-6 max-w-4xl">
+        <span class="text-primary font-label-md text-label-md font-bold tracking-widest uppercase">About</span>
+        <h1 class="font-headline-xl text-headline-xl-mobile md:text-headline-xl text-on-surface leading-tight">
+          Researchers and engineers, in <span class="text-primary italic">one shop</span>.
+        </h1>
+        <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+          Latent Sig is a small, senior team operating at the seam between frontier AI research and the engineering it takes to ship that research in production.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission / What we believe -->
+  <section class="py-32 bg-surface">
+    <div class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop grid grid-cols-12 gap-gutter">
+      <div class="col-span-12 lg:col-span-4 flex flex-col gap-4">
+        <span class="text-primary font-label-md text-label-md font-bold tracking-widest uppercase">What we believe</span>
+        <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">Principles</h2>
+      </div>
+      <div class="col-span-12 lg:col-span-8 flex flex-col gap-8">
+        <div class="flex items-start gap-4 p-6 border border-outline-variant/30 rounded-2xl bg-surface-container-low">
+          <span class="material-symbols-outlined text-primary text-3xl">science</span>
+          <div>
+            <h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">Research-led, engineering-disciplined</h3>
+            <p class="font-body-md text-body-md text-on-surface-variant">Frontier capability is necessary but not sufficient. The work that matters is engineered.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4 p-6 border border-outline-variant/30 rounded-2xl bg-surface-container-low">
+          <span class="material-symbols-outlined text-primary text-3xl">visibility</span>
+          <div>
+            <h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">Transparent over slick</h3>
+            <p class="font-body-md text-body-md text-on-surface-variant">We share our reasoning, our trade-offs, and our uncertainty. Clients hire judgment, not theater.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4 p-6 border border-outline-variant/30 rounded-2xl bg-surface-container-low">
+          <span class="material-symbols-outlined text-primary text-3xl">groups</span>
+          <div>
+            <h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">Small team, deep work</h3>
+            <p class="font-body-md text-body-md text-on-surface-variant">We stay deliberately small so every engagement gets senior attention.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team placeholder -->
+  <section class="py-32 bg-surface-container-lowest">
+    <div class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop">
+      <div class="flex flex-col mb-16 gap-4">
+        <span class="text-secondary font-label-md text-label-md font-bold tracking-widest uppercase">Team</span>
+        <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">The people behind the work</h2>
+      </div>
+      <div class="grid grid-cols-12 gap-gutter">
+        {
+          [1, 2, 3].map(() => (
+            <div class="col-span-12 md:col-span-4 bg-surface-container-low border border-outline-variant/30 rounded-2xl p-8 flex flex-col gap-4">
+              <div class="w-20 h-20 rounded-full bg-gradient-to-br from-primary/30 to-secondary/20 border border-outline-variant/30 flex items-center justify-center">
+                <span class="material-symbols-outlined text-primary text-4xl">person</span>
+              </div>
+              <div>
+                <h3 class="font-headline-sm text-headline-sm text-on-surface">Team Member</h3>
+                <p class="font-label-sm text-label-sm text-on-surface-variant tracking-widest uppercase mt-1">Role / Title</p>
+              </div>
+              <p class="font-body-md text-body-md text-on-surface-variant">Short bio — background, what they're working on, what they care about. Replace this placeholder with real copy.</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-32 relative overflow-hidden">
+    <div class="absolute inset-0 bg-primary/5"></div>
+    <div class="relative max-w-3xl mx-auto px-margin-mobile text-center flex flex-col items-center gap-8">
+      <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">Work with us.</h2>
+      <p class="font-body-lg text-body-lg text-on-surface-variant">If your problem is interesting and your team is sharp, we'd like to hear from you.</p>
+      <a href="/contact" class="px-10 py-5 bg-primary text-on-primary font-label-md text-label-md font-bold rounded-lg hover:brightness-110 shadow-lg shadow-primary/20 transition-all">
+        Get in touch
+      </a>
+    </div>
+  </section>
+</Layout>

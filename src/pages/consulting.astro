@@ -1,0 +1,76 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Consulting — Latent Sig" description="Technical audits, workflow optimization, and embedded engineering for internal teams.">
+  <!-- Hero -->
+  <section class="relative overflow-hidden bg-grid-pattern">
+    <div class="absolute inset-0 bg-gradient-to-b from-surface/40 via-surface/70 to-surface"></div>
+    <div class="relative max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop py-24">
+      <div class="flex flex-col gap-6 max-w-4xl">
+        <span class="text-tertiary font-label-md text-label-md font-bold tracking-widest uppercase">Consulting</span>
+        <h1 class="font-headline-xl text-headline-xl-mobile md:text-headline-xl text-on-surface leading-tight">
+          Make your <span class="text-tertiary italic">team</span> the bottleneck — then unblock it.
+        </h1>
+        <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+          Deep-dive technical audits and workflow optimization for engineering teams already shipping AI. We embed, observe, and leave you with a sharper machine.
+        </p>
+        <div class="flex flex-wrap gap-4 pt-4">
+          <a href="/contact" class="px-8 py-4 bg-primary-container text-on-primary-container font-label-md text-label-md font-bold rounded-lg hover:brightness-110 transition-all">Request an Audit</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Offerings -->
+  <section class="py-32 bg-surface">
+    <div class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop">
+      <div class="flex flex-col mb-16 gap-4">
+        <span class="text-tertiary font-label-md text-label-md font-bold tracking-widest uppercase">Engagements</span>
+        <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">Three ways we work together</h2>
+      </div>
+      <div class="grid grid-cols-12 gap-gutter">
+        <div class="col-span-12 md:col-span-4 bg-surface-container-low border border-outline-variant/30 rounded-2xl p-10 hover:border-primary transition-all flex flex-col">
+          <span class="material-symbols-outlined text-primary text-5xl mb-8">search_check</span>
+          <h3 class="font-headline-md text-headline-md text-on-surface mb-4">Technical Audit</h3>
+          <p class="font-body-md text-body-md text-on-surface-variant mb-6 flex-1">A 2–4 week deep read of your AI stack: architecture, eval, ops, cost. You get a prioritized report you can act on.</p>
+          <div class="font-label-sm text-label-sm text-on-surface-variant tracking-widest uppercase">2–4 weeks · fixed scope</div>
+        </div>
+        <div class="col-span-12 md:col-span-4 bg-surface-container border border-outline-variant/30 rounded-2xl p-10 hover:border-secondary transition-all flex flex-col">
+          <span class="material-symbols-outlined text-secondary text-5xl mb-8">group_work</span>
+          <h3 class="font-headline-md text-headline-md text-on-surface mb-4">Embedded Engineering</h3>
+          <p class="font-body-md text-body-md text-on-surface-variant mb-6 flex-1">A senior engineer or research lead sits with your team to ship a specific outcome — and to leave behind a stronger codebase and stronger people.</p>
+          <div class="font-label-sm text-label-sm text-on-surface-variant tracking-widest uppercase">1–3 months · outcome-based</div>
+        </div>
+        <div class="col-span-12 md:col-span-4 bg-surface-container-high border border-outline-variant/30 rounded-2xl p-10 hover:border-tertiary transition-all flex flex-col">
+          <span class="material-symbols-outlined text-tertiary text-5xl mb-8">school</span>
+          <h3 class="font-headline-md text-headline-md text-on-surface mb-4">Team Enablement</h3>
+          <p class="font-body-md text-body-md text-on-surface-variant mb-6 flex-1">Workshops and pair-coded reviews that lift the median engineer's AI fluency. Less buzzword, more shipped code.</p>
+          <div class="font-label-sm text-label-sm text-on-surface-variant tracking-widest uppercase">3–10 days · on-site or remote</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How we work -->
+  <section class="py-32 bg-surface-container-lowest">
+    <div class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop">
+      <div class="flex flex-col mb-16 gap-4">
+        <span class="text-secondary font-label-md text-label-md font-bold tracking-widest uppercase">How we work</span>
+        <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">No theater. Just engineering.</h2>
+      </div>
+      <div class="grid grid-cols-12 gap-gutter">
+        <div class="col-span-12 md:col-span-6 flex flex-col gap-6 p-8 border border-outline-variant/30 rounded-2xl bg-surface-container">
+          <span class="material-symbols-outlined text-primary text-4xl">visibility</span>
+          <h3 class="font-headline-sm text-headline-sm text-on-surface">Transparent by default</h3>
+          <p class="font-body-md text-body-md text-on-surface-variant">You see our reasoning, our trade-offs, and our code. Nothing happens off-camera.</p>
+        </div>
+        <div class="col-span-12 md:col-span-6 flex flex-col gap-6 p-8 border border-outline-variant/30 rounded-2xl bg-surface-container">
+          <span class="material-symbols-outlined text-primary text-4xl">handshake</span>
+          <h3 class="font-headline-sm text-headline-sm text-on-surface">Aligned incentives</h3>
+          <p class="font-body-md text-body-md text-on-surface-variant">We optimize for the smallest engagement that ships your outcome — not the longest invoice.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
