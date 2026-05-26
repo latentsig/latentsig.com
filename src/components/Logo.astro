@@ -6,94 +6,26 @@ interface Props {
 }
 
 const { height = 32, showWordmark = true, class: className = '' } = Astro.props;
-
-const viewBox = showWordmark ? '0 0 220 60' : '0 0 60 60';
-const widthAttr = showWordmark ? height * (220 / 60) : height;
-const gradId = `ls-sine-${Math.random().toString(36).slice(2, 8)}`;
-
-// True sine path sampled densely so the curve is smooth, not a bezier guess.
-const SAMPLES = 96;
-const X_START = 10;
-const X_END = 50;
-const Y_CENTER = 30;
-const AMP = 13;
-const PERIODS = 1;
-
-function sinePath(phaseOffset: number, invert = false) {
-  const points: string[] = [];
-  for (let i = 0; i <= SAMPLES; i++) {
-    const t = i / SAMPLES;
-    const x = X_START + t * (X_END - X_START);
-    const y =
-      Y_CENTER -
-      (invert ? -1 : 1) * AMP * Math.sin(t * Math.PI * 2 * PERIODS + phaseOffset);
-    points.push(`${x.toFixed(2)} ${y.toFixed(2)}`);
-  }
-  return 'M ' + points.join(' L ');
-}
-
-const mainSine = sinePath(0, false);
-const echoSine = sinePath(0, true); // inverted phase (mirror) — matches the logo
 ---
 
-<svg
-  xmlns="http://www.w3.org/2000/svg"
-  viewBox={viewBox}
-  height={height}
-  width={widthAttr}
-  fill="none"
-  aria-label="Latentsig"
-  class={className}
->
-  <defs>
-    <linearGradient id={gradId} x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#c0c1ff" />
-      <stop offset="50%" stop-color="#8083ff" />
-      <stop offset="100%" stop-color="#494bd6" />
-    </linearGradient>
-  </defs>
-
-  <!-- bracket frame (corners) -->
-  <g stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none">
-    <path d="M 6 18 L 6 6 L 18 6" />
-    <path d="M 42 6 L 54 6 L 54 18" />
-    <path d="M 6 42 L 6 54 L 18 54" />
-    <path d="M 42 54 L 54 54 L 54 42" />
-  </g>
-
-  <!-- dotted echo wave -->
-  <path
-    d={echoSine}
-    stroke="currentColor"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-    stroke-dasharray="0.1 3"
-    opacity="0.4"
-    fill="none"
+{showWordmark ? (
+  <img
+    src="/logo.png"
+    alt="Latentsig"
+    height={height}
+    style={`height: ${height}px; width: auto;`}
+    class={className}
   />
-
-  <!-- main sine wave (gradient) -->
-  <path
-    d={mainSine}
-    stroke={`url(#${gradId})`}
-    stroke-width="3"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-    fill="none"
-  />
-
-  {showWordmark && (
-    <text
-      x="72"
-      y="42"
-      fill="currentColor"
-      font-family="'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif"
-      font-size="34"
-      font-weight="600"
-      letter-spacing="-0.02em"
-    >
-      latentsig
-    </text>
-  )}
-</svg>
+) : (
+  <div
+    style={`height: ${height}px; width: ${height}px; overflow: hidden;`}
+    class={className}
+  >
+    <img
+      src="/logo.png"
+      alt="Latentsig"
+      height={height}
+      style={`height: ${height}px; width: auto;`}
+    />
+  </div>
+)}
