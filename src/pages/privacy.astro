@@ -1,0 +1,87 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const updated = '6 June 2026';
+---
+
+<Layout title="Privacy Policy — Latentsig AI" description="Privacy Policy for Latentsig AI.">
+  <!-- Hero -->
+  <section class="relative overflow-hidden bg-grid-pattern">
+    <div class="absolute inset-0 bg-gradient-to-b from-surface/40 via-surface/70 to-surface"></div>
+    <div class="relative max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop py-24">
+      <div class="flex flex-col gap-6 max-w-4xl">
+        <span class="text-primary font-label-md text-label-md font-bold tracking-widest uppercase">Legal</span>
+        <h1 class="font-headline-xl text-headline-xl-mobile md:text-headline-xl text-on-surface leading-tight">
+          Privacy Policy
+        </h1>
+        <p class="font-label-sm text-label-sm text-on-surface-variant tracking-widest uppercase">Last updated: {updated}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Body -->
+  <section class="py-24 bg-surface">
+    <div class="max-w-3xl mx-auto px-margin-mobile md:px-margin-desktop flex flex-col gap-12">
+      <p class="font-body-lg text-body-lg text-on-surface-variant">
+        Latentsig AI ("we", "us") operates latentsig.com. This policy explains, plainly, what
+        information this website handles. The short version: this is a static website — we do not
+        run analytics, set cookies, or collect personal data through it.
+      </p>
+
+      <div class="flex flex-col gap-3">
+        <h2 class="font-headline-sm text-headline-sm text-on-surface">1. What we collect</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant">
+          Nothing, directly. This site has no user accounts, no analytics or tracking scripts, and
+          sets no cookies of its own. The contact form does not submit anything to our servers — it
+          opens your own email client with a pre-filled draft that you choose whether to send.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-3">
+        <h2 class="font-headline-sm text-headline-sm text-on-surface">2. Email you send us</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant">
+          If you email us, we receive whatever you choose to include — typically your name, email
+          address, and message. We use it only to respond to you and to conduct any engagement that
+          follows. We do not sell it, share it for marketing, or add you to mailing lists without
+          your consent.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-3">
+        <h2 class="font-headline-sm text-headline-sm text-on-surface">3. Third-party services</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant">
+          When this site loads in your browser, a few assets are fetched from third parties: fonts
+          and icons from Google Fonts, and styling from the Tailwind CSS CDN. The site is hosted on
+          GitHub Pages. These providers see your IP address and standard request metadata as part of
+          serving those files, governed by their own privacy policies. We do not receive that data.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-3">
+        <h2 class="font-headline-sm text-headline-sm text-on-surface">4. Your rights</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant">
+          You may ask us at any time what information we hold about you (for most visitors: none),
+          and to correct or delete it. Write to
+          <a class="text-primary hover:underline" href="mailto:latentsig@gmail.com">latentsig@gmail.com</a>
+          and we will respond promptly.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-3">
+        <h2 class="font-headline-sm text-headline-sm text-on-surface">5. Changes</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant">
+          If we add anything that changes what data this site handles — for example analytics or a
+          server-backed contact form — we will update this policy and the date above before doing so.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-3">
+        <h2 class="font-headline-sm text-headline-sm text-on-surface">6. Contact</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant">
+          Questions about this policy:
+          <a class="text-primary hover:underline" href="mailto:latentsig@gmail.com">latentsig@gmail.com</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>
