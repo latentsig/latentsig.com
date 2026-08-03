@@ -9,6 +9,7 @@ const posts = [
     title: 'Quantization without tears: a production checklist',
     excerpt: 'INT8 in prod is a workflow, not a switch. The five steps we run before any model ships at reduced precision.',
     author: 'Latentsig AI Eng',
+    href: '/blog/quantization-without-tears/',
   },
   {
     tag: 'Strategy',
@@ -23,13 +24,13 @@ const posts = [
     tagColor: 'primary',
     readTime: '12 min',
     title: 'Evaluating retrieval: beyond top-k accuracy',
-    excerpt: 'The metrics that actually correlate with downstream LLM quality — and the ones the leaderboards keep rewarding instead.',
+    excerpt: 'The metrics that actually correlate with downstream LLM quality, and the ones the leaderboards keep rewarding instead.',
     author: 'Latentsig AI Research',
   },
 ];
 ---
 
-<Layout title="Insights & Research — Latentsig AI" description="Engineering Journal: notes from the confluence of frontier AI theory and production practice.">
+<Layout title="Insights &amp; Research · Latentsig AI" description="Engineering Journal: notes from the confluence of frontier AI theory and production practice.">
   <!-- Hero -->
   <section class="relative overflow-hidden bg-grid-pattern">
     <div class="absolute inset-0 bg-gradient-to-b from-surface/40 via-surface/70 to-surface"></div>
@@ -69,7 +70,7 @@ const posts = [
             <span class="font-label-sm text-label-sm text-on-surface-variant">14 min read</span>
           </div>
           <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">Latent Signals: what model internals tell us before the loss curve does</h2>
-          <p class="font-body-lg text-body-lg text-on-surface-variant">A practical primer on activation probing during fine-tuning runs — and the early signals that predict whether your model is actually learning what you think it is.</p>
+          <p class="font-body-lg text-body-lg text-on-surface-variant">A practical primer on activation probing during fine-tuning runs, and the early signals that predict whether your model is actually learning what you think it is.</p>
           <div class="flex items-center gap-3 pt-2">
             <div class="w-10 h-10 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center">
               <span class="material-symbols-outlined text-primary text-base">person</span>
@@ -89,8 +90,13 @@ const posts = [
     <div class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop">
       <div class="grid grid-cols-12 gap-gutter">
         {
-          posts.map((p) => (
-            <article class="col-span-12 md:col-span-4 bg-surface-container-low border border-outline-variant/30 rounded-2xl overflow-hidden hover:border-primary transition-all flex flex-col">
+          posts.map((p) => {
+            const Tag = p.href ? 'a' : 'div';
+            return (
+            <Tag
+              href={p.href}
+              class="col-span-12 md:col-span-4 bg-surface-container-low border border-outline-variant/30 rounded-2xl overflow-hidden hover:border-primary transition-all flex flex-col group"
+            >
               <div class={`h-48 relative overflow-hidden bg-gradient-to-br ${p.tagColor === 'primary' ? 'from-primary/20 to-surface-container' : p.tagColor === 'secondary' ? 'from-secondary/20 to-surface-container' : 'from-tertiary/20 to-surface-container'}`}>
                 <div class="absolute inset-0 dot-grid-bg opacity-50" />
               </div>
@@ -116,8 +122,9 @@ const posts = [
                   <span class="font-label-sm text-label-sm text-on-surface-variant">{p.author}</span>
                 </div>
               </div>
-            </article>
-          ))
+            </Tag>
+            );
+          })
         }
       </div>
     </div>

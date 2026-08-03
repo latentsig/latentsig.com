@@ -1,8 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { CALENDLY_URL } from '../consts';
 ---
 
-<Layout title="Implementation — Latentsig AI" description="Production-grade AI engineering: from POC to scaled deployment with deterministic reliability.">
+<Layout title="Implementation · Latentsig AI" description="Production-grade AI engineering: from POC to scaled deployment with deterministic reliability.">
   <!-- Hero -->
   <section class="relative overflow-hidden bg-grid-pattern">
     <div class="absolute inset-0 bg-gradient-to-b from-surface/40 via-surface/70 to-surface"></div>
@@ -68,7 +69,7 @@ import Layout from '../layouts/Layout.astro';
           <span class="material-symbols-outlined text-tertiary text-5xl mb-8">speed</span>
           <h3 class="font-headline-md text-headline-md text-on-surface mb-2">Inference Optimization</h3>
           <p class="font-body-md text-body-md text-on-surface-variant mb-4">Quantization + batching reducing GPU spend by 62% with no accuracy loss.</p>
-          <a href="/contact" class="font-label-md text-label-md text-tertiary hover:underline inline-flex items-center gap-1">Talk to us <span class="material-symbols-outlined text-base">arrow_forward</span></a>
+          <a href={CALENDLY_URL} target="_blank" rel="noopener" class="font-label-md text-label-md text-tertiary hover:underline inline-flex items-center gap-1">Talk to us <span class="material-symbols-outlined text-base">arrow_forward</span></a>
         </div>
         <div class="col-span-12 md:col-span-8 bg-surface-container-highest border border-outline-variant/30 rounded-2xl p-10 hover:border-primary transition-all">
           <span class="px-3 py-1 bg-tertiary/10 border border-tertiary/30 rounded text-tertiary font-label-sm text-label-sm">INFRASTRUCTURE</span>
@@ -117,7 +118,7 @@ import Layout from '../layouts/Layout.astro';
           <div class="col-span-12 md:col-span-2 font-headline-xl text-headline-xl text-primary/30">03</div>
           <div class="col-span-12 md:col-span-10">
             <h3 class="font-headline-md text-headline-md text-on-surface mb-3">Security-First Context</h3>
-            <p class="font-body-lg text-body-lg text-on-surface-variant max-w-3xl">Tenancy boundaries, prompt isolation, and data-egress controls are first-class architectural concerns — not features layered on after audit pressure.</p>
+            <p class="font-body-lg text-body-lg text-on-surface-variant max-w-3xl">Tenancy boundaries, prompt isolation, and data-egress controls are first-class architectural concerns, not features layered on after audit pressure.</p>
           </div>
         </div>
       </div>
@@ -133,7 +134,7 @@ import Layout from '../layouts/Layout.astro';
       <p class="font-body-lg text-body-lg text-on-surface-variant">
         Bring us your stuck prototype, your scaling wall, or your green-field architecture. We'll engineer the path forward.
       </p>
-      <a href="/contact" class="px-10 py-5 bg-primary text-on-primary font-label-md text-label-md font-bold rounded-lg hover:brightness-110 shadow-lg shadow-primary/20 transition-all">
+      <a href={CALENDLY_URL} target="_blank" rel="noopener" class="px-10 py-5 bg-primary text-on-primary font-label-md text-label-md font-bold rounded-lg hover:brightness-110 shadow-lg shadow-primary/20 transition-all">
         Start a Conversation
       </a>
     </div>

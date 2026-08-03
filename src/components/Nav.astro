@@ -1,14 +1,15 @@
 ---
 import Logo from './Logo.astro';
+import { CALENDLY_URL } from '../consts';
 
-const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const path = Astro.url.pathname;
 
 const links = [
-  { href: '/rd-advisory', label: 'R&D Advisory' },
-  { href: '/implementation', label: 'Implementation' },
-  { href: '/consulting', label: 'Consulting' },
-  { href: '/insights', label: 'Insights' },
-  { href: '/about', label: 'About' },
+  { href: '/rd-advisory/', label: 'R&D Advisory' },
+  { href: '/implementation/', label: 'Implementation' },
+  { href: '/consulting/', label: 'Consulting' },
+  { href: '/insights/', label: 'Insights' },
+  { href: '/about/', label: 'About' },
 ];
 ---
 
@@ -35,7 +36,9 @@ const links = [
       }
     </div>
     <a
-      href="/contact"
+      href={CALENDLY_URL}
+      target="_blank"
+      rel="noopener"
       class="hidden sm:inline-flex bg-primary-container text-on-primary-container px-6 py-2.5 rounded-lg font-label-md text-label-md font-bold hover:brightness-110 transition-all"
     >
       Get a Consultation
@@ -59,7 +62,9 @@ const links = [
         ))
       }
       <a
-        href="/contact"
+        href={CALENDLY_URL}
+        target="_blank"
+        rel="noopener"
         class="mt-2 bg-primary-container text-on-primary-container px-6 py-3 rounded-lg font-label-md text-label-md font-bold text-center"
       >
         Get a Consultation

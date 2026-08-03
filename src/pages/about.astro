@@ -1,8 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { CALENDLY_URL } from '../consts';
 ---
 
-<Layout title="About — Latentsig AI" description="About Latentsig AI: researchers and engineers bridging frontier AI and production reality.">
+<Layout title="About · Latentsig AI" description="About Latentsig AI: researchers and engineers bridging frontier AI and production reality.">
   <!-- Hero -->
   <section class="relative overflow-hidden bg-grid-pattern">
     <div class="absolute inset-0 bg-gradient-to-b from-surface/40 via-surface/70 to-surface"></div>
@@ -70,7 +71,7 @@ import Layout from '../layouts/Layout.astro';
                 <h3 class="font-headline-sm text-headline-sm text-on-surface">Team Member</h3>
                 <p class="font-label-sm text-label-sm text-on-surface-variant tracking-widest uppercase mt-1">Role / Title</p>
               </div>
-              <p class="font-body-md text-body-md text-on-surface-variant">Short bio — background, what they're working on, what they care about. Replace this placeholder with real copy.</p>
+              <p class="font-body-md text-body-md text-on-surface-variant">Short bio: background, what they're working on, what they care about. Replace this placeholder with real copy.</p>
             </div>
           ))
         }
@@ -84,7 +85,7 @@ import Layout from '../layouts/Layout.astro';
     <div class="relative max-w-3xl mx-auto px-margin-mobile text-center flex flex-col items-center gap-8">
       <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">Work with us.</h2>
       <p class="font-body-lg text-body-lg text-on-surface-variant">If your problem is interesting and your team is sharp, we'd like to hear from you.</p>
-      <a href="/contact" class="px-10 py-5 bg-primary text-on-primary font-label-md text-label-md font-bold rounded-lg hover:brightness-110 shadow-lg shadow-primary/20 transition-all">
+      <a href={CALENDLY_URL} target="_blank" rel="noopener" class="px-10 py-5 bg-primary text-on-primary font-label-md text-label-md font-bold rounded-lg hover:brightness-110 shadow-lg shadow-primary/20 transition-all">
         Get in touch
       </a>
     </div>

@@ -1,8 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { CALENDLY_EMBED_URL } from '../consts';
 ---
 
-<Layout title="Contact — Latentsig AI" description="Get in touch with Latentsig AI.">
+<Layout title="Contact · Latentsig AI" description="Book a consultation with Latentsig AI.">
   <section class="relative overflow-hidden bg-grid-pattern">
     <div class="absolute inset-0 bg-gradient-to-b from-surface/40 via-surface/70 to-surface"></div>
     <div class="relative max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop py-24">
@@ -12,15 +13,41 @@ import Layout from '../layouts/Layout.astro';
           Let's talk.
         </h1>
         <p class="font-body-lg text-body-lg text-on-surface-variant">
-          Tell us a little about what you're working on. We read everything that comes in.
+          Book a call with our engineering leads to discuss your AI roadmap. Or tell us a little about what you're working on. We read everything that comes in.
         </p>
       </div>
     </div>
   </section>
 
+  <!-- Book a call -->
   <section class="py-24 bg-surface">
+    <div class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop">
+      <div class="flex flex-col items-center gap-4 text-center mb-12">
+        <span class="font-label-sm text-label-sm text-on-surface-variant tracking-widest uppercase">Book a consultation</span>
+        <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">Pick a time that works for you.</h2>
+      </div>
+      <div class="mx-auto max-w-4xl rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 md:p-6 overflow-hidden">
+        <iframe
+          src={CALENDLY_EMBED_URL}
+          title="Schedule a consultation with Latentsig AI"
+          width="100%"
+          height="700"
+          frameborder="0"
+          loading="lazy"
+          class="rounded-xl"
+        ></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- Email form -->
+  <section class="py-24 bg-surface-container-lowest">
     <div class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop grid grid-cols-12 gap-gutter">
       <div class="col-span-12 md:col-span-5 flex flex-col gap-8">
+        <div class="flex flex-col gap-2">
+          <span class="font-label-sm text-label-sm text-on-surface-variant tracking-widest uppercase">Prefer email?</span>
+          <p class="font-body-md text-body-md text-on-surface-variant">Short on context or just want to say hello? Drop us a note and we'll get back to you.</p>
+        </div>
         <div class="flex flex-col gap-2">
           <span class="font-label-sm text-label-sm text-on-surface-variant tracking-widest uppercase">Email</span>
           <a href="mailto:latentsig@gmail.com" class="font-headline-sm text-headline-sm text-primary hover:underline">latentsig@gmail.com</a>
@@ -29,12 +56,8 @@ import Layout from '../layouts/Layout.astro';
           <span class="font-label-sm text-label-sm text-on-surface-variant tracking-widest uppercase">Code</span>
           <a href="https://github.com/latentsig" target="_blank" rel="noopener" class="font-headline-sm text-headline-sm text-primary hover:underline">github.com/latentsig</a>
         </div>
-        <div class="flex flex-col gap-2">
-          <span class="font-label-sm text-label-sm text-on-surface-variant tracking-widest uppercase">Response time</span>
-          <span class="font-body-lg text-body-lg text-on-surface">Usually within two business days.</span>
-        </div>
       </div>
-      <form class="col-span-12 md:col-span-7 flex flex-col gap-5 p-8 border border-outline-variant/30 rounded-2xl bg-surface-container-low" onsubmit="event.preventDefault(); window.location.href='mailto:latentsig@gmail.com?subject=' + encodeURIComponent('Latentsig AI inquiry from ' + (document.getElementById('name').value || 'website')) + '&body=' + encodeURIComponent(document.getElementById('message').value + '\n\n— ' + document.getElementById('name').value + '\n' + document.getElementById('email').value);">
+      <form class="col-span-12 md:col-span-7 flex flex-col gap-5 p-8 border border-outline-variant/30 rounded-2xl bg-surface-container-low" onsubmit="event.preventDefault(); window.location.href='mailto:latentsig@gmail.com?subject=' + encodeURIComponent('Latentsig AI inquiry from ' + (document.getElementById('name').value || 'website')) + '&body=' + encodeURIComponent(document.getElementById('message').value + '\n\nFrom: ' + document.getElementById('name').value + '\n' + document.getElementById('email').value);">
         <div class="flex flex-col gap-2">
           <label for="name" class="font-label-sm text-label-sm text-on-surface-variant tracking-widest uppercase">Name</label>
           <input id="name" required class="px-4 py-3 bg-surface-container border border-outline-variant/40 rounded-lg text-on-surface font-body-md focus:outline-none focus:border-primary" />

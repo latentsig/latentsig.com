@@ -1,8 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { CALENDLY_URL } from '../consts';
 ---
 
-<Layout title="R&D Advisory — Latentsig AI" description="Strategic AI advisory: tech stack selection, feasibility studies, ethics & governance.">
+<Layout title="R&D Advisory · Latentsig AI" description="Strategic AI advisory: tech stack selection, feasibility studies, ethics & governance.">
   <!-- Hero -->
   <section class="relative overflow-hidden bg-grid-pattern">
     <div class="absolute inset-0 bg-gradient-to-b from-surface/40 via-surface/70 to-surface"></div>
@@ -17,7 +18,7 @@ import Layout from '../layouts/Layout.astro';
         </p>
         <div class="flex flex-wrap gap-4 pt-4">
           <a href="#frameworks" class="px-8 py-4 bg-primary-container text-on-primary-container font-label-md text-label-md font-bold rounded-lg hover:brightness-110 transition-all">Explore Frameworks</a>
-          <a href="/contact" class="px-8 py-4 border border-outline-variant text-on-surface font-label-md text-label-md font-bold rounded-lg hover:bg-surface-container-high transition-colors">Schedule a Workshop</a>
+          <a href={CALENDLY_URL} target="_blank" rel="noopener" class="px-8 py-4 border border-outline-variant text-on-surface font-label-md text-label-md font-bold rounded-lg hover:bg-surface-container-high transition-colors">Schedule a Workshop</a>
         </div>
       </div>
     </div>
@@ -34,7 +35,7 @@ import Layout from '../layouts/Layout.astro';
         <div class="col-span-12 md:col-span-4 bg-surface-container-low border border-outline-variant/30 rounded-2xl p-10 hover:border-primary transition-all">
           <span class="material-symbols-outlined text-primary text-5xl mb-8">architecture</span>
           <h3 class="font-headline-md text-headline-md text-on-surface mb-4">Tech Stack Selection</h3>
-          <p class="font-body-md text-body-md text-on-surface-variant mb-6">Choose the right model families, vector stores, and inference paths for your workload — without lock-in.</p>
+          <p class="font-body-md text-body-md text-on-surface-variant mb-6">Choose the right model families, vector stores, and inference paths for your workload without lock-in.</p>
           <div class="flex flex-wrap gap-2">
             <span class="px-3 py-1 bg-surface rounded text-on-surface-variant font-label-sm text-label-sm border border-outline-variant/20">Scalability</span>
             <span class="px-3 py-1 bg-surface rounded text-on-surface-variant font-label-sm text-label-sm border border-outline-variant/20">Cost-efficiency</span>
@@ -97,7 +98,7 @@ import Layout from '../layouts/Layout.astro';
             <span class="material-symbols-outlined text-primary mt-0.5">check_circle</span>
             <div>
               <h4 class="font-headline-sm text-headline-sm text-on-surface">Proprietary Benchmarking</h4>
-              <p class="font-body-md text-body-md text-on-surface-variant">Custom eval sets that reflect your real distribution — not whatever the leaderboard rewards.</p>
+              <p class="font-body-md text-body-md text-on-surface-variant">Custom eval sets that reflect your real distribution, not whatever the leaderboard rewards.</p>
             </div>
           </div>
         </div>
@@ -113,7 +114,7 @@ import Layout from '../layouts/Layout.astro';
       <p class="font-body-lg text-body-lg text-on-surface-variant">
         A focused engagement with our research leads to pressure-test your roadmap and surface the next 12 months of architectural decisions.
       </p>
-      <a href="/contact" class="px-10 py-5 bg-primary text-on-primary font-label-md text-label-md font-bold rounded-lg hover:brightness-110 shadow-lg shadow-primary/20 transition-all">
+      <a href={CALENDLY_URL} target="_blank" rel="noopener" class="px-10 py-5 bg-primary text-on-primary font-label-md text-label-md font-bold rounded-lg hover:brightness-110 shadow-lg shadow-primary/20 transition-all">
         Schedule a Workshop
       </a>
     </div>
