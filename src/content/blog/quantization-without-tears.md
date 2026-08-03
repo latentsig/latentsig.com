@@ -1,117 +1,122 @@
 ---
-title: "Quantization Without Tears: A Production Checklist"
-description: "INT8 in prod is a workflow, not a switch. The five steps we run before any model ships at reduced precision."
+title: "INT8 Post-Training Quantization Without Tears: A Production Checklist"
+description: "INT8 PTQ in prod is a workflow, not a switch. The six steps we run before any model ships at reduced precision."
 tag: Engineering
-readTime: "12 min"
+readTime: "16 min"
 date: 2026-08-02
 author: Latentsig AI Eng
 series: Field Notes
 ---
 
-Flipping a quantization flag like `load_in_8bit=True` or compiling with `torch.quantization` often feels like a quick performance win. Memory consumption drops by 50-75%, and early benchmark numbers look promising.
+Handing a checkpoint to `torchao.quantize_` or feeding it through TensorRT feels like a quick performance win. Memory drops by 50-75%, and the first benchmark numbers look great.
 
 Then production traffic hits.
 
-Suddenly, you encounter silent model quality degradation on long-context prompts, unexpected latency spikes during high-concurrency batches, or severe accuracy drops on specific edge-case inputs.
+You start seeing silent quality degradation on long-context prompts, latency spikes under high-concurrency batching, or, worst of all, no speedup whatsoever, because the engine quietly fell back to FP16 kernels for half your GEMMs.
 
-In enterprise ML infrastructure, **INT8 quantization is not an off-by-default compiler toggle; it is a systematic engineering workflow.** Quantizing a high-capacity model (whether a vision backbone, cross-encoder, or LLM) down to 8-bit representations without compromising output fidelity requires understanding execution hardware, activation statistics, and runtime failure modes.
+In enterprise ML infrastructure, **INT8 post-training quantization is not an off-by-default compiler toggle; it is a systematic engineering workflow.** Taking a high-capacity model (a vision backbone, a cross-encoder, an LLM) down to 8-bit without losing output fidelity or missing SLA targets means understanding your execution engine, your activation statistics, your kernel dispatch, and your runtime failure modes.
 
-Here is the 5-step checklist we run before shipping any quantized model to production.
+This is a checklist for post-training quantization specifically. Quantization-aware training is a different discipline with different economics, and it is out of scope here.
 
-## Step 1: Profile Execution Targets & Choose the Right Quantization Scheme
+Here are the six steps we run before shipping any INT8 PTQ model to production.
 
-Before quantizing a single weight, you must map your target execution engine and determine whether your workload is **memory-bandwidth bound** or **compute bound**.
+## Step 1: Profile Execution Engines and Map Runtime Targets
 
-![Step 1: Workload Classification & Execution Path Routing](/images/blog/quantization-without-tears/step1.png)
+Before quantizing a single weight, map your target execution engine (TensorRT, vLLM, ONNX Runtime, or PyTorch 2 Export via TorchAO) and determine whether your workload is **memory-bandwidth bound** or **compute bound**. This one classification drives every decision that follows.
 
-### Symmetric vs. Asymmetric Quantization
+![Step 1: Workload Classification & Runtime Target Mapping](/images/blog/quantization-without-tears/step1.png)
 
-- **Symmetric INT8:** Maps floating-point values to signed integers in the range $[-128, 127]$ with zero mapped strictly to integer `0`.
+### Workload Classification
+
+- **Memory-bandwidth bound, so quantize weights only.** Autoregressive decoding at small batch sizes spends its time moving weights from VRAM into SRAM, not doing arithmetic. Quantize the weights, keep activations in FP16/BF16, and let the kernel dequantize on the fly just before the multiply. What you win is bytes moved per token.
+- **Compute bound, so quantize weights and activations (W8A8).** Prefill, dense embedding encoders, vision backbones, and high-concurrency batched serving spend their time in matrix arithmetic. Quantizing both sides lets you issue real integer GEMMs on Tensor Cores. What you win is arithmetic throughput.
+
+Getting this backwards is the most common failure we see. A team applies W8A8 to a batch-size-1 decode workload, absorbs the accuracy risk of activation quantization, and gains almost nothing, because the workload was never compute bound to begin with.
+
+### Symmetric vs. Asymmetric Formats
+
+- **Symmetric INT8** maps values symmetrically around zero into $[-128, 127]$, with float zero landing exactly on integer `0`.
   $$\text{Scale } s = \frac{\max(|x_{\min}|, |x_{\max}|)}{127}, \quad x_q = \text{clamp}\left(\left\lfloor \frac{x}{s} \right\rceil, -128, 127\right)$$
-  *Pros:* Hardware-friendly; zero addition or subtraction overhead during matrix multiplication on NVIDIA Tensor Cores.
-- **Asymmetric INT8:** Maps values to $[0, 255]$ or $[-128, 127]$ using both a scale factor $s$ and an integer zero-point offset $z$.
-  *Pros:* Better preserves precision for skewed distribution activations (e.g., ReLU or GELU outputs).
-  *Cons:* Introduces zero-point correction terms during GEMM execution, adding latency overhead if not fused at the kernel level.
+  No zero-point term survives into the GEMM, which is why the vendor fast paths assume it.
+- **Asymmetric INT8** carries an explicit zero-point offset $z$ alongside the scale $s$. It preserves precision better on skewed distributions such as post-ReLU or post-GELU activations, at the cost of correction terms in the matrix multiply. Those terms are free if the backend fuses them and expensive if it does not, which is exactly what Step 5 exists to verify.
 
-### Weight-Only vs. Weight-and-Activation (W8A8)
+## Step 2: Calibrate Empirically and Test for Range Stability
 
-- **Weight-Only INT8 (W8A16):** Keeps activations in FP16/BF16 while quantizing static weights to INT8. Weights are dequantized on-the-fly right before multiplication. Best for memory-bandwidth-bound autoregressive decoding (batch size = 1).
-- **Weight-and-Activation (W8A8):** Both weights and intermediate activations are quantized to INT8, executing real integer GEMM operations on hardware Tensor Cores. Essential for throughput-heavy workloads (large batch inference, dense embedding encoders, prefill stages).
+For W8A8 static quantization, activation ranges cannot be derived from the weights. They have to be observed by pushing real inputs through the model and recording what comes out.
 
-## Step 2: Engineer a Representative Calibration Dataset
+![Step 2: Empirical Calibration & Range Stability Pipeline](/images/blog/quantization-without-tears/step2.png)
 
-For static quantization and W8A8 configurations, activation dynamic ranges ($\min / \max$ values) cannot be derived statically from model weights. They must be observed by running sample inputs through the model during a **calibration phase**.
+### What Actually Matters in Calibration
 
-![Step 2: Calibration Dataset & Range Profiling Pipeline](/images/blog/quantization-without-tears/step2.png)
+1. **Use your own data, not a public corpus.** Calibrating on WikiText or C4 when production serves structured JSON, domain-specific code, or noisy user queries sets your activation scales to the wrong distribution and clips the features you actually care about.
+2. **Stratify, then converge. Do not pick a number.** Start with 128-512 representative production sequences spread across prompt lengths and domain strata. Then keep adding until the observed activation ranges and the resulting per-layer scale factors stop moving. Convergence is the stopping criterion; the sample count is simply whatever number produced it. A fixed "512 samples" rule is a guess that happens to be right sometimes.
+3. **Clip deliberately.** MinMax scaling hands your entire dynamic range to the single largest outlier in the calibration set. Use KL-divergence (entropy) calibration or percentile clipping in the 99.9-99.99% band so that one transient spike cannot flatten precision for every normal value in the tensor.
 
-### Common Calibration Pitfalls
+## Step 3: Handle Sensitivity and Outliers (SmoothQuant vs. AWQ/GPTQ)
 
-1. **Synthetic or Toy Datasets:** Calibrating on standard public corpora (like WikiText or C4) when your production workload handles structured JSON outputs, code, or noisy user queries will miscalibrate activation scales, clipping domain-specific feature distributions.
-2. **Over-scaling Dataset Size:** Calibration requires quality and distributional coverage, not massive volume. 128 to 512 carefully curated production sequences are typically sufficient.
+Transformers reliably develop **activation outlier channels**: specific hidden dimensions whose magnitudes run $10\times$ to $100\times$ above their neighbours. Per-tensor activation quantization stretches the scale to cover them and destroys the precision of the remaining 99% of channels.
 
-### Choosing the Clipping Range Method
+The two families of fix solve genuinely different problems, and they are routinely conflated.
 
-- **MinMax Scaling:** Maps the absolute minimum and maximum observed values. Extremely sensitive to outlier activations; a single transient spike can collapse precision across the entire dynamic range.
-- **Entropy / KL-Divergence Calibration:** Minimizes the Kullback-Leibler divergence between the FP32/FP16 activation distribution and the quantized INT8 histogram. Recommended for standard vision and NLP backbones.
-- **Percentile Clipping (e.g., 99.99%):** Clips the top 0.01% of extreme outlier activation values, preserving granularity for the remaining 99.99% of tensor values.
+![Step 3: Quantization Sensitivity & Outlier Management](/images/blog/quantization-without-tears/step3.png)
 
-## Step 3: Migrate Activation Outliers (SmoothQuant & AWQ)
-
-Transformer activations inherently produce systematic **outlier channels**, specific feature dimensions across layers whose magnitudes can be $10\times$ to $100\times$ larger than typical values.
-
-Standard per-tensor or per-token activation quantization forces the quantization scale to stretch, destroying the precision of the remaining 99% of normal channels.
-
-![Step 3: SmoothQuant Activation Outlier Migration](/images/blog/quantization-without-tears/step3.png)
-
-### Outlier Migration Strategies
-
-- **SmoothQuant:** SmoothQuant mathematically migrates quantization difficulty from activations to weights using an equivalent channel-wise transformation scale $s$:
+- **SmoothQuant, for W8A8 integer GEMM.** Migrates quantization difficulty out of the activations and into the weights using a per-channel scale $s$:
   $$Y = (X \cdot \operatorname{diag}(s)^{-1}) \cdot (\operatorname{diag}(s) \cdot W) = X' \cdot W'$$
-  By dividing outlier activation channels by $s$ and multiplying the corresponding weight columns by $s$, both activations and weights become easy to quantize in INT8 without changing linear algebra outputs.
-- **Activation-Aware Weight Quantization (AWQ):** AWQ profiles activation distributions to identify the top 1% most salient weight channels. Instead of mixed-precision execution, it computes per-channel scaling factors to protect important weights while keeping all matrix operations uniform INT8/INT4.
+  Divide the outlier activation channels, multiply the matching weight columns, and the product is mathematically unchanged. Both tensors become easy to quantize, and you get a genuine integer GEMM. Reach for this when Step 1 said compute bound.
+- **AWQ and GPTQ, for weight-only quantization.** Both identify the small fraction of weight channels that matter most, AWQ from activation statistics and GPTQ from second-order Hessian information, then protect those channels while compressing the rest to INT8 or INT4. Activations stay in FP16/BF16. Neither method quantizes activations, and neither gives you a W8A8 integer GEMM. Reach for these when Step 1 said memory-bandwidth bound.
 
-## Step 4: Benchmark Quality Loss & Measure Distributional Drift
+Choosing from the wrong column is not a tuning mistake, it is a category error. AWQ will not make a compute-bound prefill faster, and SmoothQuant will not help a batch-size-1 decode loop that is starved on memory bandwidth.
 
-Never rely solely on global aggregate metrics (e.g., top-1 accuracy or standard perplexity) when evaluating quantized models. Low global accuracy drop can hide failure modes on critical sub-tasks.
+## Step 4: Benchmark Application-Specific Quality and Drift
 
-![Step 4: Comprehensive Quality Evaluation & Drift Gates](/images/blog/quantization-without-tears/step4.png)
+Global perplexity is a weak gate. A model can hold its aggregate score and still fall apart on the one task that justifies the deployment.
 
-### Required Quality Gates
+![Step 4: Quality Verification & Drift Gates](/images/blog/quantization-without-tears/step4.png)
 
-1. **Layer-wise Error Analysis:** Measure Mean Squared Error (MSE) and Cosine Similarity between FP16 and INT8 tensor outputs layer-by-layer. A sudden drop in cosine similarity at a specific layer identifies where quantization fails.
-2. **Logit & Probability Drift:** Measure Jensen-Shannon (JS) Divergence on predicted token or class probability distributions between FP16 baseline and INT8 quantized models across validation sets.
-3. **Domain Task Evaluation:** Run domain-specific task evals (e.g., code synthesis accuracy, exact match extraction, multi-turn reasoning) rather than generic benchmarks.
+1. **Layer-wise error profiling.** Track mean squared error and cosine similarity between FP16 and INT8 outputs layer by layer. A sharp drop in cosine similarity localises the damage to a specific layer, and that localisation is usually the fix.
+2. **Logit and probability drift.** Measure Jensen-Shannon divergence between the FP16 and INT8 output distributions across a validation set. Aggregate accuracy can hold steady while the distribution shifts underneath it.
+3. **Application SLA gates.** Set pass/fail thresholds from business impact, such as exact-match on extraction, compile rate on generated code, or ranking agreement, rather than from a leaderboard metric. The threshold should be a number somebody would defend in a review.
 
-## Step 5: Implement Runtime Safe-Fail & Telemetry Fallbacks
+## Step 5: Verify Kernel Execution and Measure Real Gains
 
-Even with rigorous offline calibration, production environments will inevitably encounter out-of-distribution inputs that trigger activation spikes and cause quantized precision loss.
+This is the step teams skip, and it catches the most embarrassing class of failure. A quantized model running on FP16 kernels is *slower* than the baseline it replaced: you have paid the accuracy cost and added dequantization overhead in exchange for nothing.
 
-![Step 5: Production Runtime Telemetry & Dynamic Fallback](/images/blog/quantization-without-tears/step5.png)
+### The Kernel and Performance Gate
 
-### Production Safeguards
+1. **Confirm which kernels dispatched.** Read the engine build logs from TensorRT, vLLM, or TorchAO and verify that INT8 Tensor Core kernels were selected for every GEMM you targeted. Look specifically for silent Q/DQ backend fallbacks and un-fused graph breaks. "The build succeeded" is not the same claim as "the fast path is running."
+2. **Benchmark under realistic load.** p50, p95, and p99 latency at production concurrency, not single-request timings against an idle GPU.
+3. **Track serving economics.** For autoregressive models: time-to-first-token (TTFT), time-per-output-token (TPOT), peak VRAM footprint, and cost per million tokens. TTFT and TPOT move independently, so quantization that speeds up prefill can leave decode entirely untouched.
 
-- **Block-wise / Layer-wise Hybrid Precision:** If profiling reveals that specific layers (such as the first embedding projection layer, attention output projections, or final LM head) are sensitive to INT8 quantization, keep those specific blocks in FP16/BF16 while running the bulk intermediate layers in INT8.
-- **Runtime Dynamic Fallback:** Monitor activation scale metrics or logit entropy at runtime. If an input prompt causes out-of-bounds layer activations, trigger a fallback execution path to the unquantized baseline model.
-- **Dual-Path Canary Deployment:** Deploy new INT8 models alongside existing FP16/BF16 models in a shadow/canary setup. Sample 1-5% of live traffic to compare output agreement between full-precision and quantized versions before declaring production readiness.
+If the numbers do not move, return to Step 1. Something about the pairing of engine and workload is wrong, and no amount of recalibration will fix it.
+
+## Step 6: Ship Safety Nets and Watch the Telemetry
+
+Offline calibration cannot anticipate everything production will send you.
+
+![Step 6: Production Safety Nets & Canary Topology](/images/blog/quantization-without-tears/step5.png)
+
+- **Static hybrid precision, the primary defense.** When profiling shows specific layers are sensitive, and the usual suspects are embedding projections, attention output projections, and the final LM head, keep those in FP16/BF16 and run the bulk of the transformer in INT8. It is deterministic, requires no runtime machinery, and resolves most of the problem before it reaches production.
+- **Canary and shadow deployment.** Route 1-5% of live traffic to the INT8 model alongside the FP16 baseline and compare output agreement on real inputs before committing to a full rollout.
+- **Dynamic fallback, optional and not free.** Routing individual requests to an FP16 path when runtime activations spike is a legitimate pattern, but it bills you for it: both models resident in VRAM, a spike detector that needs validating (false positives quietly erase the throughput gains you bought), and a latency budget that has to absorb the switch. It also complicates streaming responses mid-generation. Reach for it only after static hybrid precision has failed.
 
 ## Pre-Deployment Verification Checklist
 
-Before issuing a deployment approval for an INT8 model, verify that every item on this checklist is marked complete:
+Before issuing deployment approval for an INT8 post-training quantized model, verify that every item on this checklist is marked complete:
 
 | Step | Verification Milestone | Passed? |
 | :--- | :--- | :---: |
-| **1. Target Mapping** | Confirmed hardware target (e.g., NVIDIA Ampere/Hopper Tensor Cores, ONNX Runtime execution provider) supports accelerated INT8 GEMM operations. | [ ] |
-| **2. Scheme Selection** | Explicitly selected Symmetric vs. Asymmetric and Weight-Only vs. W8A8 based on compute vs. memory constraints. | [ ] |
-| **3. Calibration** | Constructed a calibration set containing 128-512 real production samples (not generic public benchmarks). | [ ] |
-| **4. Outlier Handling** | Applied outlier smoothing (SmoothQuant / AWQ) if working with Transformer activation channels. | [ ] |
-| **5. Quality Benchmarking** | Verified layer-wise cosine similarity ($> 0.99$) and confirmed downstream task loss is within accepted tolerance ($< 1\%$). | [ ] |
-| **6. Runtime Fallback** | Implemented hybrid precision for sensitive layers or dynamic fallback mechanisms for out-of-distribution inputs. | [ ] |
+| **1. Target Mapping** | Classified the workload (compute-bound W8A8 vs. memory-bound weight-only) and confirmed the target engine supports accelerated INT8 Tensor Core dispatch. | [ ] |
+| **2. Empirical Calibration** | Calibrated on representative production data, expanding the sample set until per-layer scale factors and activation ranges converged. | [ ] |
+| **3. Outlier Handling** | Applied SmoothQuant for W8A8 integer GEMM, or AWQ/GPTQ for salient-channel protection in weight-only mode. | [ ] |
+| **4. Quality Verification** | Validated layer-wise cosine similarity, logit JS-divergence, and downstream domain task accuracy against a defined SLA tolerance. | [ ] |
+| **5. Kernel & Perf Gate** | Verified zero silent Q/DQ fallbacks in the engine logs and confirmed measurable gains in p95/p99 latency, TTFT, and TPOT. | [ ] |
+| **6. Safety Nets** | Applied static hybrid precision to sensitive layers and executed a canary rollout with live telemetry monitoring. | [ ] |
 
 ## References & Further Reading
 
-1. **SmoothQuant Paper:** [SmoothQuant: Accurate and Efficient Post-Training Quantization for Large Language Models (Xiao et al., 2022)](https://arxiv.org/abs/2211.10438), detailed mathematical formulation of activation outlier smoothing.
+1. **SmoothQuant Paper:** [SmoothQuant: Accurate and Efficient Post-Training Quantization for Large Language Models (Xiao et al., 2022)](https://arxiv.org/abs/2211.10438), mathematical formulation of activation outlier migration for W8A8 integer GEMM.
 2. **LLM.int8() Paper:** [LLM.int8(): 8-bit Matrix Multiplication for Transformers at Scale (Dettmers et al., 2022)](https://arxiv.org/abs/2208.07339), analysis of emergent activation outliers in large-scale transformer models.
-3. **AWQ Paper:** [AWQ: Activation-aware Weight Quantization for LLM Compression and Acceleration (Lin et al., 2023)](https://arxiv.org/abs/2306.00978), protection of salient weight channels guided by activation distributions.
+3. **AWQ Paper:** [AWQ: Activation-aware Weight Quantization for LLM Compression and Acceleration (Lin et al., 2023)](https://arxiv.org/abs/2306.00978), protection of salient weight channels guided by activation distributions for weight-only quantization.
 4. **GPTQ Paper:** [GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers (Frantar et al., 2022)](https://arxiv.org/abs/2210.17323), one-shot layer-wise weight quantization using second-order Hessian updates.
 5. **NVIDIA TensorRT Developer Guide:** [NVIDIA TensorRT Quantization Schemes](https://docs.nvidia.com/deeplearning/tensorrt/latest/inference-library/quantized-types-schemes.html), technical reference on INT8 and FP8 hardware execution schemes.
-6. **PyTorch Quantization:** [PyTorch TorchAO Documentation](https://docs.pytorch.org/ao/stable/index.html), PyTorch architecture optimization and native quantization APIs.
+6. **PyTorch Architecture Optimization:** [Welcome to the torchao Documentation](https://docs.pytorch.org/ao/stable/index.html), PyTorch-native quantization, PT2E export flows, and serving optimizations.
