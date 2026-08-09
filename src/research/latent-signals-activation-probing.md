@@ -391,7 +391,3 @@ The disciplined stance is therefore neither skepticism nor spectacle. Measure th
 - Zhengxuan Wu et al., [“pyvene: A Library for Understanding and Improving PyTorch Models via Interventions”](https://arxiv.org/abs/2403.07809), 2024.
 - Kevin Ro Wang et al., [“Interpretability in the Wild: a Circuit for Indirect Object Identification in GPT-2 Small”](https://arxiv.org/abs/2211.00593), ICLR 2023.
 - Kenneth Li et al., [“Inference-Time Intervention: Eliciting Truthful Answers from a Language Model”](https://arxiv.org/abs/2306.03341), NeurIPS 2023.
-
-## Editorial and evidence note
-
-This is a practitioner synthesis, not a report of a new Latentsig experiment. All charts on the companion web page are explicitly labeled **schematic** unless they reproduce a cited result. Claims about “early” signals are contingent on task, model, probe design, and checkpoint cadence. The frontier-model landscape is intentionally frozen to May 2026 to match the publication date.
