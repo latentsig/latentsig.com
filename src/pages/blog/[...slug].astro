@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import QuantizationBanner from '../../components/QuantizationBanner.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -18,6 +19,8 @@ const formattedDate = post.data.date.toLocaleDateString('en-US', {
   month: 'short',
   day: 'numeric',
 });
+
+const isQuantizationPost = post.slug === 'quantization-without-tears';
 ---
 
 <Layout title={`${post.data.title} · Latentsig AI`} description={post.data.description}>
@@ -51,6 +54,8 @@ const formattedDate = post.data.date.toLocaleDateString('en-US', {
           </div>
         </div>
       </header>
+
+      {isQuantizationPost && <QuantizationBanner class="mb-14" />}
 
       <div class="blog-content">
         <Content />

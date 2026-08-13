@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import QuantizationBanner from '../components/QuantizationBanner.astro';
 
 const posts = [
   {
@@ -21,6 +22,7 @@ const posts = [
     author: 'Latentsig AI Eng',
     href: '/blog/quantization-without-tears/',
     image: undefined,
+    visual: 'quantization',
   },
   {
     tag: 'Strategy',
@@ -112,7 +114,9 @@ const posts = [
               class="col-span-12 md:col-span-4 bg-surface-container-low border border-outline-variant/30 rounded-2xl overflow-hidden hover:border-primary transition-all flex flex-col group"
             >
               <div class={`h-48 relative overflow-hidden bg-gradient-to-br ${p.tagColor === 'primary' ? 'from-primary/20 to-surface-container' : p.tagColor === 'secondary' ? 'from-secondary/20 to-surface-container' : 'from-tertiary/20 to-surface-container'}`}>
-                {p.image ? (
+                {p.visual === 'quantization' ? (
+                  <QuantizationBanner compact />
+                ) : p.image ? (
                   <>
                     <img src={p.image} alt="DFlash token blocks moving from sequential drafting to parallel verification" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
                     <div class="absolute inset-0 bg-gradient-to-t from-surface-container/60 to-transparent" />

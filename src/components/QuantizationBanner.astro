@@ -1,0 +1,218 @@
+---
+interface Props {
+  compact?: boolean;
+  class?: string;
+}
+
+const { compact = false, class: className = '' } = Astro.props;
+---
+
+<div
+  class:list={['quantization-banner', { compact }, className]}
+  role="img"
+  aria-label="FP16 model values being calibrated into eight discrete INT8 quantization levels"
+>
+  <svg viewBox="0 0 960 400" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <linearGradient id="quant-bg" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#101a36" />
+        <stop offset="0.55" stop-color="#111b31" />
+        <stop offset="1" stop-color="#07101f" />
+      </linearGradient>
+      <linearGradient id="quant-flow" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#89ceff" />
+        <stop offset="0.56" stop-color="#c0c1ff" />
+        <stop offset="1" stop-color="#ffb783" />
+      </linearGradient>
+      <linearGradient id="quant-glow" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#c0c1ff" stop-opacity="0.19" />
+        <stop offset="1" stop-color="#c0c1ff" stop-opacity="0" />
+      </linearGradient>
+      <pattern id="quant-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#c0c1ff" stroke-opacity="0.055" stroke-width="1" />
+      </pattern>
+      <filter id="quant-soft-glow" x="-40%" y="-40%" width="180%" height="180%">
+        <feGaussianBlur stdDeviation="10" />
+      </filter>
+      <clipPath id="quant-plot-clip">
+        <rect x="52" y="92" width="856" height="246" rx="16" />
+      </clipPath>
+    </defs>
+
+    <rect width="960" height="400" fill="url(#quant-bg)" />
+    <rect width="960" height="400" fill="url(#quant-grid)" />
+    <circle cx="170" cy="206" r="132" fill="#89ceff" opacity="0.08" filter="url(#quant-soft-glow)" />
+    <circle cx="805" cy="206" r="132" fill="#ffb783" opacity="0.09" filter="url(#quant-soft-glow)" />
+
+    <g class="banner-copy">
+      <text x="52" y="51" class="eyebrow">LATENTSIG / ENGINEERING FIELD NOTE</text>
+      <text x="908" y="51" text-anchor="end" class="format">W8A8 · INT8 PTQ</text>
+    </g>
+
+    <g clip-path="url(#quant-plot-clip)">
+      <rect x="52" y="92" width="856" height="246" rx="16" fill="#0b1326" fill-opacity="0.56" stroke="#c0c1ff" stroke-opacity="0.16" />
+
+      <!-- Continuous FP16 signal -->
+      <g class="source-signal">
+        <path
+          d="M76 242 C102 238 104 204 124 199 C146 194 147 276 170 264 C194 251 190 122 218 129 C244 136 246 222 267 217 C290 211 294 171 318 181 C337 188 344 235 365 228"
+          fill="none"
+          stroke="#89ceff"
+          stroke-width="4"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M76 242 C102 238 104 204 124 199 C146 194 147 276 170 264 C194 251 190 122 218 129 C244 136 246 222 267 217 C290 211 294 171 318 181 C337 188 344 235 365 228 L365 319 L76 319 Z"
+          fill="url(#quant-glow)"
+        />
+        <g fill="#89ceff">
+          <circle cx="124" cy="199" r="4" />
+          <circle cx="170" cy="264" r="4" />
+          <circle cx="218" cy="129" r="4" />
+          <circle cx="267" cy="217" r="4" />
+          <circle cx="318" cy="181" r="4" />
+        </g>
+        <text x="76" y="122" class="plot-label">FP16 RANGE</text>
+        <text x="76" y="145" class="plot-note">continuous values</text>
+      </g>
+
+      <!-- Calibration bridge -->
+      <g class="calibration">
+        <path d="M388 141 L474 175" stroke="#c0c1ff" stroke-opacity="0.42" stroke-width="1.5" />
+        <path d="M388 183 L474 190" stroke="#c0c1ff" stroke-opacity="0.42" stroke-width="1.5" />
+        <path d="M388 225 L474 205" stroke="#c0c1ff" stroke-opacity="0.42" stroke-width="1.5" />
+        <path d="M388 267 L474 220" stroke="#c0c1ff" stroke-opacity="0.42" stroke-width="1.5" />
+        <rect x="414" y="181" width="118" height="40" rx="20" fill="#171f33" stroke="#c0c1ff" stroke-opacity="0.42" />
+        <text x="473" y="205" text-anchor="middle" class="calibrate-label">CALIBRATE</text>
+      </g>
+
+      <!-- Discrete INT8 levels -->
+      <g class="quantized-output">
+        <g stroke="#ffb783" stroke-opacity="0.22" stroke-width="1">
+          <line x1="570" y1="125" x2="870" y2="125" />
+          <line x1="570" y1="151" x2="870" y2="151" />
+          <line x1="570" y1="177" x2="870" y2="177" />
+          <line x1="570" y1="203" x2="870" y2="203" />
+          <line x1="570" y1="229" x2="870" y2="229" />
+          <line x1="570" y1="255" x2="870" y2="255" />
+          <line x1="570" y1="281" x2="870" y2="281" />
+          <line x1="570" y1="307" x2="870" y2="307" />
+        </g>
+        <path
+          d="M570 255 H606 V229 H642 V281 H678 V151 H714 V203 H750 V177 H786 V229 H822 V203 H870"
+          fill="none"
+          stroke="url(#quant-flow)"
+          stroke-width="6"
+          stroke-linecap="square"
+          stroke-linejoin="round"
+        />
+        <g fill="#ffb783">
+          <rect x="599" y="222" width="14" height="14" rx="3" />
+          <rect x="635" y="274" width="14" height="14" rx="3" />
+          <rect x="671" y="144" width="14" height="14" rx="3" />
+          <rect x="707" y="196" width="14" height="14" rx="3" />
+          <rect x="743" y="170" width="14" height="14" rx="3" />
+          <rect x="779" y="222" width="14" height="14" rx="3" />
+          <rect x="815" y="196" width="14" height="14" rx="3" />
+        </g>
+        <text x="570" y="122" class="plot-label warm">INT8 LEVELS</text>
+        <text x="870" y="122" text-anchor="end" class="plot-note">scale s · zero-point z</text>
+      </g>
+    </g>
+
+    <g class="footer-copy">
+      <text x="52" y="373" class="headline">QUANTIZATION WITHOUT TEARS</text>
+      <text x="908" y="373" text-anchor="end" class="bit-shift">16-BIT <tspan class="arrow">→</tspan> 8-BIT</text>
+    </g>
+  </svg>
+</div>
+
+<style>
+  .quantization-banner {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    aspect-ratio: 12 / 5;
+    border: 1px solid rgba(192, 193, 255, 0.22);
+    border-radius: 1rem;
+    background: #0b1326;
+    box-shadow: 0 22px 70px rgba(1, 7, 19, 0.35);
+  }
+
+  .quantization-banner.compact {
+    height: 12rem;
+    aspect-ratio: auto;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  text {
+    font-family: 'Geist', ui-sans-serif, system-ui, sans-serif;
+  }
+
+  .eyebrow,
+  .format,
+  .plot-label,
+  .plot-note,
+  .calibrate-label {
+    letter-spacing: 0.12em;
+  }
+
+  .eyebrow,
+  .format {
+    fill: #c7c4d7;
+    font-size: 12px;
+    font-weight: 650;
+  }
+
+  .format { fill: #ffb783; }
+  .plot-label { fill: #89ceff; font-size: 13px; font-weight: 700; }
+  .plot-label.warm { fill: #ffb783; }
+  .plot-note { fill: #908fa0; font-size: 11px; }
+  .calibrate-label { fill: #c0c1ff; font-size: 11px; font-weight: 750; }
+
+  .headline {
+    fill: #dae2fd;
+    font-family: 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.025em;
+  }
+
+  .bit-shift {
+    fill: #c7c4d7;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+  }
+
+  .arrow { fill: #ffb783; font-size: 16px; }
+
+  .source-signal,
+  .quantized-output {
+    transition: transform 450ms ease;
+  }
+
+  :global(a:hover) .quantization-banner .source-signal { transform: translateX(5px); }
+  :global(a:hover) .quantization-banner .quantized-output { transform: translateX(-5px); }
+
+  @media (max-width: 640px) {
+    .quantization-banner:not(.compact) { aspect-ratio: 5 / 3; }
+    .quantization-banner:not(.compact) svg { width: 145%; transform: translateX(-15%); }
+    .quantization-banner:not(.compact) .banner-copy,
+    .quantization-banner:not(.compact) .footer-copy { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .source-signal,
+    .quantized-output { transition: none; }
+  }
+</style>
