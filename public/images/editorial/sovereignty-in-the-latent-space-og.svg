@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Sovereignty in the Latent Space</title>
+  <desc id="desc">A stream of latent signals passes through a verification gate and becomes an inspectable system.</desc>
+  <defs>
+    <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M28 0H0V28" fill="none" stroke="#26314a" stroke-width="1" opacity=".48"/>
+    </pattern>
+    <linearGradient id="signal" x1="0" x2="1">
+      <stop offset="0" stop-color="#a9abff" stop-opacity="0"/>
+      <stop offset=".58" stop-color="#ff9f52"/>
+      <stop offset="1" stop-color="#71c69a"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="7" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="1200" height="630" fill="#08101f"/>
+  <rect x="24" y="24" width="1152" height="582" fill="url(#grid)" stroke="#273149"/>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <text x="58" y="76" fill="#ff9f52" font-size="12" font-weight="700" letter-spacing="3">LATENTSIG / BENGALURU / 15 AUG 2026</text>
+    <text x="58" y="176" fill="#f7efd9" font-size="68" font-weight="700" letter-spacing="-2">SOVEREIGNTY IN</text>
+    <text x="58" y="250" fill="#f7efd9" font-size="68" font-weight="700" letter-spacing="-2">THE LATENT SPACE</text>
+    <text x="60" y="294" fill="#a9abff" font-size="23">Engineering India’s AI on our own terms</text>
+  </g>
+  <g fill="none" stroke="url(#signal)" stroke-width="2" filter="url(#glow)" opacity=".92">
+    <path d="M84 425C240 382 365 498 540 421S840 364 1064 418"/>
+    <path d="M84 443C247 401 372 508 540 437S843 387 1064 434"/>
+    <path d="M84 461C250 426 380 520 540 453S845 412 1064 450"/>
+    <path d="M84 479C256 452 389 529 540 469S848 439 1064 466"/>
+  </g>
+  <g transform="translate(566 363)">
+    <rect width="30" height="148" rx="5" fill="#101b2f" stroke="#a9abff"/>
+    <path d="M7 18H23M7 39H23M7 60H23M7 81H23M7 102H23M7 123H23" stroke="#ff9f52"/>
+    <text x="15" y="-14" text-anchor="middle" fill="#ff9f52" font-family="monospace" font-size="10">VERIFY</text>
+  </g>
+  <g transform="translate(918 366)" fill="#0d1729" stroke="#71c69a">
+    <rect width="166" height="35" rx="5"/><rect y="47" width="166" height="35" rx="5"/><rect y="94" width="166" height="35" rx="5"/>
+    <path d="M16 18H76M91 18h59M16 65h32M60 65h90M16 112h83M111 112h39"/>
+  </g>
+  <text x="58" y="562" fill="#9ca7bf" font-family="monospace" font-size="12" letter-spacing="2">BRING THE SIGNAL. BUILD THE INSTRUMENT.</text>
+  <text x="1138" y="82" text-anchor="end" fill="#a9abff" font-family="serif" font-size="50">λ</text>
+</svg>

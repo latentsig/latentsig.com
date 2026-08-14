@@ -1,0 +1,250 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const pageTitle = 'Sovereignty in the Latent Space: Engineering India’s AI on Our Own Terms';
+const description = 'A Bengaluru perspective on moving past AI hype, reducing black-box dependence, and engineering systems that survive contact with the real world.';
+const socialImage = '/images/editorial/sovereignty-in-the-latent-space-og.svg';
+---
+
+<Layout title={`${pageTitle} · Latentsig AI`} description={description} image={socialImage} article>
+  <div class="reading-progress" aria-hidden="true"><span id="progress-bar"></span></div>
+
+  <div class="sovereignty-page">
+    <header class="hero">
+      <div class="hero-field" aria-hidden="true">
+        <span class="field-line line-one"></span>
+        <span class="field-line line-two"></span>
+        <span class="field-orbit orbit-one"></span>
+        <span class="field-orbit orbit-two"></span>
+      </div>
+
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <a href="/" class="back-link"><span aria-hidden="true">←</span> Latentsig</a>
+          <div class="eyebrow-row">
+            <span class="eyebrow">Independence Day essay</span>
+            <span>Bengaluru · 15 August 2026</span>
+          </div>
+          <h1>Sovereignty in the <em>latent space.</em></h1>
+          <p class="dek">Engineering India’s AI on our own terms, beyond the demo, the black box, and the rented intelligence layer.</p>
+
+          <div class="author-row">
+            <span class="author-mark">λ</span>
+            <span><strong>Latentsig AI</strong><small>9 min read · Editorial note</small></span>
+          </div>
+        </div>
+
+        <div class="sovereignty-console" aria-label="A visual model of technological sovereignty">
+          <div class="console-meta">
+            <span>12.9716° N</span>
+            <span>77.5946° E</span>
+            <b>Bengaluru / IN</b>
+          </div>
+          <div class="console-stage">
+            <div class="dependency-side">
+              <small>Rented intelligence</small>
+              <span>Opaque API</span>
+              <span>Unpriced drift</span>
+              <span>External control</span>
+            </div>
+            <div class="signal-gate">
+              <i></i><i></i><i></i>
+              <strong>VERIFY</strong>
+              <i></i><i></i><i></i>
+            </div>
+            <div class="ownership-side">
+              <small>Commanded system</small>
+              <span>Measured quality</span>
+              <span>Private data</span>
+              <span>Owned process</span>
+            </div>
+          </div>
+          <div class="console-footer">
+            <span>INDEPENDENCE / 80</span>
+            <strong>Bring the signal. Build the instrument.</strong>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="principle-strip" aria-label="Core engineering principles">
+      <div><small>Trust standard</small><strong>Measure before you trust.</strong><span>Quality must be inspectable at deployment and after it.</span></div>
+      <div><small>Compute standard</small><strong>Spend where quality earns it.</strong><span>Route each task to the leanest model that clears the bar.</span></div>
+      <div><small>Ownership standard</small><strong>Keep command of the system.</strong><span>Control the data, weights, infrastructure, and process advantage.</span></div>
+    </section>
+
+    <div class="page-grid">
+      <aside class="toc" aria-label="On this page">
+        <span>On this page</span>
+        <a href="#the-new-frontier-of-sovereignty">The new frontier</a>
+        <a href="#the-demo-trap">The demo trap</a>
+        <a href="#three-engineering-pillars">Three engineering pillars</a>
+        <a href="#what-self-reliance-requires">What self-reliance requires</a>
+        <a href="#an-independence-day-promise">Our promise</a>
+      </aside>
+
+      <article class="article-body">
+        <p class="lead" id="the-new-frontier-of-sovereignty">India’s first Independence Day established a principle that still matters: our future cannot depend on someone else’s permission. On the country’s 80th Independence Day, that principle has a new technical frontier.</p>
+
+        <p>India is participating in a global race for artificial intelligence. But technological self-reliance, or <em>Atmanirbharata</em>, will not come from wrapping foreign APIs and accepting opaque decisions. It requires the capability, infrastructure, and engineering discipline to build, verify, and own intelligent systems on terms we can defend.</p>
+
+        <p>That is the work we come to do at Latentsig.</p>
+
+        <blockquote>
+          <span>Our operating thesis</span>
+          <p>You cannot trust what you cannot measure.</p>
+        </blockquote>
+
+        <h2 id="the-demo-trap">The demo trap and production reality</h2>
+
+        <p>AI demonstrations are easy to make impressive. A carefully chosen prompt, a clean dataset, and a controlled environment can make a model look like magic. Production removes those advantages.</p>
+
+        <p>Real systems meet incomplete enterprise data, strict compliance reviews, model drift, latency spikes, adversarial inputs, and compute bills that keep growing after the launch. A workflow that looked fluent in a slide deck can become unreliable, slow, or impossible to audit.</p>
+
+        <figure class="system-figure reality-figure">
+          <div class="figure-heading"><span>Reality check</span><b>What changes after the demonstration</b></div>
+          <div class="reality-grid">
+            <div class="reality-column demo-column">
+              <small>Controlled demo</small>
+              <strong>One prompt looks convincing</strong>
+              <div><span>Curated inputs</span><span>Single model</span><span>Happy path</span></div>
+            </div>
+            <div class="contact-zone" aria-hidden="true">
+              <span>CONTACT WITH REALITY</span>
+              <i></i><i></i><i></i><i></i>
+            </div>
+            <div class="reality-column production-column">
+              <small>Production system</small>
+              <strong>Every output needs a reason</strong>
+              <div><span>Messy data</span><span>Quality drift</span><span>Audit trail</span><span>Cost ceiling</span><span>Latency SLO</span><span>Human review</span></div>
+            </div>
+          </div>
+          <figcaption>The model is one component. Reliability comes from the evaluation, routing, controls, and operating feedback around it.</figcaption>
+        </figure>
+
+        <p>Enterprise AI cannot require blind faith. If an algorithm influences a diagnosis, approves a financial claim, or generates mission-critical code, the organisation needs more than an answer. It needs evidence for why that answer passed, what uncertainty remains, and who takes over when the system is unsure.</p>
+
+        <h2 id="three-engineering-pillars">Three engineering pillars</h2>
+
+        <p>We turn latent capability into dependable software through three linked disciplines. Each one closes a different gap between a model benchmark and an operating system.</p>
+
+        <div class="pillar-list" role="list" aria-label="Latentsig engineering pillars">
+          <section role="listitem">
+            <span>VERIFY</span>
+            <div>
+              <h3>Continuous verification</h3>
+              <p>Testing does not stop at deployment. Deterministic evaluation engines stress-test the system as the data, models, and operating conditions change. Domain experts feed observed failures back into the evaluation set so the system improves against reality, not intuition.</p>
+            </div>
+            <small>Output: a living quality record</small>
+          </section>
+          <section role="listitem">
+            <span>ROUTE</span>
+            <div>
+              <h3>Intelligent model routing</h3>
+              <p>High-tier compute should not handle every task. A routing layer sends each request to the leanest model that clears its quality threshold, with escalation when confidence or risk demands it.</p>
+            </div>
+            <small>Output: controlled quality per rupee</small>
+          </section>
+          <section role="listitem">
+            <span>BENCHMARK</span>
+            <div>
+              <h3>Domain-specific benchmarks</h3>
+              <p>Public leaderboards do not represent private workflows. We test open and proprietary models on clean, domain-specific data so teams can see which workloads are safe to bring in-house. Our next releases will include voice and automatic speech recognition benchmarks across Indian-language datasets.</p>
+            </div>
+            <small>Output: an evidence-based model choice</small>
+          </section>
+        </div>
+
+        <h2 id="what-self-reliance-requires">What technological self-reliance requires</h2>
+
+        <p>Self-reliance does not mean isolation from global research. It means commanding the tools we choose to use. For Indian AI systems, that command has four practical dimensions.</p>
+
+        <div class="sovereignty-table" role="table" aria-label="Four dimensions of AI self-reliance in India">
+          <div class="table-head" role="row">
+            <span role="columnheader">Capability</span><span role="columnheader">Indian operating reality</span><span role="columnheader">Evidence of command</span>
+          </div>
+          <div role="row">
+            <strong role="cell"><i>अ</i> Vernacular language depth</strong>
+            <span role="cell">Dialect diversity, code-switching, and context that broad multilingual scores can hide.</span>
+            <span role="cell">Benchmarks built from representative Indian-language tasks and reviewed by native domain experts.</span>
+          </div>
+          <div role="row">
+            <strong role="cell"><i>▤</i> Document intelligence</strong>
+            <span role="cell">Regional forms, scans, handwriting, mixed scripts, and inconsistent administrative formats.</span>
+            <span role="cell">Private parsing pipelines with traceable extraction and zero unnecessary data leakage.</span>
+          </div>
+          <div role="row">
+            <strong role="cell"><i>⌁</i> Edge and industrial QA</strong>
+            <span role="cell">Factory floors and field operations with limited bandwidth, variable devices, and hard latency limits.</span>
+            <span role="cell">Local inference that is tested against the cameras, environments, and failure costs it will face.</span>
+          </div>
+          <div role="row">
+            <strong role="cell"><i>◇</i> Data sovereignty</strong>
+            <span role="cell">Sensitive customer, health, financial, and operational data that creates process advantage.</span>
+            <span role="cell">Explicit control over data, weights, access, compute, retention, and the evaluation record.</span>
+          </div>
+        </div>
+
+        <p>India has a deep engineering base. The next chapter will be defined by the teams that make AI reliable, accountable, and legible under local constraints.</p>
+
+        <h2 id="an-independence-day-promise">An Independence Day promise</h2>
+
+        <p>On India’s 80th Independence Day, we honour the people whose sacrifices made self-determination possible, and the engineers, builders, and researchers turning that freedom into capability.</p>
+
+        <p>May our code be clean, our algorithms accountable, our minds independent, and our ambitions limitless.</p>
+
+        <div class="final-line">
+          <span>λ / LATENTSIG</span>
+          <p>Bring the signal.<br /><strong>We’ll build the instrument.</strong></p>
+        </div>
+      </article>
+    </div>
+
+    <section class="closing">
+      <span>Build something dependable</span>
+      <h2>Own the quality. Own the operating knowledge.</h2>
+      <p>Latentsig partners with ambitious teams on AI R&amp;D advisory, production implementations, reliability audits, model routing, and vision systems.</p>
+      <div class="closing-links">
+        <a class="primary-link" href="https://calendly.com/latentsig" target="_blank" rel="noreferrer">Schedule a technical deep-dive <span>↗</span></a>
+        <a href="https://github.com/latentsig" target="_blank" rel="noreferrer">GitHub</a>
+        <a href="mailto:latentsig@gmail.com">Email</a>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const updateProgress = () => {
+      const article = document.querySelector('.article-body');
+      const bar = document.querySelector<HTMLElement>('#progress-bar');
+      if (!article || !bar) return;
+      const rect = article.getBoundingClientRect();
+      const total = article.scrollHeight - window.innerHeight;
+      const read = Math.min(Math.max(-rect.top, 0), total);
+      bar.style.width = `${total > 0 ? (read / total) * 100 : 0}%`;
+    };
+    updateProgress();
+    addEventListener('scroll', updateProgress, { passive: true });
+  </script>
+</Layout>
+
+<style is:global>
+  :root{--bg:#08101f;--surface:#0d1729;--surface-2:#121d32;--line:#273149;--line-soft:rgba(39,49,73,.66);--ink:#eef1ff;--muted:#a6aec5;--violet:#a9abff;--violet-2:#7c80ff;--cyan:#86d2ff;--saffron:#ff9f52;--ivory:#f7efd9;--green:#71c69a;--red:#ff8d7f;--display:"Hanken Grotesk",sans-serif;--body:"Geist",sans-serif;--mono:"DM Mono",monospace}
+  *{box-sizing:border-box}html{scroll-behavior:smooth;background:var(--bg)}body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.72 var(--body);text-rendering:optimizeLegibility}a{color:inherit}::selection{background:var(--saffron);color:#08101f}
+  .reading-progress{position:fixed;inset:0 0 auto;height:2px;z-index:1000}.reading-progress span{display:block;width:0;height:100%;background:linear-gradient(90deg,var(--saffron),var(--ivory),var(--green))}
+
+  .hero{min-height:760px;position:relative;overflow:hidden;border-bottom:1px solid var(--line);display:flex;align-items:stretch;background:radial-gradient(circle at 79% 35%,rgba(124,128,255,.18),transparent 26%),radial-gradient(circle at 72% 42%,rgba(255,159,82,.08),transparent 34%),#08101f}.hero::after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(165,176,204,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(165,176,204,.045) 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(90deg,rgba(0,0,0,.12),#000 60%,rgba(0,0,0,.35));pointer-events:none}.hero-field{position:absolute;inset:0;overflow:hidden;opacity:.72}.field-line{position:absolute;height:1px;width:58%;right:-6%;background:linear-gradient(90deg,transparent,var(--saffron),var(--ivory),var(--green),transparent);box-shadow:0 0 20px rgba(255,159,82,.32)}.line-one{top:26%;transform:rotate(-8deg)}.line-two{bottom:19%;transform:rotate(7deg);opacity:.42}.field-orbit{position:absolute;border:1px solid rgba(169,171,255,.16);border-radius:50%;right:5%;top:50%;translate:0 -50%;aspect-ratio:1}.orbit-one{width:43vw;max-width:660px}.orbit-two{width:31vw;max-width:480px;border-color:rgba(113,198,154,.13)}
+  .hero-inner{width:min(1380px,100%);margin:auto;padding:86px clamp(22px,5vw,72px) 80px;position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(430px,.85fr);gap:70px;align-items:center}.back-link{display:inline-flex;gap:8px;margin-bottom:31px;color:#b9c2d6;text-decoration:none;font:500 13px/1 var(--body)}.back-link:hover{color:var(--saffron)}.eyebrow-row{display:flex;gap:18px;margin-bottom:25px;font:500 10px/1 var(--mono);text-transform:uppercase;letter-spacing:.14em;color:var(--muted)}.eyebrow{color:var(--saffron);border-left:2px solid var(--saffron);padding-left:10px}.hero h1{font:600 clamp(55px,6.4vw,91px)/.97 var(--display);letter-spacing:-.052em;margin:0;max-width:820px;text-wrap:balance}.hero h1 em{display:block;font-style:normal;color:var(--ivory)}.dek{max-width:720px;margin:31px 0 37px;color:#c6ccdc;font-size:clamp(18px,2vw,21px);line-height:1.55}.author-row{display:flex;align-items:center;gap:13px}.author-mark{width:40px;height:40px;border:1px solid rgba(255,159,82,.42);background:rgba(255,159,82,.1);color:var(--saffron);border-radius:50%;display:grid;place-items:center;font:600 21px/1 var(--display)}.author-row>span:last-child{display:flex;flex-direction:column}.author-row strong{font-size:14px}.author-row small{font:400 11px/1.5 var(--mono);color:var(--muted);margin-top:2px}
+  .sovereignty-console{border:1px solid rgba(169,171,255,.32);background:rgba(8,16,31,.78);box-shadow:0 30px 80px rgba(0,0,0,.32),inset 0 0 70px rgba(124,128,255,.05);backdrop-filter:blur(10px);border-radius:14px;overflow:hidden;transform:rotate(1deg)}.console-meta{display:flex;align-items:center;gap:16px;padding:14px 17px;border-bottom:1px solid var(--line);font:400 8px/1 var(--mono);letter-spacing:.1em;color:#77839f}.console-meta b{margin-left:auto;color:var(--ivory);font-weight:500}.console-stage{padding:29px 22px;display:grid;grid-template-columns:1fr 78px 1fr;align-items:stretch;min-height:285px}.dependency-side,.ownership-side{display:flex;flex-direction:column;gap:8px}.dependency-side small,.ownership-side small{font:500 8px/1 var(--mono);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px}.dependency-side small{color:#7f8ba4}.ownership-side small{color:var(--green)}.dependency-side span,.ownership-side span{flex:1;min-height:51px;display:flex;align-items:center;padding:11px;border:1px solid #2b3851;border-radius:7px;background:#0d1729;font:500 10px/1.35 var(--mono)}.dependency-side span{color:#7e8aa3}.ownership-side span{color:#dbe9e3;border-color:rgba(113,198,154,.32);background:rgba(113,198,154,.06)}.signal-gate{display:grid;place-items:center;grid-template-rows:1fr 1fr 1fr auto 1fr 1fr 1fr;padding:0 18px}.signal-gate i{display:block;width:100%;height:1px;background:linear-gradient(90deg,rgba(124,128,255,.15),var(--violet),rgba(124,128,255,.15))}.signal-gate strong{writing-mode:vertical-rl;transform:rotate(180deg);font:500 8px/1 var(--mono);letter-spacing:.18em;color:var(--saffron);padding:8px 0}.console-footer{border-top:1px solid var(--line);padding:15px 17px;display:flex;align-items:center;justify-content:space-between;gap:16px}.console-footer span{font:500 8px/1 var(--mono);letter-spacing:.11em;color:var(--saffron)}.console-footer strong{font:600 11px/1.3 var(--display);color:#cdd3e6;text-align:right}
+
+  .principle-strip{width:min(1280px,100%);margin:auto;padding:0 clamp(22px,5vw,72px);display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--line)}.principle-strip>div{padding:35px 31px 38px 0;display:flex;flex-direction:column}.principle-strip>div+div{border-left:1px solid var(--line);padding-left:31px}.principle-strip small{font:500 9px/1 var(--mono);text-transform:uppercase;letter-spacing:.11em;color:var(--saffron)}.principle-strip strong{font:600 16px/1.35 var(--display);margin:12px 0 6px}.principle-strip span{font-size:12px;line-height:1.5;color:var(--muted)}
+  .page-grid{width:min(1280px,100%);margin:auto;display:grid;grid-template-columns:220px minmax(0,790px) 1fr;gap:64px;padding:92px clamp(22px,5vw,72px) 125px}.toc{grid-column:1;align-self:start;position:sticky;top:95px;display:flex;flex-direction:column}.toc>span{font:500 10px/1 var(--mono);letter-spacing:.15em;text-transform:uppercase;color:var(--saffron);margin-bottom:14px}.toc>a{font-size:12px;line-height:1.4;color:#919bb5;text-decoration:none;padding:8px 0;border-bottom:1px solid var(--line-soft)}.toc>a:hover{color:var(--ink)}.article-body{grid-column:2;min-width:0}.article-body p{margin:0 0 25px;color:#b9c1d5}.article-body .lead{font-size:22px;line-height:1.6;color:#d9deef;scroll-margin-top:100px}.article-body strong{color:#f3f4ff;font-weight:600}.article-body em{font-style:normal;color:var(--ivory)}.article-body h2{font:600 38px/1.14 var(--display);letter-spacing:-.03em;margin:90px 0 26px;scroll-margin-top:100px}.article-body h3{font:600 23px/1.25 var(--display);margin:0;color:#f0f2ff}.article-body blockquote{margin:47px 0 60px;padding:24px 0 24px 30px;border-left:2px solid var(--saffron);background:linear-gradient(90deg,rgba(255,159,82,.07),transparent)}.article-body blockquote span{font:500 9px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--saffron)}.article-body blockquote p{font:600 clamp(27px,4vw,39px)/1.22 var(--display);letter-spacing:-.025em;color:var(--ivory);margin:13px 0 0}
+  .system-figure,.case-study{margin:50px 0 60px;border:1px solid var(--line);border-radius:12px;background:#0b1527;overflow:hidden}.figure-heading{display:flex;align-items:center;gap:15px;padding:18px 21px;border-bottom:1px solid var(--line)}.figure-heading span{font:500 9px/1 var(--mono);letter-spacing:.11em;text-transform:uppercase;color:var(--saffron)}.figure-heading b{font:600 14px/1.35 var(--display)}.system-figure figcaption{padding:16px 21px 18px;border-top:1px solid var(--line);font-size:12px;line-height:1.55;color:#909bb4}.reality-grid{display:grid;grid-template-columns:1fr 110px 1fr;padding:27px 23px 30px;align-items:stretch}.reality-column{padding:21px 19px;border:1px solid #2d3a54;border-radius:9px;background:#101b2f}.reality-column small{font:500 8px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:#7f8ca6}.reality-column strong{display:block;font:600 17px/1.3 var(--display);margin:15px 0 19px}.reality-column>div{display:flex;flex-wrap:wrap;gap:6px}.reality-column span{padding:7px 8px;border:1px solid #303d57;border-radius:5px;font:400 8px/1 var(--mono);color:#909bb4}.production-column{border-color:rgba(255,159,82,.36);background:linear-gradient(145deg,rgba(255,159,82,.08),#101b2f)}.production-column small{color:var(--saffron)}.production-column span{border-color:rgba(255,159,82,.22);color:#c4b5a7}.contact-zone{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px}.contact-zone span{writing-mode:vertical-rl;transform:rotate(180deg);font:500 7px/1 var(--mono);letter-spacing:.13em;color:#66728d;margin-bottom:7px}.contact-zone i{display:block;width:42px;height:1px;background:linear-gradient(90deg,transparent,var(--saffron),transparent)}
+  .pillar-list{margin:42px 0 60px;border-top:1px solid var(--line)}.pillar-list section{display:grid;grid-template-columns:100px 1fr 145px;gap:24px;padding:30px 0;border-bottom:1px solid var(--line);align-items:start}.pillar-list section>span{font:500 9px/1 var(--mono);letter-spacing:.11em;color:var(--saffron);padding-top:8px}.pillar-list h3{margin-bottom:10px}.pillar-list p{font-size:14px;line-height:1.63;margin:0}.pillar-list section>small{font:400 9px/1.45 var(--mono);color:#8290aa;padding:8px 0 0 18px;border-left:1px solid var(--line)}
+  .case-study{margin-top:48px}.case-intro{display:grid;grid-template-columns:.85fr 1.15fr;gap:32px;padding:28px 25px;border-bottom:1px solid var(--line);align-items:end}.case-intro small{font:500 8px/1 var(--mono);letter-spacing:.11em;text-transform:uppercase;color:var(--saffron)}.case-intro h3{margin-top:13px}.case-intro>p{font-size:13px;line-height:1.55;margin:0;color:#9da8bf}.case-method{display:grid;grid-template-columns:95px 1fr;gap:20px;padding:20px 25px;border-bottom:1px solid var(--line)}.case-method span{font:500 8px/1.4 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--green);padding-top:3px}.case-method p{font-size:13px;line-height:1.55;margin:0}.metric-board{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line)}.metric{padding:25px;background:#0b1527}.metric>div:first-child{display:flex;align-items:baseline;justify-content:space-between}.metric small{font:500 9px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#8b97af}.metric strong{font:600 33px/1 var(--display);color:var(--ivory)}.track{height:9px;position:relative;background:#202d43;border-radius:10px;margin:23px 0 15px;overflow:hidden}.track span{position:absolute;inset:0 auto 0 0;width:var(--width);border-radius:10px}.track .baseline{background:#4c5a72}.track .result{height:4px;top:2px;background:var(--green);box-shadow:0 0 13px rgba(113,198,154,.45)}.metric p{font:400 8px/1.4 var(--mono);color:#7f8ca5;margin:0}.metric p i{width:7px;height:7px;background:#4c5a72;display:inline-block;border-radius:50%;margin-right:6px}.metric p i.result-key{background:var(--green)}.metric p b{float:right;color:var(--green);font-weight:500}.vision-flow{display:grid;grid-template-columns:1fr 28px 1fr 28px 1fr;padding:26px 24px;align-items:stretch}.vision-flow>div{min-height:132px;padding:18px 16px;border:1px solid #2d3a54;border-radius:8px;background:#101b2f;display:flex;flex-direction:column}.vision-flow>i{display:grid;place-items:center;color:#5f6b84;font-style:normal}.vision-flow small{font:500 8px/1 var(--mono);color:#7c89a5}.vision-flow strong{font:600 15px/1.3 var(--display);margin:20px 0 7px}.vision-flow span{font-size:10px;line-height:1.45;color:#8e9ab4}.vision-flow .decision-node{border-color:rgba(169,171,255,.5);background:linear-gradient(145deg,rgba(124,128,255,.13),#101b2f)}.vision-flow .decision-node small,.vision-flow .decision-node strong{color:#c5c7ff}.decision-table{border-top:1px solid var(--line);padding:0 24px 22px}.decision-table>div{display:grid;grid-template-columns:1fr 1.1fr 1.45fr;border-bottom:1px solid var(--line-soft)}.decision-table span,.decision-table strong{padding:13px 8px;font-size:11px;line-height:1.4}.decision-table strong{font-weight:600}.decision-table span{color:#97a2ba}.decision-table .decision-head span{font:500 8px/1 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:#6f7c97;padding-top:15px}.decision-table .approve strong{color:var(--green)}.decision-table .reject strong{color:var(--red)}.decision-table .escalate strong{color:var(--saffron)}
+  .sovereignty-table{margin:45px 0 48px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#0b1527}.sovereignty-table>div{display:grid;grid-template-columns:.9fr 1.2fr 1.35fr}.sovereignty-table>div+div{border-top:1px solid var(--line)}.sovereignty-table span,.sovereignty-table strong{padding:18px 17px;font-size:12px;line-height:1.55}.sovereignty-table strong{font-weight:600;color:#edf0ff;display:flex;align-items:flex-start;gap:10px}.sovereignty-table strong i{font:500 18px/1 var(--display);font-style:normal;color:var(--saffron);width:24px;flex:0 0 auto}.sovereignty-table span{color:#9ba6bd;border-left:1px solid var(--line)}.sovereignty-table .table-head{background:#101b2e}.sovereignty-table .table-head span{font:500 8px/1.3 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:#77849f;border-left:0}.sovereignty-table .table-head span+span{border-left:1px solid var(--line)}
+  .final-line{margin:51px 0 0;padding:29px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);display:grid;grid-template-columns:155px 1fr;gap:28px;align-items:center}.final-line>span{font:500 9px/1 var(--mono);letter-spacing:.12em;color:var(--saffron)}.final-line p{font:500 clamp(27px,4vw,39px)/1.2 var(--display);letter-spacing:-.025em;color:#c9d0e3;margin:0}.final-line p strong{color:var(--ivory)}
+  .closing{padding:105px clamp(22px,5vw,72px);text-align:center;border-top:1px solid var(--line);background:radial-gradient(circle at 50% 0,rgba(255,159,82,.09),transparent 44%),radial-gradient(circle at 70% 100%,rgba(113,198,154,.06),transparent 35%)}.closing>span{font:500 10px/1 var(--mono);letter-spacing:.15em;text-transform:uppercase;color:var(--saffron)}.closing h2{max-width:880px;margin:21px auto;font:600 clamp(36px,5vw,59px)/1.08 var(--display);letter-spacing:-.04em}.closing p{max-width:650px;margin:0 auto 35px;color:var(--muted)}.closing-links{display:flex;align-items:center;justify-content:center;gap:20px}.closing-links a{font:600 13px/1 var(--body);color:#b8c1d5;text-decoration:none}.closing-links a:hover{color:var(--ivory)}.closing-links .primary-link{padding:15px 19px;border-radius:8px;background:var(--saffron);color:#101421}.closing-links .primary-link:hover{background:#ffb271;color:#101421}.closing-links .primary-link span{margin-left:8px}
+  @media(max-width:1060px){.hero-inner{grid-template-columns:1fr;gap:48px;padding-top:70px}.hero-copy{max-width:820px}.sovereignty-console{max-width:700px;transform:none}.hero{min-height:1050px}.page-grid{grid-template-columns:1fr;max-width:910px}.toc{display:none}.article-body{grid-column:1}.principle-strip{grid-template-columns:1fr}.principle-strip>div+div{border-left:0;border-top:1px solid var(--line);padding-left:0}}
+  @media(max-width:700px){body{font-size:16px}.hero{min-height:auto}.hero-inner{padding-top:55px;padding-bottom:58px;gap:42px}.eyebrow-row{flex-direction:column;gap:10px}.hero h1{font-size:49px}.dek{font-size:17px}.console-stage{grid-template-columns:1fr;gap:16px;padding:20px}.signal-gate{grid-template-columns:1fr auto 1fr;grid-template-rows:1fr;padding:1px 0}.signal-gate i{display:none}.signal-gate::before,.signal-gate::after{content:"";height:1px;background:linear-gradient(90deg,transparent,var(--saffron))}.signal-gate::after{background:linear-gradient(90deg,var(--saffron),transparent)}.signal-gate strong{writing-mode:initial;transform:none;padding:0 12px}.console-footer{align-items:flex-start;flex-direction:column}.console-footer strong{text-align:left}.principle-strip>div{padding:25px 0}.page-grid{padding-top:60px;padding-bottom:85px}.article-body .lead{font-size:19px}.article-body h2{font-size:31px;margin-top:70px}.reality-grid{grid-template-columns:1fr;padding:17px}.contact-zone{height:68px}.contact-zone span{writing-mode:initial;transform:none}.contact-zone i{display:none}.pillar-list section{grid-template-columns:1fr;gap:8px}.pillar-list section>small{border-left:0;padding:5px 0}.case-intro{grid-template-columns:1fr;gap:18px}.metric-board{grid-template-columns:1fr}.vision-flow{grid-template-columns:1fr;padding:17px}.vision-flow>i{height:25px;transform:rotate(90deg)}.decision-table{padding:0 15px 16px;overflow-x:auto}.decision-table>div{min-width:560px}.sovereignty-table{overflow-x:auto}.sovereignty-table>div{min-width:700px}.final-line{grid-template-columns:1fr;gap:15px}.closing-links{flex-wrap:wrap}.closing-links .primary-link{width:100%;max-width:330px}}
+  @media(prefers-reduced-motion:no-preference){.sovereignty-console{animation:console-in .8s cubic-bezier(.2,.7,.2,1) both}.hero-copy{animation:copy-in .7s .08s cubic-bezier(.2,.7,.2,1) both}@keyframes console-in{from{opacity:0;transform:translateY(18px) rotate(1deg)}to{opacity:1;transform:translateY(0) rotate(1deg)}}@keyframes copy-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}}
+</style>
