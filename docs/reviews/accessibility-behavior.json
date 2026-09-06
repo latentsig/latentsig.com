@@ -1,0 +1,56 @@
+{
+  "skipFirst": true,
+  "skipTargetsMain": true,
+  "menuExpanded": true,
+  "menuTab": true,
+  "menuEscape": true,
+  "touchTargets": true,
+  "visibleFocus": true,
+  "keyboardPause": true,
+  "pauseSurvivesScroll": true,
+  "stableReaderText": true,
+  "readerHasAllChapters": true,
+  "visualStoryHidden": true,
+  "enlargedText": {
+    "overflow": false,
+    "copyBottom": 1836.09375,
+    "sceneTop": 1896.09375,
+    "actionsBottom": 1836.09375,
+    "heroBottom": 2362.09375
+  },
+  "textSpacing": {
+    "overflow": false,
+    "copyBottom": 2539.5,
+    "sceneTop": 2599.5,
+    "actionsBottom": 2539.5,
+    "heroBottom": 3098.5
+  },
+  "landscapeDefers3D": true,
+  "landscapeMenu": {
+    "bottom": 375,
+    "viewport": 375,
+    "scrollable": true,
+    "lastVisible": true
+  },
+  "noJavaScript": {
+    "styled": true,
+    "poster": true,
+    "menuVisible": true,
+    "noCanvas": true,
+    "overflow": false
+  },
+  "modelFailure": {
+    "poster": true,
+    "buttonHidden": true,
+    "copyVisible": true,
+    "links": true
+  },
+  "runtimeReducedMotion": {
+    "static": true,
+    "inactive": true,
+    "scrollAuto": true
+  },
+  "resumeAfterPreference": true,
+  "resizeBudget": true,
+  "passed": true
+}

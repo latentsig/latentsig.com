@@ -12,8 +12,9 @@ const { height = 32, showWordmark = true, class: className = '' } = Astro.props;
   <img
     src="/logo.png"
     alt="Latentsig"
-    height={height}
-    style={`height: ${height}px; width: auto;`}
+    width={2778}
+    height={950}
+    style={`height: ${height}px; width: auto; max-width: none; aspect-ratio: 2778 / 950;`}
     class={className}
   />
 ) : (
@@ -24,8 +25,9 @@ const { height = 32, showWordmark = true, class: className = '' } = Astro.props;
     <img
       src="/logo.png"
       alt="Latentsig"
-      height={height}
-      style={`height: ${height}px; width: auto;`}
+      width={2778}
+      height={950}
+      style={`height: ${height}px; width: auto; max-width: none; aspect-ratio: 2778 / 950;`}
     />
   </div>
 )}

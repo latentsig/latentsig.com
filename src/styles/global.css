@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html { scroll-padding-top: 6rem; }
+body { overflow-wrap: anywhere; }
+:where(a,button,input,textarea,select,summary):focus-visible { outline: 3px solid #c0c1ff; outline-offset: 4px; }
+.sr-only { position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0; }
+.skip-link { position:fixed;top:12px;left:16px;z-index:100;padding:12px 18px;background:#e1e0ff;color:#07006c;border-radius:4px;transform:translateY(-180%); }
+.skip-link:focus { transform:translateY(0); }
+@media(prefers-reduced-motion:reduce) {
+  html { scroll-behavior:auto !important; }
+  *,*::before,*::after { animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important; }
+}
+@media(forced-colors:active) {
+  :where(a,button):focus-visible { outline-color:Highlight; }
+}

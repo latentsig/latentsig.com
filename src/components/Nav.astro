@@ -13,18 +13,19 @@ const links = [
 ];
 ---
 
-<nav class="fixed w-full top-0 z-50 bg-surface/80 backdrop-blur-xl border-b border-outline-variant/30">
+<nav aria-label="Main navigation" class="fixed w-full top-0 z-50 bg-surface/80 backdrop-blur-xl border-b border-outline-variant/30">
   <div class="flex justify-between items-center max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop h-20">
     <a href="/" class="flex items-center text-on-surface hover:opacity-90 transition-opacity" aria-label="Latentsig home">
-      <Logo height={72} class="hidden sm:block" />
-      <Logo height={56} showWordmark={false} class="sm:hidden" />
+      <Logo height={72} class="hidden xl:block" />
+      <Logo height={44} class="xl:hidden" />
     </a>
-    <div class="hidden md:flex items-center gap-gutter">
+    <div class="hidden xl:flex items-center gap-gutter">
       {
         links.map((l) => (
           <a
             href={l.href}
-            class={`font-label-md text-label-md transition-colors duration-200 ${
+            aria-current={path === l.href ? "page" : undefined}
+            class={`inline-flex items-center min-h-11 font-label-md text-label-md transition-colors duration-200 ${
               path === l.href
                 ? 'text-primary'
                 : 'text-on-surface-variant hover:text-primary'
@@ -43,16 +44,17 @@ const links = [
     >
       Get a Consultation
     </a>
-    <button id="mobile-menu-toggle" class="md:hidden text-on-surface" aria-label="Toggle menu">
-      <span class="material-symbols-outlined">menu</span>
+    <button id="mobile-menu-toggle" type="button" class="xl:hidden text-on-surface" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" /></svg>
     </button>
   </div>
-  <div id="mobile-menu" class="md:hidden hidden border-t border-outline-variant/30 bg-surface">
+  <div id="mobile-menu" hidden class="xl:hidden hidden border-t border-outline-variant/30 bg-surface">
     <div class="flex flex-col px-margin-mobile py-4 gap-3">
       {
         links.map((l) => (
           <a
             href={l.href}
+            aria-current={path === l.href ? "page" : undefined}
             class={`font-label-md text-label-md py-2 ${
               path === l.href ? 'text-primary' : 'text-on-surface-variant'
             }`}
@@ -73,12 +75,28 @@ const links = [
   </div>
 </nav>
 
-<script is:inline>
-  document.addEventListener('DOMContentLoaded', () => {
-    const btn = document.getElementById('mobile-menu-toggle');
-    const menu = document.getElementById('mobile-menu');
-    if (btn && menu) {
-      btn.addEventListener('click', () => menu.classList.toggle('hidden'));
-    }
-  });
+<noscript><style>nav[aria-label="Main navigation"]{position:static}#mobile-menu{display:block!important}#mobile-menu-toggle{display:none}#main-content{padding-top:0}</style></noscript>
+<style>
+  #mobile-menu-toggle{min-width:44px;min-height:44px;align-items:center;justify-content:center}
+  #mobile-menu{max-height:calc(100vh - 80px);max-height:calc(100dvh - 80px);overflow-y:auto;overscroll-behavior:contain}
+  #mobile-menu a{display:flex;align-items:center;min-height:44px}
+  @media(max-width:1279px){#mobile-menu-toggle{display:inline-flex}}
+</style>
+<script>
+  const button = document.querySelector<HTMLButtonElement>('#mobile-menu-toggle');
+  const menu = document.querySelector<HTMLElement>('#mobile-menu');
+  if (button && menu) {
+    const setOpen = (open: boolean, restoreFocus = false) => {
+      button.setAttribute('aria-expanded', String(open));
+      button.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+      menu.hidden = !open; menu.classList.toggle('hidden', !open);
+      if (restoreFocus) button.focus();
+    };
+    button.addEventListener('click', () => setOpen(menu.hidden));
+    document.addEventListener('keydown', event => { if(event.key === 'Escape' && !menu.hidden) setOpen(false, true); });
+    document.addEventListener('pointerdown', event => { if(!menu.hidden && !menu.contains(event.target as Node) && !button.contains(event.target as Node)) setOpen(false); });
+    document.addEventListener('focusin', event => { if(!menu.hidden && !menu.contains(event.target as Node) && !button.contains(event.target as Node)) setOpen(false); });
+    menu.addEventListener('click', event => { if((event.target as Element).closest('a')) setOpen(false); });
+    matchMedia('(min-width: 1280px)').addEventListener('change', event => { if(event.matches) setOpen(false); });
+  }
 </script>

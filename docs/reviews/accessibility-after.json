@@ -1,0 +1,294 @@
+{
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 960,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".motion-label"
+            ],
+            [
+              "div[data-story=\"0\"] > .hero-eyebrow[data-astro-source-loc=\"37:36\"]"
+            ],
+            [
+              "div[data-story=\"0\"] > h2[data-astro-source-loc=\"38:16\"] > span[data-astro-source-loc=\"38:21\"]"
+            ],
+            [
+              "div[data-story=\"0\"] > h2[data-astro-source-loc=\"38:16\"] > .hero-title-accent[data-astro-source-loc=\"38:78\"]"
+            ],
+            [
+              "span[data-astro-source-loc=\"38:124\"]"
+            ],
+            [
+              "div[data-story=\"0\"] > .hero-description[data-astro-source-loc=\"39:39\"]"
+            ],
+            [
+              "div[data-story=\"0\"] > .hero-cue[data-astro-source-loc=\"40:31\"]"
+            ],
+            [
+              ".hero-secondary"
+            ],
+            [
+              "b[data-astro-source-loc=\"49:59\"]"
+            ],
+            [
+              "small[data-astro-source-loc=\"49:79\"]"
+            ],
+            [
+              "b[data-astro-source-loc=\"50:40\"]"
+            ],
+            [
+              "small[data-astro-source-loc=\"50:59\"]"
+            ],
+            [
+              "b[data-astro-source-loc=\"51:40\"]"
+            ],
+            [
+              "small[data-astro-source-loc=\"51:63\"]"
+            ],
+            [
+              "b[data-astro-source-loc=\"52:40\"]"
+            ],
+            [
+              "small[data-astro-source-loc=\"52:61\"]"
+            ]
+          ]
+        }
+      ],
+      "overflow": false,
+      "overflowElements": [],
+      "pause": {
+        "x": 1196.40625,
+        "y": 766,
+        "width": 131.59375,
+        "height": 44,
+        "top": 766,
+        "right": 1328,
+        "bottom": 810,
+        "left": 1196.40625
+      },
+      "menu": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      }
+    },
+    {
+      "width": 320,
+      "height": 740,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              "h3[data-astro-source-loc=\"46:78\"]"
+            ],
+            [
+              ".max-w-md"
+            ]
+          ]
+        }
+      ],
+      "overflow": false,
+      "overflowElements": [],
+      "pause": {
+        "x": 24,
+        "y": 652.84375,
+        "width": 139.59375,
+        "height": 44,
+        "top": 652.84375,
+        "right": 163.59375,
+        "bottom": 696.84375,
+        "left": 24
+      },
+      "menu": {
+        "x": 260,
+        "y": 18,
+        "width": 44,
+        "height": 44,
+        "top": 18,
+        "right": 304,
+        "bottom": 62,
+        "left": 260
+      }
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "violations": [],
+      "incomplete": [],
+      "overflow": false,
+      "overflowElements": [],
+      "pause": {
+        "x": 24,
+        "y": 546.0625,
+        "width": 139.59375,
+        "height": 44,
+        "top": 546.0625,
+        "right": 163.59375,
+        "bottom": 590.0625,
+        "left": 24
+      },
+      "menu": {
+        "x": 330,
+        "y": 18,
+        "width": 44,
+        "height": 44,
+        "top": 18,
+        "right": 374,
+        "bottom": 62,
+        "left": 330
+      }
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "violations": [],
+      "incomplete": [],
+      "overflow": false,
+      "overflowElements": [],
+      "pause": {
+        "x": 24,
+        "y": 581.96875,
+        "width": 139.59375,
+        "height": 44,
+        "top": 581.96875,
+        "right": 163.59375,
+        "bottom": 625.96875,
+        "left": 24
+      },
+      "menu": {
+        "x": 660,
+        "y": 18,
+        "width": 44,
+        "height": 44,
+        "top": 18,
+        "right": 704,
+        "bottom": 62,
+        "left": 660
+      }
+    },
+    {
+      "width": 1024,
+      "height": 768,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".motion-label"
+            ],
+            [
+              "div[data-story=\"0\"] > .hero-eyebrow[data-astro-source-loc=\"37:36\"]"
+            ],
+            [
+              "div[data-story=\"0\"] > h2[data-astro-source-loc=\"38:16\"] > span[data-astro-source-loc=\"38:21\"]"
+            ],
+            [
+              "div[data-story=\"0\"] > h2[data-astro-source-loc=\"38:16\"] > .hero-title-accent[data-astro-source-loc=\"38:78\"]"
+            ],
+            [
+              "span[data-astro-source-loc=\"38:124\"]"
+            ],
+            [
+              "div[data-story=\"0\"] > .hero-description[data-astro-source-loc=\"39:39\"]"
+            ],
+            [
+              "div[data-story=\"0\"] > .hero-cue[data-astro-source-loc=\"40:31\"]"
+            ],
+            [
+              ".hero-secondary"
+            ],
+            [
+              "b[data-astro-source-loc=\"49:59\"]"
+            ],
+            [
+              "small[data-astro-source-loc=\"49:79\"]"
+            ],
+            [
+              "b[data-astro-source-loc=\"50:40\"]"
+            ],
+            [
+              "small[data-astro-source-loc=\"50:59\"]"
+            ],
+            [
+              "b[data-astro-source-loc=\"51:40\"]"
+            ],
+            [
+              "small[data-astro-source-loc=\"51:63\"]"
+            ],
+            [
+              "b[data-astro-source-loc=\"52:40\"]"
+            ],
+            [
+              "small[data-astro-source-loc=\"52:61\"]"
+            ]
+          ]
+        }
+      ],
+      "overflow": false,
+      "overflowElements": [],
+      "pause": {
+        "x": 860.40625,
+        "y": 616,
+        "width": 131.59375,
+        "height": 44,
+        "top": 616,
+        "right": 992,
+        "bottom": 660,
+        "left": 860.40625
+      },
+      "menu": {
+        "x": 916,
+        "y": 18,
+        "width": 44,
+        "height": 44,
+        "top": 18,
+        "right": 960,
+        "bottom": 62,
+        "left": 916
+      }
+    },
+    {
+      "width": 667,
+      "height": 375,
+      "violations": [],
+      "incomplete": [],
+      "overflow": false,
+      "overflowElements": [],
+      "pause": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "menu": {
+        "x": 607,
+        "y": 18,
+        "width": 44,
+        "height": 44,
+        "top": 18,
+        "right": 651,
+        "bottom": 62,
+        "left": 607
+      }
+    }
+  ],
+  "errors": [],
+  "passed": true
+}

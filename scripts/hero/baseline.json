@@ -1,0 +1,7 @@
+{
+  "src/pages/index.astro": "ae8d9e131a336f95b0209dfd52c0a565fdc9f52a3b8195f21cd17b21840e2584",
+  "src/components/Nav.astro": "a0b3a405e49caea7ac30b87ac0f6e121d77cc61b545ad620f27fdb16885ab836",
+  "src/components/Footer.astro": "26bc1f713f802616a38ee871a78ad041290c00d69d411c4fdafcf1800daadbcb",
+  "src/layouts/Layout.astro": "dcf687679629ad28b2519bc2d2502f78625d61fa25836c30d9f620db69642883",
+  "below_hero": "208b6f52b5c285ecc5004fbdb65d86e4daf33696cd25a2606fa0844e133ef060"
+}

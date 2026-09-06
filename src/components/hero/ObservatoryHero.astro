@@ -1,0 +1,101 @@
+---
+import { CALENDLY_URL } from '../../consts';
+const stories = [
+  { eyebrow: 'AI RESEARCH. REAL-WORLD ENGINEERING.', title: 'Engineering the', accent: 'Latent Potential', end: 'of AI.', text: 'We bridge the gap between academic research and industrial deployment. Latentsig AI provides enterprise-grade AI architecture, R&D advisory, and implementation for the most demanding technical environments.', cue: 'FROM RESEARCH TO THE REAL WORLD' },
+  { eyebrow: '01 / RESEARCH', title: 'Find the', accent: 'possibility.', text: 'Good engineering starts with better questions. Explore ideas, uncover patterns, and find a direction worth pursuing.', cue: 'R&D ADVISORY · RESEARCH · PROTOTYPING' },
+  { eyebrow: '02 / ARCHITECTURE', title: 'Give ideas', accent: 'structure.', text: 'Connect models, data, and infrastructure. Every layer has a purpose. Every connection is intentional.', cue: 'AI ARCHITECTURE · SYSTEM DESIGN' },
+  { eyebrow: '03 / DEPLOYMENT', title: 'Make it', accent: 'work.', text: 'Move from possibility to practice. Implement, test, observe, and refine AI for the real world.', cue: 'IMPLEMENTATION · TESTING · OBSERVABILITY' },
+];
+---
+<section class="observatory-hero" aria-labelledby="hero-heading">
+  <h1 id="hero-heading" class="hero-accessible-title">Engineering the Latent Potential of AI.</h1>
+  <div class="hero-visual">
+    <latentsig-hero-scene class="hero-scene" data-model="/3d/hero/observatory.glb" data-state="poster">
+      <picture>
+        <source media="(max-width: 900px)" srcset="/3d/hero/observatory-mobile.webp" />
+        <img class="hero-poster" src="/3d/hero/observatory.webp" alt="" width="1440" height="850" decoding="async" fetchpriority="low" />
+      </picture>
+      <div class="hero-canvas" aria-hidden="true"></div>
+      <div class="hero-anatomy" aria-hidden="true"><span data-layer-label="0">Data</span><span data-layer-label="1">Models</span><span data-layer-label="2">Runtime</span></div>
+
+    </latentsig-hero-scene>
+  </div>
+  <div class="hero-shade" aria-hidden="true"></div>
+  <div class="hero-inner">
+        <button class="hero-motion" type="button" aria-label="Pause animation" data-paused="false" hidden>
+          <svg class="pause-symbol" viewBox="0 0 20 20" width="17" height="17" aria-hidden="true" fill="currentColor"><rect x="5" y="4" width="3" height="12" rx="1"/><rect x="12" y="4" width="3" height="12" rx="1"/></svg>
+          <svg class="resume-symbol" viewBox="0 0 20 20" width="17" height="17" aria-hidden="true" fill="currentColor"><path d="m6 3 11 7-11 7z"/></svg>
+          <span class="motion-label">Pause animation</span>
+        </button>
+    <div class="hero-copy">
+      <div class="sr-only hero-text-alternative">
+        <p>{stories[0].text}</p>
+        {stories.slice(1).map(story => <section><h2>{story.title} {story.accent}</h2><p>{story.text}</p></section>)}
+      </div>
+      <div class="hero-stories" aria-hidden="true">
+        {stories.map((story, i) => <div class="hero-story" data-story={i} style={i === 0 ? '' : 'opacity:0;visibility:hidden'}>
+          <p class="hero-eyebrow"><span></span>{story.eyebrow}</p>
+          <h2><span>{story.title}</span>{' '}<span class="hero-title-accent">{story.accent}</span>{' '}{story.end && <span>{story.end}</span>}</h2>
+          <p class="hero-description">{story.text}</p>
+          <p class="hero-cue">{story.cue}</p>
+        </div>)}
+      </div>
+      <div class="hero-actions">
+        <a href={CALENDLY_URL} target="_blank" rel="noopener" class="hero-primary">Partner with Us <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6" /></svg></a>
+        <a href="/implementation/" class="hero-secondary">Our Capabilities <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+    <div class="hero-process" aria-hidden="true">
+      <span data-chapter="0" data-active="true"><i></i><b>Latentsig</b><small>The signal</small></span>
+      <span data-chapter="1"><i></i><b>Research</b><small>Discover the possibility</small></span>
+      <span data-chapter="2"><i></i><b>Architecture</b><small>Shape the system</small></span>
+      <span data-chapter="3"><i></i><b>Deployment</b><small>Bring it to life</small></span>
+    </div>
+  </div>
+</section>
+<script>
+  import '../../scripts/hero-bootstrap';
+</script>
+<style>
+  .observatory-hero{--hero-bg:#0b1326;--hero-ink:#dae2fd;--hero-muted:#b4bad2;--hero-accent:#c0c1ff;position:relative;isolation:isolate;overflow:hidden;background:var(--hero-bg);min-height:clamp(700px,calc(100svh - 80px),850px)}
+  .hero-accessible-title{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+  .hero-visual{z-index:0;position:absolute;inset:0;background:radial-gradient(ellipse at 75% 45%,#292b5755,transparent 65%)}
+  .hero-scene{display:block;position:absolute;inset:0;width:100%;height:100%}
+  .hero-poster,.hero-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}.hero-poster{object-fit:cover;opacity:1;transition:opacity .5s}.hero-canvas{opacity:0;transition:opacity .7s}.hero-canvas :global(canvas){display:block;width:100%;height:100%}
+  .hero-scene[data-state="ready"] .hero-canvas,.hero-scene[data-state="paused"] .hero-canvas{opacity:1}.hero-scene[data-state="ready"] .hero-poster,.hero-scene[data-state="paused"] .hero-poster{opacity:0}
+  .hero-anatomy{position:absolute;inset:0;pointer-events:none;z-index:2}.hero-anatomy>span{position:absolute;top:0;left:0;opacity:0;visibility:hidden;padding:5px 10px;margin-left:20px;background:#0b1326dc;border:1px solid #a6acdf66;border-radius:3px;color:#dae2fd;font:500 11px/1.3 Geist,sans-serif;letter-spacing:.03em}.hero-anatomy>span::before{content:"";position:absolute;right:100%;top:50%;width:20px;border-top:1px solid #a6acdf88}.hero-scene[data-state="poster"] .hero-anatomy,.hero-scene[data-state="fallback"] .hero-anatomy{display:none}
+  .hero-shade{z-index:1;position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,#0b1326 3%,#0b1326f5 43%,#0b1326b3 53%,transparent 72%),linear-gradient(0deg,#0b1326 1%,transparent 23%)}
+  .hero-inner{z-index:2;position:relative;max-width:1280px;padding:60px 64px 140px;margin:0 auto;min-height:inherit;height:auto;display:flex;flex-direction:column;justify-content:center;pointer-events:none}
+  .hero-copy{width:490px;max-width:46%;margin-top:0}
+  .hero-stories{display:grid;align-items:center;min-height:408px}
+  .hero-story{grid-area:1/1;will-change:opacity}
+  .hero-eyebrow{display:flex;align-items:center;gap:10px;margin:0 0 25px;color:var(--hero-accent);font:550 11px/1.5 Geist,sans-serif;letter-spacing:.12em}
+  .hero-eyebrow>span{width:5px;height:5px;border-radius:50%;background:#a8aaff}
+  h2{margin:0 0 24px;color:var(--hero-ink);font-family:'Hanken Grotesk',sans-serif;font-size:clamp(3rem,4.7vw,4.25rem);font-weight:600;line-height:1.04;letter-spacing:-.04em}h2>span{display:block}.hero-title-accent{color:var(--hero-accent)}
+  .hero-description{max-width:455px;margin:0;color:var(--hero-muted);font:400 16px/1.75 Geist,sans-serif}
+  .hero-cue{font:500 10px/1.6 Geist,sans-serif;letter-spacing:.12em;color:#919bb8;margin:24px 0 0}
+  .hero-actions{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin-top:27px;pointer-events:auto}
+  .hero-actions>a{display:inline-flex;align-items:center;gap:17px;min-height:48px;padding:0 20px;border-radius:5px;font:550 14px/1.3 Geist,sans-serif;transition:background .2s,color .2s,border-color .2s}
+  .hero-primary{background:#c0c1ff;color:#17123c;border:1px solid #c0c1ff}.hero-primary:hover{background:#dedfff;border-color:#dedfff}.hero-secondary{color:#dae2fd;border:1px solid #464d64;background:#0b1326aa}.hero-secondary:hover{background:#1e2740;border-color:#7984a4}.hero-secondary>span{font-size:20px;font-weight:400}
+  .hero-actions>a:focus-visible,.hero-motion:focus-visible{outline:2px solid #dae2fd;outline-offset:5px}
+  .hero-motion{pointer-events:auto;position:absolute;right:32px;bottom:120px;z-index:4;background:#131b2eb3;border:1px solid #53617b66;border-radius:5px;min-height:44px;min-width:44px;color:#bfc6de;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:8px;cursor:pointer}.hero-motion[hidden]{display:none}.hero-motion:hover{background:#28314b}.motion-label{font:400 12px/1.2 Geist,sans-serif;white-space:nowrap;opacity:1;transition:max-width .2s,opacity .2s}.hero-motion:hover .motion-label,.hero-motion:focus-visible .motion-label{max-width:110px;opacity:1}.resume-symbol{display:none}.hero-motion[data-paused="true"] .pause-symbol{display:none}.hero-motion[data-paused="true"] .resume-symbol{display:block}
+  .hero-process{position:absolute;bottom:30px;left:64px;right:64px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:30px;font-family:Geist,sans-serif;color:#7d89a6}
+  .hero-process>span{min-width:0;overflow-wrap:anywhere;position:relative;padding:14px 0 0;border-top:1px solid #7d89a639;display:grid;gap:4px}.hero-process b{font-size:13px;font-weight:500}.hero-process small{font-size:11px}.hero-process i{position:absolute;top:-1px;height:1px;left:0;width:0;background:#c0c1ff;transition:width .9s}.hero-process [data-active="true"]{color:#dae2fd}.hero-process [data-active="true"] i{width:100%}
+  @media(max-width:1100px) and (min-width:901px){.hero-inner{padding-left:36px;padding-right:36px}.hero-copy{max-width:48%}h2{font-size:52px}.hero-description{font-size:15px}.hero-process{left:36px;right:36px}.hero-actions>a{font-size:13px;padding:0 14px}}
+  @media(max-width:900px){
+    .observatory-hero{min-height:0;display:grid;grid-template-areas:"copy" "controls" "scene" "process";grid-template-columns:minmax(0,1fr)}
+    .hero-inner{display:contents}.hero-copy{grid-area:copy;max-width:none;width:auto;margin:0;padding:38px 24px 0;z-index:2}
+    .hero-stories{min-height:0;align-items:start}.hero-eyebrow{font-size:.625rem;letter-spacing:.07em;margin-bottom:21px}
+    h2{font-size:clamp(2.4rem,9.5vw,3.625rem);line-height:1.06;margin-bottom:20px;overflow-wrap:anywhere}
+    .hero-description{font-size:1rem;line-height:1.65;max-width:520px}.hero-cue{font-size:.625rem;margin-top:18px}
+    .hero-actions{margin-top:24px;gap:10px}.hero-actions>a{font-size:.8125rem;padding:0 15px;min-height:44px;gap:12px}
+    .hero-visual{position:relative;grid-area:scene;inset:auto;height:clamp(320px,100vw,480px);width:100%;min-width:0}
+    .hero-shade{display:none}.hero-visual::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,#0b1326,transparent 12%,transparent 88%,#0b1326)}
+    .hero-process{position:relative;grid-area:process;left:auto;right:auto;bottom:auto;margin:12px 24px 30px;gap:14px}.hero-process b{font-size:.6875rem}.hero-process small{display:none}.hero-process>span{padding-top:11px}
+    .hero-motion{position:relative;grid-area:controls;right:auto;bottom:auto;justify-self:start;margin:16px 24px 0;padding:8px 12px}
+    .hero-poster{object-fit:contain;object-position:center}
+  }
+  @media(max-width:480px){.hero-process{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(forced-colors:active){.hero-stories,.hero-actions,.hero-motion{forced-color-adjust:auto}.hero-shade,.hero-visual{display:none}.hero-motion{display:none}.hero-actions>a{border:1px solid ButtonText}}
+  @media(prefers-reduced-motion:reduce){.hero-poster,.hero-canvas,.hero-motion,.hero-actions>a,.hero-process i{transition:none}}
+</style>

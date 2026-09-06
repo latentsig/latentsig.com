@@ -1,0 +1,10 @@
+{
+  "source_meshes": 216,
+  "batched_meshes": 11,
+  "model_bytes": 1244256,
+  "animated_groups": [
+    "ArchitectureLayers",
+    "CoreSpin",
+    "ResearchSpin"
+  ]
+}

@@ -1,0 +1,504 @@
+{
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 960,
+      "violations": [
+        {
+          "id": "heading-order",
+          "impact": "moderate",
+          "description": "Ensure the order of headings is semantically correct",
+          "nodes": [
+            {
+              "target": [
+                "h4[data-astro-source-loc=\"37:98\"]"
+              ],
+              "summary": "Fix any of the following:\n  Heading order invalid"
+            }
+          ]
+        }
+      ],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "targets": [
+            [
+              ".hero-process"
+            ]
+          ]
+        },
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              "div[data-story=\"0\"] > .hero-eyebrow[data-astro-source-loc=\"29:36\"]"
+            ],
+            [
+              "div[data-story=\"0\"] > h2[data-astro-source-loc=\"30:16\"] > span[data-astro-source-loc=\"30:21\"]"
+            ],
+            [
+              "div[data-story=\"0\"] > h2[data-astro-source-loc=\"30:16\"] > .hero-title-accent[data-astro-source-loc=\"30:73\"]"
+            ],
+            [
+              "span[data-astro-source-loc=\"30:114\"]"
+            ],
+            [
+              "div[data-story=\"0\"] > .hero-description[data-astro-source-loc=\"31:39\"]"
+            ],
+            [
+              "div[data-story=\"0\"] > .hero-cue[data-astro-source-loc=\"32:31\"]"
+            ],
+            [
+              ".hero-primary"
+            ],
+            [
+              ".hero-secondary"
+            ],
+            [
+              "b[data-astro-source-loc=\"41:59\"]"
+            ],
+            [
+              "small[data-astro-source-loc=\"41:79\"]"
+            ],
+            [
+              "b[data-astro-source-loc=\"42:40\"]"
+            ],
+            [
+              "small[data-astro-source-loc=\"42:59\"]"
+            ],
+            [
+              "b[data-astro-source-loc=\"43:40\"]"
+            ],
+            [
+              "small[data-astro-source-loc=\"43:63\"]"
+            ],
+            [
+              "b[data-astro-source-loc=\"44:40\"]"
+            ],
+            [
+              "small[data-astro-source-loc=\"44:61\"]"
+            ]
+          ]
+        }
+      ],
+      "overflow": false,
+      "overflowElements": [],
+      "pause": {
+        "x": 1367,
+        "y": 774,
+        "width": 41,
+        "height": 36,
+        "top": 774,
+        "right": 1408,
+        "bottom": 810,
+        "left": 1367
+      },
+      "menu": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      }
+    },
+    {
+      "width": 320,
+      "height": 740,
+      "violations": [
+        {
+          "id": "heading-order",
+          "impact": "moderate",
+          "description": "Ensure the order of headings is semantically correct",
+          "nodes": [
+            {
+              "target": [
+                "h4[data-astro-source-loc=\"37:98\"]"
+              ],
+              "summary": "Fix any of the following:\n  Heading order invalid"
+            }
+          ]
+        }
+      ],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "targets": [
+            [
+              ".hero-process"
+            ]
+          ]
+        },
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              "div[data-story=\"0\"] > .hero-eyebrow[data-astro-source-loc=\"29:36\"]"
+            ],
+            [
+              "div[data-story=\"0\"] > h2[data-astro-source-loc=\"30:16\"] > span[data-astro-source-loc=\"30:21\"]"
+            ],
+            [
+              "div[data-story=\"0\"] > h2[data-astro-source-loc=\"30:16\"] > .hero-title-accent[data-astro-source-loc=\"30:73\"]"
+            ],
+            [
+              "span[data-astro-source-loc=\"30:114\"]"
+            ],
+            [
+              "div[data-story=\"0\"] > .hero-description[data-astro-source-loc=\"31:39\"]"
+            ],
+            [
+              "div[data-story=\"0\"] > .hero-cue[data-astro-source-loc=\"32:31\"]"
+            ],
+            [
+              ".hero-primary"
+            ],
+            [
+              ".hero-secondary"
+            ],
+            [
+              "b[data-astro-source-loc=\"41:59\"]"
+            ],
+            [
+              "b[data-astro-source-loc=\"42:40\"]"
+            ],
+            [
+              "b[data-astro-source-loc=\"43:40\"]"
+            ],
+            [
+              "b[data-astro-source-loc=\"44:40\"]"
+            ],
+            [
+              "h3[data-astro-source-loc=\"46:78\"]"
+            ]
+          ]
+        }
+      ],
+      "overflow": false,
+      "overflowElements": [],
+      "pause": {
+        "x": 261,
+        "y": 907,
+        "width": 35,
+        "height": 36,
+        "top": 907,
+        "right": 296,
+        "bottom": 943,
+        "left": 261
+      },
+      "menu": {
+        "x": 280,
+        "y": 24.5,
+        "width": 24,
+        "height": 31,
+        "top": 24.5,
+        "right": 304,
+        "bottom": 55.5,
+        "left": 280
+      }
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "violations": [
+        {
+          "id": "heading-order",
+          "impact": "moderate",
+          "description": "Ensure the order of headings is semantically correct",
+          "nodes": [
+            {
+              "target": [
+                "h4[data-astro-source-loc=\"37:98\"]"
+              ],
+              "summary": "Fix any of the following:\n  Heading order invalid"
+            }
+          ]
+        }
+      ],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "targets": [
+            [
+              ".hero-process"
+            ]
+          ]
+        },
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              "div[data-story=\"0\"] > .hero-eyebrow[data-astro-source-loc=\"29:36\"]"
+            ],
+            [
+              "div[data-story=\"0\"] > h2[data-astro-source-loc=\"30:16\"] > span[data-astro-source-loc=\"30:21\"]"
+            ],
+            [
+              "div[data-story=\"0\"] > h2[data-astro-source-loc=\"30:16\"] > .hero-title-accent[data-astro-source-loc=\"30:73\"]"
+            ],
+            [
+              "span[data-astro-source-loc=\"30:114\"]"
+            ],
+            [
+              "div[data-story=\"0\"] > .hero-description[data-astro-source-loc=\"31:39\"]"
+            ],
+            [
+              "div[data-story=\"0\"] > .hero-cue[data-astro-source-loc=\"32:31\"]"
+            ],
+            [
+              ".hero-secondary"
+            ],
+            [
+              "b[data-astro-source-loc=\"41:59\"]"
+            ],
+            [
+              "b[data-astro-source-loc=\"42:40\"]"
+            ],
+            [
+              "b[data-astro-source-loc=\"43:40\"]"
+            ],
+            [
+              "b[data-astro-source-loc=\"44:40\"]"
+            ]
+          ]
+        }
+      ],
+      "overflow": false,
+      "overflowElements": [],
+      "pause": {
+        "x": 331,
+        "y": 907,
+        "width": 35,
+        "height": 36,
+        "top": 907,
+        "right": 366,
+        "bottom": 943,
+        "left": 331
+      },
+      "menu": {
+        "x": 350,
+        "y": 24.5,
+        "width": 24,
+        "height": 31,
+        "top": 24.5,
+        "right": 374,
+        "bottom": 55.5,
+        "left": 350
+      }
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "violations": [
+        {
+          "id": "heading-order",
+          "impact": "moderate",
+          "description": "Ensure the order of headings is semantically correct",
+          "nodes": [
+            {
+              "target": [
+                "h4[data-astro-source-loc=\"37:98\"]"
+              ],
+              "summary": "Fix any of the following:\n  Heading order invalid"
+            }
+          ]
+        }
+      ],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "targets": [
+            [
+              ".hero-process"
+            ]
+          ]
+        },
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              "div[data-story=\"0\"] > .hero-eyebrow[data-astro-source-loc=\"29:36\"]"
+            ],
+            [
+              "div[data-story=\"0\"] > h2[data-astro-source-loc=\"30:16\"] > span[data-astro-source-loc=\"30:21\"]"
+            ],
+            [
+              "div[data-story=\"0\"] > h2[data-astro-source-loc=\"30:16\"] > .hero-title-accent[data-astro-source-loc=\"30:73\"]"
+            ],
+            [
+              "span[data-astro-source-loc=\"30:114\"]"
+            ],
+            [
+              "div[data-story=\"0\"] > .hero-description[data-astro-source-loc=\"31:39\"]"
+            ],
+            [
+              "div[data-story=\"0\"] > .hero-cue[data-astro-source-loc=\"32:31\"]"
+            ],
+            [
+              ".hero-primary"
+            ],
+            [
+              ".hero-secondary"
+            ],
+            [
+              "b[data-astro-source-loc=\"41:59\"]"
+            ],
+            [
+              "small[data-astro-source-loc=\"41:79\"]"
+            ],
+            [
+              "b[data-astro-source-loc=\"42:40\"]"
+            ],
+            [
+              "small[data-astro-source-loc=\"42:59\"]"
+            ],
+            [
+              "b[data-astro-source-loc=\"43:40\"]"
+            ],
+            [
+              "small[data-astro-source-loc=\"43:63\"]"
+            ],
+            [
+              "b[data-astro-source-loc=\"44:40\"]"
+            ],
+            [
+              "small[data-astro-source-loc=\"44:61\"]"
+            ],
+            [
+              "h3[data-astro-source-loc=\"59:78\"]"
+            ]
+          ]
+        }
+      ],
+      "overflow": false,
+      "overflowElements": [],
+      "pause": {
+        "x": 695,
+        "y": 774,
+        "width": 41,
+        "height": 36,
+        "top": 774,
+        "right": 736,
+        "bottom": 810,
+        "left": 695
+      },
+      "menu": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      }
+    },
+    {
+      "width": 1024,
+      "height": 768,
+      "violations": [
+        {
+          "id": "heading-order",
+          "impact": "moderate",
+          "description": "Ensure the order of headings is semantically correct",
+          "nodes": [
+            {
+              "target": [
+                "h4[data-astro-source-loc=\"37:98\"]"
+              ],
+              "summary": "Fix any of the following:\n  Heading order invalid"
+            }
+          ]
+        }
+      ],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "targets": [
+            [
+              ".hero-process"
+            ]
+          ]
+        },
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              "div[data-story=\"0\"] > .hero-eyebrow[data-astro-source-loc=\"29:36\"]"
+            ],
+            [
+              "div[data-story=\"0\"] > h2[data-astro-source-loc=\"30:16\"] > span[data-astro-source-loc=\"30:21\"]"
+            ],
+            [
+              "div[data-story=\"0\"] > h2[data-astro-source-loc=\"30:16\"] > .hero-title-accent[data-astro-source-loc=\"30:73\"]"
+            ],
+            [
+              "span[data-astro-source-loc=\"30:114\"]"
+            ],
+            [
+              "div[data-story=\"0\"] > .hero-description[data-astro-source-loc=\"31:39\"]"
+            ],
+            [
+              "div[data-story=\"0\"] > .hero-cue[data-astro-source-loc=\"32:31\"]"
+            ],
+            [
+              ".hero-primary"
+            ],
+            [
+              ".hero-secondary"
+            ],
+            [
+              "b[data-astro-source-loc=\"41:59\"]"
+            ],
+            [
+              "small[data-astro-source-loc=\"41:79\"]"
+            ],
+            [
+              "b[data-astro-source-loc=\"42:40\"]"
+            ],
+            [
+              "small[data-astro-source-loc=\"42:59\"]"
+            ],
+            [
+              "b[data-astro-source-loc=\"43:40\"]"
+            ],
+            [
+              "small[data-astro-source-loc=\"43:63\"]"
+            ],
+            [
+              "b[data-astro-source-loc=\"44:40\"]"
+            ],
+            [
+              "small[data-astro-source-loc=\"44:61\"]"
+            ]
+          ]
+        }
+      ],
+      "overflow": false,
+      "overflowElements": [],
+      "pause": {
+        "x": 951,
+        "y": 624,
+        "width": 41,
+        "height": 36,
+        "top": 624,
+        "right": 992,
+        "bottom": 660,
+        "left": 951
+      },
+      "menu": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      }
+    }
+  ],
+  "errors": []
+}

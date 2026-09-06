@@ -1,0 +1,229 @@
+{
+  "desktop": {
+    "active": true,
+    "paused": false,
+    "disposed": false,
+    "time": 8.816336000000023,
+    "frames": 531,
+    "drawCalls": 20,
+    "triangles": 79556,
+    "textures": 1,
+    "geometries": 18,
+    "pixelRatio": 1,
+    "targetFps": 60,
+    "totalSubmissionMs": 375.9,
+    "meanSubmissionMs": 0.71,
+    "mechanisms": {
+      "researchReveal": 0,
+      "architectureReveal": 0,
+      "deploymentReveal": 0
+    },
+    "chapter": 0,
+    "camera": [
+      8.398555857058426,
+      4.800361035735393,
+      8.001263625073877
+    ],
+    "target": [
+      0,
+      2.1,
+      0
+    ],
+    "width": 1440,
+    "height": 850,
+    "observedFps": 60.2,
+    "steadySubmissionMs": 0.67
+  },
+  "autoplays": true,
+  "noFilmControl": true,
+  "pause": true,
+  "resume": true,
+  "loopContinues": true,
+  "chapters": [
+    {
+      "time": 6,
+      "chapter": 0,
+      "camera": [
+        6.965625,
+        5.1585937500000005,
+        9.255078125
+      ],
+      "target": [
+        0,
+        2.1,
+        0
+      ],
+      "drawCalls": 20,
+      "mechanisms": {
+        "researchReveal": 0,
+        "architectureReveal": 0,
+        "deploymentReveal": 0
+      },
+      "overlay": {
+        "opacity": "1",
+        "title": "Engineering the Latent Potential of AI.",
+        "hiddenFromReader": true
+      },
+      "passed": true
+    },
+    {
+      "time": 19,
+      "chapter": 1,
+      "camera": [
+        -8.482617187499999,
+        4.4689453125,
+        7.089648437499999
+      ],
+      "target": [
+        -5.9,
+        1.65,
+        0.25
+      ],
+      "drawCalls": 19,
+      "mechanisms": {
+        "researchReveal": 1,
+        "architectureReveal": 0,
+        "deploymentReveal": 0
+      },
+      "overlay": {
+        "opacity": "1",
+        "title": "Find the possibility. ",
+        "hiddenFromReader": true
+      },
+      "passed": true
+    },
+    {
+      "time": 32,
+      "chapter": 2,
+      "camera": [
+        7.703515625,
+        6.5689453124999995,
+        1.5619140625
+      ],
+      "target": [
+        2.55,
+        2.1,
+        -5
+      ],
+      "drawCalls": 19,
+      "mechanisms": {
+        "researchReveal": 0,
+        "architectureReveal": 1,
+        "deploymentReveal": 0
+      },
+      "overlay": {
+        "opacity": "1",
+        "title": "Give ideas structure. ",
+        "hiddenFromReader": true
+      },
+      "passed": true
+    },
+    {
+      "time": 45,
+      "chapter": 3,
+      "camera": [
+        8.934375,
+        4.1482421875,
+        9.903515625
+      ],
+      "target": [
+        4.65,
+        1.3,
+        4.1
+      ],
+      "drawCalls": 20,
+      "mechanisms": {
+        "researchReveal": 0,
+        "architectureReveal": 0,
+        "deploymentReveal": 1
+      },
+      "overlay": {
+        "opacity": "1",
+        "title": "Make it work. ",
+        "hiddenFromReader": true
+      },
+      "passed": true
+    }
+  ],
+  "layerLabels": [
+    {
+      "text": "Data",
+      "visible": true
+    },
+    {
+      "text": "Models",
+      "visible": true
+    },
+    {
+      "text": "Runtime",
+      "visible": true
+    }
+  ],
+  "mechanismsUnfold": true,
+  "mechanismsReassemble": true,
+  "cameraTravel": true,
+  "offscreenSuspends": true,
+  "returnsToAnimation": true,
+  "hiddenSuspends": true,
+  "navLinks": [
+    "/",
+    "/rd-advisory/",
+    "/implementation/",
+    "/consulting/",
+    "/insights/",
+    "/about/",
+    "https://calendly.com/latentsig"
+  ],
+  "mobile": {
+    "active": true,
+    "paused": false,
+    "disposed": false,
+    "time": 1.5832999999999988,
+    "frames": 49,
+    "drawCalls": 20,
+    "triangles": 79556,
+    "textures": 1,
+    "geometries": 18,
+    "pixelRatio": 1,
+    "targetFps": 30,
+    "totalSubmissionMs": 70.3,
+    "meanSubmissionMs": 1.43,
+    "mechanisms": {
+      "researchReveal": 0,
+      "architectureReveal": 0,
+      "deploymentReveal": 0
+    },
+    "chapter": 0,
+    "camera": [
+      11.058055705285337,
+      10.768226691526978,
+      16.442169051048825
+    ],
+    "target": [
+      0,
+      1.199257446958871,
+      0
+    ],
+    "width": 390,
+    "height": 390,
+    "overflow": false
+  },
+  "mobileMenu": true,
+  "reducedMotion": {
+    "modelRequested": false,
+    "canvas": false,
+    "posterLoaded": true
+  },
+  "saveData": {
+    "modelRequested": false,
+    "canvas": false
+  },
+  "contextLoss": true,
+  "preserved": {
+    "navigationDestinations": true,
+    "footerDestinations": true,
+    "sectionHeadings": true
+  },
+  "errors": [],
+  "passed": true
+}
