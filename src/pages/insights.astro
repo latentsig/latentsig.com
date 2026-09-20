@@ -6,12 +6,24 @@ const posts = [
   {
     tag: 'Research',
     tagColor: 'primary',
+    readTime: '12 min',
+    title: 'Laya and RLCD: fast decisions for AI workflows',
+    excerpt: 'How typed questions, encoder models, and probability-focused training can move bounded AI judgments into ordinary software.',
+    author: 'Latentsig AI Research',
+    href: '/insights/laya-rlcd-system-one/',
+    image: '/images/research/laya/laya-rlcd-system-one-hero.jpg',
+    imageAlt: 'Unstructured signals passing through a decision core into three probability distributions',
+  },
+  {
+    tag: 'Research',
+    tagColor: 'primary',
     readTime: '13 min',
     title: 'DFlash explained: how block-diffusion drafting makes LLMs generate faster',
     excerpt: 'A visual walkthrough of DFlash architecture, Apple Silicon and RTX execution, and what a Muse Spark integration would actually require.',
     author: 'Latentsig AI Research',
     href: '/insights/dflash-muse-spark-1-2/',
     image: '/images/research/dflash/dflash-muse-spark-hero.jpg',
+    imageAlt: 'DFlash token blocks moving from sequential drafting to parallel verification',
   },
   {
     tag: 'Engineering',
@@ -118,7 +130,7 @@ const posts = [
                   <QuantizationBanner compact />
                 ) : p.image ? (
                   <>
-                    <img src={p.image} alt="DFlash token blocks moving from sequential drafting to parallel verification" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+                    <img src={p.image} alt={p.imageAlt} class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
                     <div class="absolute inset-0 bg-gradient-to-t from-surface-container/60 to-transparent" />
                   </>
                 ) : (
