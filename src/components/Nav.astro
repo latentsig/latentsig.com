@@ -4,11 +4,15 @@ import { CALENDLY_URL } from '../consts';
 
 const path = Astro.url.pathname;
 const products = [
-  { label: 'Annotation & Verification Platform', href: '/products/annotation-verification/', detail: 'From raw data to reviewed, reliable datasets.', eyebrow: 'DATA QUALITY' },
-  { label: 'Agentic AI Platform', href: '/products/agentic-ai-platform/', detail: 'Explore agent workflows, orchestration, and evaluation.', eyebrow: 'AI WORKFLOWS', children: [
-    { label: 'Agent Catalogue', href: '/products/agentic-ai-platform/#catalogue' },
-    { label: 'Workflow Harness', href: '/products/agentic-ai-platform/#workflow' },
-    { label: 'Workflow Monitoring', href: '/products/agentic-ai-platform/#monitoring' },
+  { label: 'Annotation & Verification Platform', href: '/products/annotation-verification/', detail: 'From raw data to reviewed, reliable datasets.', eyebrow: 'DATA QUALITY', childrenLabel: 'CONCEPT FLOW', children: [
+    { label: 'Prepare Data', href: '/products/annotation-verification/#workflow-1' },
+    { label: 'Annotate', href: '/products/annotation-verification/#workflow-2' },
+    { label: 'Verify', href: '/products/annotation-verification/#workflow-3' },
+  ] },
+  { label: 'Agentic AI Platform', href: '/products/agentic-ai-platform/', detail: 'Explore agent workflows, orchestration, and evaluation.', eyebrow: 'AI WORKFLOWS', childrenLabel: 'CONCEPT AREAS', children: [
+    { label: 'Agent Catalogue', href: '/products/agentic-ai-platform/#workflow-1' },
+    { label: 'Workflow Harness', href: '/products/agentic-ai-platform/#workflow-2' },
+    { label: 'Workflow Monitoring', href: '/products/agentic-ai-platform/#workflow-3' },
   ] },
 ];
 const solutions = [
@@ -60,24 +64,26 @@ const booking = `${CALENDLY_URL}?utm_source=latentsig_website&utm_campaign=produ
 
   <div class="mega-panel" id="products-panel" data-panel="products" hidden>
     <div class="mega-inner products-mega">
-      <section class="featured-product">
-        <span class="menu-eyebrow">Two product directions · concept stage</span>
-        <h2>Platforms for better data and more capable AI.</h2>
-        <p>Explore the two product areas LatentSig is developing. Availability is stated on each page.</p>
-        <div class="featured-actions"><a href="/products/">Explore Products <span aria-hidden="true">→</span></a><a href="/demos/">See Demonstrations <span aria-hidden="true">↗</span></a></div>
+      <div class="product-feature-media"><div class="menu-annotation-art" aria-hidden="true"><div class="menu-art-toolbar"><b>DATASET · CONCEPT</b><i></i><i></i><i></i></div><div class="menu-art-body"><div class="menu-art-frame"><i></i><i></i><i></i><b>OBJECT A</b><b>OBJECT B</b></div><div class="menu-art-review"><b>REVIEW QUEUE</b><span><i></i>Example frame</span><span><i></i>Label check</span><span><i></i>Human review</span><small>SAMPLE WORKFLOW</small></div></div></div><div><small>ILLUSTRATIVE WORKFLOW · DATA QUALITY</small><b>Annotation &amp; Verification</b></div></div>
+      <section class="product-discovery"><div class="product-intro"><span class="menu-eyebrow">Discover our products</span><h2>Tools for better data and practical AI workflows.</h2><p>Two product areas in development, with their current availability clearly described.</p></div>
+        <div class="product-areas">{products.map((item) => <section class="mega-column product-menu-card"><span class="menu-eyebrow">{item.eyebrow}</span><a class="mega-item product-title" href={item.href}><span><b>{item.label}</b><small>{item.detail}</small></span><span class="item-arrow" aria-hidden="true">↗</span></a><div class="product-menu-actions"><a href={item.href}>Explore product <span aria-hidden="true">→</span></a><a href={item.href === products[0].href ? '/demos/#annotation-verification' : '/demos/#agentic-ai-platform'}>View demo <span aria-hidden="true">↗</span></a></div>{item.children && <div class="product-children"><span>{item.childrenLabel}</span>{item.children.map((child) => <a href={child.href}>{child.label}<span aria-hidden="true">↗</span></a>)}</div>}</section>)}</div>
+        <a href="/products/" class="explore-all">Explore All Products <span aria-hidden="true">→</span></a>
       </section>
-      {products.map((item) => <section class="mega-column product-menu-card"><span class="menu-eyebrow">{item.eyebrow}</span><a class="mega-item product-title" href={item.href}><span><b>{item.label}</b><small>{item.detail}</small></span><span class="item-arrow" aria-hidden="true">↗</span></a>{item.children && <div class="product-children"><span>PLATFORM AREAS</span>{item.children.map((child) => <a href={child.href}>{child.label}<span aria-hidden="true">↗</span></a>)}</div>}</section>)}
-      <a href="/products/" class="explore-all">Explore All Products <span aria-hidden="true">→</span></a>
     </div>
   </div>
   {groups.filter((group) => group.id !== 'products').map((group) => (
     <div class="mega-panel compact-panel" id={`${group.id}-panel`} data-panel={group.id} hidden>
-      <div class="mega-inner compact-inner"><div><span class="menu-eyebrow">Discover</span><h2>{group.label}</h2></div><div class="compact-items">{group.items.map((item) => <a class="mega-item" href={item.href}><span><b>{item.label}</b>{item.detail && <small>{item.detail}</small>}</span><span class="item-arrow" aria-hidden="true">↗</span></a>)}</div></div>
+      <div class="mega-inner compact-inner"><div class:list={['compact-feature-media', `compact-${group.id}`]} aria-hidden="true">
+        {group.id === 'solutions' && <div class="menu-solution-art"><div class="solution-browser"><i></i><i></i><i></i><div><b></b><b></b><b></b></div><span></span><span></span><span></span></div><div class="solution-mobile"><i></i><b></b><b></b><b></b></div></div>}
+        {group.id === 'services' && <div class="menu-services-art"><small>FROM IDEA TO DELIVERY</small><div><span><b>01</b><i>Research</i></span><em></em><span><b>02</b><i>Design</i></span><em></em><span><b>03</b><i>Build</i></span></div><strong>One focused path forward</strong></div>}
+        {group.id === 'about' && <div class="menu-about-art"><span class="orbit orbit-a"></span><span class="orbit orbit-b"></span><i class="orbit-core">LS</i><b>LATENTSIG</b><small>Research · Products · Applications</small></div>}
+        <span class="menu-eyebrow">{group.id === 'solutions' ? 'DIGITAL APPLICATIONS · CONCEPT' : group.id === 'services' ? 'HOW WE WORK' : 'LATENTSIG'}</span>
+      </div><div class="compact-content"><div><span class="menu-eyebrow">Discover</span><h2>{group.label}</h2></div><div class="compact-items">{group.items.map((item) => <a class="mega-item" href={item.href}><span><b>{item.label}</b>{item.detail && <small>{item.detail}</small>}</span><span class="item-arrow" aria-hidden="true">↗</span></a>)}</div></div></div>
     </div>
   ))}
   <div class="mobile-panel" id="mobile-menu" hidden data-mobile-panel>
     <div class="mobile-panel-inner">
-      {groups.map((group) => <details><summary>{group.label}<span aria-hidden="true">＋</span></summary><div class="mobile-subnav">{group.id === 'products' && <a class="mobile-parent-link" href="/products/">Explore all products</a>}{group.items.map((item) => <a href={item.href}>{item.label}</a>)}{group.id === 'products' && products[1].children?.map((item) => <a class="mobile-child" href={item.href}>↳ {item.label}</a>)}</div></details>)}
+      {groups.map((group) => <details><summary>{group.label}<span aria-hidden="true">＋</span></summary><div class="mobile-subnav">{group.id === 'products' && <a class="mobile-parent-link" href="/products/">Explore all products</a>}{group.items.map((item) => <div class="mobile-nav-group"><a href={item.href}>{item.label}</a>{group.id === 'products' && item.children?.map((child) => <a class="mobile-child" href={child.href}>↳ {child.label}</a>)}</div>)}</div></details>)}
       <a class="mobile-direct" href="/insights/">Insights</a><a class="mobile-book" href={booking} target="_blank" rel="noopener noreferrer">Book a Demo ↗</a>
     </div>
   </div>

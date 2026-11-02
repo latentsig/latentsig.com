@@ -32,7 +32,7 @@ test('desktop product dropdown opens by click and stays open while moving into t
   await expect(products).toHaveAttribute('aria-expanded', 'true');
   const panel = page.locator('#products-panel');
   await expect(panel).toBeVisible();
-  await page.locator('#products-panel .featured-product').hover();
+  await page.locator('#products-panel .product-feature-media').hover();
   await expect(panel).toBeVisible();
   await page.keyboard.press('Escape');
   await expect(panel).toBeHidden();
@@ -60,12 +60,17 @@ test('products label navigates and menu destinations are present', async ({ page
   await expect(page.locator('.desktop-links a:has-text("Services")')).toHaveAttribute('href', '/services/');
   await expect(page.locator('.desktop-links a[href="/products/"]')).toHaveText('Products');
   await page.locator('[data-disclosure="products"]').click();
-  for (const href of ['/products/annotation-verification/', '/products/agentic-ai-platform/', '/solutions/web-mobile-apps/', '/demos/']) {
+  for (const href of ['/products/annotation-verification/', '/products/agentic-ai-platform/', '/products/annotation-verification/#workflow-1', '/products/annotation-verification/#workflow-2', '/products/annotation-verification/#workflow-3', '/products/agentic-ai-platform/#workflow-1', '/products/agentic-ai-platform/#workflow-2', '/products/agentic-ai-platform/#workflow-3', '/demos/#annotation-verification', '/demos/#agentic-ai-platform']) {
     await expect(page.locator(`#products-panel a[href="${href}"]`).first()).toBeVisible();
   }
   await page.locator('.desktop-links a[href="/products/"]').click();
   await expect(page).toHaveURL(/\/products\/$/);
-  await expect(page.locator('.catalog-card')).toHaveCount(3);
+  await expect(page.locator('.catalog-card')).toHaveCount(2);
+  for (const href of ['/products/annotation-verification/#workflow-1', '/products/annotation-verification/#workflow-2', '/products/annotation-verification/#workflow-3', '/products/agentic-ai-platform/#workflow-1', '/products/agentic-ai-platform/#workflow-2', '/products/agentic-ai-platform/#workflow-3']) {
+    const anchor = href.split('#')[1];
+    await page.goto(href);
+    await expect(page.locator(`#${anchor}`)).toHaveCount(1);
+  }
 });
 
 test('solutions, services, insights, and company menus route to the expected pages', async ({ page }) => {
@@ -179,4 +184,12 @@ test('captures desktop, tablet, and mobile review screenshots', async ({ page })
       await page.screenshot({ path: 'artifacts/review/mobile-menu-open.png', animations: 'disabled' });
     }
   }
+  await page.setViewportSize({ width: 1440, height: 960 });
+  await page.goto('/');
+  await page.locator('.workflow-showcase').scrollIntoViewIfNeeded();
+  await page.screenshot({ path: 'artifacts/review/workflow-showcase.png', animations: 'disabled' });
+  await page.goto('/products/annotation-verification/');
+  await page.screenshot({ path: 'artifacts/review/product-annotation.png', animations: 'disabled' });
+  await page.goto('/products/agentic-ai-platform/');
+  await page.screenshot({ path: 'artifacts/review/product-agentic.png', animations: 'disabled' });
 });

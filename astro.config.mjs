@@ -5,6 +5,7 @@ import rehypeKatex from 'rehype-katex';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://latentsig.com',
+  devToolbar: { enabled: false },
   trailingSlash: 'ignore',
   markdown: {
     remarkPlugins: [remarkMath],
