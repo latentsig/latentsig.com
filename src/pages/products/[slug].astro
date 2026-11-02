@@ -1,0 +1,38 @@
+---
+import ProductLanding from '../../components/ProductLanding.astro';
+
+export function getStaticPaths() {
+const products = {
+  'annotation-verification': {
+    title: 'Annotation & Verification Platform', slug: 'annotation-verification', eyebrow: 'Data quality · Product concept',
+    headline: 'From raw data to reviewed, reliable datasets.',
+    summary: 'A product direction for teams that need clear annotation workflows and deliberate review before data is used downstream.',
+    state: 'Concept · availability not yet confirmed',
+    workflows: ['Prepare a review queue', 'Capture annotation decisions', 'Route work for verification'],
+    useCases: ['Reviewing labeled examples for model development', 'Adding a second look to document and data processing', 'Making annotation decisions easier to inspect'],
+    steps: ['Prepare data', 'Annotate', 'Verify'],
+  },
+  'agentic-ai-platform': {
+    title: 'Agentic AI Platform', slug: 'agentic-ai-platform', eyebrow: 'AI workflows · Product concept',
+    headline: 'Make AI workflows easier to reason about.',
+    summary: 'A product direction for mapping a user request to a bounded sequence of agent steps and a reviewable result.',
+    state: 'Concept · no working agent product is included in this repository',
+    workflows: ['Describe a bounded task', 'Map steps and hand-offs', 'Review the proposed outcome'],
+    useCases: ['Exploring where multi-step automation may fit', 'Making approval points explicit in AI-assisted work', 'Discussing a workflow prototype with an engineering team'],
+    steps: ['User request', 'Agent workflow', 'Review result'],
+  },
+  'web-mobile-apps': {
+    title: 'Web & Mobile Applications', slug: 'web-mobile-apps', eyebrow: 'Digital applications · Service capability',
+    headline: 'Digital products designed around real work.',
+    summary: 'LatentSig designs and builds web and mobile applications, connecting product decisions, interface design, and engineering delivery.',
+    state: 'Service capability · scope agreed per engagement',
+    workflows: ['Shape the product and user journey', 'Design and implement the application', 'Iterate with review and feedback'],
+    useCases: ['Customer-facing web and mobile experiences', 'Internal tools for operational workflows', 'Product interfaces that connect to AI capabilities'],
+    steps: ['Understand users', 'Build the application', 'Learn and refine'],
+  },
+};
+return Object.values(products).map((product) => ({ params: { slug: product.slug }, props: { product } }));
+}
+const { product } = Astro.props;
+---
+<ProductLanding {...product} />

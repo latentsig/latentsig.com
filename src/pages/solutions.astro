@@ -1,0 +1,10 @@
+---
+import DirectoryPage from '../components/DirectoryPage.astro';
+const items = [
+  { title: 'Data Annotation & Quality', description: 'Explore annotation and review workflows for preparing more reliable datasets.', status: 'PRODUCT CONCEPT', href: '/products/annotation-verification/' },
+  { title: 'AI Workflow Automation', description: 'Map a task into a bounded AI workflow and identify where review belongs.', status: 'PRODUCT CONCEPT', href: '/products/agentic-ai-platform/' },
+  { title: 'Document Intelligence', description: 'Discuss document processing, structured review, and data quality needs.', status: 'SOLUTION DIRECTION', href: '/products/annotation-verification/#workflows' },
+  { title: 'Digital Commerce & Applications', description: 'Design and develop digital experiences around product and operational needs.', status: 'SERVICE CAPABILITY', href: '/products/web-mobile-apps/' },
+];
+---
+<DirectoryPage title="Solutions" eyebrow="SOLUTION AREAS" headline="Start with the workflow you want to improve." description="Explore LatentSig’s solution directions. Product concepts are labeled as concepts; discuss a specific workflow with us to shape a useful next step." items={items} />

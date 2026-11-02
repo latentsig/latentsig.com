@@ -3,16 +3,16 @@
     "active": true,
     "paused": false,
     "disposed": false,
-    "time": 8.816336000000023,
-    "frames": 531,
+    "time": 9.066700000000033,
+    "frames": 540,
     "drawCalls": 20,
     "triangles": 79556,
     "textures": 1,
     "geometries": 18,
     "pixelRatio": 1,
     "targetFps": 60,
-    "totalSubmissionMs": 375.9,
-    "meanSubmissionMs": 0.71,
+    "totalSubmissionMs": 3213.4,
+    "meanSubmissionMs": 5.95,
     "mechanisms": {
       "researchReveal": 0,
       "architectureReveal": 0,
@@ -20,19 +20,19 @@
     },
     "chapter": 0,
     "camera": [
-      8.398555857058426,
-      4.800361035735393,
-      8.001263625073877
+      8.399258493895355,
+      4.800235111691717,
+      8.00036171029495
     ],
     "target": [
-      0,
-      2.1,
+      -0.00009042757373739147,
+      2.0999502648344444,
       0
     ],
     "width": 1440,
     "height": 850,
-    "observedFps": 60.2,
-    "steadySubmissionMs": 0.67
+    "observedFps": 60,
+    "steadySubmissionMs": 1.53
   },
   "autoplays": true,
   "noFilmControl": true,
@@ -61,7 +61,7 @@
       },
       "overlay": {
         "opacity": "1",
-        "title": "Engineering the Latent Potential of AI.",
+        "title": "AI Platforms, Intelligent Agents & Digital Applications.",
         "hiddenFromReader": true
       },
       "passed": true
@@ -167,27 +167,39 @@
   "hiddenSuspends": true,
   "navLinks": [
     "/",
+    "/products/",
+    "/products/annotation-verification/",
     "/rd-advisory/",
-    "/implementation/",
-    "/consulting/",
     "/insights/",
     "/about/",
-    "https://calendly.com/latentsig"
+    "https://calendly.com/latentsig?utm_source=latentsig_website&utm_campaign=product_demo",
+    "/demos/",
+    "/products/agentic-ai-platform/",
+    "/products/agentic-ai-platform/#catalogue",
+    "/products/agentic-ai-platform/#workflow",
+    "/products/agentic-ai-platform/#monitoring",
+    "/products/web-mobile-apps/",
+    "/products/web-mobile-apps/#portfolio",
+    "/products/annotation-verification/#workflows",
+    "/consulting/",
+    "/implementation/",
+    "/contact/",
+    "/bts-2026/"
   ],
   "mobile": {
     "active": true,
     "paused": false,
     "disposed": false,
-    "time": 1.5832999999999988,
-    "frames": 49,
+    "time": 1.9500999999999993,
+    "frames": 58,
     "drawCalls": 20,
     "triangles": 79556,
     "textures": 1,
     "geometries": 18,
     "pixelRatio": 1,
     "targetFps": 30,
-    "totalSubmissionMs": 70.3,
-    "meanSubmissionMs": 1.43,
+    "totalSubmissionMs": 337.2,
+    "meanSubmissionMs": 5.81,
     "mechanisms": {
       "researchReveal": 0,
       "architectureReveal": 0,
@@ -195,13 +207,13 @@
     },
     "chapter": 0,
     "camera": [
-      11.058055705285337,
-      10.768226691526978,
-      16.442169051048825
+      10.467618085684194,
+      9.996115958202408,
+      15.465676064785399
     ],
     "target": [
       0,
-      1.199257446958871,
+      1.324157712643728,
       0
     ],
     "width": 390,

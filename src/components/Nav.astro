@@ -3,100 +3,163 @@ import Logo from './Logo.astro';
 import { CALENDLY_URL } from '../consts';
 
 const path = Astro.url.pathname;
-
-const links = [
-  { href: '/rd-advisory/', label: 'R&D Advisory' },
-  { href: '/implementation/', label: 'Implementation' },
-  { href: '/consulting/', label: 'Consulting' },
-  { href: '/insights/', label: 'Insights' },
-  { href: '/about/', label: 'About' },
+const products = [
+  { label: 'Agentic AI Platform', href: '/products/agentic-ai-platform/', detail: 'Explore a product concept for shaping and coordinating agent workflows.' },
+  { label: 'Agent Catalogue', href: '/products/agentic-ai-platform/#catalogue', detail: 'A planned catalogue experience for discoverable agent patterns.' },
+  { label: 'Workflow Harness', href: '/products/agentic-ai-platform/#workflow', detail: 'A concept for composing and reviewing bounded workflows.' },
+  { label: 'Workflow Monitoring', href: '/products/agentic-ai-platform/#monitoring', detail: 'A planned view of workflow status and outcomes.' },
+  { label: 'Web Applications', href: '/products/web-mobile-apps/', detail: 'Product design and development for web experiences.' },
+  { label: 'Mobile Applications', href: '/products/web-mobile-apps/', detail: 'Mobile application design and development.' },
+  { label: 'Application Portfolio', href: '/products/web-mobile-apps/#portfolio', detail: 'Explore application capabilities and project work.' },
 ];
+const solutions = [
+  { label: 'Data Annotation & Quality', href: '/products/annotation-verification/' },
+  { label: 'AI Workflow Automation', href: '/products/agentic-ai-platform/' },
+  { label: 'Document Intelligence', href: '/products/annotation-verification/#workflows' },
+  { label: 'Digital Commerce & Applications', href: '/products/web-mobile-apps/' },
+];
+const services = [
+  { label: 'AI R&D Advisory', href: '/rd-advisory/' },
+  { label: 'AI Consulting', href: '/consulting/' },
+  { label: 'AI Implementation', href: '/implementation/' },
+  { label: 'Custom Web & Mobile Development', href: '/products/web-mobile-apps/' },
+];
+const about = [
+  { label: 'Company', href: '/about/' },
+  { label: 'Contact', href: '/contact/' },
+  { label: 'Bengaluru Tech Summit 2026', href: '/bts-2026/' },
+];
+const groups = [
+  { label: 'Products', id: 'products', href: '/products/', items: products },
+  { label: 'Solutions', id: 'solutions', href: '/solutions/', items: solutions },
+  { label: 'Services', id: 'services', href: '/services/', items: services },
+  { label: 'About', id: 'about', href: '/about/', items: about },
+];
+const booking = `${CALENDLY_URL}?utm_source=latentsig_website&utm_campaign=product_demo`;
 ---
 
-<nav aria-label="Main navigation" class="fixed w-full top-0 z-50 bg-surface/80 backdrop-blur-xl border-b border-outline-variant/30">
-  <div class="flex justify-between items-center max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop h-20">
-    <a href="/" class="flex items-center text-on-surface hover:opacity-90 transition-opacity" aria-label="Latentsig home">
-      <Logo height={72} class="hidden xl:block" />
-      <Logo height={44} class="xl:hidden" />
-    </a>
-    <div class="hidden xl:flex items-center gap-gutter">
-      {
-        links.map((l) => (
-          <a
-            href={l.href}
-            aria-current={path === l.href ? "page" : undefined}
-            class={`inline-flex items-center min-h-11 font-label-md text-label-md transition-colors duration-200 ${
-              path === l.href
-                ? 'text-primary'
-                : 'text-on-surface-variant hover:text-primary'
-            }`}
-          >
-            {l.label}
-          </a>
-        ))
-      }
+<header class="site-header" data-site-header>
+  <nav aria-label="Main navigation" class="site-nav">
+    <a href="/" class="brand" aria-label="LatentSig home"><Logo height={48} /></a>
+    <div class="desktop-links">
+      {groups.slice(0, 3).map((group) => (
+        <div class="nav-group" data-nav-group={group.id}>
+          <a class:list={['nav-link', path.startsWith('/products') && group.id === 'products' && 'is-current']} href={group.href} aria-current={path === group.href || (group.id === 'products' && path.startsWith('/products')) ? 'page' : undefined}>{group.label}</a>
+          <button class="nav-disclosure" type="button" aria-label={`Toggle ${group.label} dropdown`} aria-expanded="false" aria-controls={`${group.id}-panel`} data-disclosure={group.id}><span aria-hidden="true">⌄</span></button>
+        </div>
+      ))}
+      <a class:list={['nav-link', path.startsWith('/insights') && 'is-current']} href="/insights/" aria-current={path.startsWith('/insights') ? 'page' : undefined}>Insights</a>
+      <div class="nav-group" data-nav-group="about">
+        <a class="nav-link" href="/about/" aria-current={path === '/about/' ? 'page' : undefined}>About</a>
+        <button class="nav-disclosure" type="button" aria-label="Toggle About dropdown" aria-expanded="false" aria-controls="about-panel" data-disclosure="about"><span aria-hidden="true">⌄</span></button>
+      </div>
     </div>
-    <a
-      href={CALENDLY_URL}
-      target="_blank"
-      rel="noopener"
-      class="hidden sm:inline-flex bg-primary-container text-on-primary-container px-6 py-2.5 rounded-lg font-label-md text-label-md font-bold hover:brightness-110 transition-all"
-    >
-      Get a Consultation
-    </a>
-    <button id="mobile-menu-toggle" type="button" class="xl:hidden text-on-surface" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" /></svg>
-    </button>
-  </div>
-  <div id="mobile-menu" hidden class="xl:hidden hidden border-t border-outline-variant/30 bg-surface">
-    <div class="flex flex-col px-margin-mobile py-4 gap-3">
-      {
-        links.map((l) => (
-          <a
-            href={l.href}
-            aria-current={path === l.href ? "page" : undefined}
-            class={`font-label-md text-label-md py-2 ${
-              path === l.href ? 'text-primary' : 'text-on-surface-variant'
-            }`}
-          >
-            {l.label}
-          </a>
-        ))
-      }
-      <a
-        href={CALENDLY_URL}
-        target="_blank"
-        rel="noopener"
-        class="mt-2 bg-primary-container text-on-primary-container px-6 py-3 rounded-lg font-label-md text-label-md font-bold text-center"
-      >
-        Get a Consultation
-      </a>
-    </div>
-  </div>
-</nav>
+    <a class="demo-cta" href={booking} target="_blank" rel="noopener noreferrer">Book a Demo <span aria-hidden="true">↗</span></a>
+    <button id="mobile-menu-toggle" class="mobile-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-menu" data-mobile-toggle><span></span><span></span></button>
+  </nav>
 
-<noscript><style>nav[aria-label="Main navigation"]{position:static}#mobile-menu{display:block!important}#mobile-menu-toggle{display:none}#main-content{padding-top:0}</style></noscript>
+  <div class="mega-panel" id="products-panel" data-panel="products" hidden>
+    <div class="mega-inner products-mega">
+      <section class="featured-product">
+        <span class="menu-eyebrow">Featured product · concept</span>
+        <h2>Annotation &amp; Verification Platform</h2>
+        <p>From raw data to reviewed, reliable datasets.</p>
+        <div class="featured-actions"><a href="/products/annotation-verification/">Explore Product <span aria-hidden="true">→</span></a><a href="/demos/">View Demo <span aria-hidden="true">↗</span></a></div>
+      </section>
+      <section class="mega-column"><h2>Build &amp; Orchestrate</h2>{products.slice(0, 4).map((item) => <a class="mega-item" href={item.href}><span><b>{item.label}</b><small>{item.detail}</small></span><span class="item-arrow" aria-hidden="true">↗</span></a>)}</section>
+      <section class="mega-column"><h2>Digital Applications</h2>{products.slice(4).map((item) => <a class="mega-item" href={item.href}><span><b>{item.label}</b><small>{item.detail}</small></span><span class="item-arrow" aria-hidden="true">↗</span></a>)}</section>
+      <a href="/products/" class="explore-all">Explore All Products <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+  {groups.filter((group) => group.id !== 'products').map((group) => (
+    <div class="mega-panel compact-panel" id={`${group.id}-panel`} data-panel={group.id} hidden>
+      <div class="mega-inner compact-inner"><div><span class="menu-eyebrow">Discover</span><h2>{group.label}</h2></div><div class="compact-items">{group.items.map((item) => <a class="mega-item" href={item.href}><span><b>{item.label}</b>{item.detail && <small>{item.detail}</small>}</span><span class="item-arrow" aria-hidden="true">↗</span></a>)}</div></div>
+    </div>
+  ))}
+  <div class="mobile-panel" id="mobile-menu" hidden data-mobile-panel>
+    <div class="mobile-panel-inner">
+      {groups.map((group) => <details><summary>{group.label}<span aria-hidden="true">＋</span></summary><div class="mobile-subnav">{group.id === 'products' && <a class="mobile-parent-link" href="/products/">Explore all products</a>}{group.items.map((item) => <a href={item.href}>{item.label}</a>)}</div></details>)}
+      <a class="mobile-direct" href="/insights/">Insights</a><a class="mobile-book" href={booking} target="_blank" rel="noopener noreferrer">Book a Demo ↗</a>
+    </div>
+  </div>
+</header>
+
+<noscript><style>.desktop-links{display:flex!important}.mobile-toggle,.mega-panel{display:none!important}@media(max-width:900px){.desktop-links{display:none!important}.mobile-panel{display:block!important}}</style></noscript>
+
 <style>
-  #mobile-menu-toggle{min-width:44px;min-height:44px;align-items:center;justify-content:center}
-  #mobile-menu{max-height:calc(100vh - 80px);max-height:calc(100dvh - 80px);overflow-y:auto;overscroll-behavior:contain}
-  #mobile-menu a{display:flex;align-items:center;min-height:44px}
-  @media(max-width:1279px){#mobile-menu-toggle{display:inline-flex}}
+  .site-header{--ink:#f3f1ff;--muted:#aaa9c1;--line:rgba(190,186,227,.17);position:fixed;z-index:60;inset:0 0 auto;background:rgba(9,13,29,.97);border-bottom:1px solid var(--line);color:var(--ink);font-family:Geist,system-ui,sans-serif;backdrop-filter:blur(18px)}
+  .site-nav{height:76px;max-width:1440px;margin:auto;padding:0 clamp(18px,4vw,64px);display:flex;align-items:center;gap:24px}.brand{display:flex;align-items:center;margin-right:auto;min-height:48px}.brand img{width:auto;max-height:44px;object-fit:contain}.desktop-links{height:100%;display:flex;align-items:center;gap:4px}.nav-group{height:100%;display:flex;align-items:center;position:relative}.nav-link,.nav-disclosure{min-height:44px;display:inline-flex;align-items:center;justify-content:center;color:#d8d6e8;text-decoration:none;transition:color .18s ease}.nav-link{padding:0 7px;font-size:14px;white-space:nowrap}.nav-link:hover,.nav-link.is-current,.nav-group[data-open="true"]>.nav-link{color:#c0c1ff}.nav-disclosure{width:29px;border:0;background:transparent;color:#a5a4bd;font-size:17px;cursor:pointer}.nav-disclosure span{display:none}.nav-disclosure:focus-visible{outline:2px solid #c0c1ff;outline-offset:-5px;border-radius:5px}.demo-cta,.mobile-book{min-height:46px;display:inline-flex;align-items:center;justify-content:center;gap:12px;padding:0 18px;border-radius:8px;background:#c0c1ff;color:#17142f;text-decoration:none;font-weight:700;font-size:14px;white-space:nowrap}.demo-cta:hover,.mobile-book:hover{background:#dddeff}.mobile-toggle{display:none;width:46px;height:46px;align-items:center;justify-content:center;flex-direction:column;gap:6px;border:1px solid var(--line);border-radius:8px;background:transparent}.mobile-toggle span{width:19px;height:2px;background:var(--ink);transition:transform .2s ease}.mobile-toggle[aria-expanded="true"] span:first-child{transform:translateY(4px) rotate(45deg)}.mobile-toggle[aria-expanded="true"] span:last-child{transform:translateY(-4px) rotate(-45deg)}
+  .mega-panel{position:absolute;top:100%;left:0;right:0;background:#f6f5fb;color:#201f34;border-bottom:1px solid #d8d6e7;box-shadow:0 24px 54px rgba(0,0,0,.32);animation:panel-in .18s ease-out both}.mega-panel[hidden],.mobile-panel[hidden]{display:none}@keyframes panel-in{from{opacity:0;transform:translateY(-7px)}to{opacity:1;transform:translateY(0)}}.mega-inner{max-width:1360px;margin:auto;padding:28px clamp(18px,4vw,54px) 20px}.products-mega{display:grid;grid-template-columns:1.1fr 1.1fr .84fr;gap:32px 40px}.featured-product{padding:18px;border-radius:12px;background:#eeedf6;border:1px solid #e1dfec}.concept-screen{height:164px;margin-bottom:18px;border-radius:8px;overflow:hidden;background:#11182a;color:#ebebff;border:1px solid #343a53;font-size:9px}.concept-toolbar{height:29px;display:flex;align-items:center;gap:5px;padding:0 10px;border-bottom:1px solid #343a53;color:#aaaec9;letter-spacing:.07em}.concept-toolbar i{width:6px;height:6px;border-radius:50%;background:#c0c1ff}.concept-toolbar i:nth-child(2){opacity:.6}.concept-toolbar i:nth-child(3){opacity:.35}.concept-toolbar span{margin-left:auto}.concept-body{display:flex;height:calc(100% - 29px)}.concept-sidebar{width:24%;border-right:1px solid #343a53;background:repeating-linear-gradient(0deg,transparent 0 17px,#424864 18px,transparent 19px);opacity:.6}.concept-content{padding:14px 16px;flex:1}.concept-content b{font-size:12px}.concept-row{height:24px;margin-top:10px;border-radius:3px;border:1px solid #6c6f9d;background:linear-gradient(90deg,#aeb0ff33 52%,transparent 52%)}.concept-row.short{width:82%;background:linear-gradient(90deg,#aeb0ff24 35%,transparent 35%)}.concept-label{margin-top:11px;color:#c0c1ff;letter-spacing:.12em}.concept-label span{padding:0 7px}.menu-eyebrow{display:block;margin-bottom:8px;color:#676789;font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase}.featured-product h2,.mega-column h2,.compact-inner h2{margin:0 0 8px;font-size:18px;line-height:1.25;color:#201f34}.featured-product p{margin:0;color:#5b5a70;font-size:13px;line-height:1.5}.featured-actions{display:flex;gap:18px;margin-top:14px}.featured-actions a,.explore-all{color:#4439a1;font-size:13px;font-weight:700;text-decoration:none}.featured-actions a:hover,.explore-all:hover{text-decoration:underline}.mega-column h2{margin-bottom:14px}.mega-item{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:58px;padding:9px 10px;margin:0 -10px;border-radius:7px;color:#25243b;text-decoration:none;transition:background .16s ease}.mega-item:hover,.mega-item:focus-visible{background:#e9e8f4}.mega-item b{display:block;font-size:13px;font-weight:650}.mega-item small{display:block;max-width:300px;margin-top:3px;color:#66657c;font-size:11px;line-height:1.4}.item-arrow{align-self:center;color:#6258b4}.explore-all{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;padding:13px 5px 0;border-top:1px solid #dedce9}.compact-inner{display:grid;grid-template-columns:220px 1fr;gap:34px}.compact-items{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 28px}.mobile-panel{display:none}
+  @media(max-width:1120px){.site-nav{gap:14px}.desktop-links{gap:0}.nav-link{padding:0 5px;font-size:13px}.demo-cta{padding:0 13px;font-size:13px}.products-mega{gap:24px}.mega-inner{padding-left:24px;padding-right:24px}}
+  @media(max-width:900px){.site-nav{height:68px;padding:0 18px;gap:12px}.brand img{max-height:40px}.desktop-links{display:none}.demo-cta{margin-left:auto;min-height:44px}.mobile-toggle{display:flex}.mega-panel{display:none!important}.mobile-panel{display:block;position:absolute;inset:100% 0 auto;min-height:calc(100dvh - 68px);max-height:calc(100dvh - 68px);overflow-y:auto;background:#0e1428;border-bottom:1px solid var(--line);box-shadow:0 20px 40px rgba(0,0,0,.35)}.site-header:has(.mobile-toggle[aria-expanded="true"]) .demo-cta{visibility:hidden}.mobile-panel-inner{max-width:720px;margin:auto;padding:10px 20px 22px}.mobile-panel details,.mobile-direct{border-bottom:1px solid var(--line)}.mobile-panel summary,.mobile-direct{min-height:52px;display:flex;align-items:center;justify-content:space-between;color:#f1efff;text-decoration:none;list-style:none;cursor:pointer;font-weight:600}.mobile-panel summary::-webkit-details-marker{display:none}.mobile-panel details[open] summary span{transform:rotate(45deg)}.mobile-subnav{display:grid;padding:0 0 10px 10px}.mobile-subnav a,.mobile-parent-link{min-height:44px;display:flex;align-items:center;padding:6px 8px;color:#c4c2da;text-decoration:none;font-size:14px}.mobile-subnav a:hover,.mobile-direct:hover{color:#c0c1ff}.mobile-book{display:flex;margin-top:16px;min-height:48px}.site-header:has(.mobile-toggle[aria-expanded="true"]){background:#090d1d}}
+  @media(max-width:420px){.site-nav{padding:0 12px;gap:8px}.brand img{max-width:118px}.demo-cta{min-height:44px;padding:0 10px;font-size:12px}.mobile-toggle{width:44px;height:44px}.mobile-panel-inner{padding-left:16px;padding-right:16px}}
+  @media(prefers-reduced-motion:reduce){.site-header *{animation:none!important;transition:none!important}}
 </style>
+
 <script>
-  const button = document.querySelector<HTMLButtonElement>('#mobile-menu-toggle');
-  const menu = document.querySelector<HTMLElement>('#mobile-menu');
-  if (button && menu) {
-    const setOpen = (open: boolean, restoreFocus = false) => {
-      button.setAttribute('aria-expanded', String(open));
-      button.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
-      menu.hidden = !open; menu.classList.toggle('hidden', !open);
-      if (restoreFocus) button.focus();
-    };
-    button.addEventListener('click', () => setOpen(menu.hidden));
-    document.addEventListener('keydown', event => { if(event.key === 'Escape' && !menu.hidden) setOpen(false, true); });
-    document.addEventListener('pointerdown', event => { if(!menu.hidden && !menu.contains(event.target as Node) && !button.contains(event.target as Node)) setOpen(false); });
-    document.addEventListener('focusin', event => { if(!menu.hidden && !menu.contains(event.target as Node) && !button.contains(event.target as Node)) setOpen(false); });
-    menu.addEventListener('click', event => { if((event.target as Element).closest('a')) setOpen(false); });
-    matchMedia('(min-width: 1280px)').addEventListener('change', event => { if(event.matches) setOpen(false); });
-  }
+  const header = document.querySelector<HTMLElement>('[data-site-header]');
+  const groups = Array.from(document.querySelectorAll<HTMLElement>('[data-nav-group]'));
+  const disclosures = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-disclosure]'));
+  const mobileToggle = document.querySelector<HTMLButtonElement>('[data-mobile-toggle]');
+  const mobilePanel = document.querySelector<HTMLElement>('[data-mobile-panel]');
+  let openId: string | null = null;
+  let hoverTriggered = false;
+  const closePanels = (restoreFocus = false) => {
+    groups.forEach(group => group.dataset.open = 'false');
+    disclosures.forEach(button => button.setAttribute('aria-expanded', 'false'));
+    document.querySelectorAll<HTMLElement>('[data-panel]').forEach(panel => panel.hidden = true);
+    openId = null;
+    if (mobilePanel) mobilePanel.hidden = true;
+    mobileToggle?.setAttribute('aria-expanded', 'false');
+    mobileToggle?.setAttribute('aria-label', 'Open navigation');
+    if (restoreFocus) mobileToggle?.focus();
+  };
+  const openPanel = (id: string) => {
+    closePanels();
+    const group = groups.find(item => item.dataset.navGroup === id);
+    const panel = document.querySelector<HTMLElement>(`[data-panel="${id}"]`);
+    if (!group || !panel) return;
+    openId = id;
+    group.dataset.open = 'true';
+    const button = group.querySelector<HTMLButtonElement>('[data-disclosure]');
+    button?.setAttribute('aria-expanded', 'true');
+    panel.hidden = false;
+  };
+  disclosures.forEach(button => {
+    button.addEventListener('click', () => {
+      if (hoverTriggered && openId === button.dataset.disclosure) { hoverTriggered = false; return; }
+      hoverTriggered = false;
+      openId === button.dataset.disclosure ? closePanels() : openPanel(button.dataset.disclosure || '');
+    });
+  });
+  groups.forEach(group => group.addEventListener('pointerenter', event => {
+    if (event.pointerType === 'mouse' && window.matchMedia('(min-width: 901px)').matches) {
+      hoverTriggered = true;
+      openPanel(group.dataset.navGroup || '');
+    }
+  }));
+  groups.forEach(group => group.addEventListener('pointerleave', event => {
+    if (event.pointerType !== 'mouse' || !window.matchMedia('(min-width: 901px)').matches) return;
+    hoverTriggered = false;
+    window.setTimeout(() => {
+      if (!openId || !header?.matches(':hover')) { closePanels(); return; }
+      const activeGroup = groups.find(item => item.dataset.navGroup === openId);
+      const activePanel = document.querySelector<HTMLElement>(`[data-panel="${openId}"]`);
+      if (!activeGroup?.matches(':hover') && !activePanel?.matches(':hover')) closePanels();
+    }, 100);
+  }));
+  mobileToggle?.addEventListener('click', () => {
+    const shouldOpen = mobileToggle.getAttribute('aria-expanded') !== 'true';
+    closePanels();
+    if (!shouldOpen || !mobilePanel) return;
+    mobilePanel.hidden = false;
+    mobileToggle.setAttribute('aria-expanded', 'true');
+    mobileToggle.setAttribute('aria-label', 'Close navigation');
+  });
+  mobilePanel?.addEventListener('click', event => { if ((event.target as Element).closest('a')) closePanels(); });
+  document.addEventListener('keydown', event => { if (event.key === 'Escape' && (openId || mobilePanel && !mobilePanel.hidden)) closePanels(true); });
+  document.addEventListener('pointerdown', event => { if (header && !header.contains(event.target as Node)) closePanels(); });
+  document.addEventListener('focusin', event => { if (openId && header && !header.contains(event.target as Node)) closePanels(); });
+  document.querySelectorAll<HTMLAnchorElement>('.site-header a[href]').forEach(link => link.addEventListener('click', () => { if (link.target !== '_blank') closePanels(); }));
+  window.matchMedia('(max-width: 900px)').addEventListener('change', () => closePanels());
 </script>

@@ -1,0 +1,10 @@
+---
+import DirectoryPage from '../components/DirectoryPage.astro';
+const items = [
+  { title: 'AI R&D Advisory', description: 'Explore feasibility, architecture, and research direction for an AI initiative.', status: 'ADVISORY', href: '/rd-advisory/' },
+  { title: 'AI Consulting', description: 'Work through technical decisions and workflow challenges with a focused engagement.', status: 'CONSULTING', href: '/consulting/' },
+  { title: 'AI Implementation', description: 'Design and build an AI system shaped around practical requirements.', status: 'ENGINEERING', href: '/implementation/' },
+  { title: 'Custom Web & Mobile Development', description: 'Plan and build web and mobile applications around user needs.', status: 'APPLICATION DEVELOPMENT', href: '/products/web-mobile-apps/' },
+];
+---
+<DirectoryPage title="Services" eyebrow="SERVICES" headline="A practical path from exploration to implementation." description="Choose a starting point for your AI, product, or software engineering challenge. Each engagement is discussed and scoped around its requirements." items={items} />

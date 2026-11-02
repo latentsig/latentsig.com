@@ -1,0 +1,18 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { CALENDLY_URL } from '../consts';
+---
+<Layout title="Bengaluru Tech Summit 2026 · LatentSig" description="LatentSig product showcase information for Bengaluru Tech Summit 2026. Event participation and schedule details have not been confirmed.">
+  <section class="event-page"><div class="event-wrap">
+    <p class="eyebrow">EVENT SHOWCASE INFORMATION · BENGALURU · 2026</p>
+    <h1>Bengaluru Tech Summit 2026</h1>
+    <p class="event-intro">LatentSig is preparing this page to share details if participation is confirmed. Attendance, booth location, schedule, and live demonstrations have not been confirmed.</p>
+    <div class="event-status"><span>EVENT DETAILS</span><strong>Pending confirmation</strong><p>Confirmed information and approved demonstrations will appear here when available.</p></div>
+    <div class="showcase"><h2>Product directions</h2><p>Explore the current product concepts and application capability.</p><div><a href="/products/annotation-verification/">Annotation &amp; Verification ↗</a><a href="/products/agentic-ai-platform/">Agentic AI Platform ↗</a><a href="/products/web-mobile-apps/">Web &amp; Mobile Applications ↗</a></div></div>
+    <div class="event-actions"><a class="primary" href={`${CALENDLY_URL}?utm_source=latentsig_website&utm_campaign=bts_2026`} target="_blank" rel="noopener noreferrer">Request a meeting ↗</a><a href="/contact/">Contact LatentSig</a></div>
+    <p class="event-foot">Meeting requests use LatentSig’s existing Calendly booking page. This page does not collect or store personal information.</p>
+  </div></section>
+</Layout>
+<style>
+  .event-page{min-height:80vh;padding:90px 24px;background:radial-gradient(ellipse at 80% 0,#3d367155,transparent 50%),#0b1020;color:#f4f2ff;font-family:Geist,system-ui,sans-serif}.event-wrap{max-width:1000px;margin:auto}.eyebrow{color:#c0c1ff;font-size:11px;font-weight:700;letter-spacing:.15em}.event-page h1{font:600 clamp(2.8rem,6vw,5rem)/1.02 'Hanken Grotesk',sans-serif;letter-spacing:-.045em;max-width:850px;margin:18px 0}.event-intro{max-width:820px;color:#c1bfd3;font-size:17px;line-height:1.7}.event-status{margin:38px 0;padding:22px;border:1px solid #59547b;border-radius:10px;background:#131a30}.event-status span{display:block;color:#aaa8c0;font-size:10px;letter-spacing:.12em}.event-status strong{display:block;margin-top:8px;font-size:20px;color:#ebd39d}.event-status p,.showcase>p,.event-foot{color:#aaa9c1;line-height:1.6;font-size:13px}.showcase{padding:27px 0;border-top:1px solid #34394f}.showcase h2{font:600 26px 'Hanken Grotesk',sans-serif}.showcase>div{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}.showcase a,.event-actions>a{display:flex;min-height:46px;align-items:center;padding:0 15px;border:1px solid #464662;border-radius:7px;color:#e4e2f3;text-decoration:none;font-size:13px}.showcase a:hover,.event-actions>a:hover{border-color:#aaa7f1}.event-actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:35px}.event-actions>a.primary{background:#c0c1ff;color:#17142f;border-color:#c0c1ff;font-weight:700}.event-foot{margin-top:18px;font-size:12px}@media(max-width:560px){.event-page{padding:58px 18px}.showcase>div{display:grid}.showcase a{min-height:48px}}
+</style>

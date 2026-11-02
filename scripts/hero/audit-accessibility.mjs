@@ -3,7 +3,7 @@ import axe from 'axe-core';
 import puppeteer from 'puppeteer-core';
 const before=process.argv.includes('--before');
 const browser=await puppeteer.launch({executablePath:process.env.CHROME_PATH||'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true,args:['--enable-webgl','--ignore-gpu-blocklist']});
-const out='/private/tmp/latentsig-accessibility';await mkdir(out,{recursive:true});
+const out=process.env.REPORT_DIR||'artifacts/accessibility';await mkdir(out,{recursive:true});
 const report={viewports:[],errors:[]};
 try{
  const page=await browser.newPage();page.on('pageerror',e=>report.errors.push(e.message));

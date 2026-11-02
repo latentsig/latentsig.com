@@ -36,24 +36,6 @@ const posts = [
     image: undefined,
     visual: 'quantization',
   },
-  {
-    tag: 'Strategy',
-    tagColor: 'secondary',
-    readTime: '6 min',
-    title: 'Why your AI roadmap should be three lanes, not one',
-    excerpt: 'Research, integration, and operations move on different clocks. Treating them as one program is how teams stall.',
-    author: 'Latentsig AI Advisory',
-    image: undefined,
-  },
-  {
-    tag: 'Research',
-    tagColor: 'primary',
-    readTime: '12 min',
-    title: 'Evaluating retrieval: beyond top-k accuracy',
-    excerpt: 'The metrics that actually correlate with downstream LLM quality, and the ones the leaderboards keep rewarding instead.',
-    author: 'Latentsig AI Research',
-    image: undefined,
-  },
 ];
 ---
 
@@ -71,12 +53,6 @@ const posts = [
         <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
           Exploring the confluence of frontier AI theory and the engineering realities of shipping it. Field notes, benchmarks, and the occasional opinion.
         </p>
-        <div class="flex flex-wrap gap-2 pt-4">
-          <button class="px-4 py-2 border border-primary bg-primary/10 text-primary rounded-lg font-label-md text-label-md">All</button>
-          <button class="px-4 py-2 border border-outline-variant/40 text-on-surface-variant rounded-lg font-label-md text-label-md hover:border-primary hover:text-primary transition-colors">R&amp;D</button>
-          <button class="px-4 py-2 border border-outline-variant/40 text-on-surface-variant rounded-lg font-label-md text-label-md hover:border-primary hover:text-primary transition-colors">Implementation</button>
-          <button class="px-4 py-2 border border-outline-variant/40 text-on-surface-variant rounded-lg font-label-md text-label-md hover:border-primary hover:text-primary transition-colors">Case Studies</button>
-        </div>
       </div>
     </div>
   </section>
@@ -167,23 +143,4 @@ const posts = [
     </div>
   </section>
 
-  <!-- Newsletter -->
-  <section class="py-32 relative overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-br from-primary/10 via-surface to-secondary/10"></div>
-    <div class="absolute -top-32 -left-32 w-96 h-96 bg-primary/20 rounded-full blur-[120px]"></div>
-    <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-secondary/20 rounded-full blur-[120px]"></div>
-    <div class="relative max-w-3xl mx-auto px-margin-mobile text-center flex flex-col items-center gap-8">
-      <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">Notes from the lab, in your inbox.</h2>
-      <p class="font-body-lg text-body-lg text-on-surface-variant">Roughly monthly. Engineering, no marketing.</p>
-      <form class="w-full max-w-md flex flex-col sm:flex-row gap-3" onsubmit="event.preventDefault();">
-        <input
-          type="email"
-          required
-          placeholder="you@company.com"
-          class="flex-1 px-4 py-3 bg-surface-container border border-outline-variant/40 rounded-lg text-on-surface font-body-md text-body-md focus:outline-none focus:border-primary"
-        />
-        <button class="px-6 py-3 bg-primary text-on-primary font-label-md text-label-md font-bold rounded-lg hover:brightness-110 transition-all">Subscribe</button>
-      </form>
-    </div>
-  </section>
 </Layout>

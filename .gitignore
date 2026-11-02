@@ -22,5 +22,9 @@ pnpm-debug.log*
 .vscode/
 .idea/
 
+# browser test output
+test-results/
+playwright-report/
+
 # astro
 .astro/

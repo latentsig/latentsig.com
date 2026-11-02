@@ -2,7 +2,7 @@ import puppeteer from 'puppeteer-core';
 import {writeFile,mkdir} from 'node:fs/promises';
 const browser=await puppeteer.launch({executablePath:process.env.CHROME_PATH||'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true,args:['--enable-webgl','--ignore-gpu-blocklist']});
 const wait=ms=>new Promise(r=>setTimeout(r,ms));
-const report={};const out='/private/tmp/latentsig-accessibility';await mkdir(out,{recursive:true});
+const report={};const out=process.env.REPORT_DIR||'artifacts/accessibility';await mkdir(out,{recursive:true});
 const ready=async page=>{await page.goto('http://127.0.0.1:4321/',{waitUntil:'networkidle0'});await page.waitForFunction(()=>document.querySelector('latentsig-hero-scene')?.heroDebug)};
 const geometry=()=>{
  const copy=document.querySelector('.hero-copy').getBoundingClientRect(), scene=document.querySelector('.hero-visual').getBoundingClientRect(), actions=document.querySelector('.hero-actions').getBoundingClientRect(), hero=document.querySelector('.observatory-hero').getBoundingClientRect();
@@ -11,7 +11,7 @@ const geometry=()=>{
 try{
  const page=await browser.newPage();await page.setViewport({width:390,height:844});await ready(page);
  await page.keyboard.press('Tab');report.skipFirst=await page.$eval(':focus',e=>e.classList.contains('skip-link'));await page.keyboard.press('Enter');report.skipTargetsMain=await page.$eval(':focus',e=>e.id==='main-content');
- await page.focus('#mobile-menu-toggle');await page.keyboard.press('Enter');report.menuExpanded=await page.$eval('#mobile-menu-toggle',e=>e.getAttribute('aria-expanded')==='true');await page.keyboard.press('Tab');report.menuTab=await page.$eval(':focus',e=>e.getAttribute('href')==='/rd-advisory/');await page.keyboard.press('Escape');report.menuEscape=await page.$eval('#mobile-menu-toggle',e=>e===document.activeElement&&e.getAttribute('aria-expanded')==='false');
+ await page.focus('#mobile-menu-toggle');await page.keyboard.press('Enter');report.menuExpanded=await page.$eval('#mobile-menu-toggle',e=>e.getAttribute('aria-expanded')==='true');await page.keyboard.press('Tab');report.menuTab=await page.$eval(':focus',e=>e.tagName==='SUMMARY'&&e.textContent.includes('Products'));await page.keyboard.press('Escape');report.menuEscape=await page.$eval('#mobile-menu-toggle',e=>e===document.activeElement&&e.getAttribute('aria-expanded')==='false');
  report.touchTargets=await page.$$eval('#mobile-menu-toggle,.hero-motion',els=>els.every(e=>{const r=e.getBoundingClientRect();return r.width>=44&&r.height>=44}));
  await page.focus('.hero-motion');report.visibleFocus=await page.$eval(':focus',e=>getComputedStyle(e).outlineStyle!=='none'&&parseFloat(getComputedStyle(e).outlineWidth)>=2);await page.keyboard.press('Space');
  const paused=await page.evaluate(()=>document.querySelector('latentsig-hero-scene').heroDebug.stats());await wait(200);report.keyboardPause=await page.$eval('.hero-motion',e=>e.getAttribute('aria-label')==='Resume animation');

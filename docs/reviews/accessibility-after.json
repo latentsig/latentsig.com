@@ -9,16 +9,25 @@
           "id": "color-contrast",
           "targets": [
             [
-              ".motion-label"
+              "button[aria-label=\"Toggle Products dropdown\"] > span[data-astro-source-loc=\"48:212\"][aria-hidden=\"true\"]"
+            ],
+            [
+              "button[aria-label=\"Toggle Solutions dropdown\"] > span[data-astro-source-loc=\"48:212\"][aria-hidden=\"true\"]"
+            ],
+            [
+              "button[aria-label=\"Toggle Services dropdown\"] > span[data-astro-source-loc=\"48:212\"][aria-hidden=\"true\"]"
+            ],
+            [
+              "span[data-astro-source-loc=\"54:188\"]"
             ],
             [
               "div[data-story=\"0\"] > .hero-eyebrow[data-astro-source-loc=\"37:36\"]"
             ],
             [
-              "div[data-story=\"0\"] > h2[data-astro-source-loc=\"38:16\"] > span[data-astro-source-loc=\"38:21\"]"
+              "div[data-story=\"0\"] > h2[data-astro-source-loc=\"38:16\"] > span[data-astro-source-loc=\"38:21\"][data-astro-cid-jghrn4pv=\"\"]"
             ],
             [
-              "div[data-story=\"0\"] > h2[data-astro-source-loc=\"38:16\"] > .hero-title-accent[data-astro-source-loc=\"38:78\"]"
+              "div[data-story=\"0\"] > h2[data-astro-source-loc=\"38:16\"] > .hero-title-accent[data-astro-source-loc=\"38:78\"][data-astro-cid-jghrn4pv=\"\"]"
             ],
             [
               "span[data-astro-source-loc=\"38:124\"]"
@@ -55,6 +64,42 @@
             ],
             [
               "small[data-astro-source-loc=\"52:61\"]"
+            ],
+            [
+              "b[data-astro-source-loc=\"8:137\"]"
+            ],
+            [
+              "b[data-astro-source-loc=\"8:166\"]"
+            ],
+            [
+              "span[data-astro-source-loc=\"9:116\"]"
+            ],
+            [
+              "i[data-astro-source-loc=\"9:133\"]"
+            ],
+            [
+              "span[data-astro-source-loc=\"9:144\"]"
+            ],
+            [
+              "i[data-astro-source-loc=\"9:162\"]"
+            ],
+            [
+              "span[data-astro-source-loc=\"9:173\"]"
+            ],
+            [
+              "span[data-astro-source-loc=\"10:110\"]"
+            ],
+            [
+              "span[data-astro-source-loc=\"10:126\"]"
+            ],
+            [
+              "b[data-astro-source-loc=\"12:505\"]"
+            ],
+            [
+              "b[data-astro-source-loc=\"12:629\"]"
+            ],
+            [
+              ".research-placeholder"
             ]
           ]
         }
@@ -91,10 +136,40 @@
           "id": "color-contrast",
           "targets": [
             [
-              "h3[data-astro-source-loc=\"46:78\"]"
+              "b[data-astro-source-loc=\"8:137\"]"
             ],
             [
-              ".max-w-md"
+              "b[data-astro-source-loc=\"8:166\"]"
+            ],
+            [
+              "span[data-astro-source-loc=\"9:116\"]"
+            ],
+            [
+              "i[data-astro-source-loc=\"9:133\"]"
+            ],
+            [
+              "span[data-astro-source-loc=\"9:144\"]"
+            ],
+            [
+              "i[data-astro-source-loc=\"9:162\"]"
+            ],
+            [
+              "span[data-astro-source-loc=\"9:173\"]"
+            ],
+            [
+              "span[data-astro-source-loc=\"10:110\"]"
+            ],
+            [
+              "span[data-astro-source-loc=\"10:126\"]"
+            ],
+            [
+              "b[data-astro-source-loc=\"12:505\"]"
+            ],
+            [
+              "b[data-astro-source-loc=\"12:629\"]"
+            ],
+            [
+              ".research-placeholder"
             ]
           ]
         }
@@ -103,79 +178,163 @@
       "overflowElements": [],
       "pause": {
         "x": 24,
-        "y": 652.84375,
+        "y": 712.46875,
         "width": 139.59375,
         "height": 44,
-        "top": 652.84375,
+        "top": 712.46875,
         "right": 163.59375,
-        "bottom": 696.84375,
+        "bottom": 756.46875,
         "left": 24
       },
       "menu": {
-        "x": 260,
-        "y": 18,
-        "width": 44,
+        "x": 286.34375,
+        "y": 12,
+        "width": 21.65625,
         "height": 44,
-        "top": 18,
-        "right": 304,
-        "bottom": 62,
-        "left": 260
+        "top": 12,
+        "right": 308,
+        "bottom": 56,
+        "left": 286.34375
       }
     },
     {
       "width": 390,
       "height": 844,
       "violations": [],
-      "incomplete": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              "b[data-astro-source-loc=\"8:137\"]"
+            ],
+            [
+              "b[data-astro-source-loc=\"8:166\"]"
+            ],
+            [
+              "span[data-astro-source-loc=\"9:116\"]"
+            ],
+            [
+              "i[data-astro-source-loc=\"9:133\"]"
+            ],
+            [
+              "span[data-astro-source-loc=\"9:144\"]"
+            ],
+            [
+              "i[data-astro-source-loc=\"9:162\"]"
+            ],
+            [
+              "span[data-astro-source-loc=\"9:173\"]"
+            ],
+            [
+              "span[data-astro-source-loc=\"10:110\"]"
+            ],
+            [
+              "span[data-astro-source-loc=\"10:126\"]"
+            ],
+            [
+              "b[data-astro-source-loc=\"12:505\"]"
+            ],
+            [
+              "b[data-astro-source-loc=\"12:629\"]"
+            ],
+            [
+              ".research-placeholder"
+            ]
+          ]
+        }
+      ],
       "overflow": false,
       "overflowElements": [],
       "pause": {
         "x": 24,
-        "y": 546.0625,
+        "y": 575.375,
         "width": 139.59375,
         "height": 44,
-        "top": 546.0625,
+        "top": 575.375,
         "right": 163.59375,
-        "bottom": 590.0625,
+        "bottom": 619.375,
         "left": 24
       },
       "menu": {
-        "x": 330,
-        "y": 18,
+        "x": 334,
+        "y": 12,
         "width": 44,
         "height": 44,
-        "top": 18,
-        "right": 374,
-        "bottom": 62,
-        "left": 330
+        "top": 12,
+        "right": 378,
+        "bottom": 56,
+        "left": 334
       }
     },
     {
       "width": 768,
       "height": 1024,
       "violations": [],
-      "incomplete": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              "b[data-astro-source-loc=\"8:137\"]"
+            ],
+            [
+              "b[data-astro-source-loc=\"8:166\"]"
+            ],
+            [
+              "span[data-astro-source-loc=\"9:116\"]"
+            ],
+            [
+              "i[data-astro-source-loc=\"9:133\"]"
+            ],
+            [
+              "span[data-astro-source-loc=\"9:144\"]"
+            ],
+            [
+              "i[data-astro-source-loc=\"9:162\"]"
+            ],
+            [
+              "span[data-astro-source-loc=\"9:173\"]"
+            ],
+            [
+              "span[data-astro-source-loc=\"10:110\"]"
+            ],
+            [
+              "span[data-astro-source-loc=\"10:126\"]"
+            ],
+            [
+              "b[data-astro-source-loc=\"12:505\"]"
+            ],
+            [
+              "b[data-astro-source-loc=\"12:629\"]"
+            ],
+            [
+              ".research-placeholder"
+            ]
+          ]
+        }
+      ],
       "overflow": false,
       "overflowElements": [],
       "pause": {
         "x": 24,
-        "y": 581.96875,
+        "y": 555.578125,
         "width": 139.59375,
         "height": 44,
-        "top": 581.96875,
+        "top": 555.578125,
         "right": 163.59375,
-        "bottom": 625.96875,
+        "bottom": 599.578125,
         "left": 24
       },
       "menu": {
-        "x": 660,
-        "y": 18,
-        "width": 44,
-        "height": 44,
-        "top": 18,
-        "right": 704,
-        "bottom": 62,
-        "left": 660
+        "x": 704,
+        "y": 11,
+        "width": 46,
+        "height": 46,
+        "top": 11,
+        "right": 750,
+        "bottom": 57,
+        "left": 704
       }
     },
     {
@@ -187,16 +346,28 @@
           "id": "color-contrast",
           "targets": [
             [
+              "button[aria-label=\"Toggle Products dropdown\"] > span[data-astro-source-loc=\"48:212\"][aria-hidden=\"true\"]"
+            ],
+            [
+              "button[aria-label=\"Toggle Solutions dropdown\"] > span[data-astro-source-loc=\"48:212\"][aria-hidden=\"true\"]"
+            ],
+            [
+              "button[aria-label=\"Toggle Services dropdown\"] > span[data-astro-source-loc=\"48:212\"][aria-hidden=\"true\"]"
+            ],
+            [
+              "span[data-astro-source-loc=\"54:188\"]"
+            ],
+            [
               ".motion-label"
             ],
             [
               "div[data-story=\"0\"] > .hero-eyebrow[data-astro-source-loc=\"37:36\"]"
             ],
             [
-              "div[data-story=\"0\"] > h2[data-astro-source-loc=\"38:16\"] > span[data-astro-source-loc=\"38:21\"]"
+              "div[data-story=\"0\"] > h2[data-astro-source-loc=\"38:16\"] > span[data-astro-source-loc=\"38:21\"][data-astro-cid-jghrn4pv=\"\"]"
             ],
             [
-              "div[data-story=\"0\"] > h2[data-astro-source-loc=\"38:16\"] > .hero-title-accent[data-astro-source-loc=\"38:78\"]"
+              "div[data-story=\"0\"] > h2[data-astro-source-loc=\"38:16\"] > .hero-title-accent[data-astro-source-loc=\"38:78\"][data-astro-cid-jghrn4pv=\"\"]"
             ],
             [
               "span[data-astro-source-loc=\"38:124\"]"
@@ -233,6 +404,42 @@
             ],
             [
               "small[data-astro-source-loc=\"52:61\"]"
+            ],
+            [
+              "b[data-astro-source-loc=\"8:137\"]"
+            ],
+            [
+              "b[data-astro-source-loc=\"8:166\"]"
+            ],
+            [
+              "span[data-astro-source-loc=\"9:116\"]"
+            ],
+            [
+              "i[data-astro-source-loc=\"9:133\"]"
+            ],
+            [
+              "span[data-astro-source-loc=\"9:144\"]"
+            ],
+            [
+              "i[data-astro-source-loc=\"9:162\"]"
+            ],
+            [
+              "span[data-astro-source-loc=\"9:173\"]"
+            ],
+            [
+              "span[data-astro-source-loc=\"10:110\"]"
+            ],
+            [
+              "span[data-astro-source-loc=\"10:126\"]"
+            ],
+            [
+              "b[data-astro-source-loc=\"12:505\"]"
+            ],
+            [
+              "b[data-astro-source-loc=\"12:629\"]"
+            ],
+            [
+              ".research-placeholder"
             ]
           ]
         }
@@ -250,21 +457,63 @@
         "left": 860.40625
       },
       "menu": {
-        "x": 916,
-        "y": 18,
-        "width": 44,
-        "height": 44,
-        "top": 18,
-        "right": 960,
-        "bottom": 62,
-        "left": 916
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
       }
     },
     {
       "width": 667,
       "height": 375,
       "violations": [],
-      "incomplete": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              "b[data-astro-source-loc=\"8:137\"]"
+            ],
+            [
+              "b[data-astro-source-loc=\"8:166\"]"
+            ],
+            [
+              "span[data-astro-source-loc=\"9:116\"]"
+            ],
+            [
+              "i[data-astro-source-loc=\"9:133\"]"
+            ],
+            [
+              "span[data-astro-source-loc=\"9:144\"]"
+            ],
+            [
+              "i[data-astro-source-loc=\"9:162\"]"
+            ],
+            [
+              "span[data-astro-source-loc=\"9:173\"]"
+            ],
+            [
+              "span[data-astro-source-loc=\"10:110\"]"
+            ],
+            [
+              "span[data-astro-source-loc=\"10:126\"]"
+            ],
+            [
+              "b[data-astro-source-loc=\"12:505\"]"
+            ],
+            [
+              "b[data-astro-source-loc=\"12:629\"]"
+            ],
+            [
+              ".research-placeholder"
+            ]
+          ]
+        }
+      ],
       "overflow": false,
       "overflowElements": [],
       "pause": {
@@ -278,14 +527,14 @@
         "left": 0
       },
       "menu": {
-        "x": 607,
-        "y": 18,
-        "width": 44,
-        "height": 44,
-        "top": 18,
-        "right": 651,
-        "bottom": 62,
-        "left": 607
+        "x": 603,
+        "y": 11,
+        "width": 46,
+        "height": 46,
+        "top": 11,
+        "right": 649,
+        "bottom": 57,
+        "left": 603
       }
     }
   ],
