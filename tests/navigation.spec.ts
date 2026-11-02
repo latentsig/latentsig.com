@@ -3,7 +3,7 @@ import { mkdirSync } from 'node:fs';
 
 const routes = [
   '/', '/products/', '/products/annotation-verification/',
-  '/products/agentic-ai-platform/', '/products/web-mobile-apps/',
+  '/products/agentic-ai-platform/', '/solutions/web-mobile-apps/',
   '/demos/', '/bts-2026/', '/solutions/', '/services/', '/insights/', '/rd-advisory/',
   '/consulting/', '/implementation/', '/about/', '/contact/',
 ];
@@ -14,6 +14,14 @@ test('all required product and event routes render', async ({ page }) => {
     expect(response?.status(), route).toBe(200);
     await expect(page.locator('h1').first(), route).toBeVisible();
   }
+});
+
+test('products page lists two platforms and application development lives under Solutions', async ({ page }) => {
+  await page.goto('/products/');
+  await expect(page.locator('.catalog-card')).toHaveCount(2);
+  await expect(page.getByRole('link', { name: /application solutions/i })).toHaveAttribute('href', '/solutions/web-mobile-apps/');
+  await page.goto('/solutions/web-mobile-apps/');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Digital experiences');
 });
 
 test('desktop product dropdown opens by click and stays open while moving into the panel', async ({ page }) => {
@@ -52,7 +60,7 @@ test('products label navigates and menu destinations are present', async ({ page
   await expect(page.locator('.desktop-links a:has-text("Services")')).toHaveAttribute('href', '/services/');
   await expect(page.locator('.desktop-links a[href="/products/"]')).toHaveText('Products');
   await page.locator('[data-disclosure="products"]').click();
-  for (const href of ['/products/annotation-verification/', '/products/agentic-ai-platform/', '/products/web-mobile-apps/', '/demos/']) {
+  for (const href of ['/products/annotation-verification/', '/products/agentic-ai-platform/', '/solutions/web-mobile-apps/', '/demos/']) {
     await expect(page.locator(`#products-panel a[href="${href}"]`).first()).toBeVisible();
   }
   await page.locator('.desktop-links a[href="/products/"]').click();
@@ -64,8 +72,8 @@ test('solutions, services, insights, and company menus route to the expected pag
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/');
   const menus = [
-    ['solutions', ['/products/annotation-verification/', '/products/agentic-ai-platform/', '/products/annotation-verification/#workflows', '/products/web-mobile-apps/']],
-    ['services', ['/rd-advisory/', '/consulting/', '/implementation/', '/products/web-mobile-apps/']],
+    ['solutions', ['/solutions/web-mobile-apps/', '/solutions/web-mobile-apps/#mobile', '/solutions/web-mobile-apps/#portfolio', '/products/annotation-verification/', '/products/agentic-ai-platform/']],
+    ['services', ['/rd-advisory/', '/consulting/', '/implementation/', '/solutions/web-mobile-apps/']],
     ['about', ['/about/', '/contact/', '/bts-2026/']],
   ] as const;
   for (const [id, hrefs] of menus) {

@@ -21,15 +21,6 @@ const products = {
     useCases: ['Exploring where multi-step automation may fit', 'Making approval points explicit in AI-assisted work', 'Discussing a workflow prototype with an engineering team'],
     steps: ['User request', 'Agent workflow', 'Review result'],
   },
-  'web-mobile-apps': {
-    title: 'Web & Mobile Applications', slug: 'web-mobile-apps', eyebrow: 'Digital applications · Service capability',
-    headline: 'Digital products designed around real work.',
-    summary: 'LatentSig designs and builds web and mobile applications, connecting product decisions, interface design, and engineering delivery.',
-    state: 'Service capability · scope agreed per engagement',
-    workflows: ['Shape the product and user journey', 'Design and implement the application', 'Iterate with review and feedback'],
-    useCases: ['Customer-facing web and mobile experiences', 'Internal tools for operational workflows', 'Product interfaces that connect to AI capabilities'],
-    steps: ['Understand users', 'Build the application', 'Learn and refine'],
-  },
 };
 return Object.values(products).map((product) => ({ params: { slug: product.slug }, props: { product } }));
 }
