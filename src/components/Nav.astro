@@ -1,5 +1,6 @@
 ---
 import Logo from './Logo.astro';
+import LogoMark from './LogoMark.astro';
 import { CALENDLY_URL } from '../consts';
 
 const path = Astro.url.pathname;
@@ -11,6 +12,7 @@ const links = [
   { href: '/insights/', label: 'Insights' },
   { href: '/about/', label: 'About' },
 ];
+<<<<<<< Updated upstream
 ---
 
 <nav aria-label="Main navigation" class="fixed w-full top-0 z-50 bg-surface/80 backdrop-blur-xl border-b border-outline-variant/30">
@@ -74,15 +76,120 @@ const links = [
     </div>
   </div>
 </nav>
+=======
+const solutions = [
+  { label: 'Websites & Web Applications', href: '/solutions/web-mobile-apps/', detail: 'Digital experiences designed for people and the work they need to do.' },
+  { label: 'Mobile Applications', href: '/solutions/web-mobile-apps/#mobile', detail: 'Useful mobile products, from early concept through implementation.' },
+  { label: 'Application Portfolio', href: '/solutions/web-mobile-apps/#portfolio', detail: 'Selected application work and capabilities.' },
+  { label: 'Data Annotation & Quality', href: '/products/annotation-verification/', detail: 'Annotation and review workflows for dependable data.' },
+  { label: 'AI Workflow Automation', href: '/products/agentic-ai-platform/', detail: 'Explore where agentic workflows can support real processes.' },
+];
+const services = [
+  { label: 'AI R&D Advisory', href: '/rd-advisory/' },
+  { label: 'AI Consulting', href: '/consulting/' },
+  { label: 'AI Implementation', href: '/implementation/' },
+  { label: 'Custom Web & Mobile Development', href: '/solutions/web-mobile-apps/' },
+];
+const about = [
+  { label: 'Company', href: '/about/' },
+  { label: 'Contact', href: '/contact/' },
+];
+const groups = [
+  { label: 'Products', id: 'products', href: '/products/', items: products },
+  { label: 'Solutions', id: 'solutions', href: '/solutions/', items: solutions },
+  { label: 'Services', id: 'services', href: '/services/', items: services },
+  { label: 'About', id: 'about', href: '/about/', items: about },
+];
+const booking = `${CALENDLY_URL}?utm_source=latentsig_website&utm_campaign=product_demo`;
+const isCurrent = (id: string) => {
+  if (id === 'products') return path.startsWith('/products/');
+  if (id === 'solutions') return path === '/solutions/' || path.startsWith('/solutions/');
+  if (id === 'services') return ['/services/', '/rd-advisory/', '/consulting/', '/implementation/'].includes(path);
+  if (id === 'about') return ['/about/', '/contact/'].includes(path);
+  return false;
+};
+---
+
+<header class="site-header" data-site-header>
+  <nav aria-label="Main navigation" class="site-nav">
+    <a href="/" class="brand" aria-label="LatentSig home"><Logo height={48} /></a>
+    <div class="desktop-links">
+      {groups.slice(0, 3).map((group) => (
+        <div class="nav-group" data-nav-group={group.id}>
+          <a class:list={['nav-link', isCurrent(group.id) && 'is-current']} href={group.href} aria-current={isCurrent(group.id) ? 'page' : undefined}>{group.label}</a>
+          <button class="nav-disclosure" type="button" aria-label={`Toggle ${group.label} dropdown`} aria-expanded="false" aria-controls={`${group.id}-panel`} data-disclosure={group.id}><span aria-hidden="true">⌄</span></button>
+        </div>
+      ))}
+      <a class:list={['nav-link', path.startsWith('/insights/') && 'is-current']} href="/insights/" aria-current={path.startsWith('/insights/') ? 'page' : undefined}>Insights</a>
+      <div class="nav-group" data-nav-group="about">
+        <a class:list={['nav-link', isCurrent('about') && 'is-current']} href="/about/" aria-current={isCurrent('about') ? 'page' : undefined}>About</a>
+        <button class="nav-disclosure" type="button" aria-label="Toggle About dropdown" aria-expanded="false" aria-controls="about-panel" data-disclosure="about"><span aria-hidden="true">⌄</span></button>
+      </div>
+    </div>
+    <a class="demo-cta" href={booking} target="_blank" rel="noopener noreferrer">Book a Demo <span aria-hidden="true">↗</span></a>
+    <button id="mobile-menu-toggle" class="mobile-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-menu" data-mobile-toggle><span></span><span></span></button>
+  </nav>
+
+  <div class="mega-panel" id="products-panel" data-panel="products" role="region" aria-label="Products navigation" hidden>
+    <div class="mega-inner products-mega">
+      <div class="product-feature-media"><div class="menu-annotation-art" aria-hidden="true"><div class="menu-art-toolbar"><b>DATASET · CONCEPT</b><i></i><i></i><i></i></div><div class="menu-art-body"><div class="menu-art-frame"><i></i><i></i><i></i><b>OBJECT A</b><b>OBJECT B</b></div><div class="menu-art-review"><b>REVIEW QUEUE</b><span><i></i>Example frame</span><span><i></i>Label check</span><span><i></i>Human review</span><small>SAMPLE WORKFLOW</small></div></div></div><div><small>ILLUSTRATIVE WORKFLOW · DATA QUALITY</small><b>Annotation &amp; Verification</b></div></div>
+      <section class="product-discovery"><div class="product-intro"><span class="menu-eyebrow">Discover our products</span><h2>Tools for better data and practical AI workflows.</h2><p>Two product areas in development, with their current availability clearly described.</p></div>
+        <div class="product-areas">{products.map((item) => <section class="mega-column product-menu-card"><span class="menu-eyebrow">{item.eyebrow}</span><a class="mega-item product-title" href={item.href}><span><b>{item.label}</b><small>{item.detail}</small></span><span class="item-arrow" aria-hidden="true">↗</span></a><div class="product-menu-actions"><a href={item.href}>Explore product <span aria-hidden="true">→</span></a><a href={item.href === products[0].href ? '/demos/#annotation-verification' : '/demos/#agentic-ai-platform'}>View demo <span aria-hidden="true">↗</span></a></div>{item.children && <div class="product-children"><span>{item.childrenLabel}</span>{item.children.map((child) => <a href={child.href}>{child.label}<span aria-hidden="true">↗</span></a>)}</div>}</section>)}</div>
+        <a href="/products/" class="explore-all">Explore All Products <span aria-hidden="true">→</span></a>
+      </section>
+    </div>
+  </div>
+  {groups.filter((group) => group.id !== 'products').map((group) => (
+    <div class="mega-panel compact-panel" id={`${group.id}-panel`} data-panel={group.id} role="region" aria-label={`${group.label} navigation`} hidden>
+      <div class="mega-inner compact-inner"><div class:list={['compact-feature-media', `compact-${group.id}`]} aria-hidden="true">
+        {group.id === 'solutions' && <div class="menu-solution-art"><div class="solution-browser"><i></i><i></i><i></i><div><b></b><b></b><b></b></div><span></span><span></span><span></span></div><div class="solution-mobile"><i></i><b></b><b></b><b></b></div></div>}
+        {group.id === 'services' && <div class="menu-services-art"><small>FROM IDEA TO DELIVERY</small><div><span><b>01</b><i>Research</i></span><em></em><span><b>02</b><i>Design</i></span><em></em><span><b>03</b><i>Build</i></span></div><strong>One focused path forward</strong></div>}
+        {group.id === 'about' && <div class="menu-about-art"><span class="orbit orbit-a"></span><span class="orbit orbit-b"></span><i class="orbit-core"><LogoMark size={42} /></i><b>LATENTSIG</b><small>Research · Products · Applications</small></div>}
+        <span class="menu-eyebrow">{group.id === 'solutions' ? 'DIGITAL APPLICATIONS · CONCEPT' : group.id === 'services' ? 'HOW WE WORK' : 'LATENTSIG'}</span>
+      </div><div class="compact-content"><div><span class="menu-eyebrow">Discover</span><h2>{group.label}</h2></div><div class="compact-items">{group.items.map((item) => <a class="mega-item" href={item.href}><span><b>{item.label}</b>{item.detail && <small>{item.detail}</small>}</span><span class="item-arrow" aria-hidden="true">↗</span></a>)}</div></div></div>
+    </div>
+  ))}
+  <div class="mobile-panel" id="mobile-menu" hidden data-mobile-panel>
+    <nav class="mobile-panel-inner" aria-label="Mobile navigation">
+      {groups.map((group) => <details><summary>{group.label}<span aria-hidden="true">＋</span></summary><div class="mobile-subnav">{group.id === 'products' && <a class="mobile-parent-link" href="/products/">Explore all products</a>}{group.items.map((item) => <div class="mobile-nav-group"><a href={item.href}>{item.label}</a>{group.id === 'products' && item.children?.map((child) => <a class="mobile-child" href={child.href}>↳ {child.label}</a>)}</div>)}</div></details>)}
+      <a class="mobile-direct" href="/insights/">Insights</a><a class="mobile-book" href={booking} target="_blank" rel="noopener noreferrer">Book a Demo ↗</a>
+    </nav>
+  </div>
+</header>
+
+<noscript><style>.desktop-links{display:flex!important}.mobile-toggle,.mega-panel{display:none!important}@media(max-width:900px){.desktop-links{display:none!important}.mobile-panel{display:block!important}}</style></noscript>
+>>>>>>> Stashed changes
 
 <noscript><style>nav[aria-label="Main navigation"]{position:static}#mobile-menu{display:block!important}#mobile-menu-toggle{display:none}#main-content{padding-top:0}</style></noscript>
 <style>
+<<<<<<< Updated upstream
   #mobile-menu-toggle{min-width:44px;min-height:44px;align-items:center;justify-content:center}
   #mobile-menu{max-height:calc(100vh - 80px);max-height:calc(100dvh - 80px);overflow-y:auto;overscroll-behavior:contain}
   #mobile-menu a{display:flex;align-items:center;min-height:44px}
   @media(max-width:1279px){#mobile-menu-toggle{display:inline-flex}}
+=======
+  .site-header{--nav-height:76px;--ink:#272a23;--line:#dedbd1;position:fixed;z-index:60;inset:0 0 auto;color:var(--ink);font-family:Geist,system-ui,sans-serif;background:rgba(249,247,241,.96);border-bottom:1px solid var(--line);backdrop-filter:blur(18px);transition:box-shadow .2s ease}
+  .site-nav{height:var(--nav-height);max-width:1440px;margin:auto;padding:0 clamp(18px,4vw,64px);display:flex;align-items:center;gap:20px;transition:height .2s ease}
+  .brand{display:flex;align-items:center;margin-right:auto;min-height:48px;flex:none}.brand img{display:block;width:auto;max-height:40px;object-fit:contain}
+  .desktop-links{height:100%;display:flex;align-items:center;gap:8px}.nav-group{height:100%;display:flex;align-items:center;position:relative}
+  .nav-link,.nav-disclosure{min-height:44px;display:inline-flex;align-items:center;justify-content:center;color:#3b3e35;text-decoration:none;transition:color .18s ease}.nav-link{padding:0 7px;font-size:14px;white-space:nowrap}.nav-link:hover,.nav-link.is-current,.nav-group[data-open="true"]>.nav-link{color:#68774d}
+  .nav-disclosure{width:25px;flex:none;border:0;border-radius:4px;background:transparent;color:#68774d;cursor:pointer}.nav-disclosure span{display:block;width:7px;height:7px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:translateY(-2px) rotate(45deg);transition:transform .2s ease}.nav-disclosure[aria-expanded="true"] span{transform:translateY(2px) rotate(225deg)}
+  .demo-cta,.mobile-book{min-height:46px;display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:0 17px;border:1px solid #6d7b50;border-radius:7px;background:#6d7b50;color:#fffdf8;text-decoration:none;font-weight:650;font-size:13px;white-space:nowrap;transition:background .18s ease,border-color .18s ease,transform .18s ease}.demo-cta:hover,.mobile-book:hover{background:#596742;border-color:#596742}.demo-cta span,.mobile-book span,.item-arrow{transition:transform .18s ease}.demo-cta:hover span,.mobile-book:hover span{transform:translate(2px,-2px)}
+  .mobile-toggle{display:none;width:44px;height:44px;align-items:center;justify-content:center;flex-direction:column;gap:6px;border:1px solid #d6d3c8;border-radius:7px;background:transparent;cursor:pointer}.mobile-toggle span{width:18px;height:1.5px;background:#34372f;transition:transform .2s ease}.mobile-toggle[aria-expanded="true"] span:first-child{transform:translateY(3.75px) rotate(45deg)}.mobile-toggle[aria-expanded="true"] span:last-child{transform:translateY(-3.75px) rotate(-45deg)}
+  .mega-panel{position:absolute;top:calc(100% + 8px);left:50%;right:auto;width:min(780px,calc(100vw - 32px));max-height:calc(100dvh - 104px);overflow:auto;overscroll-behavior:contain;border:1px solid #dedbd1;border-radius:14px;background:#fffdf8;color:#292c25;box-shadow:0 20px 50px rgba(32,38,27,.17);transform:translateX(-50%);transform-origin:top center;animation:menu-in .2s cubic-bezier(.2,.8,.2,1) both}.mega-panel[hidden],.mobile-panel[hidden]{display:none}@keyframes menu-in{from{opacity:0;translate:0 -6px;clip-path:inset(0 0 100% 0)}to{opacity:1;translate:0 0;clip-path:inset(0)}}
+  .mega-inner{width:100%;max-width:none;margin:0;padding:18px}.products-mega{display:grid;grid-template-columns:minmax(0,1fr);gap:0}.product-feature-media{position:relative;height:132px;min-height:132px;overflow:hidden;border-radius:9px;background:#273b31}.product-feature-media::after{content:"";position:absolute;inset:25% 0 0;background:linear-gradient(transparent,rgba(12,25,17,.72));pointer-events:none}.product-feature-media>div:last-child{position:absolute;z-index:1;left:16px;right:16px;bottom:12px;color:#fffdf8;display:grid;gap:3px}.product-feature-media small{font-size:9px;letter-spacing:.12em;font-weight:600}.product-feature-media b{font:500 20px/1.1 'Hanken Grotesk',sans-serif}.menu-annotation-art{padding:10px 14px}.menu-art-body{grid-template-columns:minmax(0,1fr) 110px;gap:8px;padding-top:8px}.menu-art-review{gap:4px;padding:6px}.menu-art-review span{padding-bottom:3px}.menu-art-review small{font-size:5px}
+  .product-discovery{padding:16px 2px 2px;display:flex;flex-direction:column;background:#fffdf8}.product-intro{margin:0 0 12px}.menu-eyebrow{display:block;margin-bottom:6px;color:#68774d;font-size:9px;font-weight:700;letter-spacing:.13em;text-transform:uppercase}.product-intro h2{margin:0 0 5px;color:#292c25;font:500 24px/1.12 'Hanken Grotesk',sans-serif;letter-spacing:-.025em}.product-intro p{max-width:620px;margin:0;color:#676b60;font-size:12px;line-height:1.5}.product-areas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.product-menu-card{align-self:stretch;min-width:0;padding:12px;border:1px solid #e2dfd5;border-radius:9px;background:#f9f8f2}.product-menu-card>.menu-eyebrow{margin-bottom:2px}.product-title{min-height:62px;padding:7px 0;margin:0}.product-title b{font-size:14px;font-weight:600}.product-title small{font-size:11px}.product-menu-actions{display:flex;flex-wrap:wrap;gap:12px;padding:7px 0 9px;border-bottom:1px solid #e3e0d7}.product-menu-actions a{color:#536540;text-decoration:none;font-size:11px;font-weight:650}.product-menu-actions a:hover{text-decoration:underline;text-underline-offset:3px}.product-children{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;padding-top:8px;border:0}.product-children>span{grid-column:1/-1;margin-bottom:2px;color:#777b6e;font-size:8px;font-weight:700;letter-spacing:.12em}.product-children a{min-height:30px;display:flex;align-items:center;gap:3px;color:#4f5745;text-decoration:none;font-size:10px}.product-children a:hover{color:#52633d}.product-children a span{color:#68774d}.explore-all{display:flex;align-items:center;justify-content:space-between;min-height:38px;margin-top:10px;padding:7px 2px 0;border-top:1px solid #dedbd1;color:#536540;font-size:12px;font-weight:700;text-decoration:none}
+  .compact-inner{display:grid;grid-template-columns:180px minmax(0,1fr);gap:0}.compact-feature-media{position:relative;min-height:240px;overflow:hidden;display:flex;align-items:flex-end;padding:15px;background:#2b342a}.compact-feature-media::after{content:"";position:absolute;inset:35% 0 0;background:linear-gradient(transparent,rgba(12,25,17,.72));pointer-events:none}.compact-feature-media .menu-eyebrow{position:relative;z-index:1;margin:0;color:#fffdf8}.compact-content{min-width:0;padding:18px 20px;background:#fffdf8}.compact-content>div:first-child{margin-bottom:10px}.compact-inner h2{margin:0;color:#292c25;font:500 25px/1.1 'Hanken Grotesk',sans-serif}.compact-items{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px 14px}.compact-items .mega-item{min-height:58px;padding:8px 9px;margin:0;border-bottom:1px solid #eeece5;border-radius:5px}.mega-item{display:flex;align-items:center;justify-content:space-between;gap:10px;min-width:0;min-height:48px;padding:8px 9px;border-radius:6px;color:#292c25;text-decoration:none;transition:background .16s ease,color .16s ease}.mega-item:hover,.mega-item:focus-visible{background:#f0efe8;color:#52633d}.mega-item b{display:block;font-size:12px;font-weight:600;line-height:1.35}.mega-item small{display:block;max-width:300px;margin-top:3px;color:#676b60;font-size:10px;line-height:1.4}.item-arrow{flex:none;color:#68774d}.mega-item:hover .item-arrow{transform:translate(2px,-2px)}
+  .mobile-panel{display:none}.mobile-panel-inner{max-width:720px;margin:auto;padding:8px 20px 22px}.mobile-panel details,.mobile-direct{border-bottom:1px solid #dedbd1}.mobile-panel summary,.mobile-direct{min-height:52px;display:flex;align-items:center;justify-content:space-between;color:#292c25;text-decoration:none;list-style:none;cursor:pointer;font-size:15px;font-weight:600}.mobile-panel summary::-webkit-details-marker{display:none}.mobile-panel summary span{font-size:20px;font-weight:400;transition:transform .18s ease}.mobile-panel details[open] summary span{transform:rotate(45deg)}.mobile-subnav{display:grid;padding:0 0 10px 10px}.mobile-subnav a,.mobile-parent-link{min-height:44px;display:flex;align-items:center;padding:6px 8px;color:#50554b;text-decoration:none;font-size:13px}.mobile-nav-group{display:grid}.mobile-subnav a:hover,.mobile-direct:hover{color:#52633d}.mobile-child{min-height:38px!important;margin-left:8px;padding-left:14px!important;border-left:1px solid #d5d2c7;font-size:12px!important}.mobile-book{display:flex;width:100%;margin-top:16px;min-height:48px}
+  .site-header :focus-visible{outline:3px solid #74629e;outline-offset:3px;border-radius:4px}.site-header a,.site-header button{touch-action:manipulation}
+  @media(max-width:1120px){.site-nav{gap:12px}.desktop-links{gap:2px}.nav-link{padding:0 5px;font-size:13px}.nav-disclosure{width:21px}.demo-cta{padding:0 12px;font-size:12px}}
+  @media(max-width:900px){.site-nav{--nav-height:68px;height:var(--nav-height);padding:0 18px;gap:10px}.brand img{max-height:38px}.desktop-links{display:none}.demo-cta{margin-left:auto;min-height:44px}.mobile-toggle{display:flex}.mega-panel{display:none}.mobile-panel{display:block;position:absolute;top:100%;left:0;right:0;height:calc(100dvh - var(--nav-height));max-height:calc(100dvh - var(--nav-height));overflow-y:auto;overscroll-behavior:contain;background:#f7f4ec;border-bottom:1px solid #dedbd1;box-shadow:0 20px 40px rgba(37,40,31,.14)}.site-header:has(.mobile-toggle[aria-expanded="true"]) .demo-cta{visibility:hidden}.mobile-panel-inner{padding:8px 22px 24px}.site-header:has(.mobile-toggle[aria-expanded="true"]){background:rgba(249,247,241,.98)}}
+  @media(max-width:560px){.site-nav{padding:0 14px;gap:8px}.brand img{max-width:132px;max-height:36px}.demo-cta{min-height:42px;padding:0 10px;font-size:11px;gap:6px}.mobile-toggle{width:42px;height:42px}.mobile-panel-inner{padding-right:18px;padding-left:18px}}
+  @media(prefers-reduced-motion:reduce){.site-header *{animation:none!important;transition-duration:.15s!important;scroll-behavior:auto!important}}
+>>>>>>> Stashed changes
 </style>
 <script>
+<<<<<<< Updated upstream
   const button = document.querySelector<HTMLButtonElement>('#mobile-menu-toggle');
   const menu = document.querySelector<HTMLElement>('#mobile-menu');
   if (button && menu) {
@@ -99,4 +206,124 @@ const links = [
     menu.addEventListener('click', event => { if((event.target as Element).closest('a')) setOpen(false); });
     matchMedia('(min-width: 1280px)').addEventListener('change', event => { if(event.matches) setOpen(false); });
   }
+=======
+  const header = document.querySelector<HTMLElement>('[data-site-header]');
+  const groups = Array.from(document.querySelectorAll<HTMLElement>('[data-nav-group]'));
+  const disclosures = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-disclosure]'));
+  const panels = Array.from(document.querySelectorAll<HTMLElement>('[data-panel]'));
+  const mobileToggle = document.querySelector<HTMLButtonElement>('[data-mobile-toggle]');
+  const mobilePanel = document.querySelector<HTMLElement>('[data-mobile-panel]');
+  const desktop = window.matchMedia('(min-width: 901px)');
+  let openId: string | null = null;
+  let openedByHover = false;
+  let closeTimer = 0;
+  let savedBodyOverflow: string | null = null;
+  const cancelClose = () => {
+    if (closeTimer) window.clearTimeout(closeTimer);
+    closeTimer = 0;
+  };
+  const lockPageScroll = () => {
+    if (savedBodyOverflow !== null) return;
+    savedBodyOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+  };
+  const unlockPageScroll = () => {
+    if (savedBodyOverflow === null) return;
+    document.body.style.overflow = savedBodyOverflow;
+    savedBodyOverflow = null;
+  };
+  const closePanels = (restoreFocus = false) => {
+    cancelClose();
+    const previousId = openId;
+    const wasMobileOpen = Boolean(mobilePanel && !mobilePanel.hidden);
+    groups.forEach(group => group.dataset.open = 'false');
+    disclosures.forEach(button => button.setAttribute('aria-expanded', 'false'));
+    panels.forEach(panel => panel.hidden = true);
+    openId = null;
+    openedByHover = false;
+    if (mobilePanel) mobilePanel.hidden = true;
+    mobileToggle?.setAttribute('aria-expanded', 'false');
+    mobileToggle?.setAttribute('aria-label', 'Open navigation');
+    unlockPageScroll();
+    if (restoreFocus) {
+      const target = wasMobileOpen
+        ? mobileToggle
+        : groups.find(group => group.dataset.navGroup === previousId)?.querySelector<HTMLButtonElement>('[data-disclosure]');
+      target?.focus();
+    }
+  };
+  const openPanel = (id: string, fromHover = false) => {
+    closePanels();
+    const group = groups.find(item => item.dataset.navGroup === id);
+    const panel = document.querySelector<HTMLElement>(`[data-panel="${id}"]`);
+    if (!group || !panel) return;
+    openId = id;
+    openedByHover = fromHover;
+    group.dataset.open = 'true';
+    const button = group.querySelector<HTMLButtonElement>('[data-disclosure]');
+    button?.setAttribute('aria-expanded', 'true');
+    panel.hidden = false;
+  };
+  disclosures.forEach(button => {
+    button.addEventListener('click', () => {
+      if (openId === button.dataset.disclosure && openedByHover) {
+        openedByHover = false;
+        cancelClose();
+        return;
+      }
+      openId === button.dataset.disclosure ? closePanels() : openPanel(button.dataset.disclosure || '');
+    });
+    button.addEventListener('keydown', event => {
+      if (event.key !== 'ArrowDown') return;
+      event.preventDefault();
+      const id = button.dataset.disclosure || '';
+      if (openId !== id) openPanel(id);
+      document.querySelector<HTMLElement>(`[data-panel="${id}"] a[href]`)?.focus();
+    });
+  });
+  groups.forEach(group => group.addEventListener('pointerenter', event => {
+    if (event.pointerType !== 'mouse' || !desktop.matches) return;
+    cancelClose();
+    const id = group.dataset.navGroup || '';
+    if (openId !== id) openPanel(id, true);
+  }));
+  const scheduleClose = (event: PointerEvent) => {
+    if (event.pointerType !== 'mouse' || !desktop.matches) return;
+    cancelClose();
+    closeTimer = window.setTimeout(() => {
+      const pointerOverNavigation = groups.some(group => group.matches(':hover')) || panels.some(panel => panel.matches(':hover'));
+      if (!pointerOverNavigation) closePanels();
+    }, 180);
+  };
+  groups.forEach(group => group.addEventListener('pointerleave', scheduleClose));
+  panels.forEach(panel => {
+    panel.addEventListener('pointerenter', cancelClose);
+    panel.addEventListener('pointerleave', scheduleClose);
+  });
+  mobileToggle?.addEventListener('click', () => {
+    if (mobileToggle.getAttribute('aria-expanded') === 'true') {
+      closePanels();
+      return;
+    }
+    closePanels();
+    if (!mobilePanel) return;
+    mobilePanel.hidden = false;
+    mobileToggle.setAttribute('aria-expanded', 'true');
+    mobileToggle.setAttribute('aria-label', 'Close navigation');
+    lockPageScroll();
+  });
+  mobilePanel?.addEventListener('click', event => { if ((event.target as Element).closest('a')) closePanels(); });
+  document.addEventListener('keydown', event => {
+    if (event.key !== 'Escape' || (!openId && (!mobilePanel || mobilePanel.hidden))) return;
+    event.preventDefault();
+    closePanels(true);
+  });
+  document.addEventListener('pointerdown', event => { if (header && !header.contains(event.target as Node)) closePanels(); });
+  document.addEventListener('focusin', event => {
+    const menuOpen = Boolean(openId || mobilePanel && !mobilePanel.hidden);
+    if (menuOpen && header && !header.contains(event.target as Node)) closePanels();
+  });
+  document.querySelectorAll<HTMLAnchorElement>('.site-header a[href]').forEach(link => link.addEventListener('click', () => closePanels()));
+  desktop.addEventListener('change', () => closePanels());
+>>>>>>> Stashed changes
 </script>

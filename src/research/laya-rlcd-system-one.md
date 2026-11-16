@@ -7,7 +7,7 @@ reading_time: "12 min"
 status: "Systems explainer"
 ---
 
-# Laya and RLCD: fast decisions for AI workflows
+## Laya and RLCD: fast decisions for AI workflows
 
 Many AI workflows use a text-generation model to produce a small decision. A support router may need one queue name. A guardrail may need a probability. An agent supervisor may need a score on a fixed rubric. Modern chat models can constrain decoding to valid JSON, but they still generate the answer token by token. Laya scores the declared options directly.
 

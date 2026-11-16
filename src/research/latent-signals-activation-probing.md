@@ -7,7 +7,7 @@ reading_time: "18 min"
 status: "Research feature · practitioner synthesis"
 ---
 
-# Latent Signals: what model internals tell us before the loss curve does
+## Latent Signals: what model internals tell us before the loss curve does
 
 Fine-tuning dashboards are built around observables: training loss, validation loss, reward, benchmark scores, and samples. These measurements matter. But each compresses a complicated learning process into either a scalar or a handful of outputs. Two runs can reach nearly identical loss while learning very different internal solutions: one may organize a robust representation of the target concept; the other may exploit formatting cues, memorize the training distribution, or damage capabilities that the benchmark never exercises.
 

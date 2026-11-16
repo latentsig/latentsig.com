@@ -8,7 +8,14 @@ const stories = [
 ];
 ---
 <section class="observatory-hero" aria-labelledby="hero-heading">
+<<<<<<< Updated upstream
   <h1 id="hero-heading" class="hero-accessible-title">Engineering the Latent Potential of AI.</h1>
+=======
+  <h1 id="hero-heading" class="hero-accessible-title">Practical AI for real work.</h1>
+  <div class="hero-background" aria-hidden="true">
+    <video class="hero-background-video" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260405_074625_a81f018a-956b-43fb-9aee-4d1508e30e6a.mp4" poster="/images/home-cinematic-fallback.png" muted autoplay playsinline preload="auto" tabindex="-1"></video>
+  </div>
+>>>>>>> Stashed changes
   <div class="hero-visual">
     <latentsig-hero-scene class="hero-scene" data-model="/3d/hero/observatory.glb" data-state="poster">
       <picture>
@@ -59,10 +66,16 @@ const stories = [
 <style>
   .observatory-hero{--hero-bg:#0b1326;--hero-ink:#dae2fd;--hero-muted:#b4bad2;--hero-accent:#c0c1ff;position:relative;isolation:isolate;overflow:hidden;background:var(--hero-bg);min-height:clamp(700px,calc(100svh - 80px),850px)}
   .hero-accessible-title{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+<<<<<<< Updated upstream
   .hero-visual{z-index:0;position:absolute;inset:0;background:radial-gradient(ellipse at 75% 45%,#292b5755,transparent 65%)}
   .hero-scene{display:block;position:absolute;inset:0;width:100%;height:100%}
   .hero-poster,.hero-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}.hero-poster{object-fit:cover;opacity:1;transition:opacity .5s}.hero-canvas{opacity:0;transition:opacity .7s}.hero-canvas :global(canvas){display:block;width:100%;height:100%}
   .hero-scene[data-state="ready"] .hero-canvas,.hero-scene[data-state="paused"] .hero-canvas{opacity:1}.hero-scene[data-state="ready"] .hero-poster,.hero-scene[data-state="paused"] .hero-poster{opacity:0}
+=======
+  .hero-visual{z-index:0;position:absolute;inset:0;background:transparent;clip-path:inset(0 43% 0 0);will-change:clip-path}
+  .hero-scene{display:block;position:absolute;inset:0;width:57%;height:100%;transform-origin:left center;will-change:transform,opacity}
+  .hero-workflow-art{position:absolute;inset:0;width:100%;height:100%;padding:clamp(18px,4vw,56px);box-sizing:border-box;background:transparent}.art-grid path{fill:none;stroke:#68734c;stroke-width:.6;opacity:.24}.hero-workflow-art text{font:600 10px/1 Geist,system-ui,sans-serif;letter-spacing:1.2px;fill:#48513c}.art-route{fill:none;stroke:url(#flow-line);stroke-width:2;stroke-dasharray:6 8;animation:route-flow 7s linear infinite}.art-input rect,.art-node rect,.art-output rect{fill:#fffdf8;stroke:#dad8ce;stroke-width:1.4}.art-input path,.art-node path{stroke:#a6aa9c;stroke-width:2;stroke-linecap:round}.art-input circle{fill:#79865b}.art-node circle{fill:#8977b3}.art-output circle{fill:#7b9871}.art-output path{fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.art-node{animation:node-lift 5.5s ease-in-out infinite}.art-node-2{animation-delay:.45s}.art-node-3{animation-delay:.9s}.art-packet{opacity:.9}@keyframes route-flow{to{stroke-dashoffset:-56}}@keyframes node-lift{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+>>>>>>> Stashed changes
   .hero-anatomy{position:absolute;inset:0;pointer-events:none;z-index:2}.hero-anatomy>span{position:absolute;top:0;left:0;opacity:0;visibility:hidden;padding:5px 10px;margin-left:20px;background:#0b1326dc;border:1px solid #a6acdf66;border-radius:3px;color:#dae2fd;font:500 11px/1.3 Geist,sans-serif;letter-spacing:.03em}.hero-anatomy>span::before{content:"";position:absolute;right:100%;top:50%;width:20px;border-top:1px solid #a6acdf88}.hero-scene[data-state="poster"] .hero-anatomy,.hero-scene[data-state="fallback"] .hero-anatomy{display:none}
   .hero-shade{z-index:1;position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,#0b1326 3%,#0b1326f5 43%,#0b1326b3 53%,transparent 72%),linear-gradient(0deg,#0b1326 1%,transparent 23%)}
   .hero-inner{z-index:2;position:relative;max-width:1280px;padding:60px 64px 140px;margin:0 auto;min-height:inherit;height:auto;display:flex;flex-direction:column;justify-content:center;pointer-events:none}
@@ -89,13 +102,111 @@ const stories = [
     h2{font-size:clamp(2.4rem,9.5vw,3.625rem);line-height:1.06;margin-bottom:20px;overflow-wrap:anywhere}
     .hero-description{font-size:1rem;line-height:1.65;max-width:520px}.hero-cue{font-size:.625rem;margin-top:18px}
     .hero-actions{margin-top:24px;gap:10px}.hero-actions>a{font-size:.8125rem;padding:0 15px;min-height:44px;gap:12px}
+<<<<<<< Updated upstream
     .hero-visual{position:relative;grid-area:scene;inset:auto;height:clamp(320px,100vw,480px);width:100%;min-width:0}
     .hero-shade{display:none}.hero-visual::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,#0b1326,transparent 12%,transparent 88%,#0b1326)}
     .hero-process{position:relative;grid-area:process;left:auto;right:auto;bottom:auto;margin:12px 24px 30px;gap:14px}.hero-process b{font-size:.6875rem}.hero-process small{display:none}.hero-process>span{padding-top:11px}
+=======
+    .hero-visual{position:relative;grid-area:scene;inset:auto;height:clamp(300px,83vw,460px);width:100%;min-width:0;clip-path:none}
+    .hero-scene{width:100%}
+    .hero-shade{display:none}
+    .hero-category-line{position:relative;right:auto;bottom:auto;grid-area:categories;margin:0 24px 26px;flex-wrap:wrap;gap:9px 12px}
+>>>>>>> Stashed changes
     .hero-motion{position:relative;grid-area:controls;right:auto;bottom:auto;justify-self:start;margin:16px 24px 0;padding:8px 12px}
     .hero-poster{object-fit:contain;object-position:center}
   }
   @media(max-width:480px){.hero-process{grid-template-columns:repeat(2,minmax(0,1fr))}}
   @media(forced-colors:active){.hero-stories,.hero-actions,.hero-motion{forced-color-adjust:auto}.hero-shade,.hero-visual{display:none}.hero-motion{display:none}.hero-actions>a{border:1px solid ButtonText}}
   @media(prefers-reduced-motion:reduce){.hero-poster,.hero-canvas,.hero-motion,.hero-actions>a,.hero-process i{transition:none}}
+</style>
+
+<script>
+  const heroVideo = document.querySelector<HTMLVideoElement>('.hero-background-video');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  if (heroVideo) {
+    let frame = 0;
+    let fadeTimer = 0;
+    let ending = false;
+    heroVideo.style.opacity = '0';
+
+    const fade = (target: number, duration: number) => {
+      cancelAnimationFrame(frame);
+      const from = Number.parseFloat(heroVideo.style.opacity || '0');
+      const started = performance.now();
+      const step = (now: number) => {
+        const progress = Math.min(1, (now - started) / duration);
+        heroVideo.style.opacity = String(from + (target - from) * progress);
+        if (progress < 1) frame = requestAnimationFrame(step);
+      };
+      frame = requestAnimationFrame(step);
+    };
+
+    const startPlayback = () => {
+      if (reducedMotion.matches) return;
+      void heroVideo.play().then(() => fade(1, 500)).catch(() => {});
+    };
+    const onCanPlay = () => startPlayback();
+    const onTimeUpdate = () => {
+      if (!ending && heroVideo.duration - heroVideo.currentTime <= .55) {
+        ending = true;
+        fade(0, 500);
+      }
+    };
+    const onEnded = () => {
+      ending = false;
+      heroVideo.style.opacity = '0';
+      window.clearTimeout(fadeTimer);
+      fadeTimer = window.setTimeout(() => {
+        if (reducedMotion.matches) return;
+        heroVideo.currentTime = 0;
+        startPlayback();
+      }, 100);
+    };
+    const onMotionChange = () => {
+      if (reducedMotion.matches) {
+        window.clearTimeout(fadeTimer);
+        cancelAnimationFrame(frame);
+        heroVideo.pause();
+        heroVideo.style.opacity = '0';
+      } else if (heroVideo.readyState >= 3 && heroVideo.paused) startPlayback();
+    };
+
+    heroVideo.addEventListener('canplay', onCanPlay, { once: true });
+    heroVideo.addEventListener('timeupdate', onTimeUpdate);
+    heroVideo.addEventListener('ended', onEnded);
+    reducedMotion.addEventListener('change', onMotionChange);
+    if (heroVideo.readyState >= 3) startPlayback();
+  }
+</script>
+
+<style is:global>
+  body.home-visual .observatory-hero{position:relative;isolation:isolate;display:block;min-height:100svh;height:100svh;overflow:hidden;padding:0;background:#000!important;color:#fff!important}
+  body.home-visual .hero-background{position:absolute;z-index:0;inset:0;overflow:hidden;background:#000 url('/images/home-cinematic-fallback.png') center 58%/cover no-repeat;pointer-events:none}
+  body.home-visual .hero-background-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center bottom;opacity:0;will-change:opacity}
+  body.home-visual .hero-visual{position:absolute;z-index:1;left:50%;right:auto;bottom:9%;top:auto;width:min(920px,90vw);height:clamp(165px,25vh,250px);clip-path:none!important;overflow:hidden;transform:translateX(-50%);border:1px solid rgba(255,255,255,.18);border-radius:24px;background:rgba(255,255,255,.025);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+  body.home-visual .hero-scene{position:absolute;inset:0;width:100%;height:100%;transform:none!important;opacity:1!important}
+  body.home-visual .hero-workflow-art{inset:0;width:100%;height:100%;padding:8px;background:transparent}
+  body.home-visual .hero-shade{position:absolute;z-index:2;inset:0;display:block!important;background:linear-gradient(180deg,rgba(0,0,0,.20),rgba(0,0,0,.05)34%,rgba(0,0,0,.63)100%),linear-gradient(90deg,rgba(0,0,0,.2),transparent 70%);pointer-events:none}
+  body.home-visual .hero-inner{position:relative;z-index:3;width:100%;max-width:1280px;height:100%;min-height:100svh;margin:0 auto;padding:130px 24px 310px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;pointer-events:auto}
+  body.home-visual .hero-copy{width:min(850px,100%);max-width:none;margin:0 auto;padding:0}
+  body.home-visual .hero-stories{min-height:0;display:grid;align-items:center}
+  body.home-visual .hero-eyebrow{justify-content:center;margin:0 0 22px;color:rgba(255,255,255,.57);font:500 11px/1.5 Inter,system-ui,sans-serif;letter-spacing:.18em}
+  body.home-visual .hero-eyebrow>span{background:#fff;box-shadow:0 0 0 5px rgba(255,255,255,.1)}
+  body.home-visual .hero-copy h2{margin:0 auto 22px;color:#fff;font:400 clamp(4.2rem,9.2vw,8rem)/.9 'Instrument Serif',serif;letter-spacing:-.045em;text-wrap:balance}
+  body.home-visual .hero-copy h2>span{display:inline}
+  body.home-visual .hero-title-accent{color:rgba(255,255,255,.62);font-style:italic}
+  body.home-visual .hero-description{max-width:610px;margin:0 auto;color:rgba(255,255,255,.76);font:400 15px/1.75 Inter,system-ui,sans-serif}
+  body.home-visual .hero-cue{margin:14px 0 0;color:rgba(255,255,255,.42);font:500 9px/1.6 Inter,system-ui,sans-serif;letter-spacing:.16em}
+  body.home-visual .hero-actions{justify-content:center;gap:12px;margin-top:24px}
+  body.home-visual .hero-actions>a{min-height:48px;padding:0 23px;border-radius:999px;font:500 13px/1 Inter,system-ui,sans-serif}
+  body.home-visual .hero-primary{background:#fff;color:#080808;border-color:#fff}
+  body.home-visual .hero-primary:hover{background:#dedede;border-color:#dedede}
+  body.home-visual .hero-secondary{background:rgba(255,255,255,.035);border-color:rgba(255,255,255,.22);color:#fff;backdrop-filter:blur(12px)}
+  body.home-visual .hero-secondary:hover{background:rgba(255,255,255,.11);border-color:rgba(255,255,255,.4)}
+  body.home-visual .hero-category-line{position:absolute;left:50%;right:auto;bottom:20px;z-index:4;transform:translateX(-50%);display:flex;justify-content:center;gap:14px;width:max-content;max-width:calc(100% - 36px);color:rgba(255,255,255,.68);font:500 10px/1.5 Inter,system-ui,sans-serif;letter-spacing:.04em}
+  body.home-visual .hero-category-line i{background:rgba(255,255,255,.5)}
+  @media(max-width:900px){body.home-visual .observatory-hero{height:auto;min-height:100svh}body.home-visual .hero-inner{height:auto;min-height:100svh;padding:125px 22px 315px}body.home-visual .hero-visual{bottom:9%;width:94vw;height:clamp(170px,28vw,235px)}body.home-visual .hero-copy h2{font-size:clamp(3.5rem,12vw,6rem)}}
+  @media(max-width:560px){body.home-visual .hero-inner{padding:112px 20px 300px}body.home-visual .hero-copy h2{font-size:clamp(3.2rem,13vw,4.5rem)}body.home-visual .hero-description{font-size:14px}body.home-visual .hero-actions{gap:9px}body.home-visual .hero-actions>a{min-height:46px;padding:0 16px;font-size:12px}body.home-visual .hero-visual{bottom:11%;width:96vw;height:170px;border-radius:18px}body.home-visual .hero-category-line{bottom:16px;gap:9px;font-size:9px}}
+  @media(prefers-reduced-motion:reduce){body.home-visual .hero-background-video{display:none}body.home-visual .hero-background{background:#000}}
 </style>

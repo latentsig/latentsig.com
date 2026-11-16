@@ -1,6 +1,7 @@
 ---
 import Article from '../../research/laya-rlcd-system-one.md';
 import Layout from '../../layouts/Layout.astro';
+import LogoMark from '../../components/LogoMark.astro';
 
 const pageTitle = 'Laya and RLCD: fast decisions for AI workflows';
 const description = 'A technical explainer on Laya, typed decision models, RLCD training, calibrated confidence, and where fast structured decisions fit in AI systems.';
@@ -21,7 +22,7 @@ const hero = '/images/research/laya/laya-rlcd-system-one-hero.jpg';
           <div class="eyebrow-row"><span class="eyebrow">Systems explainer</span><span>12 min read</span></div>
           <h1>Laya and RLCD: <em>fast decisions for AI workflows</em></h1>
           <p>{description}</p>
-          <div class="author-row"><span class="author-mark">λ</span><span><strong>Latentsig AI Research</strong><small>September 2026 · Architecture review</small></span></div>
+          <div class="author-row"><LogoMark size={40} class="author-mark" /><span><strong>Latentsig AI Research</strong><small>September 2026 · Architecture review</small></span></div>
         </div>
       </div>
     </header>

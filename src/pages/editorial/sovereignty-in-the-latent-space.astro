@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import LogoMark from '../../components/LogoMark.astro';
 
 const pageTitle = 'Sovereignty in the Latent Space: Engineering India’s AI on Our Own Terms';
 const description = 'A Bengaluru perspective on moving past AI hype, reducing black-box dependence, and engineering systems that survive contact with the real world.';
@@ -29,7 +30,7 @@ const socialImage = '/images/editorial/sovereignty-in-the-latent-space-og.svg';
           <p class="dek">Engineering India’s AI on our own terms, beyond the demo, the black box, and the rented intelligence layer.</p>
 
           <div class="author-row">
-            <span class="author-mark">λ</span>
+            <LogoMark size={40} class="author-mark" />
             <span><strong>Latentsig AI</strong><small>9 min read · Editorial note</small></span>
           </div>
         </div>
@@ -194,7 +195,7 @@ const socialImage = '/images/editorial/sovereignty-in-the-latent-space-og.svg';
         <p>May our code be clean, our algorithms accountable, our minds independent, and our ambitions limitless.</p>
 
         <div class="final-line">
-          <span>λ / LATENTSIG</span>
+          <span class="final-brand"><LogoMark size={30} /> / LATENTSIG</span>
           <p>Bring the signal.<br /><strong>We’ll build the instrument.</strong></p>
         </div>
       </article>
@@ -247,4 +248,8 @@ const socialImage = '/images/editorial/sovereignty-in-the-latent-space-og.svg';
   @media(max-width:1060px){.hero-inner{grid-template-columns:1fr;gap:48px;padding-top:70px}.hero-copy{max-width:820px}.sovereignty-console{max-width:700px;transform:none}.hero{min-height:1050px}.page-grid{grid-template-columns:1fr;max-width:910px}.toc{display:none}.article-body{grid-column:1}.principle-strip{grid-template-columns:1fr}.principle-strip>div+div{border-left:0;border-top:1px solid var(--line);padding-left:0}}
   @media(max-width:700px){body{font-size:16px}.hero{min-height:auto}.hero-inner{padding-top:55px;padding-bottom:58px;gap:42px}.eyebrow-row{flex-direction:column;gap:10px}.hero h1{font-size:49px}.dek{font-size:17px}.console-stage{grid-template-columns:1fr;gap:16px;padding:20px}.signal-gate{grid-template-columns:1fr auto 1fr;grid-template-rows:1fr;padding:1px 0}.signal-gate i{display:none}.signal-gate::before,.signal-gate::after{content:"";height:1px;background:linear-gradient(90deg,transparent,var(--saffron))}.signal-gate::after{background:linear-gradient(90deg,var(--saffron),transparent)}.signal-gate strong{writing-mode:initial;transform:none;padding:0 12px}.console-footer{align-items:flex-start;flex-direction:column}.console-footer strong{text-align:left}.principle-strip>div{padding:25px 0}.page-grid{padding-top:60px;padding-bottom:85px}.article-body .lead{font-size:19px}.article-body h2{font-size:31px;margin-top:70px}.reality-grid{grid-template-columns:1fr;padding:17px}.contact-zone{height:68px}.contact-zone span{writing-mode:initial;transform:none}.contact-zone i{display:none}.pillar-list section{grid-template-columns:1fr;gap:8px}.pillar-list section>small{border-left:0;padding:5px 0}.case-intro{grid-template-columns:1fr;gap:18px}.metric-board{grid-template-columns:1fr}.vision-flow{grid-template-columns:1fr;padding:17px}.vision-flow>i{height:25px;transform:rotate(90deg)}.decision-table{padding:0 15px 16px;overflow-x:auto}.decision-table>div{min-width:560px}.sovereignty-table{overflow-x:auto}.sovereignty-table>div{min-width:700px}.final-line{grid-template-columns:1fr;gap:15px}.closing-links{flex-wrap:wrap}.closing-links .primary-link{width:100%;max-width:330px}}
   @media(prefers-reduced-motion:no-preference){.sovereignty-console{animation:console-in .8s cubic-bezier(.2,.7,.2,1) both}.hero-copy{animation:copy-in .7s .08s cubic-bezier(.2,.7,.2,1) both}@keyframes console-in{from{opacity:0;transform:translateY(18px) rotate(1deg)}to{opacity:1;transform:translateY(0) rotate(1deg)}}@keyframes copy-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}}
+</style>
+
+<style>
+  .final-brand{display:inline-flex;align-items:center;gap:8px}
 </style>

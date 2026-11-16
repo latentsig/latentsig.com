@@ -14,9 +14,10 @@ interface Props {
 const {
   title,
   description = 'Latentsig AI, high-performance AI engineering for the enterprise.',
-  image = '/logo.png',
+  image = '/latentsig-waveform-logo.png',
   article = false,
 } = Astro.props;
+const isHome = Astro.url.pathname === '/';
 
 const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin);
 const socialImage = new URL(image, Astro.site ?? Astro.url.origin);
@@ -30,7 +31,7 @@ const socialImage = new URL(image, Astro.site ?? Astro.url.origin);
     <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="canonical" href={canonical} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta property="og:type" content={article ? 'article' : 'website'} />
@@ -44,6 +45,7 @@ const socialImage = new URL(image, Astro.site ?? Astro.url.origin);
     <meta name="twitter:image" content={socialImage} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Hanken+Grotesk:wght@100..900&display=swap" rel="stylesheet" />
     <style is:global>
@@ -72,7 +74,7 @@ const socialImage = new URL(image, Astro.site ?? Astro.url.origin);
       }
     </style>
   </head>
-  <body class="bg-surface text-on-surface font-body-md selection:bg-primary-container selection:text-on-primary-container antialiased">
+  <body class:list={['site-dark bg-surface text-on-surface font-body-md selection:bg-primary-container selection:text-on-primary-container antialiased', isHome && 'home-visual']}>
     <a class="skip-link" href="#main-content">Skip to content</a>
     <Nav />
     <main id="main-content" tabindex="-1" class="pt-20">

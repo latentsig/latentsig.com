@@ -1,6 +1,7 @@
 ---
 import Article from '../../research/latent-signals-activation-probing.md';
 import Layout from '../../layouts/Layout.astro';
+import LogoMark from '../../components/LogoMark.astro';
 
 const pageTitle = 'Latent Signals: what model internals tell us before the loss curve does';
 const description = 'A practical primer on activation probing during fine-tuning runs, and the early signals that predict whether your model is actually learning what you think it is.';
@@ -24,7 +25,7 @@ const description = 'A practical primer on activation probing during fine-tuning
           <h1>Latent Signals: what model internals tell us <em>before the loss curve does</em></h1>
           <p>{description}</p>
           <div class="author-row">
-            <span class="author-mark">λ</span>
+            <LogoMark size={40} class="author-mark" />
             <span><strong>Latentsig AI Research</strong><small>May 2026 · Practitioner synthesis</small></span>
           </div>
         </div>

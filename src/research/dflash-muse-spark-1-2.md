@@ -7,7 +7,7 @@ reading_time: "13 min"
 status: "Systems explainer · paper walkthrough"
 ---
 
-# DFlash explained: how block-diffusion drafting makes LLMs generate faster
+## DFlash explained: how block-diffusion drafting makes LLMs generate faster
 
 Large language models generate text one token at a time. Before a model can produce token 101, it has to finish token 100. This is called **autoregressive generation**. It works well, but it makes the hardware wait through a long series of small, dependent steps.
 

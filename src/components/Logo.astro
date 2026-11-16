@@ -10,24 +10,25 @@ const { height = 32, showWordmark = true, class: className = '' } = Astro.props;
 
 {showWordmark ? (
   <img
-    src="/logo.png"
-    alt="Latentsig"
-    width={2778}
-    height={950}
-    style={`height: ${height}px; width: auto; max-width: none; aspect-ratio: 2778 / 950;`}
-    class={className}
+    src="/latentsig-waveform-logo.png"
+    alt="LatentSig"
+    width={2168}
+    height={725}
+    style={`height: ${height}px; width: auto; max-width: 100%; aspect-ratio: 2168 / 725;`}
+    class:list={['brand-wordmark', className]}
   />
 ) : (
-  <div
-    style={`height: ${height}px; width: ${height}px; overflow: hidden;`}
-    class={className}
-  >
-    <img
-      src="/logo.png"
-      alt="Latentsig"
-      width={2778}
-      height={950}
-      style={`height: ${height}px; width: auto; max-width: none; aspect-ratio: 2778 / 950;`}
-    />
-  </div>
+  <img
+    src="/latentsig-waveform-mark.png"
+    alt="LatentSig"
+    width={700}
+    height={400}
+    style={`height: ${height}px; width: ${height}px; aspect-ratio: 1;`}
+    class:list={['brand-symbol', className]}
+  />
 )}
+
+<style>
+  .brand-wordmark{display:block;padding:5px 8px;border-radius:3px;background:#080c2b;object-fit:contain}
+  .brand-symbol{display:block;padding:5px;border-radius:5px;background:#080c2b;object-fit:contain}
+</style>

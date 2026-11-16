@@ -1,6 +1,7 @@
 ---
 import Article from '../../research/dflash-muse-spark-1-2.md';
 import Layout from '../../layouts/Layout.astro';
+import LogoMark from '../../components/LogoMark.astro';
 
 const pageTitle = 'DFlash explained: how block-diffusion drafting makes LLMs generate faster';
 const description = 'A visual introduction to DFlash’s architecture, why it maps well to Apple M-series and NVIDIA RTX GPUs, and what a Muse Spark integration would require.';
@@ -19,7 +20,7 @@ const hero = '/images/research/dflash/dflash-muse-spark-hero.jpg';
         <div class="eyebrow-row"><span class="eyebrow">Systems explainer</span><span>13 min read</span></div>
         <h1>DFlash explained: <em>faster tokens through parallel drafting</em></h1>
         <p>{description}</p>
-        <div class="author-row"><span class="author-mark">λ</span><span><strong>Latentsig AI Research</strong><small>August 2026 · Paper walkthrough</small></span></div>
+        <div class="author-row"><LogoMark size={40} class="author-mark" /><span><strong>Latentsig AI Research</strong><small>August 2026 · Paper walkthrough</small></span></div>
       </div>
     </header>
 
