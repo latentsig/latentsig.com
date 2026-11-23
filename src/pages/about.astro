@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import { CALENDLY_URL } from '../consts';
 ---
 
-<Layout title="About · Latentsig AI" description="About Latentsig AI: researchers and engineers bridging frontier AI and production reality.">
+<Layout title="About Latentsig AI | Bengaluru AI Engineering" description="Meet Latentsig AI, a Bengaluru-based AI engineering practice for R&D advisory, architecture and production implementation.">
   <!-- Hero -->
   <section class="relative overflow-hidden bg-grid-pattern">
     <div class="absolute inset-0 bg-gradient-to-b from-surface/40 via-surface/70 to-surface"></div>
@@ -53,28 +53,15 @@ import { CALENDLY_URL } from '../consts';
     </div>
   </section>
 
-  <!-- Team placeholder -->
+  <!-- Local practice -->
   <section class="py-32 bg-surface-container-lowest">
     <div class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop">
-      <div class="flex flex-col mb-16 gap-4">
-        <span class="text-secondary font-label-md text-label-md font-bold tracking-widest uppercase">Team</span>
-        <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">The people behind the work</h2>
-      </div>
-      <div class="grid grid-cols-12 gap-gutter">
-        {
-          [1, 2, 3].map(() => (
-            <div class="col-span-12 md:col-span-4 bg-surface-container-low border border-outline-variant/30 rounded-2xl p-8 flex flex-col gap-4">
-              <div class="w-20 h-20 rounded-full bg-gradient-to-br from-primary/30 to-secondary/20 border border-outline-variant/30 flex items-center justify-center">
-                <span class="material-symbols-outlined text-primary text-4xl">person</span>
-              </div>
-              <div>
-                <h3 class="font-headline-sm text-headline-sm text-on-surface">Team Member</h3>
-                <p class="font-label-sm text-label-sm text-on-surface-variant tracking-widest uppercase mt-1">Role / Title</p>
-              </div>
-              <p class="font-body-md text-body-md text-on-surface-variant">Short bio: background, what they're working on, what they care about. Replace this placeholder with real copy.</p>
-            </div>
-          ))
-        }
+      <div class="flex flex-col gap-6 max-w-4xl">
+        <span class="text-secondary font-label-md text-label-md font-bold tracking-widest uppercase">Bengaluru, Karnataka, India</span>
+        <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">Research-led AI engineering, based in Bengaluru.</h2>
+        <p class="font-body-lg text-body-lg text-on-surface-variant">
+          Latentsig AI is the AI engineering practice of Latentsig Software Private Limited. From Bengaluru, we help enterprise teams with research and advisory, system architecture, and production implementation. On-site engagements are available in Bengaluru, with remote work for distributed teams.
+        </p>
       </div>
     </div>
   </section>
