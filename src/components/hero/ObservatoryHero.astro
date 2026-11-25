@@ -10,7 +10,7 @@ const stories = [
 <section class="observatory-hero" aria-labelledby="hero-heading">
   <h1 id="hero-heading" class="hero-accessible-title">Practical AI for real work.</h1>
   <div class="hero-background" aria-hidden="true">
-    <video class="hero-background-video" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260405_074625_a81f018a-956b-43fb-9aee-4d1508e30e6a.mp4" poster="/images/home-cinematic-fallback.png" muted autoplay playsinline preload="auto" tabindex="-1"></video>
+    <video class="hero-background-video" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260405_074625_a81f018a-956b-43fb-9aee-4d1508e30e6a.mp4" poster="/images/home-cinematic-fallback.png" muted autoplay loop playsinline preload="auto" tabindex="-1"></video>
   </div>
   <div class="hero-shade" aria-hidden="true"></div>
   <div class="hero-inner">
@@ -87,35 +87,11 @@ const stories = [
 </style>
 
 <script>
-  const hero = document.querySelector<HTMLElement>('.observatory-hero');
-  if (hero) {
-    const stories = Array.from(hero.querySelectorAll<HTMLElement>('[data-story]'));
-    const chapters = Array.from(hero.querySelectorAll<HTMLElement>('[data-chapter]'));
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    let active = 0;
-    const showStory = (index: number) => {
-      stories.forEach((story, i) => {
-        story.style.transition = 'opacity 650ms ease';
-        story.style.opacity = String(Number(i === index));
-        story.style.visibility = i === index ? 'visible' : 'hidden';
-      });
-      chapters.forEach((chapter, i) => { chapter.dataset.active = String(i === index); });
-      active = index;
-    };
-    if (stories.length > 1 && !reducedMotion.matches) {
-      window.setInterval(() => showStory((active + 1) % stories.length), 8000);
-    }
-  }
-</script>
-
-<script>
   const heroVideo = document.querySelector<HTMLVideoElement>('.hero-background-video');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   if (heroVideo) {
     let frame = 0;
-    let fadeTimer = 0;
-    let ending = false;
     heroVideo.style.opacity = '0';
 
     const fade = (target: number, duration: number) => {
@@ -132,28 +108,14 @@ const stories = [
 
     const startPlayback = () => {
       if (reducedMotion.matches) return;
-      void heroVideo.play().then(() => fade(1, 500)).catch(() => {});
+      void heroVideo.play().catch(() => {});
     };
     const onCanPlay = () => startPlayback();
-    const onTimeUpdate = () => {
-      if (!ending && heroVideo.duration - heroVideo.currentTime <= .55) {
-        ending = true;
-        fade(0, 500);
-      }
-    };
-    const onEnded = () => {
-      ending = false;
-      heroVideo.style.opacity = '0';
-      window.clearTimeout(fadeTimer);
-      fadeTimer = window.setTimeout(() => {
-        if (reducedMotion.matches) return;
-        heroVideo.currentTime = 0;
-        startPlayback();
-      }, 100);
+    const onPlaying = () => {
+      if (!reducedMotion.matches) fade(1, 500);
     };
     const onMotionChange = () => {
       if (reducedMotion.matches) {
-        window.clearTimeout(fadeTimer);
         cancelAnimationFrame(frame);
         heroVideo.pause();
         heroVideo.style.opacity = '0';
@@ -161,8 +123,7 @@ const stories = [
     };
 
     heroVideo.addEventListener('canplay', onCanPlay, { once: true });
-    heroVideo.addEventListener('timeupdate', onTimeUpdate);
-    heroVideo.addEventListener('ended', onEnded);
+    heroVideo.addEventListener('playing', onPlaying);
     reducedMotion.addEventListener('change', onMotionChange);
     if (heroVideo.readyState >= 3) startPlayback();
   }
