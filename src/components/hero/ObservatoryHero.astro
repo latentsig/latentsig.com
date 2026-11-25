@@ -12,17 +12,6 @@ const stories = [
   <div class="hero-background" aria-hidden="true">
     <video class="hero-background-video" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260405_074625_a81f018a-956b-43fb-9aee-4d1508e30e6a.mp4" poster="/images/home-cinematic-fallback.png" muted autoplay playsinline preload="auto" tabindex="-1"></video>
   </div>
-  <div class="hero-visual">
-    <latentsig-hero-scene class="hero-scene" data-model="/3d/hero/observatory.glb" data-state="poster">
-      <picture>
-        <source media="(max-width: 900px)" srcset="/3d/hero/observatory-mobile.webp" />
-        <img class="hero-poster" src="/3d/hero/observatory.webp" alt="" width="1440" height="850" decoding="async" fetchpriority="low" />
-      </picture>
-      <div class="hero-canvas" aria-hidden="true"></div>
-      <div class="hero-anatomy" aria-hidden="true"><span data-layer-label="0">Data</span><span data-layer-label="1">Models</span><span data-layer-label="2">Runtime</span></div>
-
-    </latentsig-hero-scene>
-  </div>
   <div class="hero-shade" aria-hidden="true"></div>
   <div class="hero-inner">
         <button class="hero-motion" type="button" aria-label="Pause animation" data-paused="false" hidden>
@@ -56,9 +45,6 @@ const stories = [
     </div>
   </div>
 </section>
-<script>
-  import '../../scripts/hero-bootstrap';
-</script>
 <style>
   .observatory-hero{--hero-bg:#0b1326;--hero-ink:#dae2fd;--hero-muted:#b4bad2;--hero-accent:#c0c1ff;position:relative;isolation:isolate;overflow:hidden;background:var(--hero-bg);min-height:clamp(700px,calc(100svh - 80px),850px)}
   .hero-accessible-title{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
@@ -85,23 +71,42 @@ const stories = [
   .hero-process>span{min-width:0;overflow-wrap:anywhere;position:relative;padding:14px 0 0;border-top:1px solid #7d89a639;display:grid;gap:4px}.hero-process b{font-size:13px;font-weight:500}.hero-process small{font-size:11px}.hero-process i{position:absolute;top:-1px;height:1px;left:0;width:0;background:#c0c1ff;transition:width .9s}.hero-process [data-active="true"]{color:#dae2fd}.hero-process [data-active="true"] i{width:100%}
   @media(max-width:1100px) and (min-width:901px){.hero-inner{padding-left:36px;padding-right:36px}.hero-copy{max-width:48%}h2{font-size:52px}.hero-description{font-size:15px}.hero-process{left:36px;right:36px}.hero-actions>a{font-size:13px;padding:0 14px}}
   @media(max-width:900px){
-    .observatory-hero{min-height:0;display:grid;grid-template-areas:"copy" "controls" "scene" "process";grid-template-columns:minmax(0,1fr)}
+    .observatory-hero{min-height:0;display:grid;grid-template-areas:"copy" "process";grid-template-columns:minmax(0,1fr)}
     .hero-inner{display:contents}.hero-copy{grid-area:copy;max-width:none;width:auto;margin:0;padding:38px 24px 0;z-index:2}
     .hero-stories{min-height:0;align-items:start}.hero-eyebrow{font-size:.625rem;letter-spacing:.07em;margin-bottom:21px}
     h2{font-size:clamp(2.4rem,9.5vw,3.625rem);line-height:1.06;margin-bottom:20px;overflow-wrap:anywhere}
     .hero-description{font-size:1rem;line-height:1.65;max-width:520px}.hero-cue{font-size:.625rem;margin-top:18px}
     .hero-actions{margin-top:24px;gap:10px}.hero-actions>a{font-size:.8125rem;padding:0 15px;min-height:44px;gap:12px}
-    .hero-visual{position:relative;grid-area:scene;inset:auto;height:clamp(300px,83vw,460px);width:100%;min-width:0;clip-path:none}
-    .hero-scene{width:100%}
     .hero-shade{display:none}
-    .hero-category-line{position:relative;right:auto;bottom:auto;grid-area:categories;margin:0 24px 26px;flex-wrap:wrap;gap:9px 12px}
-    .hero-motion{position:relative;grid-area:controls;right:auto;bottom:auto;justify-self:start;margin:16px 24px 0;padding:8px 12px}
-    .hero-poster{object-fit:contain;object-position:center}
+    .hero-process{position:relative;grid-area:process;left:auto;right:auto;bottom:auto;margin:30px 24px 36px;gap:18px}
   }
   @media(max-width:480px){.hero-process{grid-template-columns:repeat(2,minmax(0,1fr))}}
   @media(forced-colors:active){.hero-stories,.hero-actions,.hero-motion{forced-color-adjust:auto}.hero-shade,.hero-visual{display:none}.hero-motion{display:none}.hero-actions>a{border:1px solid ButtonText}}
   @media(prefers-reduced-motion:reduce){.hero-poster,.hero-canvas,.hero-motion,.hero-actions>a,.hero-process i{transition:none}}
+  .hero-motion{display:none!important}
 </style>
+
+<script>
+  const hero = document.querySelector<HTMLElement>('.observatory-hero');
+  if (hero) {
+    const stories = Array.from(hero.querySelectorAll<HTMLElement>('[data-story]'));
+    const chapters = Array.from(hero.querySelectorAll<HTMLElement>('[data-chapter]'));
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let active = 0;
+    const showStory = (index: number) => {
+      stories.forEach((story, i) => {
+        story.style.transition = 'opacity 650ms ease';
+        story.style.opacity = String(Number(i === index));
+        story.style.visibility = i === index ? 'visible' : 'hidden';
+      });
+      chapters.forEach((chapter, i) => { chapter.dataset.active = String(i === index); });
+      active = index;
+    };
+    if (stories.length > 1 && !reducedMotion.matches) {
+      window.setInterval(() => showStory((active + 1) % stories.length), 8000);
+    }
+  }
+</script>
 
 <script>
   const heroVideo = document.querySelector<HTMLVideoElement>('.hero-background-video');

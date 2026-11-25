@@ -6,6 +6,7 @@ import rehypeKatex from 'rehype-katex';
 export default defineConfig({
   site: 'https://latentsig.com',
   trailingSlash: 'ignore',
+  devToolbar: { enabled: false },
   markdown: {
     remarkPlugins: [remarkMath],
     rehypePlugins: [rehypeKatex],

@@ -187,6 +187,15 @@ body.site-dark:not(.home-visual) footer.site-footer { background:#f1f1ee!importa
 body.site-dark .material-symbols-outlined { display:inline-grid!important;place-items:center;flex:none;width:38px;height:38px;overflow:hidden;border:1px solid rgba(184,206,138,.3);border-radius:50%;background:rgba(184,206,138,.08);font-size:0!important;line-height:1; }
 body.site-dark .material-symbols-outlined::before { content:'✦';color:#b8ce8a;font:500 17px/1 'Geist',sans-serif; }
 body.site-dark :where(a,button,input,textarea,select,summary):focus-visible { outline-color:#c7d8a1!important; }
+@media(max-width:700px) {
+  html,body { max-width:100%;overflow-x:clip; }
+  .insight-card { min-width:0;width:100%;max-width:100%; }
+  .insight-card>div:first-child { height:auto;aspect-ratio:16/9; }
+  .insight-card>div:first-child img { object-fit:contain!important;background:#050a18; }
+  body.site-dark:not(.home-visual) .insight-card h3 { font-size:clamp(20px,5.5vw,22px);line-height:1.28;overflow-wrap:anywhere; }
+  body.home-visual .research-cards>a { min-width:0; }
+  body.home-visual .research-cards img { object-fit:contain!important;background:#050a18; }
+}
 @media(max-width:900px) {
   body.site-dark .mega-panel { display:none!important; }
   body.site-dark .products-mega { grid-template-columns:minmax(0,1fr);gap:0; }
