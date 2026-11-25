@@ -1,6 +1,7 @@
 ---
 import Logo from './Logo.astro';
 import LogoMark from './LogoMark.astro';
+import MobileNavigation from './MobileNavigation.astro';
 import { CALENDLY_URL } from '../consts';
 
 const path = Astro.url.pathname;
@@ -41,6 +42,53 @@ const groups = [
   { label: 'Solutions', id: 'solutions', href: '/solutions/', items: solutions },
   { label: 'Services', id: 'services', href: '/services/', items: services },
   { label: 'About', id: 'about', href: '/about/', items: about },
+];
+const mobileSections = [
+  {
+    label: 'Products',
+    groups: [
+      {
+        label: 'Product platforms',
+        items: products.map((item, index) => ({ label: item.label, href: item.href, icon: index === 0 ? 'layers' : 'spark' })),
+      },
+      {
+        label: 'Product demos',
+        items: [
+          { label: 'Annotation & Verification demo', href: '/demos/#annotation-verification', icon: 'document' },
+          { label: 'Agentic AI Platform demo', href: '/demos/#agentic-ai-platform', icon: 'network' },
+        ],
+      },
+      { label: 'All products', items: [{ label: 'Explore all products', href: '/products/', icon: 'grid' }] },
+    ],
+  },
+  {
+    label: 'Solutions',
+    items: [
+      { label: 'Explore all solutions', href: '/solutions/', icon: 'grid' },
+      ...solutions.map((item, index) => ({ label: item.label, href: item.href, icon: ['globe', 'phone', 'layers', 'check', 'spark'][index] })),
+    ],
+  },
+  {
+    label: 'Services',
+    items: [
+      { label: 'Explore all services', href: '/services/', icon: 'grid' },
+      ...services.map((item, index) => ({ label: item.label, href: item.href, icon: ['flask', 'spark', 'code', 'phone'][index] })),
+    ],
+  },
+  {
+    label: 'About',
+    items: about.map((item, index) => ({ ...item, icon: index === 0 ? 'building' : 'mail' })),
+  },
+  {
+    label: 'Insights',
+    items: [
+      { label: 'Explore all insights', href: '/insights/', icon: 'grid' },
+      { label: 'Latent Signals: model activation research', href: '/insights/latent-signals-activation-probing/', icon: 'chart' },
+      { label: 'Laya and RLCD: AI workflow decisions', href: '/insights/laya-rlcd-system-one/', icon: 'network' },
+      { label: 'DFlash: faster LLM generation', href: '/insights/dflash-muse-spark-1-2/', icon: 'spark' },
+      { label: 'INT8 post-training quantization', href: '/blog/quantization-without-tears/', icon: 'document' },
+    ],
+  },
 ];
 const booking = `${CALENDLY_URL}?utm_source=latentsig_website&utm_campaign=product_demo`;
 const isCurrent = (id: string) => {
@@ -91,17 +139,12 @@ const isCurrent = (id: string) => {
       </div><div class="compact-content"><div><span class="menu-eyebrow">Discover</span><h2>{group.label}</h2></div><div class="compact-items">{group.items.map((item) => <a class="mega-item" href={item.href}><span><b>{item.label}</b>{item.detail && <small>{item.detail}</small>}</span><span class="item-arrow" aria-hidden="true">↗</span></a>)}</div></div></div>
     </div>
   ))}
-  <div class="mobile-panel" id="mobile-menu" hidden data-mobile-panel>
-    <nav class="mobile-panel-inner" aria-label="Mobile navigation">
-      {groups.map((group) => <details><summary>{group.label}<span aria-hidden="true">＋</span></summary><div class="mobile-subnav">{group.id === 'products' && <a class="mobile-parent-link" href="/products/">Explore all products</a>}{group.items.map((item) => <div class="mobile-nav-group"><a href={item.href}>{item.label}</a>{group.id === 'products' && item.children?.map((child) => <a class="mobile-child" href={child.href}>↳ {child.label}</a>)}</div>)}</div></details>)}
-      <a class="mobile-direct" href="/insights/">Insights</a><a class="mobile-book" href={booking} target="_blank" rel="noopener noreferrer">Book a Demo ↗</a>
-    </nav>
-  </div>
+  <MobileNavigation sections={mobileSections} currentPath={path} booking={booking} />
 </header>
 
-<noscript><style>.desktop-links{display:flex!important}.mobile-toggle,.mega-panel{display:none!important}@media(max-width:900px){.desktop-links{display:none!important}.mobile-panel{display:block!important}}</style></noscript>
+<noscript><style>.desktop-links{display:flex!important}.mobile-toggle,.mega-panel{display:none!important}@media(max-width:900px){.desktop-links{display:none!important}.mobile-menu-overlay{display:flex!important}}</style></noscript>
 
-<noscript><style>nav[aria-label="Main navigation"]{position:static}#mobile-menu{display:block!important}#mobile-menu-toggle{display:none}#main-content{padding-top:0}</style></noscript>
+<noscript><style>nav[aria-label="Main navigation"]{position:static}#mobile-menu{display:flex!important}#mobile-menu-toggle{display:none}#main-content{padding-top:0}</style></noscript>
 <style>
   .site-header{--nav-height:76px;--ink:#272a23;--line:#dedbd1;position:fixed;z-index:60;inset:0 0 auto;color:var(--ink);font-family:Geist,system-ui,sans-serif;background:rgba(249,247,241,.96);border-bottom:1px solid var(--line);backdrop-filter:blur(18px);transition:box-shadow .2s ease}
   .site-nav{height:var(--nav-height);max-width:1440px;margin:auto;padding:0 clamp(18px,4vw,64px);display:flex;align-items:center;gap:20px;transition:height .2s ease}
@@ -129,11 +172,17 @@ const isCurrent = (id: string) => {
   const panels = Array.from(document.querySelectorAll<HTMLElement>('[data-panel]'));
   const mobileToggle = document.querySelector<HTMLButtonElement>('[data-mobile-toggle]');
   const mobilePanel = document.querySelector<HTMLElement>('[data-mobile-panel]');
+  const mobileDialog = document.querySelector<HTMLElement>('[data-mobile-dialog]');
+  const mobileClose = document.querySelector<HTMLButtonElement>('[data-mobile-close]');
+  const mobileBackdrop = document.querySelector<HTMLElement>('[data-mobile-backdrop]');
+  const mobileSections = Array.from(document.querySelectorAll<HTMLDetailsElement>('[data-mobile-section]'));
+  const mobileSubsections = Array.from(document.querySelectorAll<HTMLDetailsElement>('[data-mobile-subsection]'));
   const desktop = window.matchMedia('(min-width: 901px)');
   let openId: string | null = null;
   let openedByHover = false;
   let closeTimer = 0;
   let savedBodyOverflow: string | null = null;
+  let inertTargets: Array<{ element: HTMLElement; wasInert: boolean }> = [];
   const cancelClose = () => {
     if (closeTimer) window.clearTimeout(closeTimer);
     closeTimer = 0;
@@ -148,6 +197,24 @@ const isCurrent = (id: string) => {
     document.body.style.overflow = savedBodyOverflow;
     savedBodyOverflow = null;
   };
+  const setPageInert = (inert: boolean) => {
+    if (inert) {
+      inertTargets = [];
+      Array.from(document.body.children).forEach(child => {
+        if (!(child instanceof HTMLElement) || child === header) return;
+        inertTargets.push({ element: child, wasInert: child.inert });
+        child.inert = true;
+      });
+      const siteNav = header?.querySelector<HTMLElement>('.site-nav');
+      if (siteNav) {
+        inertTargets.push({ element: siteNav, wasInert: siteNav.inert });
+        siteNav.inert = true;
+      }
+      return;
+    }
+    inertTargets.forEach(({ element, wasInert }) => { element.inert = wasInert; });
+    inertTargets = [];
+  };
   const closePanels = (restoreFocus = false) => {
     cancelClose();
     const previousId = openId;
@@ -160,6 +227,7 @@ const isCurrent = (id: string) => {
     if (mobilePanel) mobilePanel.hidden = true;
     mobileToggle?.setAttribute('aria-expanded', 'false');
     mobileToggle?.setAttribute('aria-label', 'Open navigation');
+    if (wasMobileOpen) setPageInert(false);
     unlockPageScroll();
     if (restoreFocus) {
       const target = wasMobileOpen
@@ -227,17 +295,56 @@ const isCurrent = (id: string) => {
     mobileToggle.setAttribute('aria-expanded', 'true');
     mobileToggle.setAttribute('aria-label', 'Close navigation');
     lockPageScroll();
+    setPageInert(true);
+    requestAnimationFrame(() => mobileClose?.focus());
   });
   mobilePanel?.addEventListener('click', event => { if ((event.target as Element).closest('a')) closePanels(); });
+  mobileClose?.addEventListener('click', () => closePanels(true));
+  mobileBackdrop?.addEventListener('pointerdown', () => closePanels(true));
+  mobileSections.forEach(section => section.addEventListener('toggle', () => {
+    if (!section.open) return;
+    mobileSections.forEach(other => { if (other !== section) other.open = false; });
+  }));
+  mobileSubsections.forEach(section => section.addEventListener('toggle', () => {
+    if (!section.open) return;
+    const parent = section.closest<HTMLElement>('[data-mobile-section]');
+    parent?.querySelectorAll<HTMLDetailsElement>('[data-mobile-subsection]').forEach(other => {
+      if (other !== section) other.open = false;
+    });
+  }));
   document.addEventListener('keydown', event => {
-    if (event.key !== 'Escape' || (!openId && (!mobilePanel || mobilePanel.hidden))) return;
+    const mobileOpen = Boolean(mobilePanel && !mobilePanel.hidden);
+    if (mobileOpen && event.key === 'Tab' && mobileDialog) {
+      const focusable = Array.from(mobileDialog.querySelectorAll<HTMLElement>('a[href],button:not([disabled]),summary,[tabindex]:not([tabindex="-1"])'))
+        .filter(element => element.getClientRects().length > 0 && !element.closest('[hidden]'));
+      if (focusable.length) {
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        const active = document.activeElement;
+        if (!mobileDialog.contains(active)) {
+          event.preventDefault();
+          (event.shiftKey ? last : first).focus();
+        } else if (!event.shiftKey && active === last) {
+          event.preventDefault();
+          first.focus();
+        } else if (event.shiftKey && active === first) {
+          event.preventDefault();
+          last.focus();
+        }
+      }
+    }
+    if (event.key !== 'Escape' || (!openId && !mobileOpen)) return;
     event.preventDefault();
     closePanels(true);
   });
   document.addEventListener('pointerdown', event => { if (header && !header.contains(event.target as Node)) closePanels(); });
   document.addEventListener('focusin', event => {
-    const menuOpen = Boolean(openId || mobilePanel && !mobilePanel.hidden);
-    if (menuOpen && header && !header.contains(event.target as Node)) closePanels();
+    const mobileOpen = Boolean(mobilePanel && !mobilePanel.hidden);
+    if (mobileOpen && mobileDialog && !mobileDialog.contains(event.target as Node)) {
+      closePanels(true);
+      return;
+    }
+    if (openId && header && !header.contains(event.target as Node)) closePanels();
   });
   document.querySelectorAll<HTMLAnchorElement>('.site-header a[href]').forEach(link => link.addEventListener('click', () => closePanels()));
   desktop.addEventListener('change', () => closePanels());

@@ -1,9 +1,11 @@
 import {writeFile,mkdir} from 'node:fs/promises';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
 import axe from 'axe-core';
 import puppeteer from 'puppeteer-core';
 const before=process.argv.includes('--before');
 const browser=await puppeteer.launch({executablePath:process.env.CHROME_PATH||'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true,args:['--enable-webgl','--ignore-gpu-blocklist']});
-const out='/private/tmp/latentsig-accessibility';await mkdir(out,{recursive:true});
+const out=process.env.ACCESSIBILITY_OUT||join(tmpdir(),'latentsig-accessibility');await mkdir(out,{recursive:true});
 const report={viewports:[],errors:[]};
 try{
  const page=await browser.newPage();page.on('pageerror',e=>report.errors.push(e.message));
@@ -15,5 +17,5 @@ try{
   report.viewports.push({width,height,...scan,...layout});await page.screenshot({path:`${out}/${before?'before':'after'}-${width}.png`});
  }
  report.passed=report.errors.length===0&&report.viewports.every(v=>!v.overflow&&v.violations.length===0);
- await writeFile(`docs/reviews/accessibility-${before?'before':'after'}.json`,JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));if(!before&&!report.passed)process.exitCode=1;
+ await writeFile(process.env.ACCESSIBILITY_REPORT||`docs/reviews/accessibility-${before?'before':'after'}.json`,JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));if(!before&&!report.passed)process.exitCode=1;
 }finally{await browser.close()}

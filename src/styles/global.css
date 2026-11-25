@@ -20,11 +20,6 @@ body { overflow-wrap: anywhere; }
 .mega-panel { background:#fffdf8!important;color:#292c25!important;border-color:#dedbd1!important; }
 .featured-product,.product-menu-card { background:#f3f0e7!important;border-color:#e2dfd5!important; }
 .menu-eyebrow,.featured-actions a,.explore-all,.item-arrow { color:#68774d!important; }
-.mobile-panel { background:#f8f5ed!important; }
-.mobile-panel summary,.mobile-direct { color:#292c25!important; }
-.mobile-subnav a,.mobile-parent-link { color:#55594f!important; }
-.mobile-nav-group { display:grid; }
-.mobile-subnav .mobile-child { min-height:38px!important;margin-left:12px;padding-left:16px!important;border-left:1px solid #d5d2c7;color:#6a7651!important;font-size:12px!important; }
 .observatory-hero,.catalog-hero,.catalog,.home-section,.home-cta,.product-hero,.product-section,.product-bottom,.directory-page,.workflow-section,.research-section,.services-section { color:var(--ls-ink)!important; background:#f7f4ec!important; }
 .catalog-card,.feature-card,.process-step,.directory-card,.home-product,.service-cards>a,.research-cards>a,.product-visual { color:var(--ls-ink)!important;background:#fffdf8!important;border-color:#dedbd1!important; }
 .catalog-card p,.product-summary,.feature-card p,.availability-note,.directory-intro,.directory-card p,.home-product p,.product-bottom>div>p:not(.product-eyebrow),.workflow-wrap>div:first-child>p:last-child { color:#676b60!important; }
@@ -133,6 +128,7 @@ body.site-dark:not(.home-visual) .product-hero .maturity { color:#e2e7dd!importa
 body.site-dark:not(.home-visual) .product-hero .maturity i { background:#b8ce8a!important; }
 body.site-dark:not(.home-visual) :is(.product-visual,.visual-step,.feature-card,.process-step,.directory-card,.catalog-card) a { color:#c4d99b!important; }
 body.site-dark:not(.home-visual) .site-header { background:rgba(9,10,12,.98)!important;color:#f1f2ef!important;border-color:rgba(255,255,255,.12)!important;box-shadow:0 10px 32px rgba(0,0,0,.2); }
+@media(max-width:900px) { body.site-dark .site-header:has(.mobile-toggle[aria-expanded="true"]) { background:transparent!important;backdrop-filter:none!important; } }
 body.site-dark:not(.home-visual) .insight-card { color:#f2f3f1!important;background:#121417!important;border-color:#34373b!important;box-shadow:0 18px 44px rgba(0,0,0,.24); }
 body.site-dark:not(.home-visual) .insight-card h3 { color:#f5f5f2!important;font:600 23px/1.2 'Hanken Grotesk',sans-serif;letter-spacing:-.025em; }
 body.site-dark:not(.home-visual) .insight-card p { color:#b9bcb8!important; }
@@ -178,10 +174,6 @@ body.site-dark .mega-item:hover,body.site-dark .mega-item:focus-visible { backgr
 body.site-dark .product-menu-actions,body.site-dark .explore-all { border-color:#34373b!important; }
 body.site-dark .product-menu-actions a,body.site-dark .product-children a,body.site-dark .explore-all,body.site-dark .item-arrow { color:#c2d895!important; }
 body.site-dark .product-children>span { color:#a5aaa7!important; }
-body.site-dark .mobile-panel { background:rgba(12,13,15,.98)!important;border-color:#303236!important;box-shadow:0 24px 60px rgba(0,0,0,.5)!important; }
-body.site-dark .mobile-panel summary,body.site-dark .mobile-direct { color:#f1f2ef!important;border-color:#303236!important; }
-body.site-dark .mobile-subnav a,body.site-dark .mobile-parent-link { color:#d0d2cf!important; }
-body.site-dark .mobile-child { border-left-color:#646b60!important; }
 body.site-dark .skip-link { background:#c5dc98!important;color:#10130c!important; }
 body.site-dark:not(.home-visual) footer.site-footer { background:#f1f1ee!important;color:#292c25!important; }
 body.site-dark .material-symbols-outlined { display:inline-grid!important;place-items:center;flex:none;width:38px;height:38px;overflow:hidden;border:1px solid rgba(184,206,138,.3);border-radius:50%;background:rgba(184,206,138,.08);font-size:0!important;line-height:1; }
@@ -202,5 +194,5 @@ body.site-dark :where(a,button,input,textarea,select,summary):focus-visible { ou
   body.site-dark .product-feature-media { height:132px;min-height:132px; }
 }
 @media(prefers-reduced-motion:reduce) {
-  body.site-dark .mega-panel,body.site-dark .mobile-panel { scroll-behavior:auto!important; }
+  body.site-dark .mega-panel { scroll-behavior:auto!important; }
 }
