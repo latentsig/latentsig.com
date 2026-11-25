@@ -1,0 +1,18 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import RouteLanding from '../../components/RouteLanding.astro';
+---
+
+<Layout title="Agentic AI Platform Concept | Latentsig" description="A Latentsig product concept for coordinating AI workflow steps with visible review points.">
+  <RouteLanding
+    eyebrow="PRODUCT CONCEPT · AGENTIC AI"
+    title="Make workflow steps easier to reason about."
+    description="The Agentic AI concept explores how a request might be planned, routed through bounded steps, and returned with a reviewable result. The workflow shown here is illustrative."
+    note="This page describes a product concept, not a live application. No public login or self-service demo is offered here."
+    cards={[
+      { eyebrow: '01 · PLAN', title: 'Make the task visible', description: 'Represent a request as understandable steps before work begins.', href: '/demos/#agentic-ai-platform', action: 'See the illustrative workflow' },
+      { eyebrow: '02 · COORDINATE', title: 'Show the handoffs', description: 'Make it clear where tools, agents, and people could take part in a workflow.', href: '/demos/#agentic-ai-platform', action: 'See the illustrative workflow' },
+      { eyebrow: '03 · REVIEW', title: 'Return a reviewable result', description: 'Keep the outcome and its review point visible to the people responsible for it.', href: '/contact/', action: 'Discuss a use case' },
+    ]}
+  />
+</Layout>

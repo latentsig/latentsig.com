@@ -1,0 +1,17 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import RouteLanding from '../../components/RouteLanding.astro';
+---
+
+<Layout title="Illustrative AI Workflow Demos | Latentsig" description="View illustrative workflow concepts for annotation and verification and agentic AI from Latentsig.">
+  <RouteLanding
+    eyebrow="ILLUSTRATIVE WORKFLOWS"
+    title="See how the work could move from input to outcome."
+    description="These visual walkthroughs explain product concepts and workflow ideas at a high level. They are not live product interfaces or interactive product demos."
+    note="For current product availability or a project-specific walkthrough, contact Latentsig."
+    cards={[
+      { eyebrow: 'DATA QUALITY · CONCEPT', title: 'Annotation & Verification', description: 'An illustrative path from source data through annotation, review, and verification.', href: '/products/annotation-verification/', action: 'Read about the concept', id: 'annotation-verification' },
+      { eyebrow: 'AGENTIC AI · CONCEPT', title: 'Agentic AI Workflow', description: 'An illustrative path showing planning, bounded work steps, and a reviewable result.', href: '/products/agentic-ai-platform/', action: 'Read about the concept', id: 'agentic-ai-platform' },
+    ]}
+  />
+</Layout>

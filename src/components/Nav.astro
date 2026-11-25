@@ -5,78 +5,20 @@ import { CALENDLY_URL } from '../consts';
 
 const path = Astro.url.pathname;
 
-const links = [
-  { href: '/rd-advisory/', label: 'R&D Advisory' },
-  { href: '/implementation/', label: 'Implementation' },
-  { href: '/consulting/', label: 'Consulting' },
-  { href: '/insights/', label: 'Insights' },
-  { href: '/about/', label: 'About' },
+const products = [
+  {
+    eyebrow: 'DATA QUALITY',
+    label: 'Annotation & Verification Platform',
+    href: '/products/annotation-verification/',
+    detail: 'A product concept for organizing annotation, review, and verification workflows.',
+  },
+  {
+    eyebrow: 'AGENTIC AI',
+    label: 'Agentic AI Platform',
+    href: '/products/agentic-ai-platform/',
+    detail: 'A product concept for making AI workflows easier to coordinate and review.',
+  },
 ];
-<<<<<<< Updated upstream
----
-
-<nav aria-label="Main navigation" class="fixed w-full top-0 z-50 bg-surface/80 backdrop-blur-xl border-b border-outline-variant/30">
-  <div class="flex justify-between items-center max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop h-20">
-    <a href="/" class="flex items-center text-on-surface hover:opacity-90 transition-opacity" aria-label="Latentsig home">
-      <Logo height={72} class="hidden xl:block" />
-      <Logo height={44} class="xl:hidden" />
-    </a>
-    <div class="hidden xl:flex items-center gap-gutter">
-      {
-        links.map((l) => (
-          <a
-            href={l.href}
-            aria-current={path === l.href ? "page" : undefined}
-            class={`inline-flex items-center min-h-11 font-label-md text-label-md transition-colors duration-200 ${
-              path === l.href
-                ? 'text-primary'
-                : 'text-on-surface-variant hover:text-primary'
-            }`}
-          >
-            {l.label}
-          </a>
-        ))
-      }
-    </div>
-    <a
-      href={CALENDLY_URL}
-      target="_blank"
-      rel="noopener"
-      class="hidden sm:inline-flex bg-primary-container text-on-primary-container px-6 py-2.5 rounded-lg font-label-md text-label-md font-bold hover:brightness-110 transition-all"
-    >
-      Get a Consultation
-    </a>
-    <button id="mobile-menu-toggle" type="button" class="xl:hidden text-on-surface" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" /></svg>
-    </button>
-  </div>
-  <div id="mobile-menu" hidden class="xl:hidden hidden border-t border-outline-variant/30 bg-surface">
-    <div class="flex flex-col px-margin-mobile py-4 gap-3">
-      {
-        links.map((l) => (
-          <a
-            href={l.href}
-            aria-current={path === l.href ? "page" : undefined}
-            class={`font-label-md text-label-md py-2 ${
-              path === l.href ? 'text-primary' : 'text-on-surface-variant'
-            }`}
-          >
-            {l.label}
-          </a>
-        ))
-      }
-      <a
-        href={CALENDLY_URL}
-        target="_blank"
-        rel="noopener"
-        class="mt-2 bg-primary-container text-on-primary-container px-6 py-3 rounded-lg font-label-md text-label-md font-bold text-center"
-      >
-        Get a Consultation
-      </a>
-    </div>
-  </div>
-</nav>
-=======
 const solutions = [
   { label: 'Websites & Web Applications', href: '/solutions/web-mobile-apps/', detail: 'Digital experiences designed for people and the work they need to do.' },
   { label: 'Mobile Applications', href: '/solutions/web-mobile-apps/#mobile', detail: 'Useful mobile products, from early concept through implementation.' },
@@ -158,16 +100,9 @@ const isCurrent = (id: string) => {
 </header>
 
 <noscript><style>.desktop-links{display:flex!important}.mobile-toggle,.mega-panel{display:none!important}@media(max-width:900px){.desktop-links{display:none!important}.mobile-panel{display:block!important}}</style></noscript>
->>>>>>> Stashed changes
 
 <noscript><style>nav[aria-label="Main navigation"]{position:static}#mobile-menu{display:block!important}#mobile-menu-toggle{display:none}#main-content{padding-top:0}</style></noscript>
 <style>
-<<<<<<< Updated upstream
-  #mobile-menu-toggle{min-width:44px;min-height:44px;align-items:center;justify-content:center}
-  #mobile-menu{max-height:calc(100vh - 80px);max-height:calc(100dvh - 80px);overflow-y:auto;overscroll-behavior:contain}
-  #mobile-menu a{display:flex;align-items:center;min-height:44px}
-  @media(max-width:1279px){#mobile-menu-toggle{display:inline-flex}}
-=======
   .site-header{--nav-height:76px;--ink:#272a23;--line:#dedbd1;position:fixed;z-index:60;inset:0 0 auto;color:var(--ink);font-family:Geist,system-ui,sans-serif;background:rgba(249,247,241,.96);border-bottom:1px solid var(--line);backdrop-filter:blur(18px);transition:box-shadow .2s ease}
   .site-nav{height:var(--nav-height);max-width:1440px;margin:auto;padding:0 clamp(18px,4vw,64px);display:flex;align-items:center;gap:20px;transition:height .2s ease}
   .brand{display:flex;align-items:center;margin-right:auto;min-height:48px;flex:none}.brand img{display:block;width:auto;max-height:40px;object-fit:contain}
@@ -186,27 +121,8 @@ const isCurrent = (id: string) => {
   @media(max-width:900px){.site-nav{--nav-height:68px;height:var(--nav-height);padding:0 18px;gap:10px}.brand img{max-height:38px}.desktop-links{display:none}.demo-cta{margin-left:auto;min-height:44px}.mobile-toggle{display:flex}.mega-panel{display:none}.mobile-panel{display:block;position:absolute;top:100%;left:0;right:0;height:calc(100dvh - var(--nav-height));max-height:calc(100dvh - var(--nav-height));overflow-y:auto;overscroll-behavior:contain;background:#f7f4ec;border-bottom:1px solid #dedbd1;box-shadow:0 20px 40px rgba(37,40,31,.14)}.site-header:has(.mobile-toggle[aria-expanded="true"]) .demo-cta{visibility:hidden}.mobile-panel-inner{padding:8px 22px 24px}.site-header:has(.mobile-toggle[aria-expanded="true"]){background:rgba(249,247,241,.98)}}
   @media(max-width:560px){.site-nav{padding:0 14px;gap:8px}.brand img{max-width:132px;max-height:36px}.demo-cta{min-height:42px;padding:0 10px;font-size:11px;gap:6px}.mobile-toggle{width:42px;height:42px}.mobile-panel-inner{padding-right:18px;padding-left:18px}}
   @media(prefers-reduced-motion:reduce){.site-header *{animation:none!important;transition-duration:.15s!important;scroll-behavior:auto!important}}
->>>>>>> Stashed changes
 </style>
 <script>
-<<<<<<< Updated upstream
-  const button = document.querySelector<HTMLButtonElement>('#mobile-menu-toggle');
-  const menu = document.querySelector<HTMLElement>('#mobile-menu');
-  if (button && menu) {
-    const setOpen = (open: boolean, restoreFocus = false) => {
-      button.setAttribute('aria-expanded', String(open));
-      button.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
-      menu.hidden = !open; menu.classList.toggle('hidden', !open);
-      if (restoreFocus) button.focus();
-    };
-    button.addEventListener('click', () => setOpen(menu.hidden));
-    document.addEventListener('keydown', event => { if(event.key === 'Escape' && !menu.hidden) setOpen(false, true); });
-    document.addEventListener('pointerdown', event => { if(!menu.hidden && !menu.contains(event.target as Node) && !button.contains(event.target as Node)) setOpen(false); });
-    document.addEventListener('focusin', event => { if(!menu.hidden && !menu.contains(event.target as Node) && !button.contains(event.target as Node)) setOpen(false); });
-    menu.addEventListener('click', event => { if((event.target as Element).closest('a')) setOpen(false); });
-    matchMedia('(min-width: 1280px)').addEventListener('change', event => { if(event.matches) setOpen(false); });
-  }
-=======
   const header = document.querySelector<HTMLElement>('[data-site-header]');
   const groups = Array.from(document.querySelectorAll<HTMLElement>('[data-nav-group]'));
   const disclosures = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-disclosure]'));
@@ -325,5 +241,4 @@ const isCurrent = (id: string) => {
   });
   document.querySelectorAll<HTMLAnchorElement>('.site-header a[href]').forEach(link => link.addEventListener('click', () => closePanels()));
   desktop.addEventListener('change', () => closePanels());
->>>>>>> Stashed changes
 </script>

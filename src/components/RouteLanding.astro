@@ -1,0 +1,74 @@
+---
+interface RouteCard {
+  eyebrow: string;
+  title: string;
+  description: string;
+  href: string;
+  action: string;
+  id?: string;
+}
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  description: string;
+  note?: string;
+  cards: RouteCard[];
+}
+
+const { eyebrow, title, description, note, cards } = Astro.props;
+---
+
+<section class="directory-page route-landing">
+  <div class="route-container">
+    <header class="route-intro">
+      <p class="directory-eyebrow">{eyebrow}</p>
+      <h1>{title}</h1>
+      <p class="route-description">{description}</p>
+      {note && <p class="route-note">{note}</p>}
+    </header>
+
+    <div class="route-grid">
+      {cards.map((card) => (
+        <a id={card.id} class="directory-card route-card" href={card.href}>
+          <span class="route-card-eyebrow">{card.eyebrow}</span>
+          <h2>{card.title}</h2>
+          <p>{card.description}</p>
+          <span class="directory-link route-card-action">{card.action}<span aria-hidden="true"> ↗</span></span>
+        </a>
+      ))}
+    </div>
+
+    <aside class="route-contact">
+      <div>
+        <p class="route-card-eyebrow">START A CONVERSATION</p>
+        <h2>Have a specific use case in mind?</h2>
+        <p>Share the workflow or product question you are exploring, and Latentsig can discuss a useful next step.</p>
+      </div>
+      <a href="/contact/">Contact Latentsig <span aria-hidden="true">↗</span></a>
+    </aside>
+  </div>
+</section>
+
+<style>
+  .route-landing { min-height: 70vh; padding: clamp(72px, 9vw, 124px) clamp(22px, 6vw, 88px) 96px; }
+  .route-container { width: min(1180px, 100%); margin-inline: auto; }
+  .route-intro { max-width: 800px; margin-bottom: 42px; }
+  .route-intro h1 { margin: 10px 0 18px; font: 500 clamp(2.5rem, 6.4vw, 5rem)/1.02 'Hanken Grotesk', sans-serif; letter-spacing: -.04em; text-wrap: balance; }
+  .route-description { max-width: 720px; margin: 0; color: #b5b8b5; font: 400 clamp(1rem, 1.5vw, 1.15rem)/1.7 Geist, system-ui, sans-serif; }
+  .route-note { max-width: 720px; margin: 20px 0 0; padding: 13px 16px; border-left: 2px solid #a8bd78; background: #111316; color: #c7cbc5; font: 400 .9rem/1.6 Geist, system-ui, sans-serif; }
+  .route-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .route-card { min-height: 225px; display: flex; flex-direction: column; align-items: flex-start; padding: 23px; border: 1px solid #303236; border-radius: 14px; color: #f2f3f1; text-decoration: none; transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease; }
+  .route-card:hover { transform: translateY(-3px); border-color: #717d5e; box-shadow: 0 18px 44px #0005; }
+  .route-card:focus-visible,.route-contact a:focus-visible { outline: 3px solid #c7d8a1; outline-offset: 4px; }
+  .route-card-eyebrow { color: #b8ce8a; font: 700 .68rem/1.5 Geist, system-ui, sans-serif; letter-spacing: .12em; text-transform: uppercase; }
+  .route-card h2,.route-contact h2 { margin: 14px 0 9px; color: #f5f5f2; font: 500 1.42rem/1.2 'Hanken Grotesk', sans-serif; }
+  .route-card p,.route-contact p { margin: 0; color: #b5b8b5; font: 400 .9rem/1.65 Geist, system-ui, sans-serif; }
+  .route-card-action { display: inline-block; margin-top: auto; padding-top: 24px; color: #c2d895; font: 650 .8rem/1.4 Geist, system-ui, sans-serif; }
+  .route-contact { display: flex; justify-content: space-between; align-items: center; gap: 28px; margin-top: 38px; padding: 27px; border: 1px solid #303236; border-radius: 14px; background: #111316; }
+  .route-contact h2 { margin-top: 8px; }
+  .route-contact a { flex: none; display: inline-flex; align-items: center; gap: 12px; min-height: 46px; padding: 0 17px; border-radius: 7px; background: #b8ce8a; color: #10130c; font: 700 .82rem/1 Geist, system-ui, sans-serif; text-decoration: none; }
+  @media (max-width: 800px) { .route-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 560px) { .route-landing { padding: 65px 18px 72px; } .route-intro { margin-bottom: 28px; } .route-grid { grid-template-columns: 1fr; gap: 12px; } .route-card { min-height: 190px; padding: 20px; } .route-contact { align-items: flex-start; flex-direction: column; padding: 22px; } }
+  @media (prefers-reduced-motion: reduce) { .route-card { transition: none; } }
+</style>

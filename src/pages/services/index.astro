@@ -1,0 +1,18 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import RouteLanding from '../../components/RouteLanding.astro';
+---
+
+<Layout title="AI Engineering Services | Latentsig" description="Latentsig provides AI R&D advisory, consulting, implementation, and digital application delivery.">
+  <RouteLanding
+    eyebrow="SERVICES"
+    title="Focused engineering for the steps between idea and implementation."
+    description="Choose a starting point for research-led advisory, technical consulting, AI implementation, or application delivery. Engagement scope depends on the problem and constraints."
+    cards={[
+      { eyebrow: 'RESEARCH & DIRECTION', title: 'R&D Advisory', description: 'Explore a technical question, evaluate approaches, and identify a practical direction.', href: '/rd-advisory/', action: 'Explore R&D advisory' },
+      { eyebrow: 'TECHNICAL GUIDANCE', title: 'Consulting', description: 'Get engineering input on architecture, data, models, and system decisions.', href: '/consulting/', action: 'Explore consulting' },
+      { eyebrow: 'BUILD & INTEGRATE', title: 'Implementation', description: 'Move a selected AI approach into a working system with engineering support.', href: '/implementation/', action: 'Explore implementation' },
+      { eyebrow: 'DIGITAL PRODUCTS', title: 'Web & Mobile Applications', description: 'Design and implement user-facing digital applications around real workflows.', href: '/solutions/web-mobile-apps/', action: 'Explore application delivery' },
+    ]}
+  />
+</Layout>

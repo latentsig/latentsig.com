@@ -1,0 +1,18 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import RouteLanding from '../../components/RouteLanding.astro';
+---
+
+<Layout title="Annotation & Verification Concept | Latentsig" description="A Latentsig product concept for organizing data annotation, review, and verification workflows.">
+  <RouteLanding
+    eyebrow="PRODUCT CONCEPT · DATA QUALITY"
+    title="From source data to reviewed datasets."
+    description="The Annotation & Verification concept explores a clear path for preparing source data, applying labels, and reviewing results. The workflow shown on this site is illustrative."
+    note="This page describes a product concept, not a live application. No public login or self-service demo is offered here."
+    cards={[
+      { eyebrow: '01 · PREPARE', title: 'Bring data into a workflow', description: 'Organize source material so annotation and review work can be handled consistently.', href: '/demos/#annotation-verification', action: 'See the illustrative workflow' },
+      { eyebrow: '02 · ANNOTATE', title: 'Make labels reviewable', description: 'Represent annotation work in a format that supports clear checks and handoffs.', href: '/demos/#annotation-verification', action: 'See the illustrative workflow' },
+      { eyebrow: '03 · VERIFY', title: 'Review before use', description: 'Keep a human review step visible before a dataset moves to its next use.', href: '/contact/', action: 'Discuss a use case' },
+    ]}
+  />
+</Layout>

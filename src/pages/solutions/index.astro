@@ -1,0 +1,17 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import RouteLanding from '../../components/RouteLanding.astro';
+---
+
+<Layout title="Application Solutions | Latentsig" description="Explore Latentsig's web and mobile application solution and related AI product concepts.">
+  <RouteLanding
+    eyebrow="SOLUTIONS"
+    title="Digital applications designed around real work."
+    description="Explore application design and implementation, alongside Latentsig's clearly labeled product concepts for data quality and AI workflows."
+    cards={[
+      { eyebrow: 'APPLICATION DEVELOPMENT', title: 'Web & Mobile Applications', description: 'Move from product discovery through interface design and responsive implementation.', href: '/solutions/web-mobile-apps/', action: 'Explore application delivery' },
+      { eyebrow: 'DATA QUALITY · CONCEPT', title: 'Annotation & Verification', description: 'An illustrative concept for annotation, review, and verification workflows.', href: '/products/annotation-verification/', action: 'Explore the concept' },
+      { eyebrow: 'AGENTIC AI · CONCEPT', title: 'Agentic AI Platform', description: 'An illustrative concept for coordinating bounded AI workflow steps.', href: '/products/agentic-ai-platform/', action: 'Explore the concept' },
+    ]}
+  />
+</Layout>

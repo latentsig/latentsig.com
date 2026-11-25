@@ -1,0 +1,19 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import RouteLanding from '../../components/RouteLanding.astro';
+---
+
+<Layout title="Web & Mobile Application Development | Latentsig" description="Latentsig designs and implements web and mobile applications around user needs and real workflows.">
+  <RouteLanding
+    eyebrow="APPLICATION SOLUTION"
+    title="Turn user needs into useful digital tools."
+    description="Latentsig works across product discovery, interface design, and responsive web and mobile implementation. The right scope depends on the product and the people who will use it."
+    cards={[
+      { eyebrow: '01 · DISCOVERY', title: 'Start with the user need', description: 'Clarify the audience, workflow, and outcome the application should support.', href: '/contact/', action: 'Discuss a project' },
+      { eyebrow: '02 · WEB', title: 'Build for the browser', description: 'Plan clear, accessible web experiences that adapt to different screen sizes.', href: '/contact/', action: 'Discuss a web application' },
+      { eyebrow: '03 · MOBILE', title: 'Design for mobile use', description: 'Shape mobile experiences around the context and tasks of the intended users.', href: '/contact/', action: 'Discuss a mobile application', id: 'mobile' },
+      { eyebrow: 'SELECTED WORK', title: 'Application portfolio', description: 'Ask Latentsig about relevant experience and examples for a specific project.', href: '/contact/', action: 'Request relevant examples', id: 'portfolio' },
+    ]}
+    note="Examples are shared in context; this page does not imply a public portfolio catalogue."
+  />
+</Layout>

@@ -1,0 +1,18 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import RouteLanding from '../../components/RouteLanding.astro';
+---
+
+<Layout title="AI Product Concepts | Latentsig" description="Explore Latentsig's product concepts for data annotation and verification and practical AI workflows.">
+  <RouteLanding
+    eyebrow="PRODUCTS & CONCEPTS"
+    title="Tools for dependable data and practical AI workflows."
+    description="Latentsig is developing product concepts for data quality and agentic AI. This page describes the current concepts; it does not imply that a public product is available."
+    note="Availability and demo access are not listed as public here. Contact Latentsig to discuss current status."
+    cards={[
+      { eyebrow: 'DATA QUALITY · CONCEPT', title: 'Annotation & Verification', description: 'A proposed workflow for organizing data annotation, review, and verification.', href: '/products/annotation-verification/', action: 'Explore the concept' },
+      { eyebrow: 'AGENTIC AI · CONCEPT', title: 'Agentic AI Platform', description: 'A proposed way to make AI workflow steps easier to coordinate and review.', href: '/products/agentic-ai-platform/', action: 'Explore the concept' },
+      { eyebrow: 'DIGITAL APPLICATIONS', title: 'Web & Mobile Applications', description: 'Application design and implementation for products built around real work.', href: '/solutions/web-mobile-apps/', action: 'Explore the solution' },
+    ]}
+  />
+</Layout>
