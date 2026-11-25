@@ -24,8 +24,8 @@ const stories = [
         <p>{stories[0].text}</p>
         {stories.slice(1).map(story => <section><h2>{story.title} {story.accent}</h2><p>{story.text}</p></section>)}
       </div>
-      <div class="hero-stories" aria-hidden="true">
-        {stories.map((story, i) => <div class="hero-story" data-story={i} style={i === 0 ? '' : 'opacity:0;visibility:hidden'}>
+      <div class="hero-stories" aria-live="polite">
+        {stories.map((story, i) => <div class="hero-story" id={`hero-story-${i}`} data-story={i} data-active={i === 0 ? 'true' : 'false'} style={i === 0 ? 'opacity:1;visibility:visible;transform:translateY(0);' : 'opacity:0;visibility:hidden;transform:translateY(6px);'}>
           <p class="hero-eyebrow"><span></span>{story.eyebrow}</p>
           <h2><span>{story.title}</span>{' '}<span class="hero-title-accent">{story.accent}</span>{' '}{story.end && <span>{story.end}</span>}</h2>
           <p class="hero-description">{story.text}</p>
@@ -37,11 +37,11 @@ const stories = [
         <a href="/implementation/" class="hero-secondary">Our Capabilities <span aria-hidden="true">↗</span></a>
       </div>
     </div>
-    <div class="hero-process" aria-hidden="true">
-      <span data-chapter="0" data-active="true"><i></i><b>Latentsig</b><small>The signal</small></span>
-      <span data-chapter="1"><i></i><b>Research</b><small>Discover the possibility</small></span>
-      <span data-chapter="2"><i></i><b>Architecture</b><small>Shape the system</small></span>
-      <span data-chapter="3"><i></i><b>Deployment</b><small>Bring it to life</small></span>
+    <div class="hero-process" aria-label="Hero chapters" role="tablist">
+      <button type="button" class="hero-process-step" data-chapter="0" data-active="true" role="tab" aria-selected="true" aria-controls="hero-story-0"><i></i><b>Latentsig</b><small>The signal</small></button>
+      <button type="button" class="hero-process-step" data-chapter="1" data-active="false" role="tab" aria-selected="false" aria-controls="hero-story-1"><i></i><b>Research</b><small>Discover the possibility</small></button>
+      <button type="button" class="hero-process-step" data-chapter="2" data-active="false" role="tab" aria-selected="false" aria-controls="hero-story-2"><i></i><b>Architecture</b><small>Shape the system</small></button>
+      <button type="button" class="hero-process-step" data-chapter="3" data-active="false" role="tab" aria-selected="false" aria-controls="hero-story-3"><i></i><b>Deployment</b><small>Bring it to life</small></button>
     </div>
   </div>
 </section>
@@ -68,7 +68,12 @@ const stories = [
   .hero-actions>a:focus-visible,.hero-motion:focus-visible{outline:2px solid #dae2fd;outline-offset:5px}
   .hero-motion{pointer-events:auto;position:absolute;right:32px;bottom:120px;z-index:4;background:#131b2eb3;border:1px solid #53617b66;border-radius:5px;min-height:44px;min-width:44px;color:#bfc6de;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:8px;cursor:pointer}.hero-motion[hidden]{display:none}.hero-motion:hover{background:#28314b}.motion-label{font:400 12px/1.2 Geist,sans-serif;white-space:nowrap;opacity:1;transition:max-width .2s,opacity .2s}.hero-motion:hover .motion-label,.hero-motion:focus-visible .motion-label{max-width:110px;opacity:1}.resume-symbol{display:none}.hero-motion[data-paused="true"] .pause-symbol{display:none}.hero-motion[data-paused="true"] .resume-symbol{display:block}
   .hero-process{position:absolute;bottom:30px;left:64px;right:64px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:30px;font-family:Geist,sans-serif;color:#7d89a6}
-  .hero-process>span{min-width:0;overflow-wrap:anywhere;position:relative;padding:14px 0 0;border-top:1px solid #7d89a639;display:grid;gap:4px}.hero-process b{font-size:13px;font-weight:500}.hero-process small{font-size:11px}.hero-process i{position:absolute;top:-1px;height:1px;left:0;width:0;background:#c0c1ff;transition:width .9s}.hero-process [data-active="true"]{color:#dae2fd}.hero-process [data-active="true"] i{width:100%}
+  .hero-process-step,.hero-process>span{min-width:0;overflow-wrap:normal!important;word-break:normal!important;position:relative;padding:14px 0 0;border:none;border-top:1px solid #7d89a639;background:transparent;display:grid;gap:4px;text-align:left;color:inherit;cursor:pointer}
+  .hero-process b{font-size:13px;font-weight:500}
+  .hero-process small{font-size:11px}
+  .hero-process i{position:absolute;top:-1px;height:1px;left:0;width:0;background:#c0c1ff;transition:width .9s}
+  .hero-process [data-active="true"]{color:#dae2fd}
+  .hero-process [data-active="true"] i{width:100%}
   @media(max-width:1100px) and (min-width:901px){.hero-inner{padding-left:36px;padding-right:36px}.hero-copy{max-width:48%}h2{font-size:52px}.hero-description{font-size:15px}.hero-process{left:36px;right:36px}.hero-actions>a{font-size:13px;padding:0 14px}}
   @media(max-width:900px){
     .observatory-hero{min-height:0;display:grid;grid-template-areas:"copy" "process";grid-template-columns:minmax(0,1fr)}
@@ -127,6 +132,100 @@ const stories = [
     reducedMotion.addEventListener('change', onMotionChange);
     if (heroVideo.readyState >= 3) startPlayback();
   }
+
+  // Chapter and Story Automatic Carousel Animation
+  const stories = Array.from(document.querySelectorAll<HTMLElement>('.hero-story'));
+  const chapters = Array.from(document.querySelectorAll<HTMLElement>('.hero-process-step, .hero-process > [data-chapter]'));
+  const heroSection = document.querySelector<HTMLElement>('.observatory-hero');
+
+  if (stories.length > 0 && chapters.length > 0) {
+    let current = 0;
+    let timer: number | null = null;
+    const DURATION = 10000;
+    let isPaused = false;
+
+    const setChapter = (index: number) => {
+      current = index;
+      stories.forEach((story, i) => {
+        const active = i === current;
+        story.setAttribute('data-active', String(active));
+        story.style.opacity = active ? '1' : '0';
+        story.style.visibility = active ? 'visible' : 'hidden';
+        story.style.pointerEvents = active ? 'auto' : 'none';
+        story.style.transform = active ? 'translateY(0)' : 'translateY(8px)';
+      });
+      chapters.forEach((chap, i) => {
+        const active = i === current;
+        chap.setAttribute('data-active', String(active));
+        chap.setAttribute('aria-selected', String(active));
+        const progressBar = chap.querySelector<HTMLElement>('i');
+        if (progressBar) {
+          progressBar.style.animation = 'none';
+          void progressBar.offsetHeight;
+          if (active && !reducedMotion.matches && !isPaused) {
+            progressBar.style.animation = `hero-progress-fill ${DURATION}ms linear forwards`;
+          }
+        }
+      });
+    };
+
+    const nextChapter = () => {
+      const next = (current + 1) % stories.length;
+      setChapter(next);
+    };
+
+    const startTimer = () => {
+      stopTimer();
+      if (reducedMotion.matches || isPaused || document.hidden) return;
+      const activeBar = chapters[current]?.querySelector<HTMLElement>('i');
+      if (activeBar) {
+        activeBar.style.animation = 'none';
+        void activeBar.offsetHeight;
+        activeBar.style.animation = `hero-progress-fill ${DURATION}ms linear forwards`;
+      }
+      timer = window.setTimeout(() => {
+        nextChapter();
+        startTimer();
+      }, DURATION);
+    };
+
+    const stopTimer = () => {
+      if (timer) {
+        clearTimeout(timer);
+        timer = null;
+      }
+    };
+
+    chapters.forEach((chap, i) => {
+      chap.addEventListener('click', () => {
+        setChapter(i);
+        startTimer();
+      });
+    });
+
+    if (heroSection) {
+      heroSection.addEventListener('mouseenter', () => {
+        isPaused = true;
+        stopTimer();
+        const activeBar = chapters[current]?.querySelector<HTMLElement>('i');
+        if (activeBar) activeBar.style.animationPlayState = 'paused';
+      });
+      heroSection.addEventListener('mouseleave', () => {
+        isPaused = false;
+        const activeBar = chapters[current]?.querySelector<HTMLElement>('i');
+        if (activeBar) activeBar.style.animationPlayState = 'running';
+        startTimer();
+      });
+    }
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) stopTimer();
+      else startTimer();
+    });
+
+    setChapter(0);
+    startTimer();
+  }
 </script>
 
 <style is:global>
@@ -139,23 +238,59 @@ const stories = [
   body.home-visual .hero-shade{position:absolute;z-index:2;inset:0;display:block!important;background:linear-gradient(180deg,rgba(0,0,0,.20),rgba(0,0,0,.05)34%,rgba(0,0,0,.63)100%),linear-gradient(90deg,rgba(0,0,0,.2),transparent 70%);pointer-events:none}
   body.home-visual .hero-inner{position:relative;z-index:3;width:100%;max-width:1280px;height:100%;min-height:100svh;margin:0 auto;padding:130px 24px 310px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;pointer-events:auto}
   body.home-visual .hero-copy{width:min(850px,100%);max-width:none;margin:0 auto;padding:0}
-  body.home-visual .hero-stories{min-height:0;display:grid;align-items:center}
-  body.home-visual .hero-eyebrow{justify-content:center;margin:0 0 22px;color:rgba(255,255,255,.57);font:500 11px/1.5 Inter,system-ui,sans-serif;letter-spacing:.18em}
-  body.home-visual .hero-eyebrow>span{background:#fff;box-shadow:0 0 0 5px rgba(255,255,255,.1)}
-  body.home-visual .hero-copy h2{margin:0 auto 22px;color:#fff;font:400 clamp(4.2rem,9.2vw,8rem)/.9 'Instrument Serif',serif;letter-spacing:-.045em;text-wrap:balance}
+  body.home-visual .hero-stories{min-height:380px;display:grid;align-items:center}
+  body.home-visual .hero-story{grid-area:1/1;will-change:opacity,transform;transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
+  body.home-visual .hero-story[data-active="true"]{opacity:1!important;visibility:visible!important;pointer-events:auto!important;transform:translateY(0)!important}
+  body.home-visual .hero-story[data-active="false"]{opacity:0!important;visibility:hidden!important;pointer-events:none!important;transform:translateY(8px)!important}
+  body.home-visual .hero-eyebrow{justify-content:center;margin:0 0 22px;color:#c2d895;font:600 11.5px/1.5 'Geist',Inter,system-ui,sans-serif;letter-spacing:.18em}
+  body.home-visual .hero-eyebrow>span{background:#c2d895;box-shadow:0 0 0 5px rgba(194,216,149,.2)}
+  body.home-visual .hero-copy h2{margin:0 auto 22px;color:#ffffff;font:700 clamp(3.2rem,6.6vw,5.75rem)/1.05 'Hanken Grotesk','Geist',sans-serif;letter-spacing:-.035em;text-wrap:balance}
   body.home-visual .hero-copy h2>span{display:inline}
-  body.home-visual .hero-title-accent{color:rgba(255,255,255,.62);font-style:italic}
-  body.home-visual .hero-description{max-width:610px;margin:0 auto;color:rgba(255,255,255,.76);font:400 15px/1.75 Inter,system-ui,sans-serif}
-  body.home-visual .hero-cue{margin:14px 0 0;color:rgba(255,255,255,.42);font:500 9px/1.6 Inter,system-ui,sans-serif;letter-spacing:.16em}
-  body.home-visual .hero-actions{justify-content:center;gap:12px;margin-top:24px}
-  body.home-visual .hero-actions>a{min-height:48px;padding:0 23px;border-radius:999px;font:500 13px/1 Inter,system-ui,sans-serif}
+  body.home-visual .hero-title-accent{color:#ffffff;font-style:normal;font-weight:700}
+  body.home-visual .hero-description{max-width:660px;margin:0 auto;color:#ffffff;font:450 16.5px/1.7 'Geist',Inter,system-ui,sans-serif;text-shadow:0 1px 12px rgba(0,0,0,.6)}
+  body.home-visual .hero-cue{margin:20px 0 0;color:#ffffff;font:700 11px/1.6 'Geist',Inter,system-ui,sans-serif;letter-spacing:.22em;text-transform:uppercase;text-shadow:0 1px 8px rgba(0,0,0,.8)}
+  body.home-visual .hero-process{position:absolute;bottom:32px;left:64px;right:64px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:32px;font-family:'Geist',Inter,sans-serif;color:#ffffff;pointer-events:auto;z-index:4}
+  body.home-visual .hero-process-step,body.home-visual .hero-process>span{min-width:0;overflow-wrap:normal!important;word-break:normal!important;white-space:normal;position:relative;padding:16px 0 0;border:none;border-top:1px solid rgba(255,255,255,.32);background:transparent;display:grid;gap:5px;text-align:left;color:rgba(255,255,255,.68);cursor:pointer;transition:color .25s ease}
+  body.home-visual .hero-process-step:hover,body.home-visual .hero-process>span:hover{color:rgba(255,255,255,.95)}
+  body.home-visual .hero-process b{font-size:14.5px;font-weight:650;color:inherit;text-shadow:0 1px 8px rgba(0,0,0,.7);white-space:nowrap}
+  body.home-visual .hero-process small{font-size:12px;font-weight:450;color:inherit;text-shadow:0 1px 8px rgba(0,0,0,.7);line-height:1.4}
+  body.home-visual .hero-process i{position:absolute;top:-1.5px;height:2px;left:0;width:0%;background:#ffffff;box-shadow:0 0 10px rgba(255,255,255,.9)}
+  body.home-visual .hero-process [data-active="true"]{color:#ffffff}
+  body.home-visual .hero-process [data-active="true"] b{color:#ffffff}
+  body.home-visual .hero-process [data-active="true"] small{color:#ffffff}
+  body.home-visual .hero-process [data-active="true"] i{animation:hero-progress-fill 10000ms linear forwards}
+  @keyframes hero-progress-fill{from{width:0%}to{width:100%}}
+  body.home-visual .hero-actions{justify-content:center;gap:12px;margin-top:28px}
+  body.home-visual .hero-actions>a{min-height:48px;padding:0 24px;border-radius:999px;font:600 13.5px/1 'Geist',Inter,system-ui,sans-serif;letter-spacing:-.01em}
   body.home-visual .hero-primary{background:#fff;color:#080808;border-color:#fff}
   body.home-visual .hero-primary:hover{background:#dedede;border-color:#dedede}
   body.home-visual .hero-secondary{background:rgba(255,255,255,.035);border-color:rgba(255,255,255,.22);color:#fff;backdrop-filter:blur(12px)}
   body.home-visual .hero-secondary:hover{background:rgba(255,255,255,.11);border-color:rgba(255,255,255,.4)}
   body.home-visual .hero-category-line{position:absolute;left:50%;right:auto;bottom:20px;z-index:4;transform:translateX(-50%);display:flex;justify-content:center;gap:14px;width:max-content;max-width:calc(100% - 36px);color:rgba(255,255,255,.68);font:500 10px/1.5 Inter,system-ui,sans-serif;letter-spacing:.04em}
   body.home-visual .hero-category-line i{background:rgba(255,255,255,.5)}
-  @media(max-width:900px){body.home-visual .observatory-hero{height:auto;min-height:100svh}body.home-visual .hero-inner{height:auto;min-height:100svh;padding:125px 22px 315px}body.home-visual .hero-visual{bottom:9%;width:94vw;height:clamp(170px,28vw,235px)}body.home-visual .hero-copy h2{font-size:clamp(3.5rem,12vw,6rem)}}
-  @media(max-width:560px){body.home-visual .hero-inner{padding:112px 20px 300px}body.home-visual .hero-copy h2{font-size:clamp(3.2rem,13vw,4.5rem)}body.home-visual .hero-description{font-size:14px}body.home-visual .hero-actions{gap:9px}body.home-visual .hero-actions>a{min-height:46px;padding:0 16px;font-size:12px}body.home-visual .hero-visual{bottom:11%;width:96vw;height:170px;border-radius:18px}body.home-visual .hero-category-line{bottom:16px;gap:9px;font-size:9px}}
+  @media(max-width:900px){
+    body.home-visual .observatory-hero{height:auto;min-height:100svh}
+    body.home-visual .hero-inner{height:auto;min-height:100svh;padding:115px 20px 48px;display:flex;flex-direction:column;justify-content:space-between;align-items:center}
+    body.home-visual .hero-visual{display:none}
+    body.home-visual .hero-copy{width:100%;max-width:580px}
+    body.home-visual .hero-stories{min-height:300px;align-items:flex-start}
+    body.home-visual .hero-copy h2{font-size:clamp(2.3rem,7.5vw,3.8rem);line-height:1.08}
+    body.home-visual .hero-process{position:relative;left:auto;right:auto;bottom:auto;margin:42px auto 0;width:100%;max-width:540px;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 24px}
+    body.home-visual .hero-process-step,body.home-visual .hero-process>span{padding-top:12px;border-top:1px solid rgba(255,255,255,.32)}
+    body.home-visual .hero-process b{font-size:14px;white-space:normal}
+    body.home-visual .hero-process small{font-size:11.5px}
+  }
+  @media(max-width:560px){
+    body.home-visual .hero-inner{padding:100px 16px 36px}
+    body.home-visual .hero-copy h2{font-size:clamp(2.1rem,9.2vw,2.85rem)}
+    body.home-visual .hero-description{font-size:14.5px;line-height:1.6}
+    body.home-visual .hero-stories{min-height:310px}
+    body.home-visual .hero-actions{gap:10px;margin-top:18px}
+    body.home-visual .hero-actions>a{min-height:46px;padding:0 18px;font-size:12.5px}
+    body.home-visual .hero-category-line{bottom:16px;gap:9px;font-size:9px}
+    body.home-visual .hero-process{margin-top:32px;gap:14px 14px}
+    body.home-visual .hero-process-step b{font-size:13px}
+    body.home-visual .hero-process-step small{font-size:11px}
+  }
   @media(prefers-reduced-motion:reduce){body.home-visual .hero-background-video{display:none}body.home-visual .hero-background{background:#000}}
 </style>

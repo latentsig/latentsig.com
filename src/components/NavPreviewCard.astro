@@ -1,0 +1,25 @@
+---
+interface Props {
+  href: string;
+  image: string;
+  eyebrow: string;
+  title: string;
+  description: string;
+  cta: string;
+}
+
+const { href, image, eyebrow, title, description, cta } = Astro.props;
+---
+
+<a class="nav-preview-card" href={href}>
+  <img class="nav-preview-img" src={image} alt="" loading="lazy" decoding="async" />
+  <span class="nav-preview-pill">
+    <i class="nav-preview-dot" aria-hidden="true"></i>
+    {eyebrow}
+  </span>
+  <div class="nav-preview-copy">
+    <strong class="nav-preview-title">{title}</strong>
+    <p class="nav-preview-desc">{description}</p>
+    <span class="nav-preview-cta">{cta} <span class="nav-preview-arrow" aria-hidden="true">→</span></span>
+  </div>
+</a>

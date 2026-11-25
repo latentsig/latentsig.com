@@ -2,13 +2,21 @@
 interface Props {
   height?: number;
   showWordmark?: boolean;
+  variant?: 'dark' | 'light';
   class?: string;
 }
 
-const { height = 32, showWordmark = true, class: className = '' } = Astro.props;
+const { height = 32, showWordmark = true, variant = 'dark', class: className = '' } = Astro.props;
 ---
 
-{showWordmark ? (
+{showWordmark && variant === 'light' ? (
+  <span class:list={['brand-lockup-light', className]} style={`--logo-h:${height}px`}>
+    <span class="brand-badge" aria-hidden="true">
+      <img src="/latentsig-waveform-mark.png" alt="" width={700} height={400} />
+    </span>
+    <span class="brand-wordmark-text">latentsig</span>
+  </span>
+) : showWordmark ? (
   <img
     src="/latentsig-waveform-logo.png"
     alt="LatentSig"
@@ -31,4 +39,13 @@ const { height = 32, showWordmark = true, class: className = '' } = Astro.props;
 <style>
   .brand-wordmark{display:block;padding:5px 8px;border-radius:3px;background:#080c2b;object-fit:contain}
   .brand-symbol{display:block;padding:5px;border-radius:5px;background:#080c2b;object-fit:contain}
+  .brand-lockup-light{display:inline-flex;align-items:center;gap:10px;line-height:1;white-space:nowrap;flex-shrink:0}
+  .brand-badge{display:inline-grid;place-items:center;flex:none;width:var(--logo-h,36px);height:var(--logo-h,36px);padding:4.5px;border-radius:9px;background:#0d1128;box-shadow:0 2px 8px rgba(8,12,43,.18)}
+  .brand-badge img{display:block;width:100%!important;height:auto!important;max-width:none!important;max-height:none!important;object-fit:contain}
+  .brand-wordmark-text{color:#111318;font:700 20px/1 'Geist','Inter',system-ui,sans-serif;letter-spacing:-.025em;white-space:nowrap}
+  @media(max-width:480px){
+    .brand-lockup-light{gap:8px}
+    .brand-badge{width:35px;height:35px;padding:4px;border-radius:8px}
+    .brand-wordmark-text{font-size:18.5px}
+  }
 </style>
