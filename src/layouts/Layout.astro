@@ -22,6 +22,30 @@ const isHome = Astro.url.pathname === '/';
 const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin);
 const socialImage = new URL(image, Astro.site ?? Astro.url.origin);
 
+const organizationJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': 'https://latentsig.com/#organization',
+  name: 'Latentsig AI',
+  legalName: 'Latentsig Software Private Limited',
+  url: 'https://latentsig.com/',
+  logo: new URL('/logo.png', Astro.site ?? Astro.url.origin).href,
+  email: 'latentsig@gmail.com',
+  sameAs: ['https://github.com/latentsig'],
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Bengaluru',
+    addressRegion: 'Karnataka',
+    addressCountry: 'IN',
+  },
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'business inquiries',
+    email: 'latentsig@gmail.com',
+    url: 'https://latentsig.com/contact/',
+  },
+};
+
 ---
 
 <!doctype html>
@@ -34,6 +58,7 @@ const socialImage = new URL(image, Astro.site ?? Astro.url.origin);
     <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <script type="application/ld+json" set:html={JSON.stringify(organizationJsonLd)} />
     <meta property="og:type" content={article ? 'article' : 'website'} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
