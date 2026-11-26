@@ -1,0 +1,32 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ProductDemo from '../../components/products/ProductDemo.astro';
+import { CALENDLY_URL } from '../../consts';
+---
+
+<Layout title="Guided Product Demos | Latentsig AI" description="Try local sample walkthroughs for Annotation & Verification Platform and Agentic AI Studio. No API key is required.">
+  <div class="demos-page">
+    <header class="demos-intro"><span class="eyebrow">PRODUCT DEMONSTRATIONS</span><h1>Follow the work from input to review.</h1><p>These local walkthroughs use fictional sample data and do not call an external model.</p><nav aria-label="Choose a guided demonstration"><a href="#annotation-verification">Annotation & Verification Platform ↘</a><a href="#agentic-ai-platform">Agentic AI Studio ↘</a></nav></header>
+
+    <section id="annotation-verification" class="demo-section" aria-labelledby="annotation-heading"><div class="section-copy"><div><span class="eyebrow">01 / DATA QUALITY</span><h2 id="annotation-heading">Annotation & Verification Platform</h2><p>Watch independent labels move through disagreement review into a local sample export.</p></div><a href="/products/annotation-verification/">Explore product ↗</a></div><ProductDemo kind="annotation" instanceId="annotation-demo-page" /><div class="below-actions"><a href="/products/annotation-verification/">Product overview ↗</a><a href={CALENDLY_URL} target="_blank" rel="noopener">Book a demo ↗</a></div></section>
+
+    <section id="agentic-ai-platform" class="demo-section" aria-labelledby="agentic-heading"><div class="section-copy"><div><span class="eyebrow">02 / WORKFLOWS</span><h2 id="agentic-heading">Agentic AI Studio</h2><p>Inspect connected agents, a visible run, human review and an output with cited evidence.</p></div><a href="/products/agentic-ai-platform/">Explore product ↗</a></div><ProductDemo kind="agentic" instanceId="agentic-demo-page" /><div class="below-actions"><a href="/products/agentic-ai-platform/">Product overview ↗</a><a href={CALENDLY_URL} target="_blank" rel="noopener">Book a demo ↗</a></div></section>
+  </div>
+</Layout>
+
+<script>
+  const revealHashTarget = () => {
+    const id = decodeURIComponent(window.location.hash.slice(1));
+    if (id !== 'annotation-verification' && id !== 'agentic-ai-platform') return;
+    requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView({ block: 'start', behavior: 'auto' }));
+  };
+  window.addEventListener('load', revealHashTarget);
+  window.addEventListener('hashchange', revealHashTarget);
+  window.addEventListener('pageshow', revealHashTarget);
+</script>
+
+<style>
+  .demos-page{min-height:100vh;background:#0b1326;color:#e9edff;font-family:Geist,system-ui,sans-serif}.demos-intro,.demo-section{width:min(1320px,100%);margin:auto;padding-left:clamp(20px,4.5vw,72px);padding-right:clamp(20px,4.5vw,72px)}.demos-intro{padding-top:100px;padding-bottom:83px}.eyebrow{color:#aeb2f2;font-size:11px;font-weight:700;letter-spacing:.12em}.demos-intro h1{max-width:870px;margin:19px 0;color:#edf0ff;font-family:'Hanken Grotesk',Geist,sans-serif;font-size:clamp(43px,6vw,76px);font-weight:600;line-height:1.05;letter-spacing:-.045em;text-wrap:balance}.demos-intro p{max-width:570px;margin:0;color:#b7c1d9;font-size:17px;line-height:1.6}.demos-intro nav{display:flex;flex-wrap:wrap;gap:9px;margin-top:31px}.demos-intro nav a{display:inline-flex;align-items:center;min-height:43px;padding:9px 13px;border:1px solid #626b8a;border-radius:7px;color:#e7eaff;background:#18223a;text-decoration:none;font-size:12px;font-weight:650}.demos-intro nav a:hover{background:#2a3453}.demo-section{padding-top:52px;padding-bottom:101px;border-top:1px solid #39445e;scroll-margin-top:90px}.section-copy{display:flex;justify-content:space-between;align-items:end;gap:18px;margin-bottom:25px}.section-copy h2{max-width:760px;margin:10px 0 9px;color:#eff1ff;font-family:'Hanken Grotesk',Geist,sans-serif;font-size:clamp(31px,4.5vw,54px);font-weight:600;letter-spacing:-.035em;line-height:1.1}.section-copy p{max-width:650px;margin:0;color:#b6c0d9;font-size:14px;line-height:1.55}.section-copy>a,.below-actions>a{flex:none;color:#c6c6ff;font-size:12px;font-weight:700;text-decoration:none}.section-copy>a:hover,.below-actions>a:hover{text-decoration:underline}.below-actions{display:flex;justify-content:flex-end;gap:25px;margin-top:18px}
+  :where(a):focus-visible{outline:3px solid #c0c1ff;outline-offset:4px}
+  @media(max-width:700px){.demos-intro{padding-top:56px;padding-bottom:58px}.demos-intro nav{flex-direction:column}.demo-section{padding-top:48px;padding-bottom:75px}.section-copy{align-items:start;flex-direction:column}.below-actions{justify-content:flex-start;flex-wrap:wrap}}
+</style>

@@ -1,0 +1,194 @@
+---
+interface Props {
+  kind: 'agentic' | 'annotation';
+  instanceId: string;
+}
+
+const { kind, instanceId } = Astro.props;
+const agentic = kind === 'agentic';
+const productName = agentic ? 'Agentic AI Studio' : 'Annotation & Verification Platform';
+const steps = agentic ? [
+  { name: 'Sample input', short: 'Input', detail: 'A request and two source drafts enter the sample workflow.' },
+  { name: 'Agents and tools', short: 'Connect', detail: 'Select an agent to inspect its bounded contribution.' },
+  { name: 'Execution trace', short: 'Run', detail: 'The run records each step and what it returned.' },
+  { name: 'Human review', short: 'Review', detail: 'A person checks the proposed answer before sharing it.' },
+  { name: 'Cited output', short: 'Output', detail: 'The result remains linked to the passages behind it.' },
+] : [
+  { name: 'Sample dataset', short: 'Dataset', detail: 'Three fictional support records form a small annotation queue.' },
+  { name: 'Independent labels', short: 'Annotate', detail: 'Two annotators label isolated copies of the same record.' },
+  { name: 'Disagreement', short: 'Compare', detail: 'One differing label is surfaced for review.' },
+  { name: 'Reviewer decision', short: 'Review', detail: 'Choose and approve a final sample label.' },
+  { name: 'Reviewed export', short: 'Export', detail: 'Download a local CSV of the reviewed sample.' },
+];
+---
+
+<section class="product-demo" data-product-demo data-product={kind} aria-label={`${productName} guided sample walkthrough`}>
+  <div class="demo-header">
+    <div class="demo-header-title"><span class="demo-mark">∿</span><span><strong>{productName}</strong><small>Guided sample walkthrough</small></span></div>
+    <span class="demo-sample">Illustrative preview · sample data</span>
+  </div>
+  <div class="demo-progress" aria-hidden="true"><span data-progress></span></div>
+  <div class="demo-layout">
+    <div class="step-list" role="tablist" aria-label={`${productName} walkthrough steps`}>
+      {steps.map((step, index) => (
+        <button
+          id={`${instanceId}-tab-${index}`}
+          type="button"
+          role="tab"
+          aria-controls={`${instanceId}-panel-${index}`}
+          aria-selected={index === 0 ? 'true' : 'false'}
+          tabindex={index === 0 ? 0 : -1}
+          data-step-button
+          data-step-index={index}
+        ><span class="step-number">0{index + 1}</span><span><b>{step.name}</b><small>{step.short}</small></span><span class="step-arrow" aria-hidden="true">↗</span></button>
+      ))}
+    </div>
+    <div class="stage-area">
+      {steps.map((step, index) => (
+        <section
+          id={`${instanceId}-panel-${index}`}
+          class="step-panel"
+          role="tabpanel"
+          aria-labelledby={`${instanceId}-tab-${index}`}
+          tabindex="0"
+          hidden={index !== 0}
+          data-step-panel
+        >
+          <div class="panel-heading"><span class="panel-overline">STAGE 0{index + 1} / 05</span><h3>{step.name}</h3><p>{step.detail}</p></div>
+          {agentic ? (
+            <div class="panel-content">
+              {index === 0 && (
+                <div class="two-col">
+                  <div class="ui-card input-card"><span class="card-kicker">REQUEST  /  SAMPLE</span><strong>What changed between the April and May policy drafts?</strong><p>Prepare a concise answer for a release review and link every claim to its source passage.</p><span class="pill">Input received</span></div>
+                  <div class="ui-card"><span class="card-kicker">ATTACHED SOURCES</span><div class="document-row"><span class="file-icon">A</span><span><b>Policy · April draft</b><small>8 sections · fictional document</small></span></div><div class="document-row"><span class="file-icon">M</span><span><b>Policy · May draft</b><small>9 sections · fictional document</small></span></div></div>
+                </div>
+              )}
+              {index === 1 && (
+                <div class="agent-stage"><div class="agent-grid" aria-label="Select an agent contribution"><button type="button" data-agent data-agent-name="Planner" data-agent-detail="Splits the request into reading, comparison, and evidence checks." aria-pressed="true"><span>01</span><b>Planner</b><small>Plan steps</small></button><button type="button" data-agent data-agent-name="Document reader" data-agent-detail="Extracts candidate passages from the two sample drafts." aria-pressed="false"><span>02</span><b>Document reader</b><small>Read sources</small></button><button type="button" data-agent data-agent-name="Comparison agent" data-agent-detail="Pairs related clauses and marks changed language for review." aria-pressed="false"><span>03</span><b>Comparison agent</b><small>Compare clauses</small></button><button type="button" data-agent data-agent-name="Evidence checker" data-agent-detail="Checks that each proposed finding points to a source passage." aria-pressed="false"><span>04</span><b>Evidence checker</b><small>Link evidence</small></button></div><div class="ui-card agent-detail" aria-live="polite"><span class="card-kicker">SELECTED CONTRIBUTION</span><strong data-agent-detail-name>Planner</strong><p data-agent-detail-text>Splits the request into reading, comparison, and evidence checks.</p></div></div>
+              )}
+              {index === 2 && (
+                <div class="trace-list"><div class="trace-row"><span class="trace-index">01</span><span><b>Plan created</b><small>Read both drafts, compare related clauses, verify source links.</small></span><em>Complete</em></div><div class="trace-row"><span class="trace-index">02</span><span><b>Documents read</b><small>Passages captured from §2.1 and §4.3 of the sample drafts.</small></span><em>Complete</em></div><div class="trace-row trace-highlight"><span class="trace-index">03</span><span><b>Changes compared</b><small>Review frequency and exception ownership differ.</small></span><em>Highlighted</em></div><div class="trace-row"><span class="trace-index">04</span><span><b>Evidence checked</b><small>Two findings have linked passages.</small></span><em>Complete</em></div></div>
+              )}
+              {index === 3 && (
+                <div class="two-col"><div class="ui-card"><span class="card-kicker">DRAFT FINDING</span><strong>Access reviews change from quarterly to monthly.</strong><p>Linked source: April §2.1 → May §2.1.</p><div class="review-actions"><button type="button" data-agent-approve>Approve sample finding</button></div></div><div class="ui-card review-card"><span class="card-kicker">HUMAN REVIEW</span><strong data-agent-review-status>Waiting for a reviewer</strong><p>A person decides whether this draft is ready to share; this button only updates the local example.</p></div></div>
+              )}
+              {index === 4 && (
+                <div class="ui-card output-card"><div class="output-top"><span class="card-kicker">REVIEWABLE OUTPUT  /  SAMPLE</span><span class="pill">Evidence linked</span></div><strong>Two changes to review</strong><ol><li>Access reviews move from quarterly to monthly. <span>May §2.1</span></li><li>Exception requests now require a named owner. <span>May §4.3</span></li></ol><div class="evidence-foot"><b>Source trail</b><span>April draft §2.1</span><span>May draft §2.1, §4.3</span></div></div>
+              )}
+            </div>
+          ) : (
+            <div class="panel-content">
+              {index === 0 && (
+                <div class="ui-card dataset-card"><div class="dataset-head"><span class="card-kicker">DATASET  /  SAMPLE SUPPORT REQUESTS</span><span class="pill">3 fictional records</span></div><div class="record-row"><b>#R-101</b><span>“Please update the billing address on our account.”</span><small>Unlabelled</small></div><div class="record-row is-featured"><b>#R-102</b><span>“I can’t access last month’s invoice.”</span><small>Unlabelled</small></div><div class="record-row"><b>#R-103</b><span>“Where can I download my receipt?”</span><small>Unlabelled</small></div><p>Task: choose the best routing label from Billing or Access.</p></div>
+              )}
+              {index === 1 && (
+                <div class="two-col"><div class="ui-card annotator-card"><span class="card-kicker">ANNOTATOR A  /  ISOLATED COPY</span><strong>#R-102</strong><p>“I can’t access last month’s invoice.”</p><span class="label-choice">Access</span><small>Reason: the phrase “can’t access” stands out.</small></div><div class="ui-card annotator-card"><span class="card-kicker">ANNOTATOR B  /  ISOLATED COPY</span><strong>#R-102</strong><p>“I can’t access last month’s invoice.”</p><span class="label-choice alternate">Billing</span><small>Reason: the object being requested is an invoice.</small></div></div>
+              )}
+              {index === 2 && (
+                <div class="ui-card conflict-card"><div class="conflict-top"><span class="card-kicker">AGREEMENT CHECK  /  #R-102</span><span class="conflict-badge">Needs review</span></div><strong>Two labels, one record.</strong><div class="comparison"><span>Annotator A <b>Access</b></span><span class="versus">≠</span><span>Annotator B <b>Billing</b></span></div><p>The other two records agree. A reviewer resolves this one before export.</p></div>
+              )}
+              {index === 3 && (
+                <div class="two-col"><div class="ui-card"><span class="card-kicker">REVIEWER  /  #R-102</span><strong>Choose the final label</strong><p>“I can’t access last month’s invoice.”</p><div class="review-actions"><button type="button" data-review-choice data-label="Billing" aria-pressed="true">Billing</button><button type="button" data-review-choice data-label="Access" aria-pressed="false">Access</button></div><button class="approve-button" type="button" data-review-approve>Approve sample label</button></div><div class="ui-card review-card"><span class="card-kicker">REVIEW STATUS</span><strong data-review-status>Decision pending</strong><p>The reviewer’s choice is reflected in the sample export on the next step.</p></div></div>
+              )}
+              {index === 4 && (
+                <div class="ui-card export-card"><div class="output-top"><span class="card-kicker">REVIEWED DATA  /  SAMPLE CSV</span><span class="pill">3 rows</span></div><div class="csv-head"><span>record_id</span><span>reviewed_label</span><span>status</span></div><div class="csv-row"><span>R-101</span><span>Billing</span><span>approved</span></div><div class="csv-row"><span>R-102</span><span data-export-label>Billing</span><span>approved</span></div><div class="csv-row"><span>R-103</span><span>Billing</span><span>approved</span></div><button type="button" data-export>Download sample CSV ↗</button><small data-export-status aria-live="polite">Generated locally; no data leaves this browser.</small></div>
+              )}
+            </div>
+          )}
+        </section>
+      ))}
+    </div>
+  </div>
+  <div class="demo-controls"><span data-step-status aria-live="polite">Step 1 of 5 · {steps[0].name}</span><div><button type="button" data-step-prev disabled>← Back</button><button type="button" data-step-next>Next step →</button></div></div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-product-demo]').forEach((demo) => {
+    if (demo.dataset.ready === 'true') return;
+    demo.dataset.ready = 'true';
+    const tabs = [...demo.querySelectorAll<HTMLButtonElement>('[data-step-button]')];
+    const panels = [...demo.querySelectorAll<HTMLElement>('[data-step-panel]')];
+    const previous = demo.querySelector<HTMLButtonElement>('[data-step-prev]')!;
+    const next = demo.querySelector<HTMLButtonElement>('[data-step-next]')!;
+    const status = demo.querySelector<HTMLElement>('[data-step-status]')!;
+    const progress = demo.querySelector<HTMLElement>('[data-progress]')!;
+    let current = 0;
+
+    const activate = (step: number, focusTab = false) => {
+      current = Math.max(0, Math.min(tabs.length - 1, step));
+      tabs.forEach((tab, index) => {
+        const selected = index === current;
+        tab.setAttribute('aria-selected', String(selected));
+        tab.tabIndex = selected ? 0 : -1;
+        panels[index].hidden = !selected;
+      });
+      previous.disabled = current === 0;
+      next.disabled = current === tabs.length - 1;
+      status.textContent = `Step ${current + 1} of ${tabs.length} · ${tabs[current].querySelector('b')?.textContent ?? ''}`;
+      progress.style.width = `${((current + 1) / tabs.length) * 100}%`;
+      if (focusTab) tabs[current].focus();
+    };
+    tabs.forEach((tab, index) => tab.addEventListener('click', () => activate(index)));
+    demo.querySelector('.step-list')?.addEventListener('keydown', (event) => {
+      const key = (event as KeyboardEvent).key;
+      if (key === 'ArrowRight' || key === 'ArrowDown') { event.preventDefault(); activate((current + 1) % tabs.length, true); }
+      if (key === 'ArrowLeft' || key === 'ArrowUp') { event.preventDefault(); activate((current - 1 + tabs.length) % tabs.length, true); }
+      if (key === 'Home') { event.preventDefault(); activate(0, true); }
+      if (key === 'End') { event.preventDefault(); activate(tabs.length - 1, true); }
+    });
+    previous.addEventListener('click', () => activate(current - 1));
+    next.addEventListener('click', () => activate(current + 1));
+
+    const agentButtons = [...demo.querySelectorAll<HTMLButtonElement>('[data-agent]')];
+    agentButtons.forEach((button) => button.addEventListener('click', () => {
+      agentButtons.forEach((agent) => agent.setAttribute('aria-pressed', String(agent === button)));
+      demo.querySelector<HTMLElement>('[data-agent-detail-name]')!.textContent = button.dataset.agentName ?? '';
+      demo.querySelector<HTMLElement>('[data-agent-detail-text]')!.textContent = button.dataset.agentDetail ?? '';
+    }));
+    demo.querySelector<HTMLButtonElement>('[data-agent-approve]')?.addEventListener('click', () => {
+      demo.querySelector<HTMLElement>('[data-agent-review-status]')!.textContent = 'Sample finding approved';
+    });
+
+    let finalLabel = 'Billing';
+    const labelButtons = [...demo.querySelectorAll<HTMLButtonElement>('[data-review-choice]')];
+    labelButtons.forEach((button) => button.addEventListener('click', () => {
+      finalLabel = button.dataset.label ?? 'Billing';
+      labelButtons.forEach((choice) => choice.setAttribute('aria-pressed', String(choice === button)));
+      demo.querySelector<HTMLElement>('[data-review-status]')!.textContent = `${finalLabel} selected · approval pending`;
+      demo.querySelector<HTMLElement>('[data-export-label]')!.textContent = finalLabel;
+    }));
+    demo.querySelector<HTMLButtonElement>('[data-review-approve]')?.addEventListener('click', () => {
+      demo.querySelector<HTMLElement>('[data-review-status]')!.textContent = `Approved: #R-102 → ${finalLabel}`;
+    });
+    demo.querySelector<HTMLButtonElement>('[data-export]')?.addEventListener('click', () => {
+      const csv = `record_id,reviewed_label,status\nR-101,Billing,approved\nR-102,${finalLabel},approved\nR-103,Billing,approved\n`;
+      const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'latentsig-sample-reviewed-data.csv';
+      document.body.append(link);
+      link.click();
+      link.remove();
+      window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+      demo.querySelector<HTMLElement>('[data-export-status]')!.textContent = 'Sample CSV downloaded locally.';
+    });
+    activate(0);
+  });
+</script>
+
+<style>
+  .product-demo{min-width:0;overflow:hidden;border:1px solid #3a4562;border-radius:20px;background:#0e172b;color:#ebeeff;box-shadow:0 28px 64px rgba(0,0,0,.16);font-family:Geist,system-ui,sans-serif}
+  .demo-header{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:15px 20px;border-bottom:1px solid #333e5a;background:#121d33}.demo-header-title{display:flex;gap:10px;align-items:center;min-width:0}.demo-header-title>span:last-child{display:flex;flex-direction:column;gap:2px}.demo-header-title strong{font-size:13px;font-weight:700;line-height:1.2}.demo-header-title small{color:#9da9c5;font-size:10px}.demo-mark{display:grid;place-items:center;width:30px;height:30px;flex:none;border-radius:8px;background:#303760;color:#c3c4ff;font-size:25px}.demo-sample{padding:6px 10px;flex:none;border:1px solid #485477;border-radius:999px;color:#bfc7e8;font-size:10px;font-weight:600;white-space:nowrap}.demo-progress{height:3px;background:#26314c}.demo-progress span{display:block;height:100%;width:20%;background:#b6b7ff;transition:width .25s ease}
+  .demo-layout{display:grid;grid-template-columns:210px minmax(0,1fr);min-height:455px}.step-list{display:flex;flex-direction:column;gap:4px;padding:18px 10px;background:#121c30;border-right:1px solid #333e5a}.step-list button{width:100%;display:flex;align-items:center;gap:9px;min-height:62px;padding:9px 11px;border:1px solid transparent;border-radius:9px;background:transparent;color:#b6bfd8;text-align:left;cursor:pointer}.step-list button:hover{background:#202b45}.step-list button[aria-selected="true"]{border-color:#6670ac;background:#2a3156;color:#f1f1ff}.step-number{display:grid;place-items:center;width:27px;height:27px;flex:none;border:1px solid #66708c;border-radius:7px;color:#c6c9ed;font-size:9px;font-weight:700}.step-list button[aria-selected="true"] .step-number{border-color:#b1b3ff;background:#464d81;color:#fff}.step-list button>span:nth-child(2){display:flex;flex-direction:column;min-width:0;gap:2px}.step-list b{font-size:11px;line-height:1.2}.step-list small{color:#8e9bb8;font-size:9px}.step-arrow{margin-left:auto;color:#9ca7d0;font-size:13px}
+  .stage-area{min-width:0;padding:23px;background:radial-gradient(circle at 90% 5%,rgba(125,130,239,.13),transparent 40%),#0e172b}.step-panel{min-width:0}.step-panel[hidden]{display:none}.panel-heading{margin-bottom:19px}.panel-overline,.card-kicker{color:#a7abe9;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}.panel-heading h3{margin:7px 0 4px;color:#f2f4ff;font-size:23px;font-weight:650;letter-spacing:-.04em}.panel-heading p{margin:0;color:#adb8d1;font-size:12px;line-height:1.5}.panel-content{min-height:300px}.two-col{display:grid;grid-template-columns:1fr 1fr;gap:13px}.ui-card{min-width:0;padding:20px;border:1px solid #3b4865;border-radius:12px;background:#17223b}.ui-card>strong{display:block;margin:18px 0 9px;color:#f0f2ff;font-size:17px;line-height:1.35}.ui-card>p{margin:0;color:#b7c2d8;font-size:12px;line-height:1.55}.pill{display:inline-block;padding:6px 9px;border:1px solid #668b91;border-radius:999px;color:#afe6d9;background:#203e45;font-size:10px;font-weight:700}.input-card .pill{margin-top:26px}.document-row{display:flex;gap:11px;align-items:center;padding:13px 0;border-top:1px solid #36435f}.document-row:first-of-type{margin-top:14px}.document-row>span:last-child{display:flex;flex-direction:column;gap:3px}.document-row b{color:#e9eeff;font-size:12px}.document-row small{color:#9ca9c4;font-size:10px}.file-icon{display:grid;place-items:center;width:31px;height:37px;flex:none;border:1px solid #737aa9;border-radius:6px;background:#2c355a;color:#c5c8ff;font-size:11px;font-weight:700}
+  .agent-stage{display:grid;grid-template-columns:1.5fr 1fr;gap:13px}.agent-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.agent-grid button{display:flex;flex-direction:column;align-items:start;gap:7px;min-height:116px;padding:15px;border:1px solid #3c4967;border-radius:10px;background:#17223b;color:#e5eaff;text-align:left;cursor:pointer}.agent-grid button:hover,.agent-grid button[aria-pressed="true"]{border-color:#aaaaff;background:#2b3155}.agent-grid button>span{color:#b4b8f3;font-size:10px;font-weight:700}.agent-grid b{font-size:12px}.agent-grid small{color:#acb7cf;font-size:10px}.agent-detail{display:flex;flex-direction:column;justify-content:center}.agent-detail strong{font-size:20px}
+  .trace-list{display:grid;gap:9px}.trace-row{display:grid;grid-template-columns:32px minmax(0,1fr) auto;gap:11px;align-items:center;min-height:61px;padding:10px 14px;border:1px solid #3b4865;border-radius:9px;background:#17223b}.trace-highlight{border-color:#aaaaff;background:#292e54}.trace-index{color:#aeb1ef;font-size:10px;font-weight:700}.trace-row>span:nth-child(2){display:flex;flex-direction:column;gap:4px}.trace-row b{font-size:12px}.trace-row small{color:#acb8d0;font-size:10px;line-height:1.35}.trace-row em{color:#acd9cc;font-size:9px;font-style:normal}.trace-highlight em{color:#d3d1ff}
+  .review-card{display:flex;flex-direction:column;justify-content:center}.review-card strong{margin:14px 0 8px}.review-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}.review-actions button,.approve-button,.export-card>button{min-height:37px;padding:8px 12px;border:1px solid #b9bbff;border-radius:7px;background:#babbff;color:#171b40;font-size:10px;font-weight:700;cursor:pointer}.review-actions button[aria-pressed="false"]{border-color:#697491;background:#26314b;color:#dce2f4}.review-actions button:hover,.approve-button:hover,.export-card>button:hover{filter:brightness(1.15)}.approve-button{margin-top:15px}.output-card>strong{font-size:22px}.output-top,.dataset-head,.conflict-top{display:flex;align-items:center;justify-content:space-between;gap:10px}.output-card ol{padding-left:20px;margin:14px 0;color:#dfe5f9}.output-card li{padding:5px 0;font-size:12px;line-height:1.5}.output-card li span{margin-left:5px;color:#b7bbff;font-size:10px}.evidence-foot{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding-top:14px;border-top:1px solid #3b4865}.evidence-foot b{margin-right:auto;font-size:10px}.evidence-foot span{padding:6px 8px;border:1px solid #56627e;border-radius:5px;color:#b8c5df;font-size:9px}
+  .dataset-card{padding-bottom:9px}.record-row{display:grid;grid-template-columns:58px minmax(0,1fr) auto;gap:12px;align-items:center;min-height:58px;border-top:1px solid #3b4865}.record-row:first-of-type{margin-top:15px}.record-row b{color:#bec3ff;font-size:11px}.record-row span{font-size:12px;line-height:1.4}.record-row small{color:#98a5c1;font-size:10px}.record-row.is-featured{margin:0 -10px;padding:0 10px;background:#2b2b4d}.dataset-card>p{margin:14px 0;color:#aebbd2;font-size:10px}.annotator-card>small{display:block;margin-top:25px;color:#aebbd3;font-size:10px;line-height:1.45}.label-choice{display:inline-block;padding:7px 11px;margin-top:21px;border:1px solid #8ea4c9;border-radius:6px;color:#c9e9ff;background:#23435b;font-size:11px;font-weight:700}.label-choice.alternate{border-color:#aca5de;color:#e5dcff;background:#3d365e}.conflict-card>strong{font-size:22px}.conflict-badge{padding:6px 9px;border-radius:999px;background:#49314d;color:#ffccdf;font-size:10px;font-weight:700}.comparison{display:flex;align-items:center;justify-content:center;gap:20px;min-height:105px;margin:20px 0;padding:12px;border:1px solid #5a506b;border-radius:10px;background:#282940}.comparison>span:not(.versus){display:flex;flex-direction:column;gap:9px;color:#aeb8d2;font-size:10px}.comparison b{color:#f0f2ff;font-size:18px}.comparison .versus{color:#ffb7d1;font-size:24px}
+  .csv-head,.csv-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:10px 12px;font:11px/1.3 ui-monospace,SFMono-Regular,monospace}.csv-head{margin-top:15px;border-radius:6px 6px 0 0;background:#2a3650;color:#c6cbed}.csv-row{border:1px solid #394663;border-top:0;color:#dfe6f6}.csv-row:last-of-type{border-radius:0 0 6px 6px}.export-card>button{margin-top:16px}.export-card>small{display:block;margin-top:9px;color:#aebbd2;font-size:10px}
+  .demo-controls{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 19px;border-top:1px solid #333e5a;background:#121d33}.demo-controls>span{color:#adb8d1;font-size:11px}.demo-controls>div{display:flex;gap:7px}.demo-controls button{min-height:37px;padding:7px 12px;border:1px solid #656f91;border-radius:7px;background:#242f4a;color:#e8eafa;font-size:10px;font-weight:650;cursor:pointer}.demo-controls button:last-child{border-color:#a9aaff;background:#babbff;color:#171b40}.demo-controls button:disabled{opacity:.45;cursor:not-allowed}
+  :where(button):focus-visible{outline:3px solid #c2c4ff;outline-offset:3px}
+  @media(max-width:880px){.demo-layout{grid-template-columns:1fr;min-height:0}.step-list{flex-direction:row;overflow-x:auto;padding:10px;border-right:0;border-bottom:1px solid #333e5a}.step-list button{min-width:138px;min-height:56px}.step-list small,.step-arrow{display:none}.stage-area{padding:19px}.panel-content{min-height:0}.two-col,.agent-stage{grid-template-columns:1fr}}
+  @media(max-width:550px){.demo-header{align-items:start;padding:12px}.demo-header-title strong{font-size:11px}.demo-sample{max-width:105px;white-space:normal;text-align:center;font-size:9px}.stage-area{padding:13px}.panel-heading h3{font-size:20px}.ui-card{padding:16px}.step-list button{min-width:121px}.record-row{grid-template-columns:52px 1fr}.record-row small{grid-column:2}.trace-row{grid-template-columns:24px 1fr}.trace-row em{grid-column:2}.demo-controls{align-items:start;flex-direction:column;padding:12px}.demo-controls>div{width:100%}.demo-controls button{flex:1}.comparison{gap:11px}.csv-head,.csv-row{font-size:9px;padding:9px 5px}}
+  @media(prefers-reduced-motion:reduce){.demo-progress span{transition:none}}
+</style>

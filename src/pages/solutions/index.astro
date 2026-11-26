@@ -1,0 +1,172 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout
+  title="Industry AI Solutions | Latentsig AI"
+  description="Explore illustrative AI workflow examples for healthcare, industry, retail, and education."
+>
+  <div class="solutions-page">
+    <section class="intro" aria-labelledby="solutions-title">
+      <div class="page-inner">
+        <p class="eyebrow">SOLUTIONS / FOUR WORKFLOWS</p>
+        <h1 id="solutions-title">Start with the work in front of you.</h1>
+        <p class="intro-copy">These example scenarios show where structured review and useful AI assistance could fit into everyday workflows.</p>
+        <nav class="industry-nav" aria-label="Industry examples">
+          <a href="#healthcare">Healthcare <span aria-hidden="true">↘</span></a>
+          <a href="#industry">Industry <span aria-hidden="true">↘</span></a>
+          <a href="#retail">Retail <span aria-hidden="true">↘</span></a>
+          <a href="#education">Education <span aria-hidden="true">↘</span></a>
+        </nav>
+      </div>
+    </section>
+
+    <div class="industry-list page-inner">
+      <section id="healthcare" class="industry-section" tabindex="-1" aria-labelledby="healthcare-title">
+        <div class="industry-copy">
+          <span class="section-index">01 / HEALTHCARE</span>
+          <h2 id="healthcare-title">A clearer path through records.</h2>
+          <p>Example scenario: a reviewer checks extracted fields against a sample referral note before the record moves on.</p>
+          <a href="/contact/">Discuss a healthcare workflow <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="example-frame health-frame" role="img" aria-label="Illustrative sample referral record with extracted fields awaiting human review">
+          <div class="frame-bar"><span class="frame-label">ILLUSTRATIVE SCENARIO</span><span>RECORD REVIEW / SAMPLE 014</span></div>
+          <div class="record-layout">
+            <div class="record-paper">
+              <small>SAMPLE REFERRAL NOTE</small>
+              <h3>Review summary</h3>
+              <p>Follow-up requested for a routine care discussion.</p>
+              <div class="paper-line long"></div><div class="paper-line"></div><div class="paper-line short"></div>
+              <div class="paper-highlight">Appointment window: next week</div>
+            </div>
+            <div class="record-review">
+              <small>EXTRACTED FIELDS</small>
+              <div><span>Document type</span><strong>Referral</strong></div>
+              <div><span>Follow-up</span><strong>Requested</strong></div>
+              <div class="needs-review"><span>Appointment window</span><strong>Check source</strong></div>
+              <b>Awaiting reviewer confirmation</b>
+            </div>
+          </div>
+          <div class="frame-foot"><span class="dot"></span> Human review before export</div>
+        </div>
+      </section>
+
+      <section id="industry" class="industry-section" tabindex="-1" aria-labelledby="industry-title">
+        <div class="industry-copy">
+          <span class="section-index">02 / INDUSTRY</span>
+          <h2 id="industry-title">Inspection evidence, in view.</h2>
+          <p>Example scenario: a supervisor reviews checklist entries and a flagged observation before approving an inspection.</p>
+          <a href="/contact/">Discuss an operations workflow <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="example-frame industry-frame" role="img" aria-label="Illustrative equipment inspection checklist with one item flagged for review">
+          <div class="frame-bar"><span class="frame-label">ILLUSTRATIVE SCENARIO</span><span>INSPECTION / SAMPLE 006</span></div>
+          <div class="inspection-head"><div><small>CHECKLIST</small><h3>Equipment review</h3></div><span>3 ITEMS</span></div>
+          <div class="inspection-row"><span class="check">✓</span><span><strong>Guard condition</strong><small>Observation attached</small></span><b>Recorded</b></div>
+          <div class="inspection-row"><span class="check">✓</span><span><strong>Gauge reading</strong><small>Reading entered</small></span><b>Recorded</b></div>
+          <div class="inspection-row flagged"><span class="check">!</span><span><strong>Photo evidence</strong><small>Image needs confirmation</small></span><b>Review</b></div>
+          <div class="frame-foot"><span class="dot"></span> Flag resolved by a person</div>
+        </div>
+      </section>
+
+      <section id="retail" class="industry-section" tabindex="-1" aria-labelledby="retail-title">
+        <div class="industry-copy">
+          <span class="section-index">03 / RETAIL</span>
+          <h2 id="retail-title">Catalog details you can check.</h2>
+          <p>Example scenario: a catalog editor confirms suggested tags against a sample product description before publishing.</p>
+          <a href="/contact/">Discuss a retail workflow <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="example-frame retail-frame" role="img" aria-label="Illustrative catalog tagging screen with suggested tags and a review prompt">
+          <div class="frame-bar"><span class="frame-label">ILLUSTRATIVE SCENARIO</span><span>CATALOG / SAMPLE 032</span></div>
+          <div class="catalog-layout">
+            <div class="catalog-product"><div class="product-shape"><span>01</span></div><small>SAMPLE PRODUCT</small><strong>Canvas carry bag</strong><span>Everyday bag · blue</span></div>
+            <div class="catalog-tags"><small>SUGGESTED TAGS</small><div><span>Category</span><b>Accessories</b></div><div><span>Color</span><b>Blue</b></div><div class="tag-review"><span>Material</span><b>Confirm from source</b></div><p>Editor reviews the suggested attributes before publication.</p></div>
+          </div>
+          <div class="frame-foot"><span class="dot"></span> Suggested tags remain reviewable</div>
+        </div>
+      </section>
+
+      <section id="education" class="industry-section" tabindex="-1" aria-labelledby="education-title">
+        <div class="industry-copy">
+          <span class="section-index">04 / EDUCATION</span>
+          <h2 id="education-title">Learning content with context.</h2>
+          <p>Example scenario: an editor reviews topic and difficulty labels on a sample lesson item before adding it to a collection.</p>
+          <a href="/contact/">Discuss a learning workflow <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="example-frame education-frame" role="img" aria-label="Illustrative learning-content review with topic and difficulty labels awaiting approval">
+          <div class="frame-bar"><span class="frame-label">ILLUSTRATIVE SCENARIO</span><span>CONTENT REVIEW / SAMPLE 008</span></div>
+          <div class="lesson-layout">
+            <div class="lesson-paper"><small>LESSON ITEM</small><h3>Fractions &amp; proportions</h3><p>Explain how two ratios can describe the same relationship.</p><div class="lesson-question">“Which fraction is equivalent to 3/4?”</div></div>
+            <div class="lesson-review"><small>REVIEW LABELS</small><div><span>Topic</span><b>Fractions</b></div><div><span>Level</span><b>Confirm difficulty</b></div><div><span>State</span><b>Editor review</b></div></div>
+          </div>
+          <div class="frame-foot"><span class="dot"></span> Labels approved before collection</div>
+        </div>
+      </section>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .solutions-page{--page:#0b1326;--panel:#121d34;--line:rgba(192,198,236,.2);--ink:#eef1ff;--muted:#b3bdd3;--accent:#c0c1ff;background:var(--page);color:var(--ink);font-family:Geist,system-ui,sans-serif}
+  .page-inner{width:min(1260px,calc(100% - 48px));margin-inline:auto}
+  .intro{padding:104px 0 80px;background:radial-gradient(ellipse at 83% 0%,rgba(120,130,222,.18),transparent 55%)}
+  .eyebrow,.section-index,.frame-bar,.frame-foot,.example-frame small{font-size:.7rem;font-weight:700;letter-spacing:.1em}
+  .eyebrow{color:var(--accent);margin:0 0 28px}
+  h1,h2,h3,p{margin-top:0}
+  h1{max-width:920px;margin-bottom:25px;font:550 clamp(2.9rem,6vw,5.7rem)/1.04 'Hanken Grotesk',Geist,sans-serif;letter-spacing:-.055em}
+  .intro-copy{max-width:650px;color:var(--muted);font-size:clamp(1.05rem,1.7vw,1.25rem);line-height:1.62}
+  .industry-nav{display:flex;flex-wrap:wrap;gap:10px;margin-top:44px}
+  .industry-nav a{display:inline-flex;align-items:center;justify-content:space-between;gap:24px;min-width:150px;padding:13px 16px;border:1px solid var(--line);border-radius:7px;background:#16213a;color:var(--ink);font-size:.9rem;font-weight:600;text-decoration:none;transition:background .2s,border-color .2s,transform .2s}
+  .industry-nav a:hover{background:#202c4b;border-color:rgba(192,193,255,.55);transform:translateY(-2px)}
+  .industry-nav span{color:var(--accent)}
+  .industry-nav a:focus-visible,.industry-copy a:focus-visible{outline:3px solid var(--accent);outline-offset:4px}
+  .industry-list{padding-bottom:110px}
+  .industry-section{display:grid;grid-template-columns:minmax(0,.72fr) minmax(0,1fr);align-items:center;gap:clamp(30px,5vw,80px);padding:90px 0;border-top:1px solid var(--line);scroll-margin-top:104px}
+  .industry-section:target{border-top-color:rgba(192,193,255,.8)}
+  .industry-section:focus{outline:none}
+  .industry-section:nth-child(even) .industry-copy{order:2}
+  .industry-section:nth-child(even) .example-frame{order:1}
+  .section-index{display:block;margin-bottom:23px;color:var(--accent)}
+  h2{font:550 clamp(2.1rem,3.7vw,3.65rem)/1.09 'Hanken Grotesk',Geist,sans-serif;letter-spacing:-.045em;margin-bottom:19px}
+  .industry-copy p{max-width:450px;margin-bottom:31px;color:var(--muted);font-size:1rem;line-height:1.65}
+  .industry-copy a{display:inline-flex;align-items:center;gap:17px;color:var(--accent);text-decoration:none;font-weight:650;font-size:.94rem}
+  .industry-copy a span{font-size:1.14rem;transition:transform .2s}
+  .industry-copy a:hover span{transform:translate(2px,-2px)}
+  .example-frame{min-width:0;min-height:370px;display:flex;flex-direction:column;padding:22px;border:1px solid rgba(192,198,236,.23);border-radius:16px;background:radial-gradient(circle at 85% 8%,rgba(141,151,240,.15),transparent 38%),#111a2e;box-shadow:0 22px 55px rgba(0,0,0,.14);overflow:hidden}
+  .frame-bar{display:flex;justify-content:space-between;gap:12px;padding-bottom:15px;border-bottom:1px solid var(--line);color:#8792ad;white-space:nowrap}
+  .frame-label{color:var(--accent)}
+  .frame-foot{margin-top:auto;display:flex;align-items:center;gap:9px;padding-top:14px;border-top:1px solid var(--line);color:#9da8c2;letter-spacing:.03em}
+  .dot{height:7px;width:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px rgba(192,193,255,.7)}
+  .record-layout,.catalog-layout,.lesson-layout{display:grid;grid-template-columns:1fr .8fr;gap:13px;flex:1;padding:20px 0}
+  .record-paper,.record-review,.catalog-product,.catalog-tags,.lesson-paper,.lesson-review{min-width:0;padding:18px;border:1px solid var(--line);border-radius:10px;background:#19233b}
+  .record-paper{background:#26314c;color:#e8edfa}
+  .record-paper small,.lesson-paper small{color:#abb7d1}
+  .record-paper h3,.lesson-paper h3{font-size:1.1rem;line-height:1.2;margin:12px 0}
+  .record-paper p,.lesson-paper p{font-size:.75rem;line-height:1.5;margin-bottom:14px}
+  .paper-line{height:5px;width:70%;margin:8px 0;border-radius:8px;background:#59647c}
+  .paper-line.long{width:91%}.paper-line.short{width:48%}
+  .paper-highlight{margin-top:13px;padding:9px 10px;border-radius:5px;background:#404a78;font-size:.68rem;font-weight:700}
+  .record-review small,.catalog-tags small,.lesson-review small{display:block;color:#9faac4;margin-bottom:16px}
+  .record-review>div,.catalog-tags>div,.lesson-review>div{display:flex;align-items:start;justify-content:space-between;gap:10px;padding:10px 0;border-top:1px solid var(--line);font-size:.68rem}
+  .record-review span,.catalog-tags span,.lesson-review span{color:#a4afc8}
+  .record-review strong,.catalog-tags b,.lesson-review b{text-align:right;color:#e8ecfb;font-weight:600}
+  .record-review .needs-review strong,.catalog-tags .tag-review b,.lesson-review>div:nth-of-type(2) b{color:#c4c5ff}
+  .record-review>b{display:block;margin-top:16px;color:#c4c5ff;font-size:.68rem}
+  .inspection-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:21px 0 11px}
+  .inspection-head small{color:#9da8c2}.inspection-head h3{font-size:1.15rem;margin:7px 0 0}.inspection-head>span{padding:7px 9px;border:1px solid var(--line);border-radius:5px;color:#afb6d2;font-size:.65rem;font-weight:700}
+  .inspection-row{display:grid;grid-template-columns:30px minmax(0,1fr) auto;gap:12px;align-items:center;min-height:62px;padding:10px;border-top:1px solid var(--line)}
+  .inspection-row .check{display:grid;place-items:center;width:26px;height:26px;border:1px solid #8396b2;border-radius:50%;color:#b9c9dc;font-weight:700}
+  .inspection-row span:nth-child(2){display:grid;gap:4px}.inspection-row strong{font-size:.77rem}.inspection-row small{color:#8f9bb4;font-size:.62rem}
+  .inspection-row b{color:#a9b9d2;font-size:.68rem;font-weight:600}
+  .inspection-row.flagged{background:#222544;border:1px solid rgba(192,193,255,.55);border-radius:8px}.inspection-row.flagged .check,.inspection-row.flagged b{color:#c5c6ff}
+  .catalog-product{display:flex;flex-direction:column;align-items:flex-start}
+  .product-shape{height:95px;width:100%;display:grid;place-items:center;border-radius:7px;background:linear-gradient(145deg,#303f67,#1b2747);margin-bottom:15px}
+  .product-shape span{width:62px;height:58px;display:grid;place-items:center;border:1px solid #929cd1;border-radius:12px 12px 21px 21px;background:#677bb3;color:#e6ebff;font-weight:700}
+  .catalog-product small{color:#aab4cb}.catalog-product strong{font-size:.9rem;margin:7px 0}.catalog-product>span{color:#9eaac0;font-size:.72rem}
+  .catalog-tags p{color:#9eaac0;font-size:.68rem;line-height:1.45;margin:13px 0 0}
+  .lesson-paper{background:#26314c;color:#e8edfa}
+  .lesson-question{padding:12px;border-left:2px solid #9ca4dc;background:#404a6f;border-radius:0 5px 5px 0;font-size:.75rem;font-weight:600}
+  .lesson-review{align-self:stretch}
+  @media(max-width:920px){.industry-section{grid-template-columns:1fr;padding:65px 0}.industry-section:nth-child(even) .industry-copy,.industry-section:nth-child(even) .example-frame{order:initial}.intro{padding-top:80px}}
+  @media(max-width:580px){.page-inner{width:calc(100% - 36px)}.intro{padding:70px 0 55px}.industry-nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin-top:32px}.industry-nav a{min-width:0;gap:8px;padding:12px;font-size:.81rem}.industry-section{gap:27px;padding:55px 0;scroll-margin-top:82px}.example-frame{padding:14px;min-height:340px}.frame-bar{font-size:.51rem}.record-layout,.catalog-layout,.lesson-layout{gap:7px}.record-paper,.record-review,.catalog-product,.catalog-tags,.lesson-paper,.lesson-review{padding:11px}.record-review>div,.catalog-tags>div,.lesson-review>div{flex-direction:column;gap:3px}.record-review strong,.catalog-tags b,.lesson-review b{text-align:left}.inspection-row{grid-template-columns:28px minmax(0,1fr) auto;gap:7px;padding:7px 3px}.inspection-row strong{font-size:.7rem}.inspection-row b{font-size:.6rem}}
+  @media(prefers-reduced-motion:reduce){.industry-nav a,.industry-copy a span{transition:none}.industry-nav a:hover{transform:none}}
+</style>
