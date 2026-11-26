@@ -158,7 +158,6 @@ export async function createHeroRenderer(host: HTMLElement, url: string, signal:
   };
   const onContextLost = (event: Event) => {
     event.preventDefault(); stop(); host.closest('latentsig-hero-scene')?.setAttribute('data-state', 'fallback');
-    const button = hero.querySelector<HTMLButtonElement>('.hero-motion'); if (button) button.hidden = true;
     host.dispatchEvent(new CustomEvent('hero-renderer-failed', { bubbles: true }));
     dispose();
   };
