@@ -1,7 +1,7 @@
 ---
 import ProductScreen from './ProductScreen.astro';
 import ProductDemo from './ProductDemo.astro';
-import { CALENDLY_URL } from '../../consts';
+import { BOOK_DEMO_URL } from '../../consts';
 
 interface Props { kind: 'agentic' | 'annotation'; }
 const { kind } = Astro.props;
@@ -30,7 +30,7 @@ const capabilities = agentic ? [
       <span class="eyebrow">PRODUCT  /  {name}</span>
       <h1 id="product-heading">{headline}</h1>
       <p>{summary}</p>
-      <div class="hero-actions"><a class="action-primary" href={`/demos/#${slug}`}>View demo <span aria-hidden="true">↗</span></a><a class="action-secondary" href={CALENDLY_URL} target="_blank" rel="noopener">Book a demo <span aria-hidden="true">↗</span></a></div>
+      <div class="hero-actions"><a class="action-primary" href={`/demos/#${slug}`}>View demo <span aria-hidden="true">↗</span></a><a class="action-secondary" href={BOOK_DEMO_URL}>Book a demo <span aria-hidden="true">↗</span></a></div>
     </div>
     <div class="hero-visual">
       <div class="visual-topline"><span>{name}</span><span>01 / VISUAL OVERVIEW</span></div>
@@ -53,7 +53,7 @@ const capabilities = agentic ? [
     ))}
   </section>
 
-  <section class="last-action" aria-label="Next step"><div><span class="eyebrow">SEE IT IN CONTEXT</span><h2>Walk through a sample or discuss your own workflow.</h2></div><div><a href={`/demos/#${slug}`}>View demo ↗</a><a href={CALENDLY_URL} target="_blank" rel="noopener">Book a demo ↗</a></div></section>
+  <section class="last-action" aria-label="Next step"><div><span class="eyebrow">SEE IT IN CONTEXT</span><h2>Walk through a sample or discuss your own workflow.</h2></div><div><a href={`/demos/#${slug}`}>View demo ↗</a><a href={BOOK_DEMO_URL}>Book a demo ↗</a></div></section>
 
   <dialog class="walkthrough-dialog" id={`${slug}-large-walkthrough`} data-product-dialog aria-label={`${name} enlarged walkthrough`}>
     <div class="dialog-shell"><div class="dialog-top"><div><span class="eyebrow">ENLARGED WALKTHROUGH</span><h2>{name}</h2></div><button type="button" data-close-dialog aria-label="Close enlarged walkthrough">Close <span aria-hidden="true">×</span></button></div><ProductDemo kind={kind} instanceId={`${slug}-dialog`} /></div>

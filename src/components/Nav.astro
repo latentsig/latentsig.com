@@ -1,6 +1,6 @@
 ---
 import Logo from './Logo.astro';
-import { CALENDLY_URL } from '../consts';
+import { BOOK_DEMO_URL } from '../consts';
 
 const path = Astro.url.pathname;
 
@@ -147,7 +147,7 @@ const mobileIcon = (href: string) => mobileIcons[mobileIconByHref[href] ?? 'docu
       ))}
     </div>
 
-    <a class="nav-cta" href={CALENDLY_URL} target="_blank" rel="noopener">
+    <a class="nav-cta" href={BOOK_DEMO_URL}>
       <span>Book a Demo</span><span aria-hidden="true">↗</span>
     </a>
 
@@ -189,7 +189,7 @@ const mobileIcon = (href: string) => mobileIcons[mobileIconByHref[href] ?? 'docu
       </nav>
       <div class="mobile-drawer-footer">
         <a class="mobile-contact-cta" href="/contact/">Talk to us</a>
-        <a class="mobile-demo-cta" href={CALENDLY_URL} target="_blank" rel="noopener">Book a Demo<span aria-hidden="true">↗</span></a>
+        <a class="mobile-demo-cta" href={BOOK_DEMO_URL}>Book a Demo<span aria-hidden="true">↗</span></a>
       </div>
     </section>
   </div>
