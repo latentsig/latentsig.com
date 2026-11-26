@@ -184,7 +184,24 @@ const mobileIcon = (href: string) => mobileIcons[mobileIconByHref[href] ?? 'docu
               </div>
             </details>
           ))}
-          <a class="mobile-insights-link" href="/insights/" aria-current={path === '/insights/' ? 'page' : undefined}>Insights</a>
+          <details class="mobile-menu-section" name="mobile-nav-sections">
+            <summary>Insights<svg class="mobile-section-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5" /></svg></summary>
+            <div class="mobile-section-links">
+              {[
+                { href: '/insights/', label: 'Explore all insights', icon: 'grid' },
+                { href: '/insights/latent-signals-activation-probing/', label: 'Latent Signals: model activation research' },
+                { href: '/insights/laya-rlcd-system-one/', label: 'Laya and RLCD: AI workflow decisions' },
+                { href: '/insights/dflash-muse-spark-1-2/', label: 'DFlash: faster LLM generation' },
+                { href: '/blog/quantization-without-tears/', label: 'INT8 post-training quantization' },
+              ].map((link) => (
+                <a class="mobile-nav-link" href={link.href} aria-current={path === link.href ? 'page' : undefined}>
+                  <span class="mobile-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" set:html={link.icon ? mobileIcons[link.icon] : mobileIcon(link.href)}></svg></span>
+                  <span class="mobile-nav-label">{link.label}</span>
+                  <svg class="mobile-nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" /></svg>
+                </a>
+              ))}
+            </div>
+          </details>
         </div>
       </nav>
       <div class="mobile-drawer-footer">
@@ -339,33 +356,31 @@ const mobileIcon = (href: string) => mobileIcons[mobileIconByHref[href] ?? 'docu
   .mobile-menu { display:none; }
   .mobile-menu[hidden] { display:none!important; }
   .mobile-menu-backdrop { position:absolute;inset:0;width:100%;height:100%;padding:0;border:0;background:rgba(2,6,18,.64);-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px); }
-  .mobile-drawer { position:absolute;inset:0;width:100%;height:100dvh;display:grid;grid-template-rows:68px minmax(0,1fr) auto;overflow:hidden;background:#0b1326;color:#f2f3fc;box-shadow:0 20px 60px rgba(0,0,0,.48); }
-  .mobile-drawer-header { display:flex;align-items:center;justify-content:space-between;padding:0 max(18px,env(safe-area-inset-right)) 0 max(18px,env(safe-area-inset-left));border-bottom:1px solid rgba(200,204,231,.16);background:rgba(10,15,31,.96); }
-  .mobile-brand { display:flex;align-items:center;gap:8px;min-height:44px;color:#f2f3fc;text-decoration:none;font:700 20px/1 'Geist',ui-sans-serif,system-ui,sans-serif;letter-spacing:-.055em; }
+  .mobile-drawer { position:absolute;inset:0;width:100%;height:100dvh;display:grid;grid-template-rows:68px minmax(0,1fr) auto;overflow:hidden;background:#fff;color:#18181b;box-shadow:0 20px 60px rgba(15,23,42,.14); }
+  .mobile-drawer-header { display:flex;align-items:center;justify-content:space-between;padding:0 max(18px,env(safe-area-inset-right)) 0 max(18px,env(safe-area-inset-left));border-bottom:1px solid #e4e4e7;background:#fff; }
+  .mobile-brand { display:flex;align-items:center;gap:8px;min-height:44px;color:#18181b;text-decoration:none;font:700 20px/1 'Geist',ui-sans-serif,system-ui,sans-serif;letter-spacing:-.055em; }
   .mobile-brand-mark { display:block;border-radius:10px;background:#10152d;box-shadow:0 2px 12px rgba(0,0,0,.24); }
-  .mobile-menu-close { width:42px;height:42px;display:grid;place-items:center;border:1px solid rgba(200,204,231,.2);border-radius:50%;background:rgba(255,255,255,.055);color:#f2f3fc;cursor:pointer; }
+  .mobile-menu-close { width:42px;height:42px;display:grid;place-items:center;border:1px solid #e4e4e7;border-radius:50%;background:#f4f4f5;color:#18181b;cursor:pointer; }
   .mobile-menu-close svg { width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round; }
-  .mobile-drawer-content { min-height:0;overflow-y:auto;overscroll-behavior:contain;scrollbar-color:#58617a transparent; }
+  .mobile-drawer-content { min-height:0;overflow-y:auto;overscroll-behavior:contain;background:#fff;scrollbar-color:#d4d4d8 transparent; }
   .mobile-panel-inner { width:min(100%,560px);margin:0 auto;padding:8px 20px 20px; }
-  .mobile-menu-section { border-bottom:1px solid rgba(200,204,231,.14); }
-  .mobile-menu-section summary { min-height:56px;display:flex;align-items:center;justify-content:space-between;gap:14px;color:#f2f3fc;list-style:none;cursor:pointer;font:600 17px/1.25 'Geist',ui-sans-serif,system-ui,sans-serif;letter-spacing:-.01em; }
+  .mobile-menu-section { border-bottom:1px solid #f0f0f2; }
+  .mobile-menu-section summary { min-height:60px;display:flex;align-items:center;justify-content:space-between;gap:14px;color:#18181b;list-style:none;cursor:pointer;font:600 18px/1.25 'Geist',ui-sans-serif,system-ui,sans-serif;letter-spacing:-.015em; }
   .mobile-menu-section summary::-webkit-details-marker { display:none; }
-  .mobile-section-chevron { width:18px;height:18px;flex:none;fill:none;stroke:#aeb5ce;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s ease; }
-  .mobile-menu-section[open] .mobile-section-chevron { transform:rotate(180deg);stroke:#c4c1ff; }
+  .mobile-section-chevron { width:18px;height:18px;flex:none;fill:none;stroke:#52525b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s ease; }
+  .mobile-menu-section[open] .mobile-section-chevron { transform:rotate(180deg);stroke:#18181b; }
   .mobile-section-links { display:grid;gap:3px;padding:0 0 12px; }
-  .mobile-nav-link { min-height:54px;display:flex;align-items:center;gap:12px;padding:7px 10px;border:1px solid transparent;border-radius:10px;color:rgba(237,238,246,.86);text-decoration:none;font:500 14px/1.35 'Geist',ui-sans-serif,system-ui,sans-serif;transition:background .16s ease,color .16s ease; }
-  .mobile-nav-link:hover,.mobile-nav-link:focus-visible,.mobile-nav-link[aria-current="page"] { background:rgba(255,255,255,.065);color:#fff; }
-  .mobile-insights-link { min-height:56px;display:flex;align-items:center;padding:0;color:#f2f3fc;border-bottom:1px solid rgba(200,204,231,.14);text-decoration:none;font:600 17px/1.25 'Geist',ui-sans-serif,system-ui,sans-serif;letter-spacing:-.01em; }
-  .mobile-insights-link:hover,.mobile-insights-link:focus-visible,.mobile-insights-link[aria-current="page"] { color:#c4c1ff; }
-  .mobile-nav-icon { width:36px;height:36px;display:grid;place-items:center;flex:none;border:1px solid rgba(200,204,231,.17);border-radius:9px;background:rgba(255,255,255,.045);color:#bfc2df; }
+  .mobile-nav-link { min-height:50px;display:flex;align-items:center;gap:12px;padding:8px 12px;border:1px solid transparent;border-radius:10px;color:#27272a;text-decoration:none;font:500 14.5px/1.35 'Geist',ui-sans-serif,system-ui,sans-serif;transition:background .16s ease,color .16s ease; }
+  .mobile-nav-link:hover,.mobile-nav-link:focus-visible,.mobile-nav-link[aria-current="page"] { background:#f4f4f5;color:#09090b; }
+  .mobile-nav-icon { width:36px;height:36px;display:grid;place-items:center;flex:none;border:1px solid #e4e4e7;border-radius:9px;background:#f4f4f5;color:#52525b; }
   .mobile-nav-icon svg { width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round; }
-  .mobile-nav-link[aria-current="page"] .mobile-nav-icon { border-color:rgba(190,187,255,.5);background:rgba(164,158,255,.15);color:#c4c1ff; }
+  .mobile-nav-link[aria-current="page"] .mobile-nav-icon { border-color:#6d7b50;background:#edf2e4;color:#4f5e3b; }
   .mobile-nav-label { min-width:0;flex:1; }
-  .mobile-nav-arrow { width:16px;height:16px;flex:none;fill:none;stroke:#a8add0;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round; }
-  .mobile-drawer-footer { display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:13px 16px max(16px,env(safe-area-inset-bottom));border-top:1px solid rgba(200,204,231,.16);background:#0d152a; }
+  .mobile-nav-arrow { width:16px;height:16px;flex:none;fill:none;stroke:#a1a1aa;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round; }
+  .mobile-drawer-footer { display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:14px 18px max(16px,env(safe-area-inset-bottom));border-top:1px solid #e4e4e7;background:#fafafa; }
   .mobile-contact-cta,.mobile-demo-cta { min-height:48px;display:flex;align-items:center;justify-content:center;gap:8px;padding:0 12px;border-radius:9px;text-decoration:none;text-align:center;font:600 14px/1.2 'Geist',ui-sans-serif,system-ui,sans-serif; }
-  .mobile-contact-cta { border:1px solid rgba(200,204,231,.24);color:#f2f3fc;background:rgba(255,255,255,.035); }
-  .mobile-demo-cta { border:1px solid #7371ef;background:#7775f5;color:#171a3e; }
+  .mobile-contact-cta { border:1px solid #d4d4d8;color:#18181b;background:#fff; }
+  .mobile-demo-cta { border:1px solid #6d7b50;background:#6d7b50;color:#fffdf8;box-shadow:0 2px 8px rgba(109,123,80,.25); }
   .mobile-demo-cta span { margin-left:5px;font-size:16px; }
   @media(max-width:380px) { .mobile-panel-inner { padding-right:14px;padding-left:14px; }.mobile-drawer-footer { padding-right:12px;padding-left:12px;gap:8px; }.mobile-contact-cta,.mobile-demo-cta { padding:0 8px;font-size:13px; } }
   @keyframes menu-in { from { opacity:0; transform:translateY(-5px); } to { opacity:1; transform:translateY(0); } }
