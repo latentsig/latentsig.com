@@ -55,18 +55,45 @@ const menus = [
 ];
 
 const directLinks = [{ href: '/insights/', label: 'Insights' }];
-const mobileIcons = [
-  '<rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/>',
-  '<path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5"/>',
-  '<path d="m12 3 1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3Z"/>',
-  '<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v5h5M9 12h6M9 16h6"/>',
-  '<circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="18" r="2.5"/><circle cx="19" cy="18" r="2.5"/><path d="m10.8 7.2-4.6 8.6m7-8.6 4.6 8.6M7.5 18h9"/>',
-  '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
-  '<path d="M9 3h6M10 3v6l-5 8.2A2.5 2.5 0 0 0 7.1 21h9.8a2.5 2.5 0 0 0 2.1-3.8L14 9V3"/><path d="M8 15h8"/>',
-  '<path d="m8 8-4 4 4 4M16 8l4 4-4 4M14 5l-4 14"/>',
-  '<path d="M4 21V5l8-3 8 3v16M8 8h1M15 8h1M8 12h1M15 12h1M8 16h1M15 16h1M10 21v-3h4v3"/>',
-  '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/>',
-];
+const mobileIcons: Record<string, string> = {
+  grid: '<rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/>',
+  layers: '<path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5"/>',
+  spark: '<path d="m12 3 1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3Z"/>',
+  document: '<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v5h5M9 12h6M9 16h6"/>',
+  network: '<circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="18" r="2.5"/><circle cx="19" cy="18" r="2.5"/><path d="m10.8 7.2-4.6 8.6m7-8.6 4.6 8.6M7.5 18h9"/>',
+  globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
+  flask: '<path d="M9 3h6M10 3v6l-5 8.2A2.5 2.5 0 0 0 7.1 21h9.8a2.5 2.5 0 0 0 2.1-3.8L14 9V3"/><path d="M8 15h8"/>',
+  code: '<path d="m8 8-4 4 4 4M16 8l4 4-4 4M14 5l-4 14"/>',
+  building: '<path d="M4 21V5l8-3 8 3v16M8 8h1M15 8h1M8 12h1M15 12h1M8 16h1M15 16h1M10 21v-3h4v3"/>',
+  mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/>',
+  chart: '<path d="M4 19V5M4 19h17"/><path d="m7 15 4-4 3 2 6-7"/>',
+  healthcare: '<path d="M12 4v16M4 12h16"/><circle cx="12" cy="12" r="9"/>',
+  industry: '<path d="M3 21V9l6 4V9l6 4V5h6v16H3ZM17 8h1M17 12h1M17 16h1"/>',
+  education: '<path d="m3 9 9-5 9 5-9 5-9-5Z"/><path d="M7 12v5c3 2 7 2 10 0v-5M21 9v6"/>',
+};
+const mobileIconByHref: Record<string, string> = {
+  '/products/': 'grid',
+  '/products/annotation-verification/': 'layers',
+  '/demos/#annotation-verification': 'document',
+  '/products/agentic-ai-platform/': 'spark',
+  '/demos/#agentic-ai-platform': 'network',
+  '/solutions/#healthcare': 'healthcare',
+  '/solutions/#industry': 'industry',
+  '/solutions/#retail': 'chart',
+  '/solutions/#education': 'education',
+  '/services/': 'grid',
+  '/rd-advisory/': 'flask',
+  '/consulting/': 'chart',
+  '/implementation/': 'code',
+  '/about/': 'building',
+  '/contact/': 'mail',
+  '/insights/': 'chart',
+  '/insights/latent-signals-activation-probing/': 'network',
+  '/insights/laya-rlcd-system-one/': 'spark',
+  '/insights/dflash-muse-spark-1-2/': 'spark',
+  '/blog/quantization-without-tears/': 'document',
+};
+const mobileIcon = (href: string) => mobileIcons[mobileIconByHref[href] ?? 'document'];
 ---
 
 <header class="site-header">
@@ -140,13 +167,13 @@ const mobileIcons = [
       </div>
       <nav class="mobile-drawer-content" aria-label="Mobile navigation links">
         <div class="mobile-panel-inner">
-          {menus.map((menu, sectionIndex) => (
-            <details class="mobile-menu-section" name="mobile-nav-sections" open={sectionIndex === 0}>
+          {menus.map((menu) => (
+            <details class="mobile-menu-section" name="mobile-nav-sections" open={menu.href === '/products/'}>
               <summary>{menu.label}<svg class="mobile-section-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5" /></svg></summary>
               <div class="mobile-section-links">
-                {menu.links.map((link, linkIndex) => (
+                {menu.links.map((link) => (
                   <a class="mobile-nav-link" href={link.href} aria-current={path === link.href ? 'page' : undefined}>
-                    <span class="mobile-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" set:html={mobileIcons[(sectionIndex * 3 + linkIndex) % mobileIcons.length]}></svg></span>
+                    <span class="mobile-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" set:html={mobileIcon(link.href)}></svg></span>
                     <span class="mobile-nav-label">{link.label}</span>
                     <svg class="mobile-nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" /></svg>
                   </a>
@@ -154,24 +181,11 @@ const mobileIcons = [
               </div>
             </details>
           ))}
-          <details class="mobile-menu-section" name="mobile-nav-sections">
-            <summary>Insights<svg class="mobile-section-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5" /></svg></summary>
-            <div class="mobile-section-links">
-              {[
-                { href: '/insights/', label: 'All insights' },
-                { href: '/insights/latent-signals-activation-probing/', label: 'Latent Signals: model activation research' },
-                { href: '/insights/laya-rlcd-system-one/', label: 'Laya and RLCD: AI workflow decisions' },
-                { href: '/insights/dflash-muse-spark-1-2/', label: 'DFlash: faster LLM generation' },
-                { href: '/blog/quantization-without-tears/', label: 'INT8 post-training quantization' },
-              ].map((link, linkIndex) => (
-                <a class="mobile-nav-link" href={link.href} aria-current={path === link.href ? 'page' : undefined}>
-                  <span class="mobile-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" set:html={mobileIcons[(linkIndex + 4) % mobileIcons.length]}></svg></span>
-                  <span class="mobile-nav-label">{link.label}</span>
-                  <svg class="mobile-nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" /></svg>
-                </a>
-              ))}
-            </div>
-          </details>
+          <a class="mobile-nav-link mobile-nav-direct" href="/insights/" aria-current={path === '/insights/' ? 'page' : undefined}>
+            <span class="mobile-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" set:html={mobileIcon('/insights/')} /></span>
+            <span class="mobile-nav-label">Insights</span>
+            <svg class="mobile-nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" /></svg>
+          </a>
         </div>
       </nav>
       <div class="mobile-drawer-footer">
@@ -340,6 +354,7 @@ const mobileIcons = [
   .mobile-menu-section[open] .mobile-section-chevron { transform:rotate(180deg);stroke:#c4c1ff; }
   .mobile-section-links { display:grid;gap:3px;padding:0 0 12px; }
   .mobile-nav-link { min-height:54px;display:flex;align-items:center;gap:12px;padding:7px 10px;border:1px solid transparent;border-radius:10px;color:rgba(237,238,246,.86);text-decoration:none;font:500 14px/1.35 'Geist',ui-sans-serif,system-ui,sans-serif;transition:background .16s ease,color .16s ease; }
+  .mobile-nav-direct { min-height:56px;margin-top:2px;border-bottom-color:rgba(200,204,231,.14);border-radius:0; }
   .mobile-nav-link:hover,.mobile-nav-link:focus-visible,.mobile-nav-link[aria-current="page"] { background:rgba(255,255,255,.065);color:#fff; }
   .mobile-nav-icon { width:36px;height:36px;display:grid;place-items:center;flex:none;border:1px solid rgba(200,204,231,.17);border-radius:9px;background:rgba(255,255,255,.045);color:#bfc2df; }
   .mobile-nav-icon svg { width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round; }
