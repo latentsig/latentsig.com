@@ -54,6 +54,25 @@ const menus = [
   },
 ];
 
+const previewImages: Record<string, string> = {
+  '/products/': '/images/nav/products-agentic.webp',
+  '/products/annotation-verification/': '/images/nav/products-annotation.webp',
+  '/demos/#annotation-verification': '/images/nav/products-annotation.webp',
+  '/products/agentic-ai-platform/': '/images/nav/products-agentic.webp',
+  '/demos/#agentic-ai-platform': '/images/nav/products-agentic.webp',
+  '/solutions/#healthcare': '/images/nav/solutions-healthcare.webp',
+  '/solutions/#industry': '/images/nav/solutions-industry.webp',
+  '/solutions/#retail': '/images/nav/solutions-retail.webp',
+  '/solutions/#education': '/images/nav/solutions-education.webp',
+  '/services/': '/images/nav/services-research.webp',
+  '/rd-advisory/': '/images/nav/services-research.webp',
+  '/consulting/': '/images/nav/services-consulting.webp',
+  '/implementation/': '/images/nav/services-implementation.webp',
+  '/about/': '/images/nav/about-research.webp',
+  '/contact/': '/images/nav/services-consulting.webp',
+};
+const previewFor = (href: string) => previewImages[href] ?? '/3d/hero/observatory.webp';
+
 const directLinks = [{ href: '/insights/', label: 'Insights' }];
 const mobileIcons: Record<string, string> = {
   grid: '<rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/>',
@@ -117,18 +136,25 @@ const mobileIcon = (href: string) => mobileIcons[mobileIconByHref[href] ?? 'docu
             {menu.label}
             <svg class="chevron" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m4 6 4 4 4-4" /></svg>
           </a>
-          <section class="mega-menu" data-nav-panel aria-label={`${menu.label} menu`} hidden>
-            <div class="mega-feature">
-              <span class="menu-kicker"><span></span>{menu.eyebrow}</span>
-              <p>{menu.description}</p>
-              <a class="feature-link" href={menu.href}>Explore {menu.label}<span aria-hidden="true">↗</span></a>
+          <section class:list={['mega-menu', `mega-menu-${menu.label.toLowerCase()}`]} data-nav-panel aria-label={`${menu.label} menu`} hidden>
+            <div class="mega-feature" aria-hidden="true">
+                <div class="feature-visual" data-agentic={previewFor(menu.links[0].href).endsWith('products-agentic.webp') ? 'true' : 'false'}>
+                <img class="feature-image is-active" data-preview-image src={previewFor(menu.links[0].href)} alt="" width="720" height="440" loading="eager" decoding="async" />
+                <img class="feature-image" data-preview-image src={previewFor(menu.links[0].href)} alt="" width="720" height="440" loading="eager" decoding="async" />
+                {menu.label === 'Products' && (
+                  <svg class="agent-flow" data-agent-flow aria-hidden="true" viewBox="0 0 340 260" preserveAspectRatio="none">
+                    <path class="agent-flow-path" d="M22 145 C79 68 114 201 167 130 S253 70 318 144" />
+                    <circle class="agent-flow-pulse" r="3.5"><animateMotion dur="4.2s" repeatCount="indefinite" path="M22 145 C79 68 114 201 167 130 S253 70 318 144" /></circle>
+                  </svg>
+                )}
+              </div>
             </div>
             <div class="mega-links">
               <span class="menu-overline">Discover</span>
               <h2>{menu.label}</h2>
               <div class="mega-link-grid">
                 {menu.links.map((link) => (
-                  <a class="mega-link" href={link.href}>
+                  <a class="mega-link" href={link.href} data-preview-src={previewFor(link.href)}>
                     <span><strong>{link.label}</strong><small>{link.detail}</small></span>
                     <span class="link-arrow" aria-hidden="true">↗</span>
                   </a>
@@ -211,7 +237,7 @@ const mobileIcon = (href: string) => mobileIcons[mobileIconByHref[href] ?? 'docu
     position: relative;
     width: 100%;
     min-height: 84px;
-    padding: 9px clamp(24px, 7vw, 132px);
+    padding: 0 clamp(24px, 7vw, 132px);
     display: flex;
     align-items: center;
     gap: 24px;
@@ -241,8 +267,8 @@ const mobileIcon = (href: string) => mobileIcons[mobileIconByHref[href] ?? 'docu
     background: #10152d;
     box-shadow: 0 2px 12px rgba(0,0,0,.24);
   }
-  .desktop-navigation { display:flex; align-items:center; justify-content:center; gap:clamp(4px, 1.1vw, 18px); flex:1; height:100%; }
-  .nav-item { height:100%; display:flex; align-items:center; }
+  .desktop-navigation { display:flex; align-self:stretch; align-items:center; justify-content:center; gap:clamp(4px, 1.1vw, 18px); flex:1; }
+  .nav-item { align-self:stretch; display:flex; align-items:center; }
   .nav-link {
     display:inline-flex;
     align-items:center;
@@ -256,7 +282,7 @@ const mobileIcon = (href: string) => mobileIcons[mobileIconByHref[href] ?? 'docu
     white-space:nowrap;
     transition:color .18s ease, background .18s ease;
   }
-  .nav-link:hover,.nav-link:focus-visible,.nav-link.is-current { color:#c7c4ff; }
+  .nav-link:hover,.nav-link:focus-visible,.nav-link.is-current,.nav-item.is-open>.nav-link { color:#c7c4ff; }
   .nav-link:focus-visible,.nav-cta:focus-visible,.brand:focus-visible { outline:2px solid #aaa6ff; outline-offset:3px; }
   .chevron { width:14px; height:14px; stroke:currentColor; stroke-width:1.35; transition:transform .2s ease; }
   .nav-item.is-open .chevron { transform:rotate(180deg); }
@@ -280,16 +306,17 @@ const mobileIcon = (href: string) => mobileIcons[mobileIconByHref[href] ?? 'docu
   .nav-cta span:last-child { font-size:16px; }
   .mega-menu {
     position:absolute;
-    top:calc(100% + 12px);
+    top:100%;
     left:0;
     right:0;
     display:grid;
-    grid-template-columns:minmax(270px, .82fr) 1.65fr;
+    grid-template-columns:minmax(270px, 360px) minmax(0, 1fr);
     gap:24px;
     padding:16px;
     color:#f2f3f8;
     border:1px solid rgba(200,204,231,.18);
-    border-radius:26px;
+    border-top:0;
+    border-radius:0 0 24px 24px;
     background:rgba(12,15,22,.94);
     -webkit-backdrop-filter:blur(26px) saturate(135%);
     backdrop-filter:blur(26px) saturate(135%);
@@ -298,21 +325,24 @@ const mobileIcon = (href: string) => mobileIcons[mobileIconByHref[href] ?? 'docu
   }
   .mega-menu[hidden] { display:none; }
   .mega-feature {
-    min-height:190px;
-    padding:22px;
-    display:flex;
-    flex-direction:column;
-    align-items:flex-start;
-    border:1px solid rgba(255,255,255,.105);
-    border-radius:20px;
-    background:radial-gradient(ellipse at 10% 0%, rgba(133,126,255,.16), transparent 62%),rgba(255,255,255,.025);
+    min-width:0;
+    min-height:268px;
+    padding:10px;
+    border:1px solid rgba(177,178,255,.24);
+    border-radius:18px;
+    background:radial-gradient(ellipse at 30% 10%,rgba(126,119,245,.24),transparent 64%),#141a34;
+    box-shadow:inset 0 1px rgba(255,255,255,.08);
   }
-  .menu-kicker,.menu-overline { color:#aaa8d7; font:700 10px/1.3 'Geist',ui-sans-serif,system-ui,sans-serif; letter-spacing:.13em; text-transform:uppercase; }
-  .menu-kicker { display:flex; align-items:center; gap:8px; }
-  .menu-kicker span { width:7px; height:7px; border-radius:50%; background:#b6b2ff; box-shadow:0 0 12px #8b86ff; }
-  .mega-feature p { margin:20px 0 18px; max-width:310px; color:rgba(237,238,246,.75); font:400 15px/1.55 'Geist',ui-sans-serif,system-ui,sans-serif; }
-  .feature-link { display:flex; align-items:center; gap:10px; margin-top:auto; color:#c4c1ff; font:650 13px/1.3 'Geist',ui-sans-serif,system-ui,sans-serif; text-decoration:none; }
-  .feature-link:hover { color:#fff; }
+  .feature-visual { position:relative;isolation:isolate;width:100%;height:100%;min-height:246px;overflow:hidden;border:1px solid rgba(255,255,255,.2);border-radius:11px;background:#10152b;box-shadow:0 15px 32px rgba(0,0,0,.25); }
+  .feature-image { position:absolute;inset:0;width:100%;height:100%;padding:0;object-fit:cover;object-position:center;opacity:0;transform:scale(1);filter:drop-shadow(0 12px 18px rgba(0,0,0,.27));transition:opacity .3s ease,transform .55s cubic-bezier(.2,.7,.2,1); }
+  .feature-image.is-active { opacity:1; }
+  .mega-menu:has(.mega-link.is-previewed) .feature-image.is-active { transform:scale(1.045); }
+  .agent-flow { position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0;transition:opacity .24s ease; }
+  .mega-menu-products .feature-visual[data-agentic="true"] .agent-flow { opacity:.92; }
+  .agent-flow-path { fill:none;stroke:rgba(178,206,255,.5);stroke-width:1.4;stroke-dasharray:4 8; }
+  .agent-flow-pulse { fill:#d9d6ff;filter:drop-shadow(0 0 5px #9b9aff); }
+  @media (prefers-reduced-motion:reduce) { .agent-flow-pulse { display:none; } }
+  .menu-overline { color:#aaa8d7; font:700 10px/1.3 'Geist',ui-sans-serif,system-ui,sans-serif; letter-spacing:.13em; text-transform:uppercase; }
   .mega-links { padding:13px 12px 8px 0; }
   .mega-links h2 { margin:7px 0 18px; font:600 24px/1.15 'Geist',ui-sans-serif,system-ui,sans-serif; letter-spacing:-.035em; }
   .mega-link-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
@@ -328,9 +358,13 @@ const mobileIcon = (href: string) => mobileIcons[mobileIconByHref[href] ?? 'docu
     border-radius:12px 12px 5px 5px;
     color:inherit;
     text-decoration:none;
-    transition:background .18s ease,border-color .18s ease,transform .18s ease;
+    transition:background .18s ease,border-color .18s ease,transform .18s ease,opacity .18s ease;
   }
-  .mega-link:hover { background:rgba(255,255,255,.045); border-color:rgba(255,255,255,.1); transform:translateY(-1px); }
+  .mega-link:hover,.mega-link:focus-visible,.mega-link.is-previewed { background:rgba(255,255,255,.07); border-color:rgba(180,177,255,.28); transform:translateY(-1px); }
+  .mega-link-grid[data-preview-active="true"] .mega-link:not(.is-previewed) { opacity:.62; }
+  .mega-link:focus-visible { outline:2px solid #aaa6ff;outline-offset:2px; }
+  :global(html.light-theme-preview) .mega-link.is-previewed { background:#eef0f7;border-color:#dce1eb; }
+  :global(html.light-theme-preview) .mega-link-grid[data-preview-active="true"] .mega-link:not(.is-previewed) { opacity:.7; }
   .mega-link strong,.mega-link small { display:block; }
   .mega-link strong { font:600 14px/1.35 'Geist',ui-sans-serif,system-ui,sans-serif; }
   .mega-link small { margin-top:5px; color:rgba(223,225,235,.58); font:400 12px/1.35 'Geist',ui-sans-serif,system-ui,sans-serif; }
@@ -387,37 +421,157 @@ const mobileIcon = (href: string) => mobileIcons[mobileIconByHref[href] ?? 'docu
 
 <script>
   const triggers = [...document.querySelectorAll<HTMLAnchorElement>('[data-nav-trigger]')];
-  const closeMenus = (except?: HTMLAnchorElement) => {
+  const desktopQuery = matchMedia('(min-width: 881px)');
+  const directLinks = [...document.querySelectorAll<HTMLAnchorElement>('.desktop-navigation > .nav-link')];
+  const topLevelLinks = [...document.querySelectorAll<HTMLAnchorElement>('.desktop-navigation > .nav-item > .nav-link, .desktop-navigation > .nav-link')];
+  let openTrigger: HTMLAnchorElement | null = null;
+  let closeTimer = 0;
+  let restoringFocus = false;
+  let lastPointerPoint: { x: number; y: number } | null = null;
+  document.addEventListener('pointermove', (event) => {
+    if (event.pointerType === 'mouse') lastPointerPoint = { x: event.clientX, y: event.clientY };
+  }, { passive: true });
+  const cancelClose = () => {
+    if (closeTimer) window.clearTimeout(closeTimer);
+    closeTimer = 0;
+  };
+  const closeMenus = (restoreFocus = false) => {
+    cancelClose();
+    const previouslyOpen = openTrigger;
     triggers.forEach((trigger) => {
       const item = trigger.closest<HTMLElement>('[data-nav-item]');
       const panel = item?.querySelector<HTMLElement>('[data-nav-panel]');
-      const open = trigger === except;
-      trigger.setAttribute('aria-expanded', String(open));
-      item?.classList.toggle('is-open', open);
-      if (panel) panel.hidden = !open;
+      trigger.setAttribute('aria-expanded', 'false');
+      item?.classList.remove('is-open');
+      if (panel) panel.hidden = true;
     });
+    openTrigger = null;
+    if (restoreFocus && previouslyOpen) {
+      restoringFocus = true;
+      previouslyOpen.focus();
+      restoringFocus = false;
+    }
+  };
+  const openMenu = (trigger: HTMLAnchorElement) => {
+    if (!desktopQuery.matches) return;
+    cancelClose();
+    if (openTrigger === trigger) return;
+    closeMenus();
+    const item = trigger.closest<HTMLElement>('[data-nav-item]');
+    const panel = item?.querySelector<HTMLElement>('[data-nav-panel]');
+    if (!item || !panel) return;
+    openTrigger = trigger;
+    trigger.setAttribute('aria-expanded', 'true');
+    item.classList.add('is-open');
+    panel.hidden = false;
+  };
+  const scheduleClose = (event: PointerEvent) => {
+    if (event.pointerType !== 'mouse' || !openTrigger) return;
+    cancelClose();
+    closeTimer = window.setTimeout(() => {
+      closeTimer = 0;
+      const item = openTrigger?.closest<HTMLElement>('[data-nav-item]');
+      if (item?.matches(':hover') || item?.contains(document.activeElement)) return;
+      const pointerTarget = lastPointerPoint && document.elementFromPoint(lastPointerPoint.x, lastPointerPoint.y);
+      if (pointerTarget?.closest('.nav-shell')) {
+        // Keep the panel alive while a diagonal cursor crosses the navbar's open space.
+        closeTimer = window.setTimeout(() => closeMenus(), 300);
+        return;
+      }
+      closeMenus();
+    }, 300);
   };
   triggers.forEach((trigger) => {
     const item = trigger.closest<HTMLElement>('[data-nav-item]');
     const panel = item?.querySelector<HTMLElement>('[data-nav-panel]');
-    trigger.addEventListener('click', (event) => {
-      if (!panel) return;
-      event.preventDefault();
-      closeMenus(trigger.getAttribute('aria-expanded') === 'true' ? undefined : trigger);
+    let touchShouldOpen = false;
+    trigger.addEventListener('pointerdown', (event) => {
+      touchShouldOpen = event.pointerType === 'touch' && trigger.getAttribute('aria-expanded') !== 'true';
     });
-    item?.addEventListener('pointerenter', () => closeMenus(trigger));
-    item?.addEventListener('pointerleave', () => closeMenus());
-    item?.addEventListener('focusin', () => closeMenus(trigger));
+    trigger.addEventListener('click', (event) => {
+      if (touchShouldOpen) {
+        event.preventDefault();
+        openMenu(trigger);
+      }
+      touchShouldOpen = false;
+    });
+    trigger.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        openMenu(trigger);
+        panel?.querySelector<HTMLAnchorElement>('.mega-link')?.focus();
+      } else if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+        event.preventDefault();
+        const index = topLevelLinks.indexOf(trigger);
+        const step = event.key === 'ArrowRight' ? 1 : -1;
+        topLevelLinks[(index + step + topLevelLinks.length) % topLevelLinks.length]?.focus();
+      }
+    });
+    item?.addEventListener('pointerenter', (event) => {
+      if (event.pointerType === 'mouse') openMenu(trigger);
+    });
+    item?.addEventListener('focusin', () => { if (!restoringFocus) openMenu(trigger); });
+    panel?.addEventListener('pointerenter', cancelClose);
+
+    const grid = panel?.querySelector<HTMLElement>('.mega-link-grid');
+    const links = [...(grid?.querySelectorAll<HTMLAnchorElement>('.mega-link') ?? [])];
+    const images = [...(panel?.querySelectorAll<HTMLImageElement>('[data-preview-image]') ?? [])];
+    let previewRequest = 0;
+    links.forEach((link) => {
+      const selectPreview = () => {
+        links.forEach((sibling) => sibling.classList.toggle('is-previewed', sibling === link));
+        if (grid) grid.dataset.previewActive = 'true';
+        const src = link.dataset.previewSrc;
+        if (!src) return;
+        const visual = panel?.querySelector<HTMLElement>('.feature-visual');
+        if (visual) visual.dataset.agentic = String(src.endsWith('products-agentic.webp'));
+        const request = ++previewRequest;
+        const active = images.find((image) => image.classList.contains('is-active'));
+        if (active?.getAttribute('src') === src) return;
+        const preloader = new Image();
+        preloader.src = src;
+        const swap = () => {
+          if (request !== previewRequest || !preloader.naturalWidth) return;
+          const current = images.find((image) => image.classList.contains('is-active'));
+          const next = images.find((image) => image !== current);
+          if (!next) return;
+          next.src = src;
+          requestAnimationFrame(() => {
+            if (request !== previewRequest) return;
+            next.classList.add('is-active');
+            current?.classList.remove('is-active');
+          });
+        };
+        if (preloader.complete) swap();
+        else preloader.onload = swap;
+      };
+      link.addEventListener('pointerenter', (event) => {
+        if (event.pointerType === 'mouse') selectPreview();
+      });
+      link.addEventListener('focus', selectPreview);
+    });
+    grid?.addEventListener('pointerleave', () => {
+      if (grid) grid.dataset.previewActive = 'false';
+      links.forEach((link) => link.classList.remove('is-previewed'));
+    });
   });
+  directLinks.forEach((link) => link.addEventListener('pointerenter', (event) => {
+    if (event.pointerType === 'mouse') closeMenus();
+  }));
+  document.querySelector<HTMLElement>('.nav-shell')?.addEventListener('pointerleave', scheduleClose);
   document.addEventListener('pointerdown', (event) => {
     if (!(event.target as Element).closest('[data-nav-item]')) closeMenus();
   });
+  document.addEventListener('focusin', (event) => {
+    if (openTrigger && !openTrigger.closest('[data-nav-item]')?.contains(event.target as Node)) closeMenus();
+  });
   document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') {
-      closeMenus();
-      document.querySelector<HTMLButtonElement>('#mobile-menu-toggle')?.focus();
+    if (event.key === 'Escape' && openTrigger) {
+      event.preventDefault();
+      closeMenus(true);
     }
   });
+  desktopQuery.addEventListener('change', () => closeMenus());
 
   const button = document.querySelector<HTMLButtonElement>('#mobile-menu-toggle');
   const mobileMenu = document.querySelector<HTMLElement>('#mobile-menu');
