@@ -4,57 +4,121 @@ import Logo from './Logo.astro';
 const year = new Date().getFullYear();
 ---
 
-<footer class="w-full bg-surface-container-lowest border-t border-outline-variant/20">
-  <div class="grid grid-cols-12 gap-gutter max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop py-16">
-    <div class="col-span-12 md:col-span-4 flex flex-col gap-6">
-      <div class="flex items-center text-on-surface">
-        <Logo height={64} />
-      </div>
-      <p class="font-body-md text-body-md text-on-surface-variant opacity-80">
-        High-performance AI engineering for the enterprise. Bridging latent
-        capability with industrial reality.
-      </p>
-      <p class="font-body-md text-body-md text-on-surface-variant opacity-80">
-        Based in Bengaluru, Karnataka, India.
-      </p>
-      <div class="flex gap-4">
-        <a
-          class="w-11 h-11 flex items-center justify-center rounded-full border border-outline-variant/30 text-on-surface-variant hover:text-primary hover:border-primary transition-colors"
-          href="https://github.com/latentsig"
-          target="_blank"
-          rel="noopener"
-          aria-label="GitHub"
-        >
-          <span aria-hidden="true" class="material-symbols-outlined">code</span>
+<footer class="site-footer">
+  <div class="footer-stage" aria-hidden="true">
+    <video
+      class="footer-video"
+      src="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/4d01c727-d9c5-47c8-a778-35a451ffd39f.mp4"
+      poster="/images/footer-meadow-fallback.png"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+    ></video>
+  </div>
+  <p class="footer-wordmark" aria-hidden="true">LatentSig</p>
+  <div class="footer-fog" aria-hidden="true"></div>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="/" class="footer-logo" aria-label="LatentSig home"><Logo height={46} /></a>
+      <p>Researching, designing, and building AI systems, data quality platforms, and industry solutions.</p>
+      <div class="footer-socials">
+        <a href="https://github.com/latentsig" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M14 4l-4 16" /></svg>
         </a>
-        <a
-          class="w-11 h-11 flex items-center justify-center rounded-full border border-outline-variant/30 text-on-surface-variant hover:text-primary hover:border-primary transition-colors"
-          href="mailto:latentsig@gmail.com"
-          aria-label="Email"
-        >
-          <span aria-hidden="true" class="material-symbols-outlined">mail</span>
+        <a href="mailto:latentsig@gmail.com" aria-label="Email">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6" /></svg>
         </a>
       </div>
     </div>
-    <div class="col-span-6 md:col-span-2 flex flex-col gap-4">
-      <h2 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider">Services</h2>
-      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="/rd-advisory/">R&amp;D Advisory</a>
-      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="/implementation/">Implementation</a>
-      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="/consulting/">Consulting</a>
-    </div>
-    <div class="col-span-6 md:col-span-2 flex flex-col gap-4">
-      <h2 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider">Company</h2>
-      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="/about/">About</a>
-      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="/insights/">Insights</a>
-      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="/contact/">Contact</a>
-    </div>
-    <div class="col-span-12 md:col-span-4 flex flex-col gap-4">
-      <h2 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider">Legal</h2>
-      <div class="flex gap-6">
-        <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="/privacy/">Privacy Policy</a>
-        <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="/terms/">Terms of Service</a>
-      </div>
-      <p class="font-label-sm text-label-sm text-on-surface-variant mt-4 opacity-80">© {year} Latentsig Software Private Limited. All rights reserved.</p>
-    </div>
+
+    <nav class="footer-group" aria-label="Products">
+      <h2>Products</h2>
+      <a href="/products/">All Products</a>
+      <a href="/products/annotation-verification/">Annotation &amp; Verification</a>
+      <a href="/products/agentic-ai-platform/">Agentic AI Studio</a>
+      <a href="/demos/">Product Demonstrations</a>
+    </nav>
+
+    <nav class="footer-group" aria-label="Solutions and services">
+      <h2>Solutions &amp; Services</h2>
+      <a href="/solutions/">Industry Solutions</a>
+      <a href="/rd-advisory/">Applied AI Research &amp; Model Engineering</a>
+      <a href="/implementation/">Implementation</a>
+      <a href="/consulting/">Consulting</a>
+    </nav>
+
+    <nav class="footer-group" aria-label="Company">
+      <h2>Company</h2>
+      <a href="/about/">About</a>
+      <a href="/insights/">Insights</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+
+    <nav class="footer-group" aria-label="Legal">
+      <h2>Legal</h2>
+      <a href="/privacy/">Privacy Policy</a>
+      <a href="/terms/">Terms of Service</a>
+    </nav>
+
+    <p class="footer-copyright">© {year} Latentsig Software Private Limited. All rights reserved.</p>
   </div>
 </footer>
+
+<script>
+  const footerVideo = document.querySelector<HTMLVideoElement>('.footer-video');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const syncFooterVideo = () => {
+    if (!footerVideo) return;
+    if (reducedMotion.matches) {
+      footerVideo.pause();
+      if (footerVideo.readyState > 0) footerVideo.currentTime = 0;
+    } else {
+      void footerVideo.play().catch(() => {});
+    }
+  };
+  syncFooterVideo();
+  reducedMotion.addEventListener('change', syncFooterVideo);
+</script>
+
+<style>
+  .site-footer{--paper:#efede4;--mist:#e2e3f1;position:relative;isolation:isolate;min-height:760px;overflow:hidden;width:100%;background:var(--paper);color:#292c25;border-top:1px solid #dedbd1;font-family:Geist,system-ui,sans-serif}
+  .footer-stage{position:absolute;z-index:0;inset:0;overflow:hidden;background-color:var(--mist);background-image:url('/images/footer-meadow-fallback.png');background-size:cover;background-position:50% 100%;pointer-events:none}
+  .footer-stage::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,var(--paper) 0%,rgba(239,237,228,.96) 26%,rgba(239,237,228,.72) 44%,rgba(239,237,228,0) 70%)}
+  .footer-video{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 100%;transform:translateY(9%)}
+  .footer-wordmark{position:absolute;z-index:1;left:50%;bottom:-.11em;transform:translateX(-50%);margin:0;color:rgba(232,234,250,.4);background:linear-gradient(to bottom,rgba(255,255,255,.78),rgba(214,218,246,.36) 48%,rgba(255,255,255,.62));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 -1px rgba(255,255,255,.55)) drop-shadow(0 0 18px rgba(190,200,255,.45));font:600 clamp(130px,27vw,390px)/.74 'Hanken Grotesk',sans-serif;letter-spacing:-.045em;white-space:nowrap;pointer-events:none;user-select:none}
+  .footer-fog{position:absolute;z-index:2;inset:auto 0 0;height:28%;background:linear-gradient(to top,var(--mist) 0%,rgba(226,227,241,.6) 30%,rgba(226,227,241,0) 100%);pointer-events:none}
+  .footer-grid{position:relative;z-index:3;width:min(1440px,100%);margin:0 auto;padding:64px clamp(24px,6vw,100px) 26px;display:grid;grid-template-columns:minmax(300px,1.9fr) repeat(4,minmax(120px,1fr));gap:36px 28px;align-items:start}
+  .footer-brand{min-width:0;display:grid;justify-items:start;align-content:start;gap:20px}
+  .footer-logo{display:inline-flex;align-items:center;min-height:48px;text-decoration:none}
+  .brand-wordmark{display:block;max-width:100%;padding:5px 8px;border-radius:3px;background:#080c2b;object-fit:contain}
+  .footer-brand p{max-width:390px;margin:0;color:#676b60;font-size:16px;line-height:1.65}
+  .footer-socials{display:flex;gap:12px}
+  .footer-socials a{width:44px;height:44px;display:inline-flex;align-items:center;justify-content:center;border:1px solid #dedbd1;border-radius:50%;color:#3e4438;text-decoration:none;transition:color .18s ease,border-color .18s ease,background .18s ease,transform .18s ease}
+  .footer-socials a:hover{border-color:#6d7b50;background:#f7f4ec;color:#596742;transform:translateY(-2px)}
+  .footer-socials svg{width:21px;height:21px;flex:none}
+  .footer-group{min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:4px}
+  .footer-group h2{margin:0 0 8px;color:#34382f;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+  .footer-group a{min-height:40px;display:flex;align-items:center;color:#50554b;text-decoration:none;font-size:13px;line-height:1.45;transition:color .18s ease,transform .18s ease}
+  .footer-group a:hover{color:#596742;transform:translateX(3px)}
+  .footer-copyright{grid-column:1/-1;margin:4px 0 0;padding-top:20px;border-top:1px solid rgba(69,74,62,.22);color:#555a50;font-size:12px;line-height:1.5}
+  .footer-group a:focus-visible,.footer-socials a:focus-visible,.footer-logo:focus-visible{outline:3px solid #74629e;outline-offset:3px;border-radius:4px}
+  @media(max-width:1000px){.site-footer{min-height:800px}.footer-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:32px 20px}.footer-brand{grid-column:1/-1}.footer-brand p{max-width:520px}.footer-group{grid-column:span 1}}
+  @media(max-width:700px){
+    .site-footer{min-height:0;padding-bottom:0;background:var(--paper)}
+    .footer-stage{inset:auto 0 0;height:240px}
+    .footer-stage::after{background:linear-gradient(to bottom,var(--paper) 0%,rgba(239,237,228,.94) 22%,rgba(239,237,228,.35) 72%,rgba(239,237,228,.08) 100%)}
+    .footer-video{transform:none;object-position:50% 100%}
+    .footer-grid{grid-template-columns:repeat(2,minmax(0,1fr));padding:40px 22px 96px;gap:24px 18px}
+    .footer-brand{grid-column:1/-1;gap:16px}
+    .footer-brand p{font-size:16px;line-height:1.6}
+    .footer-group{gap:2px}
+    .footer-group a{min-height:44px;font-size:14px;line-height:1.45}
+    .footer-copyright{margin-top:0;font-size:13px;line-height:1.55}
+    .footer-wordmark{bottom:-.12em;font-size:clamp(76px,20vw,120px)}
+    .footer-fog{height:80px;background:linear-gradient(to top,rgba(226,227,241,.52),transparent)}
+  }
+  @media(max-width:360px){.footer-grid{grid-template-columns:minmax(0,1fr);padding-right:20px;padding-left:20px}.footer-brand,.footer-copyright{grid-column:1/-1}}
+  @media(prefers-reduced-motion:reduce){.footer-video{visibility:hidden}.footer-socials a,.footer-group a{transition:none}}
+</style>

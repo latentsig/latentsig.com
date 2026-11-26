@@ -4,99 +4,359 @@ import { CALENDLY_URL } from '../consts';
 
 const path = Astro.url.pathname;
 
-const links = [
-  { href: '/rd-advisory/', label: 'R&D Advisory' },
-  { href: '/implementation/', label: 'Implementation' },
-  { href: '/consulting/', label: 'Consulting' },
-  { href: '/insights/', label: 'Insights' },
-  { href: '/about/', label: 'About' },
+const menus = [
+  {
+    label: 'Products',
+    href: '/products/',
+    eyebrow: 'Featured · Demos',
+    description: 'Explore interactive product concepts and review-ready AI workflows.',
+    links: [
+      { href: '/products/', label: 'Explore all products', detail: 'Tools for better data and practical AI workflows' },
+      { href: '/products/annotation-verification/', label: 'Annotation & Verification Platform', detail: 'A product concept for organizing annotation, review, and verification workflows.' },
+      { href: '/demos/#annotation-verification', label: 'Annotation & Verification demo', detail: 'View the interactive product concept' },
+      { href: '/products/agentic-ai-platform/', label: 'Agentic AI Studio', detail: 'A product concept for shaping AI-assisted workflows with visible steps and review points.' },
+      { href: '/demos/#agentic-ai-platform', label: 'Agentic AI Studio walkthrough', detail: 'See AI workflows with clear review points' },
+    ],
+  },
+  {
+    label: 'Solutions',
+    href: '/solutions/',
+    eyebrow: 'Digital Solutions',
+    description: 'Applied AI and engineering for healthcare, industry, retail, and education.',
+    links: [
+      { href: '/solutions/#healthcare', label: 'Healthcare', detail: 'Care and clinical workflows' },
+      { href: '/solutions/#industry', label: 'Industry', detail: 'Operations and quality systems' },
+      { href: '/solutions/#retail', label: 'Retail', detail: 'Customer and commerce workflows' },
+      { href: '/solutions/#education', label: 'Education', detail: 'Learning and knowledge systems' },
+    ],
+  },
+  {
+    label: 'Services',
+    href: '/services/',
+    eyebrow: 'How We Work',
+    description: 'Focused R&D advisory, technical consulting, and practical delivery.',
+    links: [
+      { href: '/services/', label: 'Explore all services', detail: 'From research to production' },
+      { href: '/rd-advisory/', label: 'Applied AI Research & Model Engineering', detail: 'Research and model engineering' },
+      { href: '/consulting/', label: 'AI Consulting', detail: 'Focused technical guidance' },
+      { href: '/implementation/', label: 'AI Implementation', detail: 'Practical delivery for production' },
+    ],
+  },
+  {
+    label: 'About',
+    href: '/about/',
+    eyebrow: 'LatentSig AI',
+    description: 'Independent AI engineering and software studio based in Bengaluru.',
+    links: [
+      { href: '/about/', label: 'Company', detail: 'Research, products, and apps' },
+      { href: '/contact/', label: 'Contact', detail: 'Get in touch with our team' },
+    ],
+  },
 ];
+
+const directLinks = [{ href: '/insights/', label: 'Insights' }];
 ---
 
-<nav aria-label="Main navigation" class="fixed w-full top-0 z-50 bg-surface/80 backdrop-blur-xl border-b border-outline-variant/30">
-  <div class="flex justify-between items-center max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop h-20">
-    <a href="/" class="flex items-center text-on-surface hover:opacity-90 transition-opacity" aria-label="Latentsig home">
-      <Logo height={72} class="hidden xl:block" />
-      <Logo height={44} class="xl:hidden" />
+<header class="site-header">
+  <nav aria-label="Main navigation" class="nav-shell">
+    <a href="/" class="brand" aria-label="Latentsig home">
+      <Logo height={36} showWordmark={false} class="brand-mark" />
+      <span>latentsig</span>
     </a>
-    <div class="hidden xl:flex items-center gap-gutter">
-      {
-        links.map((l) => (
-          <a
-            href={l.href}
-            aria-current={path === l.href ? "page" : undefined}
-            class={`inline-flex items-center min-h-11 font-label-md text-label-md transition-colors duration-200 ${
-              path === l.href
-                ? 'text-primary'
-                : 'text-on-surface-variant hover:text-primary'
-            }`}
-          >
-            {l.label}
-          </a>
-        ))
-      }
-    </div>
-    <a
-      href={CALENDLY_URL}
-      target="_blank"
-      rel="noopener"
-      class="hidden sm:inline-flex bg-primary-container text-on-primary-container px-6 py-2.5 rounded-lg font-label-md text-label-md font-bold hover:brightness-110 transition-all"
-    >
-      Get a Consultation
-    </a>
-    <button id="mobile-menu-toggle" type="button" class="xl:hidden text-on-surface" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" /></svg>
-    </button>
-  </div>
-  <div id="mobile-menu" hidden class="xl:hidden hidden border-t border-outline-variant/30 bg-surface">
-    <div class="flex flex-col px-margin-mobile py-4 gap-3">
-      {
-        links.map((l) => (
-          <a
-            href={l.href}
-            aria-current={path === l.href ? "page" : undefined}
-            class={`font-label-md text-label-md py-2 ${
-              path === l.href ? 'text-primary' : 'text-on-surface-variant'
-            }`}
-          >
-            {l.label}
-          </a>
-        ))
-      }
-      <a
-        href={CALENDLY_URL}
-        target="_blank"
-        rel="noopener"
-        class="mt-2 bg-primary-container text-on-primary-container px-6 py-3 rounded-lg font-label-md text-label-md font-bold text-center"
-      >
-        Get a Consultation
-      </a>
-    </div>
-  </div>
-</nav>
 
-<noscript><style>nav[aria-label="Main navigation"]{position:static}#mobile-menu{display:block!important}#mobile-menu-toggle{display:none}#main-content{padding-top:0}</style></noscript>
+    <div class="desktop-navigation" aria-label="Site sections">
+      {menus.map((menu) => (
+        <div class="nav-item" data-nav-item>
+          <a
+            class:list={['nav-link', path === menu.href && 'is-current']}
+            href={menu.href}
+            aria-current={path === menu.href ? 'page' : undefined}
+            aria-haspopup="true"
+            aria-expanded="false"
+            data-nav-trigger
+          >
+            {menu.label}
+            <svg class="chevron" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m4 6 4 4 4-4" /></svg>
+          </a>
+          <section class="mega-menu" data-nav-panel aria-label={`${menu.label} menu`} hidden>
+            <div class="mega-feature">
+              <span class="menu-kicker"><span></span>{menu.eyebrow}</span>
+              <p>{menu.description}</p>
+              <a class="feature-link" href={menu.href}>Explore {menu.label}<span aria-hidden="true">↗</span></a>
+            </div>
+            <div class="mega-links">
+              <span class="menu-overline">Discover</span>
+              <h2>{menu.label}</h2>
+              <div class="mega-link-grid">
+                {menu.links.map((link) => (
+                  <a class="mega-link" href={link.href}>
+                    <span><strong>{link.label}</strong><small>{link.detail}</small></span>
+                    <span class="link-arrow" aria-hidden="true">↗</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </section>
+        </div>
+      ))}
+      {directLinks.map((link) => (
+        <a
+          href={link.href}
+          aria-current={path === link.href ? 'page' : undefined}
+          class:list={['nav-link', path === link.href && 'is-current']}
+        >{link.label}</a>
+      ))}
+    </div>
+
+    <a class="nav-cta" href={CALENDLY_URL} target="_blank" rel="noopener">
+      <span>Book a Demo</span><span aria-hidden="true">↗</span>
+    </a>
+
+    <button id="mobile-menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+    </button>
+  </nav>
+
+  <div id="mobile-menu" class="mobile-menu" hidden>
+    <div class="mobile-menu-inner">
+      {menus.map((menu) => (
+        <section class="mobile-menu-group" aria-label={`${menu.label} links`}>
+          <a class="mobile-menu-heading" href={menu.href} aria-current={path === menu.href ? 'page' : undefined}>{menu.label}<span aria-hidden="true">↗</span></a>
+          {menu.links.map((link) => <a class="mobile-sub-link" href={link.href}>{link.label}<span aria-hidden="true">↗</span></a>)}
+        </section>
+      ))}
+      <section class="mobile-menu-group" aria-label="Insights links">
+        <a class="mobile-menu-heading" href="/insights/" aria-current={path === '/insights/' ? 'page' : undefined}>Insights<span aria-hidden="true">↗</span></a>
+        <a class="mobile-sub-link" href="/insights/latent-signals-activation-probing/">Latent Signals: model activation research<span aria-hidden="true">↗</span></a>
+        <a class="mobile-sub-link" href="/insights/laya-rlcd-system-one/">Laya and RLCD: AI workflow decisions<span aria-hidden="true">↗</span></a>
+        <a class="mobile-sub-link" href="/insights/dflash-muse-spark-1-2/">DFlash: faster LLM generation<span aria-hidden="true">↗</span></a>
+        <a class="mobile-sub-link" href="/blog/quantization-without-tears/">INT8 post-training quantization<span aria-hidden="true">↗</span></a>
+      </section>
+      <a class="mobile-cta" href={CALENDLY_URL} target="_blank" rel="noopener">Book a Demo<span aria-hidden="true">↗</span></a>
+    </div>
+  </div>
+</header>
+
+<noscript><style>.site-header{position:static!important}#mobile-menu{display:block!important}#mobile-menu-toggle{display:none!important}#main-content{padding-top:0}</style></noscript>
+
 <style>
-  #mobile-menu-toggle{min-width:44px;min-height:44px;align-items:center;justify-content:center}
-  #mobile-menu{max-height:calc(100vh - 80px);max-height:calc(100dvh - 80px);overflow-y:auto;overscroll-behavior:contain}
-  #mobile-menu a{display:flex;align-items:center;min-height:44px}
-  @media(max-width:1279px){#mobile-menu-toggle{display:inline-flex}}
+  .site-header {
+    position: fixed;
+    z-index: 50;
+    inset: 16px 20px auto;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+  }
+  .nav-shell {
+    pointer-events: auto;
+    position: relative;
+    width: min(100%, 1280px);
+    min-height: 76px;
+    padding: 9px 12px 9px 16px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    border: 1px solid rgba(200, 204, 231, .2);
+    border-radius: 999px;
+    color: #f2f3fc;
+    background: rgba(10, 15, 31, .76);
+    -webkit-backdrop-filter: blur(22px) saturate(135%);
+    backdrop-filter: blur(22px) saturate(135%);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, .2), inset 0 1px rgba(255,255,255,.035);
+  }
+  .brand {
+    color: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    flex: 0 0 auto;
+    padding: 0 10px 0 0;
+    font: 700 21px/1 'Geist', ui-sans-serif, system-ui, sans-serif;
+    letter-spacing: -.055em;
+    text-decoration: none;
+  }
+  .brand-mark {
+    display: block;
+    border-radius: 12px;
+    background: #10152d;
+    box-shadow: 0 2px 12px rgba(0,0,0,.24);
+  }
+  .desktop-navigation { display:flex; align-items:center; justify-content:center; gap:clamp(4px, 1.1vw, 18px); flex:1; height:100%; }
+  .nav-item { height:100%; display:flex; align-items:center; }
+  .nav-link {
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    min-height:44px;
+    padding:0 10px;
+    color:rgba(232,233,246,.83);
+    font:500 15px/1.2 'Geist', ui-sans-serif, system-ui, sans-serif;
+    text-decoration:none;
+    white-space:nowrap;
+    transition:color .18s ease, background .18s ease;
+  }
+  .nav-link:hover,.nav-link:focus-visible,.nav-link.is-current { color:#c7c4ff; }
+  .nav-link:focus-visible,.nav-cta:focus-visible,.brand:focus-visible { outline:2px solid #aaa6ff; outline-offset:3px; }
+  .chevron { width:14px; height:14px; stroke:currentColor; stroke-width:1.35; transition:transform .2s ease; }
+  .nav-item.is-open .chevron { transform:rotate(180deg); }
+  .nav-cta {
+    flex:0 0 auto;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:11px;
+    min-height:52px;
+    padding:0 22px;
+    border-radius:999px;
+    color:#f7f7ff;
+    background:#171922;
+    border:1px solid rgba(255,255,255,.12);
+    font:650 14px/1 'Geist', ui-sans-serif, system-ui, sans-serif;
+    text-decoration:none;
+    transition:background .2s ease, transform .2s ease, border-color .2s ease;
+  }
+  .nav-cta:hover { background:#25283a; border-color:rgba(190,187,255,.4); transform:translateY(-1px); }
+  .nav-cta span:last-child { font-size:16px; }
+  .mega-menu {
+    position:absolute;
+    top:calc(100% + 12px);
+    left:0;
+    right:0;
+    display:grid;
+    grid-template-columns:minmax(270px, .82fr) 1.65fr;
+    gap:24px;
+    padding:16px;
+    color:#f2f3f8;
+    border:1px solid rgba(200,204,231,.18);
+    border-radius:26px;
+    background:rgba(12,15,22,.94);
+    -webkit-backdrop-filter:blur(26px) saturate(135%);
+    backdrop-filter:blur(26px) saturate(135%);
+    box-shadow:0 24px 70px rgba(0,0,0,.42);
+    animation:menu-in .18s ease both;
+  }
+  .mega-menu[hidden] { display:none; }
+  .mega-feature {
+    min-height:190px;
+    padding:22px;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    border:1px solid rgba(255,255,255,.105);
+    border-radius:20px;
+    background:radial-gradient(ellipse at 10% 0%, rgba(133,126,255,.16), transparent 62%),rgba(255,255,255,.025);
+  }
+  .menu-kicker,.menu-overline { color:#aaa8d7; font:700 10px/1.3 'Geist',ui-sans-serif,system-ui,sans-serif; letter-spacing:.13em; text-transform:uppercase; }
+  .menu-kicker { display:flex; align-items:center; gap:8px; }
+  .menu-kicker span { width:7px; height:7px; border-radius:50%; background:#b6b2ff; box-shadow:0 0 12px #8b86ff; }
+  .mega-feature p { margin:20px 0 18px; max-width:310px; color:rgba(237,238,246,.75); font:400 15px/1.55 'Geist',ui-sans-serif,system-ui,sans-serif; }
+  .feature-link { display:flex; align-items:center; gap:10px; margin-top:auto; color:#c4c1ff; font:650 13px/1.3 'Geist',ui-sans-serif,system-ui,sans-serif; text-decoration:none; }
+  .feature-link:hover { color:#fff; }
+  .mega-links { padding:13px 12px 8px 0; }
+  .mega-links h2 { margin:7px 0 18px; font:600 24px/1.15 'Geist',ui-sans-serif,system-ui,sans-serif; letter-spacing:-.035em; }
+  .mega-link-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+  .mega-link {
+    min-height:74px;
+    padding:14px 13px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    border:1px solid transparent;
+    border-bottom-color:rgba(255,255,255,.12);
+    border-radius:12px 12px 5px 5px;
+    color:inherit;
+    text-decoration:none;
+    transition:background .18s ease,border-color .18s ease,transform .18s ease;
+  }
+  .mega-link:hover { background:rgba(255,255,255,.045); border-color:rgba(255,255,255,.1); transform:translateY(-1px); }
+  .mega-link strong,.mega-link small { display:block; }
+  .mega-link strong { font:600 14px/1.35 'Geist',ui-sans-serif,system-ui,sans-serif; }
+  .mega-link small { margin-top:5px; color:rgba(223,225,235,.58); font:400 12px/1.35 'Geist',ui-sans-serif,system-ui,sans-serif; }
+  .link-arrow { color:#c3c0ff; font-size:16px; }
+  #mobile-menu-toggle { display:none; color:inherit; border:0; background:transparent; border-radius:50%; width:46px; height:46px; align-items:center; justify-content:center; cursor:pointer; }
+  .mobile-menu { pointer-events:auto; position:absolute; top:calc(100% + 10px); left:0; right:0; max-height:calc(100dvh - 120px); overflow:auto; border:1px solid rgba(200,204,231,.19); border-radius:22px; background:rgba(12,15,27,.96); -webkit-backdrop-filter:blur(22px); backdrop-filter:blur(22px); box-shadow:0 20px 56px rgba(0,0,0,.4); }
+  .mobile-menu[hidden] { display:none; }
+  .mobile-menu-inner { display:flex; flex-direction:column; padding:10px; }
+  .mobile-menu-inner a { display:flex; align-items:center; justify-content:space-between; min-height:46px; padding:0 13px; color:#ededef; border-bottom:1px solid rgba(255,255,255,.08); font:500 14px/1.3 'Geist',ui-sans-serif,system-ui,sans-serif; text-decoration:none; }
+  .mobile-menu-inner a[aria-current="page"] { color:#c6c3ff; }
+  .mobile-menu-inner a span { flex:0 0 auto; margin-left:10px; color:#bcb8ff; }
+  .mobile-menu-group { padding:4px 0 7px; border-bottom:1px solid rgba(255,255,255,.12); }
+  .mobile-menu-inner .mobile-menu-heading { min-height:46px; font-size:15px; font-weight:700; }
+  .mobile-menu-inner .mobile-sub-link { min-height:38px; padding-left:26px; color:rgba(237,238,246,.77); font-size:12px; }
+  .mobile-menu-inner .mobile-cta { margin-top:9px; min-height:48px; padding:0 16px; justify-content:center; gap:12px; border:0; border-radius:999px; background:#191b25; font-weight:650; }
+  @keyframes menu-in { from { opacity:0; transform:translateY(-5px); } to { opacity:1; transform:translateY(0); } }
+  @media(max-width:1100px) { .nav-shell { gap:12px; } .desktop-navigation { gap:2px; } .nav-link { padding:0 7px; font-size:13px; } .brand { font-size:19px; } .nav-cta { padding:0 16px; } }
+  @media(max-width:880px) {
+    .site-header { inset:12px 14px auto; }
+    .nav-shell { min-height:64px; padding:7px 9px 7px 13px; gap:8px; }
+    .brand { gap:9px; font-size:19px; }
+    .brand-mark { height:34px!important; width:34px!important; }
+    .desktop-navigation { display:none; }
+    .nav-cta { margin-left:auto; min-height:44px; padding:0 16px; font-size:13px; }
+    #mobile-menu-toggle { display:inline-flex; flex:0 0 auto; }
+  }
+  @media(max-width:460px) { .site-header { inset:9px 9px auto; } .nav-shell { min-height:58px; padding:6px 7px 6px 10px; } .brand { gap:7px; font-size:17px; } .brand-mark { height:31px!important; width:31px!important; border-radius:10px; } .nav-cta { min-height:40px; padding:0 12px; gap:7px; font-size:12px; } #mobile-menu-toggle { width:40px; height:40px; } }
+  @media(prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; animation-duration:.01ms!important; animation-iteration-count:1!important; transition-duration:.01ms!important; } }
 </style>
+
 <script>
+  const triggers = [...document.querySelectorAll<HTMLAnchorElement>('[data-nav-trigger]')];
+  const closeMenus = (except?: HTMLAnchorElement) => {
+    triggers.forEach((trigger) => {
+      const item = trigger.closest<HTMLElement>('[data-nav-item]');
+      const panel = item?.querySelector<HTMLElement>('[data-nav-panel]');
+      const open = trigger === except;
+      trigger.setAttribute('aria-expanded', String(open));
+      item?.classList.toggle('is-open', open);
+      if (panel) panel.hidden = !open;
+    });
+  };
+  triggers.forEach((trigger) => {
+    const item = trigger.closest<HTMLElement>('[data-nav-item]');
+    const panel = item?.querySelector<HTMLElement>('[data-nav-panel]');
+    trigger.addEventListener('click', (event) => {
+      if (!panel) return;
+      event.preventDefault();
+      closeMenus(trigger.getAttribute('aria-expanded') === 'true' ? undefined : trigger);
+    });
+    item?.addEventListener('pointerenter', () => closeMenus(trigger));
+    item?.addEventListener('pointerleave', () => closeMenus());
+    item?.addEventListener('focusin', () => closeMenus(trigger));
+  });
+  document.addEventListener('pointerdown', (event) => {
+    if (!(event.target as Element).closest('[data-nav-item]')) closeMenus();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      closeMenus();
+      document.querySelector<HTMLButtonElement>('#mobile-menu-toggle')?.focus();
+    }
+  });
+
   const button = document.querySelector<HTMLButtonElement>('#mobile-menu-toggle');
-  const menu = document.querySelector<HTMLElement>('#mobile-menu');
-  if (button && menu) {
+  const mobileMenu = document.querySelector<HTMLElement>('#mobile-menu');
+  if (button && mobileMenu) {
     const setOpen = (open: boolean, restoreFocus = false) => {
       button.setAttribute('aria-expanded', String(open));
       button.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
-      menu.hidden = !open; menu.classList.toggle('hidden', !open);
+      mobileMenu.hidden = !open;
       if (restoreFocus) button.focus();
     };
-    button.addEventListener('click', () => setOpen(menu.hidden));
-    document.addEventListener('keydown', event => { if(event.key === 'Escape' && !menu.hidden) setOpen(false, true); });
-    document.addEventListener('pointerdown', event => { if(!menu.hidden && !menu.contains(event.target as Node) && !button.contains(event.target as Node)) setOpen(false); });
-    document.addEventListener('focusin', event => { if(!menu.hidden && !menu.contains(event.target as Node) && !button.contains(event.target as Node)) setOpen(false); });
-    menu.addEventListener('click', event => { if((event.target as Element).closest('a')) setOpen(false); });
-    matchMedia('(min-width: 1280px)').addEventListener('change', event => { if(event.matches) setOpen(false); });
+    button.addEventListener('click', () => setOpen(mobileMenu.hidden));
+    mobileMenu.addEventListener('click', (event) => {
+      if ((event.target as Element).closest('a')) setOpen(false);
+    });
+    document.addEventListener('pointerdown', (event) => {
+      if (!mobileMenu.hidden && !mobileMenu.contains(event.target as Node) && !button.contains(event.target as Node)) setOpen(false);
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !mobileMenu.hidden) setOpen(false, true);
+    });
+    matchMedia('(min-width: 881px)').addEventListener('change', (event) => {
+      if (event.matches) setOpen(false);
+    });
   }
 </script>
