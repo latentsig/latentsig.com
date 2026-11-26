@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "astro": "^4.16.0",
+    "flag-icons": "^7.6.0",
     "katex": "^0.18.1",
     "libphonenumber-js": "^1.13.17",
     "rehype-katex": "^7.0.1",
