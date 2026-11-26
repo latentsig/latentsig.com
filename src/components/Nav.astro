@@ -141,7 +141,7 @@ const mobileIcons = [
       <nav class="mobile-drawer-content" aria-label="Mobile navigation links">
         <div class="mobile-panel-inner">
           {menus.map((menu, sectionIndex) => (
-            <details class="mobile-menu-section" open={sectionIndex === 0}>
+            <details class="mobile-menu-section" name="mobile-nav-sections" open={sectionIndex === 0}>
               <summary>{menu.label}<svg class="mobile-section-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5" /></svg></summary>
               <div class="mobile-section-links">
                 {menu.links.map((link, linkIndex) => (
@@ -154,7 +154,7 @@ const mobileIcons = [
               </div>
             </details>
           ))}
-          <details class="mobile-menu-section">
+          <details class="mobile-menu-section" name="mobile-nav-sections">
             <summary>Insights<svg class="mobile-section-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5" /></svg></summary>
             <div class="mobile-section-links">
               {[
@@ -406,6 +406,12 @@ const mobileIcons = [
   const mobileMenu = document.querySelector<HTMLElement>('#mobile-menu');
   const mobileClose = mobileMenu?.querySelector<HTMLButtonElement>('[data-mobile-close]');
   const mobileBackdrop = mobileMenu?.querySelector<HTMLButtonElement>('[data-mobile-backdrop]');
+  const mobileSections = [...(mobileMenu?.querySelectorAll<HTMLDetailsElement>('.mobile-menu-section') ?? [])];
+  mobileSections.forEach((section) => {
+    section.addEventListener('toggle', () => {
+      if (section.open) mobileSections.forEach((other) => { if (other !== section) other.open = false; });
+    });
+  });
   let previousBodyOverflow: string | undefined;
   if (button && mobileMenu) {
     const setOpen = (open: boolean, restoreFocus = false) => {
