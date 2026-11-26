@@ -184,24 +184,7 @@ const mobileIcon = (href: string) => mobileIcons[mobileIconByHref[href] ?? 'docu
               </div>
             </details>
           ))}
-          <details class="mobile-menu-section" name="mobile-nav-sections">
-            <summary>Insights<svg class="mobile-section-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5" /></svg></summary>
-            <div class="mobile-section-links">
-              {[
-                { href: '/insights/', label: 'Explore all insights', icon: 'grid' },
-                { href: '/insights/latent-signals-activation-probing/', label: 'Latent Signals: model activation research' },
-                { href: '/insights/laya-rlcd-system-one/', label: 'Laya and RLCD: AI workflow decisions' },
-                { href: '/insights/dflash-muse-spark-1-2/', label: 'DFlash: faster LLM generation' },
-                { href: '/blog/quantization-without-tears/', label: 'INT8 post-training quantization' },
-              ].map((link) => (
-                <a class="mobile-nav-link" href={link.href} aria-current={path === link.href ? 'page' : undefined}>
-                  <span class="mobile-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" set:html={link.icon ? mobileIcons[link.icon] : mobileIcon(link.href)}></svg></span>
-                  <span class="mobile-nav-label">{link.label}</span>
-                  <svg class="mobile-nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" /></svg>
-                </a>
-              ))}
-            </div>
-          </details>
+          <a class="mobile-insights-link" href="/insights/" aria-current={path === '/insights/' ? 'page' : undefined}>Insights</a>
         </div>
       </nav>
       <div class="mobile-drawer-footer">
@@ -367,6 +350,8 @@ const mobileIcon = (href: string) => mobileIcons[mobileIconByHref[href] ?? 'docu
   .mobile-menu-section { border-bottom:1px solid #f0f0f2; }
   .mobile-menu-section summary { min-height:60px;display:flex;align-items:center;justify-content:space-between;gap:14px;color:#18181b;list-style:none;cursor:pointer;font:600 18px/1.25 'Geist',ui-sans-serif,system-ui,sans-serif;letter-spacing:-.015em; }
   .mobile-menu-section summary::-webkit-details-marker { display:none; }
+  .mobile-insights-link { min-height:60px;display:flex;align-items:center;color:#18181b;border-bottom:1px solid #f0f0f2;text-decoration:none;font:600 18px/1.25 'Geist',ui-sans-serif,system-ui,sans-serif;letter-spacing:-.015em; }
+  .mobile-insights-link:hover,.mobile-insights-link:focus-visible,.mobile-insights-link[aria-current="page"] { color:#10152d; }
   .mobile-section-chevron { width:18px;height:18px;flex:none;fill:none;stroke:#52525b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s ease; }
   .mobile-menu-section[open] .mobile-section-chevron { transform:rotate(180deg);stroke:#18181b; }
   .mobile-section-links { display:grid;gap:3px;padding:0 0 12px; }
@@ -380,7 +365,8 @@ const mobileIcon = (href: string) => mobileIcons[mobileIconByHref[href] ?? 'docu
   .mobile-drawer-footer { display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:14px 18px max(16px,env(safe-area-inset-bottom));border-top:1px solid #e4e4e7;background:#fafafa; }
   .mobile-contact-cta,.mobile-demo-cta { min-height:48px;display:flex;align-items:center;justify-content:center;gap:8px;padding:0 12px;border-radius:9px;text-decoration:none;text-align:center;font:600 14px/1.2 'Geist',ui-sans-serif,system-ui,sans-serif; }
   .mobile-contact-cta { border:1px solid #d4d4d8;color:#18181b;background:#fff; }
-  .mobile-demo-cta { border:1px solid #6d7b50;background:#6d7b50;color:#fffdf8;box-shadow:0 2px 8px rgba(109,123,80,.25); }
+  .mobile-demo-cta { border:1px solid #10152d;background:#10152d;color:#fff;box-shadow:0 2px 8px rgba(16,21,45,.2); }
+  .mobile-demo-cta:hover { background:#0b1326;border-color:#0b1326; }
   .mobile-demo-cta span { margin-left:5px;font-size:16px; }
   @media(max-width:380px) { .mobile-panel-inner { padding-right:14px;padding-left:14px; }.mobile-drawer-footer { padding-right:12px;padding-left:12px;gap:8px; }.mobile-contact-cta,.mobile-demo-cta { padding:0 8px;font-size:13px; } }
   @keyframes menu-in { from { opacity:0; transform:translateY(-5px); } to { opacity:1; transform:translateY(0); } }
