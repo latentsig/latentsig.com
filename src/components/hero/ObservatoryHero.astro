@@ -1,10 +1,10 @@
 ---
 import { CALENDLY_URL } from '../../consts';
 const stories = [
-  { eyebrow: 'AI RESEARCH. REAL-WORLD ENGINEERING.', title: 'Engineering the', accent: 'Latent Potential', end: 'of AI.', text: 'We bridge the gap between academic research and industrial deployment. Latentsig AI provides enterprise-grade AI architecture, R&D advisory, and implementation for the most demanding technical environments.', cue: 'FROM RESEARCH TO THE REAL WORLD' },
-  { eyebrow: '01 / RESEARCH', title: 'Find the', accent: 'possibility.', text: 'Good engineering starts with better questions. Explore ideas, uncover patterns, and find a direction worth pursuing.', cue: 'R&D ADVISORY · RESEARCH · PROTOTYPING' },
-  { eyebrow: '02 / ARCHITECTURE', title: 'Give ideas', accent: 'structure.', text: 'Connect models, data, and infrastructure. Every layer has a purpose. Every connection is intentional.', cue: 'AI ARCHITECTURE · SYSTEM DESIGN' },
-  { eyebrow: '03 / DEPLOYMENT', title: 'Make it', accent: 'work.', text: 'Move from possibility to practice. Implement, test, observe, and refine AI for the real world.', cue: 'IMPLEMENTATION · TESTING · OBSERVABILITY' },
+  { title: 'Engineering the', accent: 'Latent Potential', end: 'of AI.', text: 'We bridge the gap between academic research and industrial deployment. Latentsig AI provides enterprise-grade AI architecture, R&D advisory, and implementation for the most demanding technical environments.', cue: 'FROM RESEARCH TO THE REAL WORLD' },
+  { title: 'Find the', accent: 'possibility.', text: 'Good engineering starts with better questions. Explore ideas, uncover patterns, and find a direction worth pursuing.', cue: 'R&D ADVISORY · RESEARCH · PROTOTYPING' },
+  { title: 'Give ideas', accent: 'structure.', text: 'Connect models, data, and infrastructure. Every layer has a purpose. Every connection is intentional.', cue: 'AI ARCHITECTURE · SYSTEM DESIGN' },
+  { title: 'Make it', accent: 'work.', text: 'Move from possibility to practice. Implement, test, observe, and refine AI for the real world.', cue: 'IMPLEMENTATION · TESTING · OBSERVABILITY' },
 ];
 ---
 <section class="observatory-hero" aria-labelledby="hero-heading">
@@ -29,7 +29,6 @@ const stories = [
       </div>
       <div class="hero-stories" aria-hidden="true">
         {stories.map((story, i) => <div class="hero-story" data-story={i} style={i === 0 ? '' : 'opacity:0;visibility:hidden'}>
-          <p class="hero-eyebrow"><span></span>{story.eyebrow}</p>
           <h2><span>{story.title}</span>{' '}<span class="hero-title-accent">{story.accent}</span>{' '}{story.end && <span>{story.end}</span>}</h2>
           <p class="hero-description">{story.text}</p>
           <p class="hero-cue">{story.cue}</p>
@@ -64,8 +63,6 @@ const stories = [
   .hero-copy{width:490px;max-width:46%;margin-top:0}
   .hero-stories{display:grid;align-items:center;min-height:408px}
   .hero-story{grid-area:1/1;will-change:opacity}
-  .hero-eyebrow{display:flex;align-items:center;gap:10px;margin:0 0 25px;color:var(--hero-accent);font:550 11px/1.5 Geist,sans-serif;letter-spacing:.12em}
-  .hero-eyebrow>span{width:5px;height:5px;border-radius:50%;background:#a8aaff}
   h2{margin:0 0 24px;color:var(--hero-ink);font-family:'Geist',ui-sans-serif,system-ui,sans-serif;font-size:clamp(2.75rem,4vw,3.5rem);font-weight:500;line-height:1.12;letter-spacing:-.025em}h2>span{display:block}.hero-title-accent{color:var(--hero-accent)}
   .hero-description{max-width:455px;margin:0;color:var(--hero-muted);font:400 16px/1.75 Geist,sans-serif}
   .hero-cue{font:500 10px/1.6 Geist,sans-serif;letter-spacing:.12em;color:#919bb8;margin:24px 0 0}
@@ -77,9 +74,9 @@ const stories = [
   .hero-process>span{min-width:0;overflow-wrap:anywhere;position:relative;padding:14px 0 0;border-top:1px solid #7d89a639;display:grid;gap:4px}.hero-process b{font-size:13px;font-weight:500}.hero-process small{font-size:11px}.hero-process i{position:absolute;top:-1px;height:1px;left:0;width:0;background:#c0c1ff;transition:width .9s}.hero-process [data-active="true"]{color:#dae2fd}.hero-process [data-active="true"] i{width:100%}
   @media(max-width:1100px) and (min-width:901px){.hero-inner{padding-left:36px;padding-right:36px}.hero-copy{max-width:48%}.hero-description{font-size:15px}.hero-process{left:36px;right:36px}.hero-actions>a{font-size:13px;padding:0 14px}}
   @media(max-width:900px){
-    .observatory-hero{min-height:0;display:grid;grid-template-areas:"copy" "controls" "scene" "process";grid-template-columns:minmax(0,1fr)}
+    .observatory-hero{min-height:0;display:grid;grid-template-areas:"copy" "scene" "process";grid-template-columns:minmax(0,1fr)}
     .hero-inner{display:contents}.hero-copy{grid-area:copy;max-width:none;width:auto;margin:0;padding:38px 24px 0;z-index:2}
-    .hero-stories{min-height:0;align-items:start}.hero-eyebrow{font-size:.625rem;letter-spacing:.07em;margin-bottom:21px}
+    .hero-stories{min-height:0;align-items:start}
     h2{font-size:clamp(2.125rem,7.5vw,3rem);line-height:1.12;margin-bottom:20px;overflow-wrap:anywhere}
     .hero-description{font-size:1rem;line-height:1.65;max-width:520px}.hero-cue{font-size:.625rem;margin-top:18px}
     .hero-actions{margin-top:24px;gap:10px}.hero-actions>a{font-size:.8125rem;padding:0 15px;min-height:44px;gap:12px}

@@ -55,6 +55,18 @@ const menus = [
 ];
 
 const directLinks = [{ href: '/insights/', label: 'Insights' }];
+const mobileIcons = [
+  '<rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/>',
+  '<path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5"/>',
+  '<path d="m12 3 1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3Z"/>',
+  '<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v5h5M9 12h6M9 16h6"/>',
+  '<circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="18" r="2.5"/><circle cx="19" cy="18" r="2.5"/><path d="m10.8 7.2-4.6 8.6m7-8.6 4.6 8.6M7.5 18h9"/>',
+  '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
+  '<path d="M9 3h6M10 3v6l-5 8.2A2.5 2.5 0 0 0 7.1 21h9.8a2.5 2.5 0 0 0 2.1-3.8L14 9V3"/><path d="M8 15h8"/>',
+  '<path d="m8 8-4 4 4 4M16 8l4 4-4 4M14 5l-4 14"/>',
+  '<path d="M4 21V5l8-3 8 3v16M8 8h1M15 8h1M8 12h1M15 12h1M8 16h1M15 16h1M10 21v-3h4v3"/>',
+  '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/>',
+];
 ---
 
 <header class="site-header">
@@ -118,22 +130,55 @@ const directLinks = [{ href: '/insights/', label: 'Insights' }];
   </nav>
 
   <div id="mobile-menu" class="mobile-menu" hidden>
-    <div class="mobile-menu-inner">
-      {menus.map((menu) => (
-        <section class="mobile-menu-group" aria-label={`${menu.label} links`}>
-          <a class="mobile-menu-heading" href={menu.href} aria-current={path === menu.href ? 'page' : undefined}>{menu.label}<span aria-hidden="true">↗</span></a>
-          {menu.links.map((link) => <a class="mobile-sub-link" href={link.href}>{link.label}<span aria-hidden="true">↗</span></a>)}
-        </section>
-      ))}
-      <section class="mobile-menu-group" aria-label="Insights links">
-        <a class="mobile-menu-heading" href="/insights/" aria-current={path === '/insights/' ? 'page' : undefined}>Insights<span aria-hidden="true">↗</span></a>
-        <a class="mobile-sub-link" href="/insights/latent-signals-activation-probing/">Latent Signals: model activation research<span aria-hidden="true">↗</span></a>
-        <a class="mobile-sub-link" href="/insights/laya-rlcd-system-one/">Laya and RLCD: AI workflow decisions<span aria-hidden="true">↗</span></a>
-        <a class="mobile-sub-link" href="/insights/dflash-muse-spark-1-2/">DFlash: faster LLM generation<span aria-hidden="true">↗</span></a>
-        <a class="mobile-sub-link" href="/blog/quantization-without-tears/">INT8 post-training quantization<span aria-hidden="true">↗</span></a>
-      </section>
-      <a class="mobile-cta" href={CALENDLY_URL} target="_blank" rel="noopener">Book a Demo<span aria-hidden="true">↗</span></a>
-    </div>
+    <button class="mobile-menu-backdrop" type="button" aria-label="Close navigation menu" data-mobile-backdrop></button>
+    <section class="mobile-drawer" role="dialog" aria-modal="true" aria-label="Mobile navigation" tabindex="-1">
+      <div class="mobile-drawer-header">
+        <a href="/" class="mobile-brand" aria-label="Latentsig home"><Logo height={34} /></a>
+        <button class="mobile-menu-close" type="button" aria-label="Close navigation menu" data-mobile-close>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg>
+        </button>
+      </div>
+      <nav class="mobile-drawer-content" aria-label="Mobile navigation links">
+        <div class="mobile-panel-inner">
+          {menus.map((menu, sectionIndex) => (
+            <details class="mobile-menu-section" open={sectionIndex === 0}>
+              <summary>{menu.label}<svg class="mobile-section-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5" /></svg></summary>
+              <div class="mobile-section-links">
+                {menu.links.map((link, linkIndex) => (
+                  <a class="mobile-nav-link" href={link.href} aria-current={path === link.href ? 'page' : undefined}>
+                    <span class="mobile-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" set:html={mobileIcons[(sectionIndex * 3 + linkIndex) % mobileIcons.length]}></svg></span>
+                    <span class="mobile-nav-label">{link.label}</span>
+                    <svg class="mobile-nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" /></svg>
+                  </a>
+                ))}
+              </div>
+            </details>
+          ))}
+          <details class="mobile-menu-section">
+            <summary>Insights<svg class="mobile-section-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5" /></svg></summary>
+            <div class="mobile-section-links">
+              {[
+                { href: '/insights/', label: 'All insights' },
+                { href: '/insights/latent-signals-activation-probing/', label: 'Latent Signals: model activation research' },
+                { href: '/insights/laya-rlcd-system-one/', label: 'Laya and RLCD: AI workflow decisions' },
+                { href: '/insights/dflash-muse-spark-1-2/', label: 'DFlash: faster LLM generation' },
+                { href: '/blog/quantization-without-tears/', label: 'INT8 post-training quantization' },
+              ].map((link, linkIndex) => (
+                <a class="mobile-nav-link" href={link.href} aria-current={path === link.href ? 'page' : undefined}>
+                  <span class="mobile-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" set:html={mobileIcons[(linkIndex + 4) % mobileIcons.length]}></svg></span>
+                  <span class="mobile-nav-label">{link.label}</span>
+                  <svg class="mobile-nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" /></svg>
+                </a>
+              ))}
+            </div>
+          </details>
+        </div>
+      </nav>
+      <div class="mobile-drawer-footer">
+        <a class="mobile-contact-cta" href="/contact/">Talk to us</a>
+        <a class="mobile-demo-cta" href={CALENDLY_URL} target="_blank" rel="noopener">Book a Demo<span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
   </div>
 </header>
 
@@ -278,16 +323,35 @@ const directLinks = [{ href: '/insights/', label: 'Insights' }];
   .mega-link small { margin-top:5px; color:rgba(223,225,235,.58); font:400 12px/1.35 'Geist',ui-sans-serif,system-ui,sans-serif; }
   .link-arrow { color:#c3c0ff; font-size:16px; }
   #mobile-menu-toggle { display:none; color:inherit; border:0; background:transparent; border-radius:50%; width:46px; height:46px; align-items:center; justify-content:center; cursor:pointer; }
-  .mobile-menu { pointer-events:auto; position:absolute; top:calc(100% + 10px); left:0; right:0; max-height:calc(100dvh - 120px); overflow:auto; border:1px solid rgba(200,204,231,.19); border-radius:22px; background:rgba(12,15,27,.96); -webkit-backdrop-filter:blur(22px); backdrop-filter:blur(22px); box-shadow:0 20px 56px rgba(0,0,0,.4); }
-  .mobile-menu[hidden] { display:none; }
-  .mobile-menu-inner { display:flex; flex-direction:column; padding:10px; }
-  .mobile-menu-inner a { display:flex; align-items:center; justify-content:space-between; min-height:46px; padding:0 13px; color:#ededef; border-bottom:1px solid rgba(255,255,255,.08); font:500 14px/1.3 'Geist',ui-sans-serif,system-ui,sans-serif; text-decoration:none; }
-  .mobile-menu-inner a[aria-current="page"] { color:#c6c3ff; }
-  .mobile-menu-inner a span { flex:0 0 auto; margin-left:10px; color:#bcb8ff; }
-  .mobile-menu-group { padding:4px 0 7px; border-bottom:1px solid rgba(255,255,255,.12); }
-  .mobile-menu-inner .mobile-menu-heading { min-height:46px; font-size:15px; font-weight:700; }
-  .mobile-menu-inner .mobile-sub-link { min-height:38px; padding-left:26px; color:rgba(237,238,246,.77); font-size:12px; }
-  .mobile-menu-inner .mobile-cta { margin-top:9px; min-height:48px; padding:0 16px; justify-content:center; gap:12px; border:0; border-radius:999px; background:#191b25; font-weight:650; }
+  .mobile-menu { display:none; }
+  .mobile-menu[hidden] { display:none!important; }
+  .mobile-menu-backdrop { position:absolute;inset:0;width:100%;height:100%;padding:0;border:0;background:rgba(2,6,18,.64);-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px); }
+  .mobile-drawer { position:absolute;inset:0;width:100%;height:100dvh;display:grid;grid-template-rows:68px minmax(0,1fr) auto;overflow:hidden;background:#0b1326;color:#f2f3fc;box-shadow:0 20px 60px rgba(0,0,0,.48); }
+  .mobile-drawer-header { display:flex;align-items:center;justify-content:space-between;padding:0 max(18px,env(safe-area-inset-right)) 0 max(18px,env(safe-area-inset-left));border-bottom:1px solid rgba(200,204,231,.16);background:rgba(10,15,31,.96); }
+  .mobile-brand { display:flex;align-items:center;min-height:44px;text-decoration:none; }
+  .mobile-menu-close { width:42px;height:42px;display:grid;place-items:center;border:1px solid rgba(200,204,231,.2);border-radius:50%;background:rgba(255,255,255,.055);color:#f2f3fc;cursor:pointer; }
+  .mobile-menu-close svg { width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round; }
+  .mobile-drawer-content { min-height:0;overflow-y:auto;overscroll-behavior:contain;scrollbar-color:#58617a transparent; }
+  .mobile-panel-inner { width:min(100%,560px);margin:0 auto;padding:8px 20px 20px; }
+  .mobile-menu-section { border-bottom:1px solid rgba(200,204,231,.14); }
+  .mobile-menu-section summary { min-height:56px;display:flex;align-items:center;justify-content:space-between;gap:14px;color:#f2f3fc;list-style:none;cursor:pointer;font:600 17px/1.25 'Geist',ui-sans-serif,system-ui,sans-serif;letter-spacing:-.01em; }
+  .mobile-menu-section summary::-webkit-details-marker { display:none; }
+  .mobile-section-chevron { width:18px;height:18px;flex:none;fill:none;stroke:#aeb5ce;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s ease; }
+  .mobile-menu-section[open] .mobile-section-chevron { transform:rotate(180deg);stroke:#c4c1ff; }
+  .mobile-section-links { display:grid;gap:3px;padding:0 0 12px; }
+  .mobile-nav-link { min-height:54px;display:flex;align-items:center;gap:12px;padding:7px 10px;border:1px solid transparent;border-radius:10px;color:rgba(237,238,246,.86);text-decoration:none;font:500 14px/1.35 'Geist',ui-sans-serif,system-ui,sans-serif;transition:background .16s ease,color .16s ease; }
+  .mobile-nav-link:hover,.mobile-nav-link:focus-visible,.mobile-nav-link[aria-current="page"] { background:rgba(255,255,255,.065);color:#fff; }
+  .mobile-nav-icon { width:36px;height:36px;display:grid;place-items:center;flex:none;border:1px solid rgba(200,204,231,.17);border-radius:9px;background:rgba(255,255,255,.045);color:#bfc2df; }
+  .mobile-nav-icon svg { width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round; }
+  .mobile-nav-link[aria-current="page"] .mobile-nav-icon { border-color:rgba(190,187,255,.5);background:rgba(164,158,255,.15);color:#c4c1ff; }
+  .mobile-nav-label { min-width:0;flex:1; }
+  .mobile-nav-arrow { width:16px;height:16px;flex:none;fill:none;stroke:#a8add0;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round; }
+  .mobile-drawer-footer { display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:13px 16px max(16px,env(safe-area-inset-bottom));border-top:1px solid rgba(200,204,231,.16);background:#0d152a; }
+  .mobile-contact-cta,.mobile-demo-cta { min-height:48px;display:flex;align-items:center;justify-content:center;gap:8px;padding:0 12px;border-radius:9px;text-decoration:none;text-align:center;font:600 14px/1.2 'Geist',ui-sans-serif,system-ui,sans-serif; }
+  .mobile-contact-cta { border:1px solid rgba(200,204,231,.24);color:#f2f3fc;background:rgba(255,255,255,.035); }
+  .mobile-demo-cta { border:1px solid #7371ef;background:#7775f5;color:#171a3e; }
+  .mobile-demo-cta span { margin-left:5px;font-size:16px; }
+  @media(max-width:380px) { .mobile-panel-inner { padding-right:14px;padding-left:14px; }.mobile-drawer-footer { padding-right:12px;padding-left:12px;gap:8px; }.mobile-contact-cta,.mobile-demo-cta { padding:0 8px;font-size:13px; } }
   @keyframes menu-in { from { opacity:0; transform:translateY(-5px); } to { opacity:1; transform:translateY(0); } }
   @media(max-width:1100px) { .nav-shell { gap:12px; } .desktop-navigation { gap:2px; } .nav-link { padding:0 7px; font-size:13px; } .brand { font-size:19px; } .nav-cta { padding:0 16px; } }
   @media(max-width:880px) {
@@ -298,6 +362,7 @@ const directLinks = [{ href: '/insights/', label: 'Insights' }];
     .desktop-navigation { display:none; }
     .nav-cta { margin-left:auto; min-height:44px; padding:0 16px; font-size:13px; }
     #mobile-menu-toggle { display:inline-flex; flex:0 0 auto; }
+    .mobile-menu:not([hidden]) { display:block;position:fixed;z-index:100;inset:0;pointer-events:auto; }
   }
   @media(max-width:460px) { .nav-shell { min-height:62px; padding:6px 12px; } .brand { gap:7px; font-size:17px; } .brand-mark { height:31px!important; width:31px!important; border-radius:10px; } .nav-cta { min-height:40px; padding:0 12px; gap:7px; font-size:12px; } #mobile-menu-toggle { width:40px; height:40px; } }
   @media(prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; animation-duration:.01ms!important; animation-iteration-count:1!important; transition-duration:.01ms!important; } }
@@ -339,16 +404,38 @@ const directLinks = [{ href: '/insights/', label: 'Insights' }];
 
   const button = document.querySelector<HTMLButtonElement>('#mobile-menu-toggle');
   const mobileMenu = document.querySelector<HTMLElement>('#mobile-menu');
+  const mobileClose = mobileMenu?.querySelector<HTMLButtonElement>('[data-mobile-close]');
+  const mobileBackdrop = mobileMenu?.querySelector<HTMLButtonElement>('[data-mobile-backdrop]');
+  let previousBodyOverflow: string | undefined;
   if (button && mobileMenu) {
     const setOpen = (open: boolean, restoreFocus = false) => {
       button.setAttribute('aria-expanded', String(open));
       button.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
       mobileMenu.hidden = !open;
+      if (open) {
+        previousBodyOverflow = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
+        mobileClose?.focus();
+      } else if (previousBodyOverflow !== undefined) {
+        document.body.style.overflow = previousBodyOverflow;
+        previousBodyOverflow = undefined;
+      }
       if (restoreFocus) button.focus();
     };
     button.addEventListener('click', () => setOpen(mobileMenu.hidden));
+    mobileClose?.addEventListener('click', () => setOpen(false, true));
+    mobileBackdrop?.addEventListener('click', () => setOpen(false, true));
     mobileMenu.addEventListener('click', (event) => {
       if ((event.target as Element).closest('a')) setOpen(false);
+    });
+    mobileMenu.addEventListener('keydown', (event) => {
+      if (event.key !== 'Tab') return;
+      const focusable = [...mobileMenu.querySelectorAll<HTMLElement>('a[href],button:not([disabled]),summary')]
+        .filter((element) => !element.closest('[hidden]') && element.getClientRects().length > 0);
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
     });
     document.addEventListener('pointerdown', (event) => {
       if (!mobileMenu.hidden && !mobileMenu.contains(event.target as Node) && !button.contains(event.target as Node)) setOpen(false);
