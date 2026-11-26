@@ -19,15 +19,15 @@ const { height = 32, showWordmark = true, class: className = '' } = Astro.props;
   />
 ) : (
   <div
-    style={`height: ${height}px; width: ${height}px; overflow: hidden;`}
+    style={`height: ${height}px; width: ${height}px; overflow: hidden; border-radius: 10px; background: #10152d; display: grid; place-items: center;`}
     class={className}
   >
     <img
-      src="/logo.png"
+      src="/favicon.svg?v=2"
       alt="Latentsig"
-      width={2778}
-      height={950}
-      style={`height: ${height}px; width: auto; max-width: none; aspect-ratio: 2778 / 950;`}
+      width={height}
+      height={height}
+      style="display:block; width:100%; height:100%; object-fit:cover;"
     />
   </div>
 )}
