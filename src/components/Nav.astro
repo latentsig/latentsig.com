@@ -46,19 +46,12 @@ const groups = [
 const mobileSections = [
   {
     label: 'Products',
-    groups: [
-      {
-        label: 'Product platforms',
-        items: products.map((item, index) => ({ label: item.label, href: item.href, icon: index === 0 ? 'layers' : 'spark' })),
-      },
-      {
-        label: 'Product demos',
-        items: [
-          { label: 'Annotation & Verification demo', href: '/demos/#annotation-verification', icon: 'document' },
-          { label: 'Agentic AI Platform demo', href: '/demos/#agentic-ai-platform', icon: 'network' },
-        ],
-      },
-      { label: 'All products', items: [{ label: 'Explore all products', href: '/products/', icon: 'grid' }] },
+    items: [
+      { label: 'Explore all products', href: '/products/', icon: 'grid' },
+      { label: 'Annotation & Verification Platform', href: '/products/annotation-verification/', icon: 'layers' },
+      { label: 'Agentic AI Platform', href: '/products/agentic-ai-platform/', icon: 'spark' },
+      { label: 'Annotation & Verification demo', href: '/demos/#annotation-verification', icon: 'document' },
+      { label: 'Agentic AI Platform demo', href: '/demos/#agentic-ai-platform', icon: 'network' },
     ],
   },
   {
@@ -206,7 +199,7 @@ const isCurrent = (id: string) => {
   .site-header :focus-visible{outline:3px solid #74629e;outline-offset:3px;border-radius:4px}.site-header a,.site-header button{touch-action:manipulation}
   @media(max-width:1120px){.site-nav{gap:12px}.desktop-links{gap:2px}.nav-link{padding:0 5px;font-size:13px}.nav-disclosure{width:21px}.demo-cta{padding:0 12px;font-size:12px}}
   @media(max-width:900px){.site-nav{--nav-height:68px;height:var(--nav-height);padding:0 18px;gap:10px}.brand img{max-height:38px}.desktop-links{display:none}.demo-cta{margin-left:auto;min-height:44px}.mobile-toggle{display:flex}.mega-panel{display:none}.mobile-panel{display:block;position:absolute;top:100%;left:0;right:0;height:calc(100dvh - var(--nav-height));max-height:calc(100dvh - var(--nav-height));overflow-y:auto;overscroll-behavior:contain;background:#f7f4ec;border-bottom:1px solid #dedbd1;box-shadow:0 20px 40px rgba(37,40,31,.14)}.site-header:has(.mobile-toggle[aria-expanded="true"]) .demo-cta{visibility:hidden}.mobile-panel-inner{padding:8px 22px 24px}.site-header:has(.mobile-toggle[aria-expanded="true"]){background:rgba(249,247,241,.98)}}
-  @media(max-width:560px){.site-nav{box-sizing:border-box;width:100%;padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right));gap:10px}.brand{min-width:max-content;flex:0 0 auto}.demo-cta{flex:0 0 auto;min-height:40px;padding:0 12px;font-size:12px;gap:6px}.mobile-toggle{width:40px;min-width:40px;flex:0 0 40px}.mobile-panel-inner{padding-right:18px;padding-left:18px}}
+  @media(max-width:560px){.site-nav:not(body.home-visual .site-nav){box-sizing:border-box;width:100%;padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right));gap:10px}.brand{min-width:max-content;flex:0 0 auto}.demo-cta{flex:0 0 auto;min-height:40px;padding:0 12px;font-size:12px;gap:6px}.mobile-toggle{width:40px;min-width:40px;flex:0 0 40px}.mobile-panel-inner{padding-right:18px;padding-left:18px}}
   @media(prefers-reduced-motion:reduce){.site-header *{animation:none!important;transition-duration:.15s!important;scroll-behavior:auto!important}}
 </style>
 <script>
@@ -219,8 +212,7 @@ const isCurrent = (id: string) => {
   const mobileDialog = document.querySelector<HTMLElement>('[data-mobile-dialog]');
   const mobileClose = document.querySelector<HTMLButtonElement>('[data-mobile-close]');
   const mobileBackdrop = document.querySelector<HTMLElement>('[data-mobile-backdrop]');
-  const mobileSections = Array.from(document.querySelectorAll<HTMLDetailsElement>('[data-mobile-section]'));
-  const mobileSubsections = Array.from(document.querySelectorAll<HTMLDetailsElement>('[data-mobile-subsection]'));
+  const mobileSectionBtns = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-mobile-section-btn]'));
   const desktop = window.matchMedia('(min-width: 901px)');
   let openId: string | null = null;
   let openedByHover = false;
@@ -269,6 +261,11 @@ const isCurrent = (id: string) => {
     openId = null;
     openedByHover = false;
     if (mobilePanel) mobilePanel.hidden = true;
+    mobileSectionBtns.forEach(btn => {
+      btn.setAttribute('aria-expanded', 'false');
+      const panel = btn.nextElementSibling as HTMLElement;
+      if (panel) panel.hidden = true;
+    });
     mobileToggle?.setAttribute('aria-expanded', 'false');
     mobileToggle?.setAttribute('aria-label', 'Open navigation');
     if (wasMobileOpen) setPageInert(false);
@@ -345,21 +342,36 @@ const isCurrent = (id: string) => {
   mobilePanel?.addEventListener('click', event => { if ((event.target as Element).closest('a')) closePanels(); });
   mobileClose?.addEventListener('click', () => closePanels(true));
   mobileBackdrop?.addEventListener('pointerdown', () => closePanels(true));
-  mobileSections.forEach(section => section.addEventListener('toggle', () => {
-    if (!section.open) return;
-    mobileSections.forEach(other => { if (other !== section) other.open = false; });
-  }));
-  mobileSubsections.forEach(section => section.addEventListener('toggle', () => {
-    if (!section.open) return;
-    const parent = section.closest<HTMLElement>('[data-mobile-section]');
-    parent?.querySelectorAll<HTMLDetailsElement>('[data-mobile-subsection]').forEach(other => {
-      if (other !== section) other.open = false;
+  mobileSectionBtns.forEach(btn => {
+    btn.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+      const panel = btn.nextElementSibling as HTMLElement;
+
+      // Close other sections
+      mobileSectionBtns.forEach(other => {
+        if (other !== btn) {
+          other.setAttribute('aria-expanded', 'false');
+          const otherPanel = other.nextElementSibling as HTMLElement;
+          if (otherPanel) otherPanel.hidden = true;
+        }
+      });
+
+      // Toggle current section
+      if (isExpanded) {
+        btn.setAttribute('aria-expanded', 'false');
+        if (panel) panel.hidden = true;
+      } else {
+        btn.setAttribute('aria-expanded', 'true');
+        if (panel) panel.hidden = false;
+      }
     });
-  }));
+  });
   document.addEventListener('keydown', event => {
     const mobileOpen = Boolean(mobilePanel && !mobilePanel.hidden);
     if (mobileOpen && event.key === 'Tab' && mobileDialog) {
-      const focusable = Array.from(mobileDialog.querySelectorAll<HTMLElement>('a[href],button:not([disabled]),summary,[tabindex]:not([tabindex="-1"])'))
+      const focusable = Array.from(mobileDialog.querySelectorAll<HTMLElement>('a[href],button:not([disabled]),[tabindex]:not([tabindex="-1"])'))
         .filter(element => element.getClientRects().length > 0 && !element.closest('[hidden]'));
       if (focusable.length) {
         const first = focusable[0];

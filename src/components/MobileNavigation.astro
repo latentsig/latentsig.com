@@ -2,8 +2,7 @@
 import Logo from './Logo.astro';
 
 type MobileNavigationItem = { label: string; href: string; icon: string };
-type MobileNavigationGroup = { label: string; items: MobileNavigationItem[] };
-type MobileNavigationSection = { label: string; groups?: MobileNavigationGroup[]; items?: MobileNavigationItem[] };
+type MobileNavigationSection = { label: string; items: MobileNavigationItem[] };
 
 interface Props {
   sections: MobileNavigationSection[];
@@ -41,46 +40,32 @@ const isCurrent = (href: string) => new URL(href, Astro.url).pathname === curren
     </div>
     <div class="mobile-drawer-content">
       <nav class="mobile-panel-inner" aria-label="Mobile navigation links">
-        {sections.map((section) => (
-          <details class="mobile-section" data-mobile-section>
-            <summary>
+        {sections.map((section, idx) => (
+          <div class="mobile-section" data-mobile-section>
+            <button
+              type="button"
+              class="mobile-section-summary"
+              aria-expanded="false"
+              aria-controls={`mobile-section-${idx}`}
+              data-mobile-section-btn
+            >
               <span>{section.label}</span>
               <svg class="mobile-section-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
-            </summary>
-            {section.groups && (
-              <div class="mobile-subsections">
-                {section.groups.map((group) => (
-                  <details class="mobile-subsection" data-mobile-subsection>
-                    <summary>
-                      <span class="mobile-subsection-label">{group.label}</span>
-                      <span class="mobile-subsection-count" aria-label={group.items.length + ' links'}>{group.items.length}</span>
-                      <svg class="mobile-subsection-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m8 10 4 4 4-4"/></svg>
-                    </summary>
-                    <div class="mobile-subsection-links">
-                      {group.items.map((item) => (
-                        <a class="mobile-nav-link" href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
-                          <span class="mobile-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" set:html={icons[item.icon] ?? icons.grid}></svg></span>
-                          <span class="mobile-nav-label">{item.label}</span>
-                          <svg class="mobile-nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
-                        </a>
-                      ))}
-                    </div>
-                  </details>
-                ))}
-              </div>
-            )}
+            </button>
             {section.items && (
-              <div class="mobile-section-links">
-                {section.items.map((item) => (
-                  <a class="mobile-nav-link" href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
-                    <span class="mobile-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" set:html={icons[item.icon] ?? icons.grid}></svg></span>
-                    <span class="mobile-nav-label">{item.label}</span>
-                    <svg class="mobile-nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
-                  </a>
-                ))}
+              <div class="mobile-section-panel" id={`mobile-section-${idx}`} hidden data-mobile-section-panel>
+                <div class="mobile-section-links">
+                  {section.items.map((item) => (
+                    <a class="mobile-nav-link" href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+                      <span class="mobile-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" set:html={icons[item.icon] ?? icons.grid}></svg></span>
+                      <span class="mobile-nav-label">{item.label}</span>
+                      <svg class="mobile-nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+                    </a>
+                  ))}
+                </div>
               </div>
             )}
-          </details>
+          </div>
         ))}
       </nav>
     </div>
@@ -92,10 +77,11 @@ const isCurrent = (href: string) => new URL(href, Astro.url).pathname === curren
 </div>
 
 <style>
-  .mobile-menu-overlay { display:none;position:fixed;inset:0;z-index:90;justify-content:flex-end;background:rgba(15,23,42,.45);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px); }
+  .mobile-menu-overlay { display:none;position:fixed;inset:0;z-index:90;justify-content:flex-end;background:rgba(15,23,42,.45);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);pointer-events:auto; }
   .mobile-menu-overlay[hidden] { display:none; }
   @media(max-width:900px) { .mobile-menu-overlay:not([hidden]) { display:flex; } }
-  .mobile-drawer { width:min(100%,460px);height:100vh;height:100dvh;display:grid;grid-template-rows:68px minmax(0,1fr) auto;overflow:hidden;border-left:1px solid #e4e4e7;background:#ffffff;color:#18181b;box-shadow:-18px 0 48px rgba(15,23,42,.14); }
+  .mobile-menu-backdrop { position:absolute;inset:0;pointer-events:auto; }
+  .mobile-drawer { position:relative;z-index:1;pointer-events:auto;width:min(100%,460px);height:100vh;height:100dvh;display:grid;grid-template-rows:68px minmax(0,1fr) auto;overflow:hidden;border-left:1px solid #e4e4e7;background:#ffffff;color:#18181b;box-shadow:-18px 0 48px rgba(15,23,42,.14); }
   .mobile-drawer-header { display:flex;align-items:center;justify-content:space-between;padding:0 max(20px,env(safe-area-inset-right)) 0 max(20px,env(safe-area-inset-left));border-bottom:1px solid #e4e4e7;background:#ffffff; }
   .mobile-brand { display:flex;align-items:center;min-width:44px;min-height:44px;text-decoration:none; }
   .mobile-close { width:40px;height:40px;display:grid;place-items:center;border:1px solid #e4e4e7;border-radius:50%;background:#f4f4f5;color:#18181b;cursor:pointer;transition:background .18s,border-color .18s; }
@@ -104,22 +90,13 @@ const isCurrent = (href: string) => new URL(href, Astro.url).pathname === curren
   .mobile-drawer-content { min-height:0;overflow-y:auto;overscroll-behavior:contain;scrollbar-color:#d4d4d8 transparent;background:#ffffff; }
   .mobile-panel-inner { width:min(100%,480px);margin:0 auto;padding:8px 20px 20px; }
   .mobile-section { border-bottom:1px solid #f0f0f2; }
-  .mobile-section summary { min-height:64px;display:flex;align-items:center;justify-content:space-between;gap:14px;color:#18181b;list-style:none;cursor:pointer;font:600 20px/1.25 'Hanken Grotesk',Geist,system-ui,sans-serif;letter-spacing:-.02em; }
-  .mobile-section summary::-webkit-details-marker,.mobile-subsection summary::-webkit-details-marker { display:none; }
-  .mobile-section-chevron,.mobile-subsection-chevron { width:18px;height:18px;flex:none;fill:none;stroke:#52525b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s ease; }
-  .mobile-section[open] > summary .mobile-section-chevron,.mobile-subsection[open] > summary .mobile-subsection-chevron { transform:rotate(180deg);stroke:#18181b; }
-  .mobile-subsections { display:grid;gap:8px;padding:0 0 16px; }
-  .mobile-section-links { display:grid;padding:0 0 14px; }
-  .mobile-section-links .mobile-nav-link { min-height:54px;border-bottom:1px solid #f0f0f2;border-radius:0; }
-  .mobile-subsection { overflow:hidden;border:1px solid #e4e4e7;border-radius:12px;background:#f8fafc;transition:border-color .16s,background .16s; }
-  .mobile-subsection[open] { background:#f4f4f5;border-color:#d4d4d8; }
-  .mobile-subsection summary { min-height:50px;display:flex;align-items:center;gap:12px;padding:0 14px;color:#18181b;list-style:none;cursor:pointer;font:600 14.5px/1.3 Geist,system-ui,sans-serif; }
-  .mobile-subsection-label { min-width:0;flex:1; }
-  .mobile-subsection-count { min-width:22px;color:#71717a;text-align:center;font-size:12.5px;font-weight:600;font-variant-numeric:tabular-nums; }
-  .mobile-subsection-chevron { width:15px;height:15px;stroke:#71717a; }
-  .mobile-subsection-links { display:grid;border-top:1px solid #e4e4e7;background:#ffffff; }
-  .mobile-nav-link { min-height:52px;display:flex;align-items:center;gap:12px;padding:8px 12px;border:1px solid transparent;border-radius:10px;color:#27272a;text-decoration:none;font:500 14.5px/1.35 Geist,system-ui,sans-serif;transition:background .16s ease,color .16s ease; }
-  .mobile-subsection-links .mobile-nav-link + .mobile-nav-link { border-top:1px solid #f4f4f5;border-radius:0; }
+  .mobile-section-summary { width:100%;min-height:60px;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:0;background:transparent;border:0;color:#18181b;cursor:pointer;font:600 18px/1.25 'Hanken Grotesk',Geist,system-ui,sans-serif;letter-spacing:-.015em;text-align:left;-webkit-tap-highlight-color:transparent; }
+  .mobile-section-chevron { width:18px;height:18px;flex:none;fill:none;stroke:#52525b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s ease; }
+  .mobile-section-summary[aria-expanded="true"] .mobile-section-chevron { transform:rotate(180deg);stroke:#18181b; }
+  .mobile-section-panel { padding:0 0 14px; }
+  .mobile-section-panel[hidden] { display:none!important; }
+  .mobile-section-links { display:grid;gap:2px; }
+  .mobile-nav-link { min-height:50px;display:flex;align-items:center;gap:12px;padding:8px 12px;border:1px solid transparent;border-radius:10px;color:#27272a;text-decoration:none;font:500 14.5px/1.35 Geist,system-ui,sans-serif;transition:background .16s ease,color .16s ease; }
   .mobile-nav-link:hover,.mobile-nav-link:focus-visible,.mobile-nav-link[aria-current="page"] { background:#f4f4f5;color:#09090b; }
   .mobile-nav-link[aria-current="page"] .mobile-nav-icon { border-color:#6d7b50;background:#edf2e4;color:#4f5e3b; }
   .mobile-nav-icon { width:36px;height:36px;display:grid;place-items:center;flex:none;border:1px solid #e4e4e7;border-radius:9px;background:#f4f4f5;color:#52525b; }
@@ -134,7 +111,7 @@ const isCurrent = (href: string) => new URL(href, Astro.url).pathname === curren
   .mobile-demo-cta:hover { background:#596742;border-color:#596742; }
   .mobile-demo-cta span { font-size:16px; }
   .mobile-drawer :focus-visible { outline:3px solid #6d7b50;outline-offset:2px; }
-  @media(max-width:380px) { .mobile-panel-inner { padding-right:14px;padding-left:14px; }.mobile-subsection summary { gap:8px;padding-right:10px;padding-left:10px;font-size:13.5px; }.mobile-drawer-footer { padding-right:12px;padding-left:12px;gap:8px; }.mobile-contact-cta,.mobile-demo-cta { padding:0 8px;font-size:13px; } }
-  @media(max-height:520px) and (max-width:900px) { .mobile-panel-inner { padding-top:4px;padding-bottom:12px; }.mobile-section summary { min-height:52px;font-size:18px; }.mobile-subsection summary { min-height:46px; }.mobile-nav-link { min-height:46px; } }
+  @media(max-width:380px) { .mobile-panel-inner { padding-right:14px;padding-left:14px; }.mobile-drawer-footer { padding-right:12px;padding-left:12px;gap:8px; }.mobile-contact-cta,.mobile-demo-cta { padding:0 8px;font-size:13px; } }
+  @media(max-height:520px) and (max-width:900px) { .mobile-panel-inner { padding-top:4px;padding-bottom:12px; }.mobile-section summary { min-height:50px;font-size:17px; }.mobile-nav-link { min-height:44px; } }
   @media(prefers-reduced-motion:reduce) { .mobile-menu-overlay * { animation:none!important;transition-duration:.01ms!important;scroll-behavior:auto!important; } }
 </style>
