@@ -70,7 +70,7 @@ try {
   await page.$eval('.product-menu-annotation.product-demo-card', (link) => link.click());
   await page.waitForFunction(() => location.pathname === '/demos/' && location.hash === '#annotation-verification');
 
-  // Agentic walkthrough: inspect the full graph, all sample outputs, parallel execution, pause/resume and approval gate.
+  // Agentic workspace: validate visual stages, parallel execution, both evaluation paths and approval.
   await page.goto(new URL('/demos/#agentic-ai-platform', base).href, { waitUntil: 'networkidle2' });
   await page.waitForFunction(() => scrollY > 100);
   const workspace = await page.$('#agentic-ai-platform [data-agent-workspace]');
@@ -78,60 +78,73 @@ try {
     state: root.dataset.executionState,
     connections: [...root.querySelectorAll('[data-connection]')].map((path) => ({ name: path.getAttribute('data-connection'), length: path.getTotalLength(), arrow: path.getAttribute('marker-end') })),
     tokens: [...root.querySelectorAll('[data-flow-token]')].map((token) => ({ name: token.getAttribute('data-flow-token'), motion: token.querySelector('animateMotion')?.getAttribute('path'), duration: token.querySelector('animateMotion')?.getAttribute('dur') })),
+    orchestrator: Boolean(root.querySelector('[data-work-node="orchestrator"]')),
   }));
-  const expectedConnections = ['input-orchestrator','dispatch-reader','dispatch-compare','dispatch-evidence','merge-reader','merge-compare','merge-evidence','evaluation-human','human-output'];
-  if (graph.state !== 'idle' || graph.connections.length !== expectedConnections.length || graph.connections.some((edge) => !expectedConnections.includes(edge.name) || edge.length < 20 || !edge.arrow?.includes('agent-flow-arrow'))) throw new Error('Workflow graph is missing a visible, directional connection');
-  if (graph.tokens.length !== expectedConnections.length || graph.tokens.some((token) => !token.motion || !token.duration || token.duration === '0s')) throw new Error('A workflow connection is missing its animated data-flow token');
-  const expectedDetails = [
-    ['input','Request & source documents','SAMPLE INPUT'], ['orchestrator','Orchestrator','ROUTING PLAN'], ['reader','Document reader','INTERMEDIATE RESULT · READER'],
-    ['compare','Change analyst','INTERMEDIATE RESULT · COMPARISON'], ['evidence','Evidence linker','INTERMEDIATE RESULT · SOURCES'],
-    ['evaluation','LLM evaluation checkpoint','EVALUATION CHECKS'], ['human','Human approval checkpoint','REVIEW QUEUE'], ['output','Final output with evidence','REVIEWED SAMPLE OUTPUT'],
-  ];
-  for (const [key, title, heading] of expectedDetails) {
-    await workspace.$eval(`[data-work-node="${key}"]`, (node) => node.click());
-    const detail = await workspace.evaluate((root) => ({ title: root.querySelector('[data-detail-title]')?.textContent, heading: root.querySelector('[data-preview-heading]')?.textContent, items: [...root.querySelectorAll('[data-preview-items] li')].map((item) => item.textContent) }));
-    if (detail.title !== title || detail.heading !== heading || detail.items.length < 2) throw new Error(`${key} node did not reveal its expected sample input/intermediate/output`);
+  const expected = ['input-document','input-analytics','document-retrieval','analytics-retrieval','retrieval-merge','merge-llm','merge-manual','llm-approval','manual-approval','approval-output'];
+  if (graph.state !== 'idle' || graph.orchestrator || graph.connections.length !== expected.length || graph.connections.some((edge) => !expected.includes(edge.name) || edge.length < 20 || !edge.arrow?.includes('agent-flow-arrow'))) throw new Error('Workflow graph has a missing connection or the old Orchestrator card');
+  if (graph.tokens.length !== expected.length || graph.tokens.some((token) => !token.motion || !token.duration || token.duration === '0s')) throw new Error('A workflow connection has no animated flow token');
+  const details = [['input','Input','preview-document'],['document','Document agent','preview-document'],['analytics','Analytics agent','preview-chart'],['retrieval','Retrieval agent','preview-evidence'],['merge','Combined findings','preview-merge'],['llm-evaluation','LLM evaluation','preview-checks'],['manual-evaluation','Human evaluation','preview-manual'],['approval','Human approval','preview-approval'],['output','Reviewed output','preview-output']];
+  for (const [key,title,visual] of details) {
+    await workspace.$eval('[data-work-node="' + key + '"]', (node) => node.click());
+    const selected = await workspace.evaluate((root) => ({ title: root.querySelector('[data-detail-title]')?.textContent, visual: root.querySelector('[data-preview-stage] > div')?.className, facts: root.querySelectorAll('[data-preview-items] li').length }));
+    if (selected.title !== title || selected.visual !== visual || selected.facts < 2) throw new Error(key + ' did not expose its sample visual/result');
   }
+  await workspace.$eval('[data-evaluation-choice="llm"]', (button) => button.click());
   await workspace.$eval('[data-run]', (button) => button.click());
-  await page.waitForFunction(() => document.querySelector('#agentic-ai-platform [data-agent-workspace]')?.dataset.executionState === 'parallel', { timeout: 5000 });
-  const parallelState = await workspace.evaluate((root) => ({ statuses: ['reader','compare','evidence'].map((key) => root.querySelector(`[data-work-node="${key}"] [data-node-status]`)?.textContent), activeFlows: [...root.querySelectorAll('[data-flow-token].is-moving')].map((token) => token.getAttribute('data-flow-token')), connections: [...root.querySelectorAll('[data-connection].is-active')].map((path) => path.getAttribute('data-connection')) }));
-  if (parallelState.statuses.some((status) => status !== 'Running') || parallelState.activeFlows.length !== 3 || parallelState.connections.length !== 3) throw new Error('Specialist agents did not execute and animate in parallel');
+  await page.waitForFunction(() => document.querySelector('#agentic-ai-platform [data-agent-workspace]')?.dataset.executionState === 'dispatch', { timeout: 3000 });
+  const parallel = await workspace.evaluate((root) => ({ status: ['document','analytics'].map((key) => root.querySelector('[data-work-node="' + key + '"] [data-node-status]')?.textContent), edges: [...root.querySelectorAll('[data-connection].is-active')].map((path) => path.getAttribute('data-connection')) }));
+  if (parallel.status.some((status) => status !== 'Running') || !parallel.edges.includes('input-document') || !parallel.edges.includes('input-analytics')) throw new Error('Document and analytics agents did not start in parallel');
   await workspace.$eval('[data-pause]', (button) => button.click());
   await page.waitForFunction(() => document.querySelector('#agentic-ai-platform [data-agent-workspace]')?.dataset.executionState === 'paused');
-  await new Promise((resolve) => setTimeout(resolve, 500));
-  const pausedState = await workspace.evaluate((root) => ({ statuses: ['reader','compare','evidence'].map((key) => root.querySelector(`[data-work-node="${key}"] [data-node-status]`)?.textContent), activeTokens: root.querySelectorAll('[data-flow-token].is-moving').length }));
-  if (pausedState.statuses.some((status) => status !== 'Running') || pausedState.activeTokens !== 0) throw new Error('Pause did not hold the parallel agents and stop animated data flow');
+  await new Promise((resolve) => setTimeout(resolve, 300));
+  const pausedState = await workspace.evaluate((root) => ({ stage: root.dataset.executionState, status: ['document','analytics'].map((key) => root.querySelector('[data-work-node="' + key + '"] [data-node-status]')?.textContent) }));
+  if (pausedState.stage !== 'paused' || pausedState.status.some((status) => status !== 'Running')) throw new Error('Pause did not preserve the parallel step');
   await workspace.$eval('[data-pause]', (button) => button.click());
-  await page.waitForFunction(() => document.querySelector('#agentic-ai-platform [data-agent-workspace]')?.dataset.executionState === 'parallel');
-  await page.waitForFunction(() => document.querySelector('#agentic-ai-platform [data-agent-workspace]')?.dataset.executionState === 'aggregation', { timeout: 5000 });
-  const mergeState = await workspace.evaluate((root) => ({ activeFlows: [...root.querySelectorAll('[data-flow-token].is-moving')].map((token) => token.getAttribute('data-flow-token')), connections: [...root.querySelectorAll('[data-connection].is-active')].map((path) => path.getAttribute('data-connection')) }));
-  if (mergeState.activeFlows.length !== 3 || mergeState.activeFlows.some((flow) => !flow.startsWith('merge-')) || mergeState.connections.length !== 3) throw new Error('Parallel agent results were not visibly aggregated');
-  await page.waitForFunction(() => document.querySelector('#agentic-ai-platform [data-agent-workspace]')?.dataset.executionState === 'evaluation', { timeout: 5000 });
-  await page.waitForFunction(() => document.querySelector('#agentic-ai-platform [data-human-approve]')?.hidden === false, { timeout: 5000 });
-  const approvalGate = await workspace.evaluate((root) => ({ stage: root.dataset.executionState, output: root.querySelector('[data-work-node="output"] [data-node-status]')?.textContent, human: root.querySelector('[data-work-node="human"] [data-node-status]')?.textContent }));
-  if (approvalGate.stage !== 'approval' || approvalGate.output !== 'Pending' || approvalGate.human !== 'Review required') throw new Error('Execution did not pause at a real human approval gate');
-  await new Promise((resolve) => setTimeout(resolve, 450));
-  if ((await workspace.evaluate((root) => root.dataset.executionState)) !== 'approval') throw new Error('Workflow continued before human approval');
+  await page.waitForFunction(() => document.querySelector('#agentic-ai-platform [data-agent-workspace]')?.dataset.executionState === 'retrieval', { timeout: 5000 });
+  const retrieval = await workspace.evaluate((root) => [...root.querySelectorAll('[data-connection].is-active')].map((path) => path.getAttribute('data-connection')));
+  if (!retrieval.includes('document-retrieval') || !retrieval.includes('analytics-retrieval')) throw new Error('Retrieval did not receive both agent results');
+  await page.waitForFunction(() => document.querySelector('#agentic-ai-platform [data-agent-workspace]')?.dataset.executionState === 'merge', { timeout: 4000 });
+  const merged = await workspace.evaluate((root) => [...root.querySelectorAll('[data-connection].is-active')].map((path) => path.getAttribute('data-connection')));
+  if (!merged.includes('retrieval-merge')) throw new Error('Retrieval results were not combined in the merge step');
+  await page.waitForFunction(() => document.querySelector('#agentic-ai-platform [data-agent-workspace]')?.dataset.executionState === 'llm-evaluation', { timeout: 4000 });
+  const llmRoute = await workspace.evaluate((root) => [...root.querySelectorAll('[data-connection].is-active')].map((path) => path.getAttribute('data-connection')));
+  if (!llmRoute.includes('merge-llm')) throw new Error('Merged results did not reach the selected LLM evaluation branch');
+  await page.waitForFunction(() => document.querySelector('#agentic-ai-platform [data-agent-workspace]')?.dataset.executionState === 'approval', { timeout: 8000 });
+  const approvalRoute = await workspace.evaluate((root) => [...root.querySelectorAll('[data-connection].is-active')].map((path) => path.getAttribute('data-connection')));
+  if (!approvalRoute.includes('llm-approval')) throw new Error('LLM evaluation did not route through the approval checkpoint');
+  const gate = await workspace.evaluate((root) => ({ mode: root.dataset.evaluationMode, output: root.querySelector('[data-work-node="output"] [data-node-status]')?.textContent, approval: root.querySelector('[data-work-node="approval"] [data-node-status]')?.textContent, visible: !root.querySelector('[data-human-approve]')?.hidden, enabled: !root.querySelector('[data-human-approve]')?.disabled }));
+  if (gate.mode !== 'llm' || gate.output !== 'Pending' || gate.approval !== 'Review required' || !gate.visible || !gate.enabled) throw new Error('LLM result did not pause for human approval');
+  await new Promise((resolve) => setTimeout(resolve, 350));
+  if ((await workspace.evaluate((root) => root.dataset.executionState)) !== 'approval') throw new Error('Workflow published without approval');
   await workspace.$eval('[data-human-approve]', (button) => button.click());
   await page.waitForFunction(() => document.querySelector('#agentic-ai-platform [data-agent-workspace]')?.dataset.executionState === 'publishing', { timeout: 3000 });
-  const publishFlow = await workspace.evaluate((root) => ({ active: [...root.querySelectorAll('[data-flow-token].is-moving')].map((token) => token.getAttribute('data-flow-token')), output: root.querySelector('[data-work-node="output"] [data-node-status]')?.textContent }));
-  if (!publishFlow.active.includes('human-output') || publishFlow.output !== 'Pending') throw new Error('Approval did not route the final result to the output node');
-  await page.waitForFunction(() => document.querySelector('#agentic-ai-platform [data-run-state]')?.textContent?.includes('Complete'), { timeout: 5000 });
-  const finalOutput = await workspace.evaluate((root) => ({ human: root.querySelector('[data-work-node="human"] [data-node-status]')?.textContent, output: root.querySelector('[data-work-node="output"] [data-node-status]')?.textContent, details: [...root.querySelectorAll('[data-preview-items] li')].map((item) => item.textContent) }));
-  if (finalOutput.human !== 'Approved locally' || finalOutput.output !== 'Complete' || !finalOutput.details.some((item) => item.includes('§4.2')) || !finalOutput.details.some((item) => item.includes('§7.1'))) throw new Error('Final output did not preserve both evidence-backed findings after approval');
+  const publishing = await workspace.evaluate((root) => ({ edges: [...root.querySelectorAll('[data-connection].is-active')].map((path) => path.getAttribute('data-connection')), output: root.querySelector('[data-work-node="output"] [data-node-status]')?.textContent }));
+  if (!publishing.edges.includes('approval-output') || publishing.output !== 'Pending') throw new Error('Approval did not animate the reviewed output route');
+  await page.waitForFunction(() => document.querySelector('#agentic-ai-platform [data-agent-workspace]')?.dataset.executionState === 'complete', { timeout: 5000 });
+  const finalOutput = await workspace.evaluate((root) => ({ state: root.querySelector('[data-work-node="output"] [data-node-status]')?.textContent, visual: root.querySelector('[data-preview-stage] > div')?.className, content: root.querySelector('[data-preview-stage]')?.textContent }));
+  if (finalOutput.state !== 'Complete' || finalOutput.visual !== 'preview-output' || !finalOutput.content?.includes('§ 4.2') || !finalOutput.content?.includes('§ 7.1')) throw new Error('Reviewed output did not retain its evidence references');
   await workspace.$eval('[data-replay]', (button) => button.click());
-  await page.waitForFunction(() => document.querySelector('#agentic-ai-platform [data-agent-workspace]')?.dataset.executionState === 'planning');
+  await page.waitForFunction(() => document.querySelector('#agentic-ai-platform [data-agent-workspace]')?.dataset.executionState === 'dispatch');
   await workspace.$eval('[data-pause]', (button) => button.click());
-  const paused = await workspace.$eval('[data-run-state]', (node) => node.textContent);
-  if (!paused.includes('Paused')) throw new Error('Pause control did not pause the replay');
+  if (!(await workspace.$eval('[data-run-state]', (node) => node.textContent)).includes('Paused')) throw new Error('Replay pause did not work');
   await workspace.$eval('[data-pause]', (button) => button.click());
   await workspace.$eval('[data-reset]', (button) => button.click());
-  if ((await workspace.evaluate((root) => root.dataset.executionState)) !== 'idle') throw new Error('Reset did not return the workflow to its idle state');
-  await page.goto(new URL('/products/agentic-ai-platform/', base).href, { waitUntil: 'networkidle2' });
-  await page.$eval('.product-page [data-open-dialog]', (button) => button.click());
-  await page.waitForFunction(() => document.querySelector('[data-product-dialog]')?.open);
-  await page.keyboard.press('Escape');
-  await page.waitForFunction(() => !document.querySelector('[data-product-dialog]')?.open);
+  if ((await workspace.evaluate((root) => root.dataset.executionState)) !== 'idle') throw new Error('Reset did not restore the idle workflow');
+  await workspace.$eval('[data-evaluation-choice="manual"]', (button) => button.click());
+  await workspace.$eval('[data-run]', (button) => button.click());
+  await page.waitForFunction(() => document.querySelector('#agentic-ai-platform [data-agent-workspace]')?.dataset.executionState === 'manual-evaluation', { timeout: 7000 });
+  await page.waitForFunction(() => document.querySelectorAll('#agentic-ai-platform [data-review-check]').length === 2, { timeout: 2000 });
+  const manualMode = await workspace.evaluate((root) => root.dataset.evaluationMode);
+  if (manualMode !== 'manual') throw new Error('Manual evaluator was not selected');
+  const manualRoute = await workspace.evaluate((root) => [...root.querySelectorAll('[data-connection].is-active')].map((path) => path.getAttribute('data-connection')));
+  if (!manualRoute.includes('merge-manual')) throw new Error('Merged results did not reach the selected manual evaluation branch');
+  await workspace.$$eval('[data-review-check]', (checks) => checks.forEach((check) => check.click()));
+  await page.waitForFunction(() => document.querySelector('#agentic-ai-platform [data-agent-workspace]')?.dataset.executionState === 'approval', { timeout: 3000 });
+  const manualGate = await workspace.evaluate((root) => ({ checks: [...root.querySelectorAll('[data-review-check]')].filter((check) => check.checked).length, enabled: !root.querySelector('[data-human-approve]')?.disabled, edge: [...root.querySelectorAll('[data-connection].is-active')].map((path) => path.getAttribute('data-connection')) }));
+  if (manualGate.checks !== 2 || !manualGate.enabled || !manualGate.edge.includes('manual-approval')) throw new Error('Manual review checks did not unlock human approval');
+  await workspace.$eval('[data-human-approve]', (button) => button.click());
+  await page.waitForFunction(() => document.querySelector('#agentic-ai-platform [data-agent-workspace]')?.dataset.executionState === 'complete', { timeout: 5000 });
+  await workspace.$eval('[data-reset]', (button) => button.click());
 
   // Annotation review and export interaction.
   await page.goto(new URL('/demos/#annotation-verification', base).href, { waitUntil: 'networkidle2' });
