@@ -1,5 +1,10 @@
 <section class="annotation-workspace" data-annotation-workspace aria-label="Illustrative image annotation and verification workspace">
   <div class="annotation-head"><div><span class="annotation-kicker">LOCAL SAMPLE · IMAGE REVIEW</span><h3>Independent annotation review</h3></div><span class="sample-tag">Fictional sample data</span><button class="annotation-expand" type="button" data-open-dialog aria-haspopup="dialog" aria-label="Open enlarged annotation workspace">⤢</button></div>
+  <div class="annotation-runbar" aria-label="Automatic review playback">
+    <div class="run-state"><span class="run-indicator" data-run-indicator></span><span data-run-status aria-live="polite">Ready to inspect</span></div>
+    <div class="run-track" aria-hidden="true"><span data-run-track></span><i data-run-step="input"></i><i data-run-step="label"></i><i data-run-step="compare"></i><i data-run-step="review"></i></div>
+    <div class="run-controls"><button type="button" data-run>Run</button><button type="button" data-pause>Pause</button><button type="button" data-replay>Replay</button><button type="button" data-reset>Reset</button></div>
+  </div>
   <div class="annotation-layout">
     <div class="image-review">
       <div class="image-toolbar"><span>Sample image · road scene</span><span data-region-label>3 cars · all marked</span></div>
@@ -7,6 +12,7 @@
         <img src="/images/nav/products-annotation-sample.webp" alt="Illustrative road scene with bounding boxes around a white car, a dark car and a blue sedan" loading="lazy" decoding="async" />
         <svg viewBox="0 0 1200 800" preserveAspectRatio="none" aria-hidden="true"><rect class="box-a" x="194" y="28" width="130" height="105" rx="7"/><rect class="box-a" x="434" y="0" width="112" height="75" rx="7"/><rect class="box-a" x="560" y="218" width="355" height="276" rx="9"/><path class="mask-b" d="M583 298Q590 265 628 255L680 238 745 236Q797 247 832 271L865 304Q895 336 902 373L898 404Q885 427 857 438L795 464 727 456 672 436 633 404 605 362Z"/></svg>
         <span class="region-label label-car-one">Car 1</span><span class="region-label label-car-two">Car 2</span><span class="region-label label-car-three">Car 3</span>
+        <span class="approval-stamp" aria-hidden="true"><i>✓</i><b>VERIFIED</b></span>
       </button>
       <div class="image-legend"><span><i class="legend-box"></i> Annotator A · 3 car boxes</span><span><i class="legend-mask"></i> Annotator B · blue sedan mask</span><span data-region-confidence>Disagreement · review</span></div>
     </div>
@@ -14,10 +20,10 @@
       <div class="review-tabs" role="tablist" aria-label="Independent annotation copies"><button type="button" role="tab" aria-selected="true" data-review-tab="a">Annotator A</button><button type="button" role="tab" aria-selected="false" data-review-tab="b">Annotator B</button><button type="button" role="tab" aria-selected="false" data-review-tab="review">Reviewer</button></div>
       <div class="annotation-card"><span class="annotation-kicker" data-annotation-label>ANNOTATION A · BOUNDING BOXES</span><strong data-annotation-title>Three car regions</strong><div class="label-chip" data-object-label>3 cars</div><p data-annotation-copy>Each visible vehicle has its own box; the blue sedan also has an independent segmentation mask.</p><div class="confidence-row"><span>Confidence signal · sample</span><b data-confidence>0.91</b></div><div class="confidence-meter"><span data-confidence-bar></span></div><div class="region-actions"><button type="button" data-region-select="vehicle" aria-pressed="true">Car regions</button><button type="button" data-region-select="background" aria-pressed="false">Background region</button></div></div>
       <div class="disagreement-card"><div><span class="annotation-kicker">VERIFICATION CHECK</span><b data-agreement-state>Overlap differs</b></div><div class="agreement-meter"><span></span><i></i></div><p>Independent labels are compared before reviewer approval.</p></div>
-      <div class="review-card"><div><span class="annotation-kicker">HUMAN REVIEW</span><b data-review-state>Correction required</b></div><div class="review-actions"><button type="button" data-correct>Correct label</button><button type="button" data-approve>Approve</button></div></div>
+      <div class="review-card"><div><span class="annotation-kicker">HUMAN REVIEW</span><b data-review-state>Queued</b></div><div class="review-actions"><button type="button" data-correct disabled>Correct label</button><button type="button" data-approve disabled>Approve</button></div></div>
     </aside>
   </div>
-  <div class="annotation-footer"><span data-export-state>Illustrative image annotation · segmentation overlay is illustrative</span><button type="button" data-export-reviewed>Export reviewed sample</button></div>
+  <div class="annotation-footer"><span data-export-state>Sample runs locally · reviewed output unlocks after approval</span><button type="button" data-export-reviewed disabled>Download reviewed sample</button></div>
 </section>
 
 <script>
@@ -34,6 +40,46 @@
     const agreement = root.querySelector<HTMLElement>('[data-agreement-state]');
     const selects = [...root.querySelectorAll<HTMLButtonElement>('[data-region-select]')];
     let reviewerLabel = 'Car';
+    const runStatus = root.querySelector<HTMLElement>('[data-run-status]');
+    const runTrack = root.querySelector<HTMLElement>('[data-run-track]');
+    const runSteps = [...root.querySelectorAll<HTMLElement>('[data-run-step]')];
+    const runButton = root.querySelector<HTMLButtonElement>('[data-run]');
+    const pauseButton = root.querySelector<HTMLButtonElement>('[data-pause]');
+    const correctButton = root.querySelector<HTMLButtonElement>('[data-correct]');
+    const approveButton = root.querySelector<HTMLButtonElement>('[data-approve]');
+    const exportButton = root.querySelector<HTMLButtonElement>('[data-export-reviewed]');
+    const stepSequence = [
+      { stage: 'input', status: 'Reading image', tab: 'a' },
+      { stage: 'label', status: 'Annotator A · regions mapped', tab: 'a' },
+      { stage: 'label', status: 'Annotator B · mask traced', tab: 'b' },
+      { stage: 'compare', status: 'Comparing annotation overlap' },
+      { stage: 'review', status: 'Boundary aligned', action: 'correct' },
+      { stage: 'review', status: 'Verified · ready for export', action: 'approve' },
+    ] as const;
+    let timer = 0;
+    let nextStep = 0;
+    let playing = false;
+    let corrected = false;
+    let approved = false;
+    let autoStarted = false;
+
+    const updateRunControls = () => {
+      if (runButton) runButton.disabled = playing;
+      if (pauseButton) pauseButton.disabled = !playing;
+      if (correctButton) correctButton.disabled = corrected || approved || nextStep < 4;
+      if (approveButton) approveButton.disabled = !corrected || approved;
+      if (exportButton) exportButton.disabled = !approved;
+    };
+    const updateProgress = (stage: string) => {
+      root.dataset.runStage = stage;
+      const currentIndex = stage === 'input' ? 0 : stage === 'label' ? 1 : stage === 'compare' ? 2 : 3;
+      runSteps.forEach((item, index) => {
+        item.classList.toggle('is-active', index === currentIndex);
+        item.classList.toggle('is-done', index < currentIndex || (stage === 'review' && approved));
+      });
+      if (runTrack) runTrack.style.setProperty('--progress', `${approved ? 100 : currentIndex * 33.33}%`);
+    };
+    const setRunStatus = (status: string) => { if (runStatus) runStatus.textContent = status; };
     const showTab = (tab: string) => {
       tabs.forEach((item) => item.setAttribute('aria-selected', String(item.dataset.reviewTab === tab)));
       const labelKicker = root.querySelector<HTMLElement>('[data-annotation-label]');
@@ -57,12 +103,129 @@
       else setRegion(region.dataset.region==='vehicle'?'background':'vehicle');
     });
     selects.forEach((button)=>button.addEventListener('click',()=>setRegion(button.dataset.regionSelect??'vehicle')));
-    root.querySelector('[data-correct]')?.addEventListener('click',()=>{ reviewerLabel='Car'; showTab('review'); if(state)state.textContent='Label corrected'; if(agreement)agreement.textContent='Correction ready'; });
-    root.querySelector('[data-approve]')?.addEventListener('click',()=>{ showTab('review'); if(state)state.textContent='Approved for sample export'; if(agreement)agreement.textContent='Verified'; root.classList.add('is-approved'); });
-    root.querySelector('[data-export-reviewed]')?.addEventListener('click',()=>{
-      const blob=new Blob(['region,object,annotator,annotation,review_status\nCar 1,Car,Annotator A,Bounding box,approved\nCar 2,Car,Annotator A,Bounding box,approved\nCar 3,Car,Annotator A,Bounding box,approved\nCar 3,Car,Annotator B,Segmentation mask,approved\n'],{type:'text/csv'}); const url=URL.createObjectURL(blob); const a=document.createElement('a');a.href=url;a.download='latentsig-reviewed-sample.csv';a.click();URL.revokeObjectURL(url);
-      const status=root.querySelector<HTMLElement>('[data-export-state]');if(status)status.textContent='Reviewed sample exported locally · no data leaves this browser';
+    const pause = () => {
+      if (timer) window.clearTimeout(timer);
+      timer = 0;
+      playing = false;
+      root.dataset.runState = 'paused';
+      setRunStatus('Paused');
+      updateRunControls();
+    };
+    const correct = (manual = false) => {
+      if (manual) pause();
+      reviewerLabel = 'Car';
+      corrected = true;
+      showTab('review');
+      if (state) state.textContent = 'Label corrected';
+      if (agreement) agreement.textContent = 'Correction ready';
+      root.dataset.corrected = 'true';
+      if (manual) setRunStatus('Correction applied');
+      updateRunControls();
+    };
+    const approve = (manual = false) => {
+      if (!corrected || approved) return;
+      if (manual) pause();
+      approved = true;
+      showTab('review');
+      if (state) state.textContent = 'Approved';
+      if (agreement) agreement.textContent = 'Verified';
+      root.classList.add('is-approved');
+      root.dataset.runState = 'complete';
+      updateProgress('review');
+      setRunStatus('Verified · ready for export');
+      const status = root.querySelector<HTMLElement>('[data-export-state]');
+      if (status) status.textContent = 'Reviewed sample ready · local download';
+      updateRunControls();
+    };
+    const reset = () => {
+      if (timer) window.clearTimeout(timer);
+      timer = 0;
+      playing = false;
+      nextStep = 0;
+      corrected = false;
+      approved = false;
+      reviewerLabel = 'Car';
+      root.classList.remove('is-approved');
+      delete root.dataset.corrected;
+      root.dataset.runState = 'ready';
+      root.dataset.runStage = 'input';
+      showTab('a');
+      if (state) state.textContent = 'Queued';
+      if (agreement) agreement.textContent = 'Awaiting comparison';
+      const status = root.querySelector<HTMLElement>('[data-export-state]');
+      if (status) status.textContent = 'Sample runs locally · reviewed output unlocks after approval';
+      setRunStatus('Ready to inspect');
+      updateProgress('input');
+      updateRunControls();
+    };
+    const advance = () => {
+      const step = stepSequence[nextStep];
+      if (!step) {
+        playing = false;
+        root.dataset.runState = 'complete';
+        updateRunControls();
+        return;
+      }
+      nextStep += 1;
+      root.dataset.runState = 'running';
+      setRunStatus(step.status);
+      updateProgress(step.stage);
+      if (step.tab) showTab(step.tab);
+      if (step.stage === 'compare') {
+        if (agreement) agreement.textContent = 'Overlap differs';
+        if (state) state.textContent = 'Review in progress';
+      }
+      if (step.action === 'correct') correct();
+      if (step.action === 'approve') approve();
+      updateRunControls();
+      if (step.action === 'approve') {
+        playing = false;
+        root.dataset.runState = 'complete';
+        updateRunControls();
+      } else {
+        timer = window.setTimeout(advance, 1450);
+      }
+    };
+    const run = () => {
+      if (playing) return;
+      if (approved || nextStep >= stepSequence.length) reset();
+      playing = true;
+      root.dataset.runState = 'running';
+      updateRunControls();
+      advance();
+    };
+    runButton?.addEventListener('click', run);
+    pauseButton?.addEventListener('click', pause);
+    root.querySelector('[data-replay]')?.addEventListener('click', () => { reset(); run(); });
+    root.querySelector('[data-reset]')?.addEventListener('click', reset);
+    correctButton?.addEventListener('click', () => correct(true));
+    approveButton?.addEventListener('click', () => approve(true));
+    exportButton?.addEventListener('click', () => {
+      if (!approved) return;
+      const blob = new Blob(['region,object,annotator,annotation,review_status\nCar 1,Car,Annotator A,Bounding box,approved\nCar 2,Car,Annotator A,Bounding box,approved\nCar 3,Car,Annotator A,Bounding box,approved\nCar 3,Car,Annotator B,Segmentation mask,approved\n'], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement('a');
+      anchor.href = url;
+      anchor.download = 'latentsig-reviewed-sample.csv';
+      anchor.click();
+      window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+      const status = root.querySelector<HTMLElement>('[data-export-state]');
+      if (status) status.textContent = 'Reviewed sample downloaded locally';
     });
+
+    reset();
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        if (autoStarted || !entries.some((entry) => entry.isIntersecting)) return;
+        autoStarted = true;
+        observer.disconnect();
+        run();
+      }, { threshold: 0.25 });
+      observer.observe(root);
+    } else {
+      autoStarted = true;
+      run();
+    }
   });
 </script>
 
@@ -81,4 +244,36 @@
   .annotated-image .region-label{z-index:1;border:1px solid rgba(255,255,255,.2);background:rgba(8,17,23,.9)}
   .annotated-image .label-a{left:46%;top:21%}
   .annotated-image .label-b{left:66%;top:21%}
+</style>
+<style>
+  .annotation-runbar{display:grid;grid-template-columns:minmax(155px,.7fr) minmax(170px,1fr) auto;align-items:center;gap:16px;padding:12px 19px;border-bottom:1px solid var(--line);background:linear-gradient(100deg,#15201f,#121a21 64%,#17211f)}
+  .run-state{display:flex;align-items:center;gap:9px;min-width:0;color:#dce5dc;font-size:10px;font-weight:600;white-space:nowrap}
+  .run-indicator{width:7px;height:7px;flex:none;border-radius:50%;background:#89968a;box-shadow:0 0 0 4px rgba(162,182,145,.1)}
+  [data-run-state=running] .run-indicator{background:#c7dc98;box-shadow:0 0 0 4px rgba(183,208,139,.1),0 0 15px rgba(183,208,139,.8);animation:run-breathe 1.5s ease-in-out infinite}
+  [data-run-state=complete] .run-indicator{background:#a8d8af;box-shadow:0 0 0 4px rgba(168,216,175,.12)}
+  [data-run-state=paused] .run-indicator{background:#e1be7d}
+  .run-track{--progress:0%;position:relative;display:grid;grid-template-columns:repeat(4,1fr);align-items:center;min-width:0;height:18px}
+  .run-track:before,.run-track>span{position:absolute;top:50%;left:8px;right:8px;height:2px;border-radius:3px;transform:translateY(-50%);content:""}
+  .run-track:before{background:#3b4844}
+  .run-track>span{right:auto;width:calc((100% - 16px)*var(--progress)/100);background:linear-gradient(90deg,#9aad83,#d1dfad);box-shadow:0 0 9px rgba(194,217,157,.35);transition:width .5s ease}
+  .run-track i{z-index:1;width:8px;height:8px;justify-self:center;border:1px solid #69756a;border-radius:50%;background:#18211f;transition:background .3s,border-color .3s,box-shadow .3s}
+  .run-track i.is-active{border-color:#d0dfaa;background:#d0dfaa;box-shadow:0 0 0 4px rgba(196,216,158,.1),0 0 12px rgba(196,216,158,.65)}
+  .run-track i.is-done{border-color:#a8c08e;background:#a8c08e}
+  .run-controls{display:flex;gap:4px;padding:3px;border:1px solid rgba(191,205,224,.13);border-radius:8px;background:rgba(5,11,14,.24)}
+  .run-controls button{min-height:27px;padding:4px 8px;border:0;border-radius:5px;background:transparent;color:#9ca99e;font:600 9px Geist,system-ui,sans-serif;cursor:pointer;transition:background .2s,color .2s}
+  .run-controls button:hover:not(:disabled){background:#293630;color:#ecf1e7}
+  .run-controls button:disabled{opacity:.4;cursor:default}
+  .approval-stamp{position:absolute;right:18px;bottom:18px;display:flex;align-items:center;gap:7px;padding:8px 11px;border:1px solid rgba(229,242,219,.72);border-radius:99px;background:rgba(29,51,37,.85);color:#edf7e5;font-size:9px;letter-spacing:.1em;opacity:0;transform:translateY(6px) scale(.96);transition:opacity .5s,transform .5s;backdrop-filter:blur(10px)}
+  .approval-stamp i{display:grid;width:17px;height:17px;place-items:center;border-radius:50%;background:#d8e9c5;color:#203326;font-size:12px;font-style:normal;font-weight:800}
+  .is-approved .approval-stamp{opacity:1;transform:translateY(0) scale(1)}
+  [data-run-stage=label] .box-a{animation:annotation-dash 4s linear infinite}
+  [data-run-stage=compare] .mask-b{stroke:#e4d6a6;stroke-width:3;filter:drop-shadow(0 0 6px rgba(228,214,166,.7))}
+  [data-corrected=true] .mask-b{fill:rgba(175,213,160,.23);stroke:#c6e4ab;stroke-width:2.5;transition:fill .5s,stroke .5s}
+  .review-actions button:disabled,.annotation-footer button:disabled{opacity:.42;cursor:default}
+  .annotation-workspace.is-approved .annotation-footer button{box-shadow:0 0 22px rgba(186,218,153,.16)}
+  @keyframes run-breathe{50%{transform:scale(.82);opacity:.72}}
+  @keyframes annotation-dash{to{stroke-dashoffset:-44}}
+  @media(max-width:780px){.annotation-runbar{grid-template-columns:minmax(0,1fr) auto;gap:10px 16px}.run-track{grid-column:1/-1;grid-row:2}}
+  @media(max-width:500px){.annotation-runbar{grid-template-columns:1fr;padding:11px 13px;gap:8px}.run-state{grid-row:1}.run-controls{grid-row:2;justify-self:stretch;justify-content:space-between}.run-controls button{flex:1;padding-inline:4px}.run-track{grid-column:1;grid-row:3}.annotation-footer{flex-direction:row;align-items:center}.annotation-footer>span{flex:1}.annotation-footer button{width:auto;flex:none}.approval-stamp{right:10px;bottom:10px;padding:6px 8px;font-size:8px}}
+  @media(prefers-reduced-motion:reduce){[data-run-state=running] .run-indicator,.annotation-workspace [data-run-stage=label] .box-a{animation:none}.run-track>span,.approval-stamp{transition:none}}
 </style>
