@@ -23,7 +23,7 @@ import AgenticScene from './AgenticScene.astro';
     const svg = root.querySelector<SVGSVGElement>('.connections');
     const output = root.querySelector<HTMLButtonElement>('[data-work-node="output"]');
     const verdict = root.querySelector<HTMLElement>('[data-output-verdict]');
-    let timer = 0, continuation: (() => void) | undefined, dueAt = 0, remaining = 0, paused = false, active = false;
+    let timer = 0, continuation: (() => void) | undefined, dueAt = 0, remaining = 0, paused = false, active = false, autoStarted = false;
     const connectionEndpoints: Record<string, [string, string]> = {
       'input-document': ['input', 'document'],
       'input-analytics': ['input', 'analytics'],
@@ -140,9 +140,9 @@ import AgenticScene from './AgenticScene.astro';
       continuation = next; remaining = delay; dueAt = Date.now() + delay;
       timer = window.setTimeout(() => { continuation = undefined; remaining = 0; next(); }, delay);
     };
-    const reset = () => {
+    const reset = (readyLabel = 'Ready') => {
       window.clearTimeout(timer); continuation = undefined; remaining = 0; paused = false; active = false;
-      setStage('idle', 'Ready'); if (run) run.disabled = false;
+      setStage('idle', readyLabel); if (run) run.disabled = false;
       if (pause) { pause.disabled = true; pause.textContent = 'Pause'; }
       try { svg?.unpauseAnimations(); } catch {}
       clearConnections();
@@ -166,6 +166,7 @@ import AgenticScene from './AgenticScene.astro';
       clearConnections(); select('output');
     };
     const runDemo = () => {
+      autoStarted = true;
       const mode = root.dataset.evaluationMode || 'llm';
       reset(); root.dataset.evaluationMode = mode;
       root.querySelectorAll<HTMLButtonElement>('[data-evaluation-choice]').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.evaluationChoice === mode)));
@@ -192,11 +193,16 @@ import AgenticScene from './AgenticScene.astro';
               return;
             }
             schedule(() => {
-              setNode('llm-evaluation', 'Passed · 3 checks', 'complete'); activateConnections('llm-approval');
-              setStage('approval', 'Approval');
-              setNode('approval', 'Review required', 'review'); if (pause) pause.disabled = true;
-              active = false; if (run) run.disabled = true;
+              setNode('llm-evaluation', 'Passed · 3 checks', 'complete');
+              activateConnections('llm-approval');
+              setStage('auto-approval', 'Auto approval');
+              setNode('approval', 'Auto-approved', 'complete');
               select('approval');
+              schedule(() => {
+                setStage('publishing', 'Publishing');
+                activateConnections('approval-output');
+                schedule(finish, 700);
+              }, 520);
             }, 850);
           }, 650);
         }, 950);
@@ -273,6 +279,18 @@ import AgenticScene from './AgenticScene.astro';
       }
     });
     document.addEventListener('fullscreenchange', syncFullscreen);
-    reset();
+    reset('Auto-ready');
+    if ('IntersectionObserver' in window) {
+      const autoStartObserver = new IntersectionObserver((entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        autoStartObserver.disconnect();
+        window.setTimeout(() => {
+          if (!autoStarted && root.dataset.executionState === 'idle') runDemo();
+        }, 360);
+      }, { threshold: 0.18 });
+      autoStartObserver.observe(root);
+    } else {
+      window.setTimeout(() => { if (!autoStarted) runDemo(); }, 500);
+    }
   });
 </script>
