@@ -41,7 +41,8 @@ try {
     await page.waitForFunction((selector) => { const image = document.querySelector(`${selector} .feature-image.is-active`); return image?.complete && image.naturalWidth > 0; }, {}, panelSelector);
     if (name === 'Products') {
       assert(await page.$eval('.mega-menu-products .feature-visual', (el) => el.dataset.agentic === 'true'), 'Agentic preview is not active by default');
-      assert(await page.$eval('.agent-flow', (el) => getComputedStyle(el).opacity === '0.92'), 'Agentic data flow is not visible');
+      assert(await page.$eval('.mega-menu-products .feature-image.is-active', (el) => el.getAttribute('src')?.includes('products-agentic.webp')), 'Fixed 3D product preview is not active');
+      assert(await page.$eval('.agent-flow', (el) => getComputedStyle(el).opacity === '0.92'), 'Product flow animation is not visible');
     }
     await page.screenshot({ path: path.join(out, `${name.toLowerCase()}.png`) });
   }
@@ -156,7 +157,7 @@ try {
   await page.setViewport({ width: 1440, height: 900 });
   await page.goto(base, { waitUntil: 'domcontentloaded' });
   await hover(productsSelector);
-  assert(await page.$eval('.agent-flow-pulse', (el) => getComputedStyle(el).display === 'none'), 'Data flow animation ignored reduced-motion preference');
+  assert(await page.$eval('.agent-flow-pulse', (el) => getComputedStyle(el).display === 'none'), 'Product flow animation ignored reduced-motion preference');
 
   assert(errors.length === 0, `Browser console/runtime errors: ${errors.join(' | ')}`);
   console.log(`PASS: visual previews; fast/slow/diagonal hover; delayed close; category transition; keyboard/Escape/outside click; mobile/tablet; no console errors.\nLinks:\n${navResults.join('\n')}\nScreenshots: ${out}`);

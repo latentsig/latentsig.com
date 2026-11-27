@@ -1,0 +1,313 @@
+<section class="agent-workspace" data-agent-workspace data-execution-state="idle" aria-label="Interactive Agentic AI Studio workflow demonstration">
+  <header class="workspace-head">
+    <div>
+      <span class="workspace-kicker">INTERACTIVE DEMONSTRATION · FICTIONAL SAMPLE</span>
+      <h3>Policy review workflow</h3>
+    </div>
+    <span class="run-state" data-run-state aria-live="polite">Ready to run</span>
+    <button class="workspace-expand" type="button" data-open-dialog aria-haspopup="dialog" aria-label="Open enlarged orchestration workspace">⤢</button>
+  </header>
+
+  <div class="orchestration-canvas" aria-label="Workflow: request, orchestrator, parallel specialist agents, evaluation, human approval, and reviewed output">
+    <svg class="connections" viewBox="0 0 1000 440" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <marker id="agent-flow-arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" /></marker>
+      </defs>
+      <path data-connection="input-orchestrator" d="M132 220H206" marker-end="url(#agent-flow-arrow)" />
+      <path data-connection="dispatch-reader" d="M316 220C340 220 340 100 372 100" marker-end="url(#agent-flow-arrow)" />
+      <path data-connection="dispatch-compare" d="M316 220H372" marker-end="url(#agent-flow-arrow)" />
+      <path data-connection="dispatch-evidence" d="M316 220C340 220 340 340 372 340" marker-end="url(#agent-flow-arrow)" />
+      <path data-connection="merge-reader" d="M516 100C548 100 548 220 578 220" marker-end="url(#agent-flow-arrow)" />
+      <path data-connection="merge-compare" d="M516 220H578" marker-end="url(#agent-flow-arrow)" />
+      <path data-connection="merge-evidence" d="M516 340C548 340 548 220 578 220" marker-end="url(#agent-flow-arrow)" />
+      <path data-connection="evaluation-human" d="M700 220H758" marker-end="url(#agent-flow-arrow)" />
+      <path data-connection="human-output" d="M878 220H940" marker-end="url(#agent-flow-arrow)" />
+      <circle class="flow-token" data-flow-token="input-orchestrator" r="4"><animateMotion dur=".65s" begin="indefinite" fill="freeze" path="M132 220H206" /></circle>
+      <circle class="flow-token" data-flow-token="dispatch-reader" r="4"><animateMotion dur="1.05s" begin="indefinite" repeatCount="indefinite" path="M316 220C340 220 340 100 372 100" /></circle>
+      <circle class="flow-token" data-flow-token="dispatch-compare" r="4"><animateMotion dur="1.05s" begin="indefinite" repeatCount="indefinite" path="M316 220H372" /></circle>
+      <circle class="flow-token" data-flow-token="dispatch-evidence" r="4"><animateMotion dur="1.05s" begin="indefinite" repeatCount="indefinite" path="M316 220C340 220 340 340 372 340" /></circle>
+      <circle class="flow-token" data-flow-token="merge-reader" r="4"><animateMotion dur=".8s" begin="indefinite" fill="freeze" path="M516 100C548 100 548 220 578 220" /></circle>
+      <circle class="flow-token" data-flow-token="merge-compare" r="4"><animateMotion dur=".8s" begin="indefinite" fill="freeze" path="M516 220H578" /></circle>
+      <circle class="flow-token" data-flow-token="merge-evidence" r="4"><animateMotion dur=".8s" begin="indefinite" fill="freeze" path="M516 340C548 340 548 220 578 220" /></circle>
+      <circle class="flow-token" data-flow-token="evaluation-human" r="4"><animateMotion dur=".65s" begin="indefinite" fill="freeze" path="M700 220H758" /></circle>
+      <circle class="flow-token" data-flow-token="human-output" r="4"><animateMotion dur=".65s" begin="indefinite" fill="freeze" path="M878 220H940" /></circle>
+    </svg>
+
+    <button class="flow-node source-node" data-work-node="input" aria-pressed="false">
+      <span class="node-overline">INCOMING REQUEST</span>
+      <span class="document-preview" aria-hidden="true"><b>FIELD OPERATIONS</b><i></i><i></i><i></i><span>APR 26&nbsp; · &nbsp;MAY 26</span></span>
+      <b>Compare policy drafts</b><small>April v1.4 · May v1.5</small><i class="node-state" data-node-status>Input ready</i>
+    </button>
+    <span class="mobile-flow" aria-hidden="true">↓ &nbsp; route request</span>
+
+    <button class="flow-node orchestrator-node" data-work-node="orchestrator" aria-pressed="true">
+      <span class="orchestrator-mark" aria-hidden="true"><svg viewBox="0 0 36 36"><path d="M8 18h8m4 0h8M16 10l4 8-4 8" /><circle cx="7" cy="18" r="3"/><circle cx="29" cy="18" r="3"/><circle cx="18" cy="8" r="3"/><circle cx="18" cy="28" r="3"/></svg></span>
+      <b>Orchestrator</b><small>Routes work &amp; gathers evidence</small><i class="node-state" data-node-status>Ready</i>
+    </button>
+    <span class="mobile-flow" aria-hidden="true">↓ &nbsp; fan out in parallel</span>
+
+    <div class="agent-stack" aria-label="Three specialist agents running in parallel">
+      <span class="parallel-label"><i></i> THREE PARALLEL AGENTS</span>
+      <button class="agent-node" data-work-node="reader" aria-pressed="false"><span class="tool-icon doc-icon" aria-hidden="true">▤</span><span class="agent-copy"><b>Document reader</b><small>Finds source clauses</small></span><span class="agent-result" data-agent-result>14 clauses</span><i data-node-status>Ready</i></button>
+      <button class="agent-node" data-work-node="compare" aria-pressed="false"><span class="tool-icon compare-icon" aria-hidden="true">⇄</span><span class="agent-copy"><b>Change analyst</b><small>Compares revisions</small></span><span class="agent-result" data-agent-result>2 changes</span><i data-node-status>Ready</i></button>
+      <button class="agent-node" data-work-node="evidence" aria-pressed="false"><span class="tool-icon evidence-icon" aria-hidden="true">↗</span><span class="agent-copy"><b>Evidence linker</b><small>Connects source lines</small></span><span class="agent-result" data-agent-result>2 citations</span><i data-node-status>Ready</i></button>
+    </div>
+    <span class="mobile-flow" aria-hidden="true">↓ &nbsp; aggregate findings</span>
+
+    <button class="flow-node evaluation-node" data-work-node="evaluation" aria-pressed="false">
+      <span class="checklist-preview" aria-hidden="true"><i>✓</i><i>✓</i><i>✓</i></span>
+      <b>LLM evaluation</b><small>Checks each finding against its source</small><i class="node-state" data-node-status>Ready</i>
+    </button>
+    <span class="mobile-flow" aria-hidden="true">↓ &nbsp; evaluation passed</span>
+    <button class="flow-node human-node" data-work-node="human" aria-pressed="false">
+      <span class="reviewer-preview" aria-hidden="true">JR</span>
+      <b>Human approval</b><small>Reviewer checks the evidence</small><i class="node-state" data-node-status>Awaiting run</i>
+    </button>
+    <span class="mobile-flow" aria-hidden="true">↓ &nbsp; publish after approval</span>
+    <button class="flow-node output-node" data-work-node="output" aria-pressed="false">
+      <span class="output-preview" aria-hidden="true"><b>REVIEW SUMMARY</b><i>01&nbsp; Review cycle</i><i>02&nbsp; Ownership</i><span>2 SOURCES LINKED</span></span>
+      <b>Reviewed output</b><small>Findings with source evidence</small><i class="node-state" data-node-status>Pending</i>
+    </button>
+
+  </div>
+
+  <div class="workspace-detail" aria-live="polite" aria-atomic="true">
+    <div class="detail-copy"><span class="workspace-kicker" data-detail-label>WORKFLOW STEP</span><strong data-detail-title>Orchestrator</strong><p data-detail-copy>Routes the request to focused agents, then brings their findings together for review.</p></div>
+    <article class="detail-preview" aria-label="Selected workflow step sample output"><span class="preview-heading" data-preview-heading>ROUTING PLAN</span><ul data-preview-items><li>Read the April and May policy drafts</li><li>Compare changed clauses in parallel</li><li>Require source evidence before review</li></ul></article>
+    <button class="human-approve" type="button" data-human-approve hidden>Approve sample output <span aria-hidden="true">→</span></button>
+  </div>
+
+  <div class="execution-trace" aria-label="Workflow execution trace">
+    <span data-trace="0">Request</span><span data-trace="1">Route</span><span data-trace="2">Agents</span><span data-trace="3">Aggregate</span><span data-trace="4">Evaluate</span><span data-trace="5">Approve</span><span data-trace="6">Output</span>
+  </div>
+
+  <footer class="workspace-toolbar">
+    <span>Deterministic local run · fictional policy data · no external API</span>
+    <div><button type="button" data-run>Run demo</button><button type="button" data-pause disabled>Pause</button><button type="button" data-replay>Replay</button><button type="button" data-reset>Reset</button></div>
+  </footer>
+</section>
+
+<script>
+  const detailData: Record<string, { title: string; copy: string; heading: string; items: string[] }> = {
+    input: { title: 'Request & source documents', copy: 'A sample request asks for the policy changes between two revisions.', heading: 'SAMPLE INPUT', items: ['“Compare the field operations policy drafts.”', 'April 2026 · revision 1.4', 'May 2026 · revision 1.5'] },
+    orchestrator: { title: 'Orchestrator', copy: 'Routes the request to focused agents, then brings their findings together for review.', heading: 'ROUTING PLAN', items: ['Read both policy drafts', 'Compare changed clauses in parallel', 'Require source evidence before review'] },
+    reader: { title: 'Document reader', copy: 'Finds matching passages in both fictional policy revisions for downstream review.', heading: 'INTERMEDIATE RESULT · READER', items: ['14 clauses indexed across both drafts', 'Matched clause 4.2 · review interval', 'Matched clause 7.1 · exception owner'] },
+    compare: { title: 'Change analyst', copy: 'Pairs matching clauses and summarizes the two changes for a reviewer.', heading: 'INTERMEDIATE RESULT · COMPARISON', items: ['Review interval · 30 days → 90 days', 'Exception owner · regional lead → site lead', '2 changes sent for evidence checking'] },
+    evidence: { title: 'Evidence linker', copy: 'Attaches each proposed change to the specific sample clauses that support it.', heading: 'INTERMEDIATE RESULT · SOURCES', items: ['Finding 01 · April §4.2 / May §4.2', 'Finding 02 · April §7.1 / May §7.1', '2 of 2 findings have linked evidence'] },
+    evaluation: { title: 'LLM evaluation checkpoint', copy: 'A deterministic local check confirms each finding has a corresponding source reference.', heading: 'EVALUATION CHECKS', items: ['2 findings include source references', '2 clause pairs are present', 'Ready for human review'] },
+    human: { title: 'Human approval checkpoint', copy: 'Review the sample findings and approve them to release the final output.', heading: 'REVIEW QUEUE', items: ['2 findings · 2 linked sources', 'Approval is required before output', 'This action stays in the local demo'] },
+    output: { title: 'Final output with evidence', copy: 'The reviewed summary preserves both findings and their source references.', heading: 'REVIEWED SAMPLE OUTPUT', items: ['Review interval changed from 30 to 90 days · §4.2', 'Exception owner changed to site lead · §7.1', 'Approved sample · 2 sources attached'] },
+  };
+
+  document.querySelectorAll<HTMLElement>('[data-agent-workspace]').forEach((root) => {
+    const nodes = [...root.querySelectorAll<HTMLButtonElement>('[data-work-node]')];
+    const run = root.querySelector<HTMLButtonElement>('[data-run]');
+    const pause = root.querySelector<HTMLButtonElement>('[data-pause]');
+    const state = root.querySelector<HTMLElement>('[data-run-state]');
+    const connections = [...root.querySelectorAll<SVGPathElement>('[data-connection]')];
+    const tokens = [...root.querySelectorAll<SVGCircleElement>('[data-flow-token]')];
+    let timer = 0;
+    let continuation: (() => void) | undefined;
+    let paused = false;
+    let active = false;
+    let activeFlows: string[] = [];
+    let pausedStage = '';
+    let pausedLabel = '';
+
+    const expand = root.querySelector<HTMLButtonElement>('[data-open-dialog]');
+    if (expand && !root.closest('.product-page')) expand.hidden = true;
+
+    const select = (key: string) => {
+      const detail = detailData[key] ?? detailData.orchestrator;
+      root.querySelector<HTMLElement>('[data-detail-title]')!.textContent = detail.title;
+      root.querySelector<HTMLElement>('[data-detail-copy]')!.textContent = detail.copy;
+      root.querySelector<HTMLElement>('[data-preview-heading]')!.textContent = detail.heading;
+      const list = root.querySelector<HTMLUListElement>('[data-preview-items]')!;
+      list.replaceChildren(...detail.items.map((text) => { const item = document.createElement('li'); item.textContent = text; return item; }));
+      nodes.forEach((node) => node.setAttribute('aria-pressed', String(node.dataset.workNode === key)));
+    };
+
+    const setNode = (key: string, status: string, phase: 'idle' | 'active' | 'complete' | 'review' = 'idle') => {
+      const node = nodes.find((item) => item.dataset.workNode === key);
+      const statusEl = node?.querySelector<HTMLElement>('[data-node-status]');
+      if (statusEl) statusEl.textContent = status;
+      if (node) node.dataset.phase = phase;
+    };
+
+    const stopFlows = (clear = true) => {
+      connections.forEach((path) => path.classList.remove('is-active'));
+      tokens.forEach((token) => {
+        token.querySelector<SVGAnimateMotionElement>('animateMotion')?.endElement();
+        token.classList.remove('is-moving');
+      });
+      if (clear) activeFlows = [];
+    };
+
+    const animate = (...names: string[]) => {
+      stopFlows();
+      activeFlows = names;
+      names.forEach((name) => {
+        root.querySelector(`[data-connection="${name}"]`)?.classList.add('is-active');
+        const token = root.querySelector<SVGCircleElement>(`[data-flow-token="${name}"]`);
+        if (!token) return;
+        token.classList.add('is-moving');
+        token.querySelector<SVGAnimateMotionElement>('animateMotion')?.beginElement();
+      });
+    };
+
+    const setStage = (stage: string, label: string) => {
+      root.dataset.executionState = stage;
+      if (state) state.textContent = label;
+    };
+
+    const schedule = (next: () => void, delay: number) => {
+      continuation = next;
+      timer = window.setTimeout(() => {
+        if (paused) return;
+        continuation = undefined;
+        next();
+      }, delay);
+    };
+
+    const markTrace = (step: number) => root.querySelector(`[data-trace="${step}"]`)?.classList.add('is-complete');
+
+    const reset = () => {
+      window.clearTimeout(timer);
+      continuation = undefined;
+      active = false;
+      paused = false;
+      root.dataset.executionState = 'idle';
+      if (state) state.textContent = 'Ready to run';
+      if (run) run.disabled = false;
+      if (pause) { pause.disabled = true; pause.textContent = 'Pause'; }
+      stopFlows();
+      root.querySelectorAll<HTMLElement>('[data-phase]').forEach((node) => delete node.dataset.phase);
+      const statuses: Record<string, string> = { input: 'Input ready', orchestrator: 'Ready', reader: 'Ready', compare: 'Ready', evidence: 'Ready', evaluation: 'Ready', human: 'Awaiting run', output: 'Pending' };
+      Object.entries(statuses).forEach(([key, value]) => setNode(key, value));
+      root.querySelectorAll('[data-trace]').forEach((item) => item.classList.remove('is-complete'));
+      const approve = root.querySelector<HTMLButtonElement>('[data-human-approve]');
+      if (approve) { approve.hidden = true; approve.disabled = false; }
+      select('orchestrator');
+    };
+
+    const finish = () => {
+      setNode('output', 'Complete', 'complete');
+      markTrace(6);
+      setStage('complete', 'Complete · approved output ready');
+      active = false;
+      continuation = undefined;
+      if (run) run.disabled = false;
+      if (pause) pause.disabled = true;
+      stopFlows();
+      select('output');
+    };
+
+    const waitForApproval = () => {
+      setStage('approval', 'Waiting for human approval');
+      setNode('evaluation', 'Passed · 2 findings checked', 'complete');
+      setNode('human', 'Review required', 'review');
+      animate('evaluation-human');
+      markTrace(4);
+      select('human');
+      const approve = root.querySelector<HTMLButtonElement>('[data-human-approve]');
+      if (approve) { approve.hidden = false; approve.disabled = paused; }
+      markTrace(5);
+    };
+
+    const startOutput = () => {
+      setStage('publishing', 'Approval recorded · preparing output');
+      setNode('human', 'Approved locally', 'complete');
+      if (pause) pause.disabled = false;
+      animate('human-output');
+      schedule(finish, 750);
+    };
+
+    const start = () => {
+      reset();
+      active = true;
+      if (run) run.disabled = true;
+      if (pause) pause.disabled = false;
+      setStage('planning', 'Routing request');
+      setNode('input', 'Sent', 'complete');
+      setNode('orchestrator', 'Planning', 'active');
+      select('orchestrator');
+      animate('input-orchestrator');
+      schedule(() => {
+        markTrace(0); markTrace(1);
+        setStage('parallel', 'Three agents working in parallel');
+        setNode('orchestrator', 'Work dispatched', 'complete');
+        ['reader', 'compare', 'evidence'].forEach((key) => setNode(key, 'Running', 'active'));
+        select('reader');
+        animate('dispatch-reader', 'dispatch-compare', 'dispatch-evidence');
+        schedule(() => {
+          ['reader', 'compare', 'evidence'].forEach((key) => setNode(key, 'Complete', 'complete'));
+          markTrace(2);
+          setStage('aggregation', 'Aggregating agent results');
+          setNode('evaluation', 'Collecting evidence', 'active');
+          select('compare');
+          animate('merge-reader', 'merge-compare', 'merge-evidence');
+          schedule(() => {
+            markTrace(3);
+            setStage('evaluation', 'Checking findings and evidence');
+            setNode('evaluation', 'Evaluating', 'active');
+            select('evaluation');
+            stopFlows();
+            schedule(waitForApproval, 850);
+          }, 800);
+        }, 1450);
+      }, 650);
+    };
+
+    nodes.forEach((node) => node.addEventListener('click', () => select(node.dataset.workNode ?? 'orchestrator')));
+    run?.addEventListener('click', start);
+    root.querySelector('[data-replay]')?.addEventListener('click', start);
+    root.querySelector('[data-reset]')?.addEventListener('click', reset);
+    pause?.addEventListener('click', () => {
+      if (!active && root.dataset.executionState !== 'approval') return;
+      paused = !paused;
+      pause.textContent = paused ? 'Resume' : 'Pause';
+      if (paused) {
+        pausedStage = root.dataset.executionState ?? 'running';
+        pausedLabel = state?.textContent ?? 'Running sample';
+        window.clearTimeout(timer);
+        setStage('paused', 'Paused · sample state saved');
+        stopFlows(false);
+        const approve = root.querySelector<HTMLButtonElement>('[data-human-approve]');
+        if (approve) approve.disabled = true;
+      } else if (continuation) {
+        setStage(pausedStage, pausedLabel);
+        const approve = root.querySelector<HTMLButtonElement>('[data-human-approve]');
+        if (approve) approve.disabled = false;
+        if (activeFlows.length) animate(...activeFlows);
+        schedule(continuation, 300);
+      } else if (root.dataset.executionState === 'paused') {
+        setStage(pausedStage || 'approval', pausedLabel || 'Waiting for human approval');
+        if (activeFlows.length) animate(...activeFlows);
+        const approve = root.querySelector<HTMLButtonElement>('[data-human-approve]');
+        if (approve) approve.disabled = false;
+      }
+    });
+    root.querySelector('[data-human-approve]')?.addEventListener('click', () => {
+      if (paused || root.dataset.executionState !== 'approval') return;
+      const approve = root.querySelector<HTMLButtonElement>('[data-human-approve]');
+      if (approve) { approve.hidden = true; approve.disabled = false; }
+      markTrace(5);
+      startOutput();
+    });
+    reset();
+  });
+</script>
+
+<style>
+  .agent-workspace{--ink:#19232c;--muted:#66737c;--line:#d9ded9;--sage:#769181;--warm:#f4f3ee;overflow:hidden;border:1px solid #d4dad5;border-radius:18px;background:#f6f5f0;color:var(--ink);font-family:Geist,system-ui,sans-serif;box-shadow:0 24px 60px rgba(23,35,40,.12)}
+  .workspace-head,.workspace-toolbar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:15px 20px;border-bottom:1px solid var(--line)}.workspace-head h3{margin:5px 0 0;font-size:18px;letter-spacing:-.03em}.workspace-kicker{color:#728274;font-size:9px;font-weight:750;letter-spacing:.13em}.run-state{padding:7px 10px;border:1px solid #d5ddd5;border-radius:99px;color:#506657;background:#edf0e9;font-size:10px;font-weight:650}.workspace-expand{width:31px;height:31px;border:1px solid var(--line);border-radius:7px;background:#eef0ea;color:#293b34;font-size:15px;cursor:pointer}.workspace-expand[hidden]{display:none}
+  .orchestration-canvas{position:relative;display:grid;grid-template-columns:1fr 1fr 1.05fr .85fr .9fr .95fr;grid-template-rows:1fr;align-items:center;gap:clamp(8px,1.3vw,16px);min-height:355px;padding:34px 16px;background:radial-gradient(ellipse at 50% 55%,rgba(211,220,207,.34),transparent 62%),#efefea}.connections{position:absolute;inset:0;width:100%;height:100%;overflow:visible}.connections marker path{fill:#87958a}.connections>path{fill:none;stroke:#b7c0ba;stroke-width:2;vector-effect:non-scaling-stroke;transition:stroke .2s,stroke-width .2s}.connections>path.is-active{stroke:#526c5b;stroke-width:3}.flow-token{display:none;fill:#506b59;filter:drop-shadow(0 0 4px rgba(75,104,83,.5))}.flow-token.is-moving{display:block}.mobile-flow{display:none}
+  .flow-node{position:relative;z-index:1;min-width:0;min-height:145px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:8px;padding:13px;border:1px solid #d9ded8;border-radius:12px;background:rgba(255,255,253,.96);color:var(--ink);text-align:left;box-shadow:0 7px 18px rgba(37,49,43,.06);cursor:pointer;transition:transform .2s,border-color .2s,box-shadow .2s}.flow-node:hover,.flow-node[aria-pressed=true]{transform:translateY(-2px);border-color:#8eaa97;box-shadow:0 12px 24px rgba(37,49,43,.12)}.flow-node[data-phase=active]{border-color:#688674;box-shadow:0 0 0 3px rgba(112,147,122,.14),0 12px 24px rgba(37,49,43,.1)}.flow-node[data-phase=complete]{border-color:#aab9a8}.flow-node[data-phase=review]{border-color:#bf9c6d;box-shadow:0 0 0 3px rgba(191,156,109,.14)}.flow-node>b{font-size:11px;line-height:1.25}.flow-node>small{color:var(--muted);font-size:9px;line-height:1.4}.node-state{color:#728274;font-size:8px;font-style:normal}.flow-node[data-phase=active] .node-state{color:#44684e}.flow-node[data-phase=review] .node-state{color:#8c6238}.input-node{grid-column:1}.orchestrator-node{grid-column:2;min-height:160px;align-items:center;text-align:center;background:#202f32;color:#f3f4ed;border-color:#344447}.orchestrator-node:hover,.orchestrator-node[aria-pressed=true]{background:#293a3b;border-color:#7a9b83}.orchestrator-node>small,.orchestrator-node .node-state{color:#c2cec1}.agent-stack{grid-column:3;z-index:1;display:grid;gap:7px;min-width:0}.parallel-label{display:flex;align-items:center;gap:6px;color:#6b796f;font-size:8px;font-weight:750;letter-spacing:.09em}.parallel-label i{width:6px;height:6px;border-radius:50%;background:#91a98d}.agent-node{position:relative;display:grid;grid-template-columns:27px minmax(0,1fr);grid-template-rows:auto auto;align-items:center;column-gap:8px;row-gap:3px;min-height:71px;padding:8px 9px;border:1px solid #d9ded8;border-radius:9px;background:#fbfbf8;color:var(--ink);text-align:left;cursor:pointer;transition:background .18s,border-color .18s,transform .18s}.agent-node:hover,.agent-node[aria-pressed=true]{transform:translateX(2px);border-color:#8eaa97;background:#f1f4ee}.agent-node[data-phase=active]{border-color:#688674;background:#edf2eb;box-shadow:0 0 0 2px rgba(112,147,122,.14)}.agent-node[data-phase=complete]{border-color:#b2c1af}.tool-icon{grid-row:1/3;display:grid;place-items:center;width:26px;height:26px;border-radius:8px;background:#e9ede7;color:#587261;font-size:15px}.compare-icon{background:#f0ece2;color:#8c7752}.evidence-icon{background:#e9efee;color:#587b7a}.agent-copy{min-width:0;display:grid;gap:2px}.agent-copy b{font-size:9px;line-height:1.2}.agent-copy small{color:var(--muted);font-size:8px}.agent-result{grid-column:2;color:#6b796f;font-size:8px}.agent-node>[data-node-status]{position:absolute;right:8px;top:7px;color:#78837b;font-size:7px;font-style:normal}.agent-node[data-phase=active]>[data-node-status]{color:#41664b}.evaluation-node{grid-column:4}.human-node{grid-column:5;background:#f7f2e9;border-color:#e1d7c6}.human-node:hover,.human-node[aria-pressed=true]{border-color:#c0a779}.output-node{grid-column:6;background:#f4f5ef}.node-overline{color:#718074;font-size:7px;font-weight:750;letter-spacing:.09em}.document-preview,.output-preview{display:grid;align-content:center;gap:5px;width:100%;min-height:61px;padding:8px 9px;border:1px solid #e4e7df;border-radius:6px;background:#f5f5f0;color:#39453d;font-size:7px}.document-preview>b,.output-preview>b{color:#566958;font-size:7px;letter-spacing:.07em}.document-preview>i{display:block;width:84%;height:3px;border-radius:4px;background:#d5dbd4}.document-preview>i:nth-of-type(2){width:66%}.document-preview>i:nth-of-type(3){width:75%}.document-preview>span,.output-preview>span{color:#78837a;font-size:6px;letter-spacing:.06em}.orchestrator-mark{display:grid;place-items:center;width:42px;height:42px;border:1px solid #647672;border-radius:50%;background:#344648}.orchestrator-mark svg{width:28px;height:28px;fill:none;stroke:#d4e0d4;stroke-width:1.5}.orchestrator-mark svg circle{fill:#aabca9;stroke:#203033}.checklist-preview{display:grid;gap:3px;width:48px;padding:6px 7px;border:1px solid #e3e7e0;border-radius:6px;background:#f6f7f3}.checklist-preview i{position:relative;padding-left:13px;color:#607461;font-size:7px;font-style:normal}.checklist-preview i:before{content:"✓";position:absolute;left:0;color:#688c70}.reviewer-preview{display:grid;place-items:center;width:35px;height:35px;border:1px solid #ddd0b9;border-radius:50%;background:#e9dfcf;color:#6b5844;font-size:10px;font-weight:700}.output-preview>i{color:#667369;font-size:7px;font-style:normal}.workspace-detail{display:grid;grid-template-columns:minmax(170px,.8fr) minmax(270px,1.2fr) auto;gap:20px;align-items:center;padding:15px 20px;border-top:1px solid var(--line);background:#f9f9f5}.detail-copy strong{display:block;margin:4px 0;color:#26332b;font-size:13px}.detail-copy p{max-width:350px;margin:0;color:var(--muted);font-size:10px;line-height:1.5}.detail-preview{padding:10px 13px;border-left:2px solid #a5b59e;background:#f0f2ec}.preview-heading{color:#667662;font-size:8px;font-weight:750;letter-spacing:.08em}.detail-preview ul{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:7px 0 0;padding:0;list-style:none}.detail-preview li{color:#4f5b53;font-size:9px;line-height:1.4}.human-approve{white-space:nowrap;padding:10px 12px;border:1px solid #526d59;border-radius:7px;background:#506b58;color:white;font-size:10px;font-weight:700;cursor:pointer}.human-approve:hover{background:#3d5845}.human-approve[hidden]{display:none}.human-approve:disabled{opacity:.55;cursor:not-allowed}.execution-trace{display:flex;justify-content:space-between;gap:6px;padding:12px 20px;border-top:1px solid var(--line);background:#f1f1ec}.execution-trace span{position:relative;display:flex;align-items:center;gap:7px;color:#8a938c;font-size:8px}.execution-trace span:before{content:"";width:7px;height:7px;border:1px solid #bdc5be;border-radius:50%;background:#fafaf6}.execution-trace span.is-complete{color:#536e59}.execution-trace span.is-complete:before{border-color:#718d73;background:#8ea98e}.workspace-toolbar{border-top:1px solid var(--line);border-bottom:0;background:#eeefea}.workspace-toolbar>span{color:#748078;font-size:9px}.workspace-toolbar>div{display:flex;flex-wrap:wrap;gap:6px}.workspace-toolbar button{min-height:33px;padding:6px 10px;border:1px solid #c6cec6;border-radius:6px;background:#f8f8f5;color:#435248;font:600 10px Geist,system-ui,sans-serif;cursor:pointer}.workspace-toolbar button[data-run]{border-color:#506b58;background:#506b58;color:#fff}.workspace-toolbar button:hover:not(:disabled){border-color:#718e78;background:#e9efe8}.workspace-toolbar button[data-run]:hover:not(:disabled){background:#3d5845}.workspace-toolbar button:disabled{opacity:.45;cursor:not-allowed}.agent-workspace :where(button):focus-visible{outline:3px solid #6d9276;outline-offset:2px}
+  @media(max-width:1100px){.orchestration-canvas{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:auto auto;gap:14px;padding:22px 16px}.connections{display:none}.input-node{grid-column:1}.orchestrator-node{grid-column:2}.agent-stack{grid-column:3}.evaluation-node{grid-column:1}.human-node{grid-column:2}.output-node{grid-column:3}.flow-node{min-height:135px}.orchestrator-node{min-height:150px}.agent-node{min-height:67px}.mobile-flow{display:none}.workspace-detail{grid-template-columns:1fr 1.2fr}.human-approve{grid-column:1/-1;justify-self:start}}
+  @media(max-width:680px){.workspace-head,.workspace-toolbar{align-items:flex-start;flex-direction:column;padding:13px}.run-state{position:absolute;right:56px;top:15px}.workspace-expand{position:absolute;right:14px;top:12px}.orchestration-canvas{display:flex;flex-direction:column;align-items:stretch;gap:0;padding:14px 12px}.flow-node{width:100%;min-height:0;padding:11px 12px}.source-node,.evaluation-node,.human-node,.output-node{display:grid;grid-template-columns:38px minmax(0,1fr) auto;grid-template-rows:auto auto;align-items:center;column-gap:9px}.source-node .node-overline{grid-column:1/-1}.source-node .document-preview{grid-column:1;grid-row:2/5;min-height:52px}.source-node>b,.source-node>small,.source-node>.node-state,.evaluation-node>b,.evaluation-node>small,.evaluation-node>.node-state,.human-node>b,.human-node>small,.human-node>.node-state,.output-node>b,.output-node>small,.output-node>.node-state{grid-column:2/-1}.checklist-preview,.reviewer-preview,.output-preview{grid-column:1;grid-row:1/4}.output-preview{min-height:52px}.orchestrator-node{min-height:68px;display:grid;grid-template-columns:42px 1fr auto;grid-template-rows:auto auto;align-items:center;text-align:left}.orchestrator-mark{grid-row:1/3}.orchestrator-node>b,.orchestrator-node>small,.orchestrator-node>.node-state{grid-column:2/-1}.agent-stack{display:grid;gap:7px;padding:5px 0}.parallel-label{padding:3px 0}.agent-node{min-height:58px}.mobile-flow{display:block;position:relative;z-index:1;padding:8px 0 8px 21px;color:#778679;font-size:9px;font-weight:650}.workspace-detail{grid-template-columns:1fr;gap:10px;padding:13px}.detail-preview ul{grid-template-columns:1fr;gap:5px}.human-approve{grid-column:auto;width:100%}.execution-trace{justify-content:flex-start;overflow-x:auto;padding:11px 13px}.execution-trace span{flex:0 0 auto}.workspace-toolbar>div{width:100%}.workspace-toolbar button{flex:1;padding-inline:5px;font-size:9px}}
+  @media(prefers-reduced-motion:reduce){.flow-node,.agent-node,.connections>path{transition:none}.flow-token{display:none!important}}
+  @media(max-width:1100px){.orchestration-canvas{display:flex;flex-direction:column;align-items:stretch;gap:0;min-height:0;padding:18px 16px}.connections{display:none}.flow-node{width:100%;min-height:104px;margin:0}.agent-stack{width:100%;padding:8px 0}.mobile-flow{display:block;position:relative;z-index:1;padding:7px 0 7px 21px;color:#778679;font-size:9px;font-weight:650}.workspace-detail{grid-template-columns:1fr 1.2fr}.human-approve{grid-column:1/-1;justify-self:start}}
+  @media(max-width:680px){.source-node .document-preview,.output-node .output-preview{width:38px;min-height:42px;padding:0;place-items:center;overflow:hidden}.source-node .document-preview>b,.source-node .document-preview>i,.source-node .document-preview>span,.output-node .output-preview>b,.output-node .output-preview>i,.output-node .output-preview>span{display:none}.source-node .document-preview:before{content:"PDF";color:#607461;font-size:9px;font-weight:750}.output-node .output-preview:before{content:"✓";color:#607461;font-size:16px;font-weight:750}.workspace-detail{grid-template-columns:1fr}.human-approve{grid-column:auto;width:100%}}
+  @media(max-width:680px){.workspace-head{position:relative;align-items:center;flex-direction:row;min-height:76px;padding:13px 135px 13px 13px}.workspace-head>div{min-width:0}.workspace-head .workspace-kicker{display:block;max-width:205px;font-size:8px;line-height:1.4}.workspace-head h3{font-size:15px;line-height:1.2}.run-state{right:49px;top:14px}.workspace-expand{right:11px;top:11px}}
+  :global(html.light-theme-preview) .agent-workspace{filter:invert(1) hue-rotate(180deg)}
+</style>

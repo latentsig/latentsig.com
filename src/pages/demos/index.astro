@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import ProductDemo from '../../components/products/ProductDemo.astro';
+import AgenticWorkspace from '../../components/products/AgenticWorkspace.astro';
+import AnnotationWorkspace from '../../components/products/AnnotationWorkspace.astro';
 import { BOOK_DEMO_URL } from '../../consts';
 ---
 
@@ -8,9 +9,9 @@ import { BOOK_DEMO_URL } from '../../consts';
   <div class="demos-page">
     <header class="demos-intro"><span class="eyebrow">PRODUCT DEMONSTRATIONS</span><h1>Follow the work from input to review.</h1><p>These local walkthroughs use fictional sample data and do not call an external model.</p><nav aria-label="Choose a guided demonstration"><a href="#annotation-verification">Annotation & Verification Platform ↘</a><a href="#agentic-ai-platform">Agentic AI Studio ↘</a></nav></header>
 
-    <section id="annotation-verification" class="demo-section" aria-labelledby="annotation-heading"><div class="section-copy"><div><span class="eyebrow">01 / DATA QUALITY</span><h2 id="annotation-heading">Annotation & Verification Platform</h2><p>Watch independent labels move through disagreement review into a local sample export.</p></div><a href="/products/annotation-verification/">Explore product ↗</a></div><ProductDemo kind="annotation" instanceId="annotation-demo-page" /><div class="below-actions"><a href="/products/annotation-verification/">Product overview ↗</a><a href={BOOK_DEMO_URL}>Book a demo ↗</a></div></section>
+    <section id="annotation-verification" class="demo-section" aria-labelledby="annotation-heading"><div class="section-copy"><div><span class="eyebrow">01 / DATA QUALITY</span><h2 id="annotation-heading">Annotation & Verification Platform</h2><p>Inspect image labels, compare independent review and approve a local sample.</p></div><a href="/products/annotation-verification/">Explore product ↗</a></div><AnnotationWorkspace /><div class="below-actions"><a href="/products/annotation-verification/">Product overview ↗</a><a href={BOOK_DEMO_URL}>Book a demo ↗</a></div></section>
 
-    <section id="agentic-ai-platform" class="demo-section" aria-labelledby="agentic-heading"><div class="section-copy"><div><span class="eyebrow">02 / WORKFLOWS</span><h2 id="agentic-heading">Agentic AI Studio</h2><p>Inspect connected agents, a visible run, human review and an output with cited evidence.</p></div><a href="/products/agentic-ai-platform/">Explore product ↗</a></div><ProductDemo kind="agentic" instanceId="agentic-demo-page" /><div class="below-actions"><a href="/products/agentic-ai-platform/">Product overview ↗</a><a href={BOOK_DEMO_URL}>Book a demo ↗</a></div></section>
+    <section id="agentic-ai-platform" class="demo-section" aria-labelledby="agentic-heading"><div class="section-copy"><div><span class="eyebrow">02 / WORKFLOWS</span><h2 id="agentic-heading">Agentic AI Studio</h2><p>Run a deterministic workflow through specialist agents, evaluation and human review.</p></div><a href="/products/agentic-ai-platform/">Explore product ↗</a></div><AgenticWorkspace /><div class="below-actions"><a href="/products/agentic-ai-platform/">Product overview ↗</a><a href={BOOK_DEMO_URL}>Book a demo ↗</a></div></section>
   </div>
 </Layout>
 
