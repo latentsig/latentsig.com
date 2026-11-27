@@ -47,30 +47,27 @@ try {
   await page.mouse.move(panelBounds.x + 40, panelBounds.y + 60, { steps: 8 });
   await page.waitForFunction(() => !document.querySelector('.mega-menu-products')?.hidden);
   await page.mouse.move(panelBounds.x + panelBounds.width * .48, panelBounds.y + panelBounds.height * .7, { steps: 10 });
-  const annotationLink = await page.$('.products-mega-list a[href="/products/annotation-verification/"]');
-  await annotationLink.hover();
+  const annotationCard = await page.$('.products-mega-list a.product-demo-card[href="/demos/#annotation-verification"]');
+  await annotationCard.hover();
   await page.waitForFunction(() => [...document.querySelectorAll('.mega-menu-products [data-preview-image]')].some((image) => image.classList.contains('is-active') && image.getAttribute('src')?.includes('products-agentic.webp')));
-  const menuLinks = await page.$$eval('.mega-menu-products a[href]', (items) => items.map((item) => item.href));
-  if (menuLinks.length !== 4) throw new Error(`Product mega menu expected two product links and two demo links, found ${menuLinks.length}`);
+  const menuLinks = await page.$$eval('.products-mega-list a.product-demo-card', (items) => items.map((item) => ({ href: item.href, text: item.textContent?.trim() ?? '' })));
+  if (menuLinks.length !== 2 || !menuLinks.some((item) => item.href.endsWith('/demos/#agentic-ai-platform')) || !menuLinks.some((item) => item.href.endsWith('/demos/#annotation-verification')) || menuLinks.some((item) => item.text.includes('Interactive demo'))) throw new Error('Product cards should be plain clickable links to their matching demos without an Interactive demo label');
   const capabilityControls = await page.$$eval('.products-mega-trust a, .products-mega-trust button, .products-mega-trust [role="button"]', (items) => items.length);
   if (capabilityControls !== 0) throw new Error('Informational trust and capability items must not be interactive');
   const capabilityCursor = await page.$eval('.products-mega-trust > div', (item) => getComputedStyle(item).cursor);
   if (capabilityCursor !== 'default') throw new Error('Informational trust and capability items should not look clickable');
-  const demoLinkStyle = await page.$eval('.product-menu-agentic .mega-link', (item) => {
-    const style = getComputedStyle(item);
-    return { background: style.backgroundColor, borderStyle: style.borderTopStyle, borderWidth: style.borderTopWidth, bottomStyle: style.borderBottomStyle, decoration: style.textDecorationLine };
-  });
-  if (demoLinkStyle.background !== 'rgba(0, 0, 0, 0)' || demoLinkStyle.borderStyle !== 'none' || demoLinkStyle.borderWidth !== '0px' || demoLinkStyle.bottomStyle !== 'none' || demoLinkStyle.decoration !== 'none') throw new Error('Interactive demo link should be a plain, unboxed menu link');
+  const cardTag = await page.$eval('.product-menu-agentic.product-demo-card', (item) => item.tagName);
+  if (cardTag !== 'A') throw new Error('Agentic product card must be a clickable link');
   const menuImage = await page.$eval('.mega-menu-products [data-preview-image].is-active', (img) => img.getAttribute('src'));
   if (!menuImage?.includes('products-agentic.webp')) throw new Error('Product preview should stay on the selected 3D image when hovering menu items');
-  await annotationLink.click();
-  await page.waitForFunction(() => location.pathname === '/products/annotation-verification/');
+  await annotationCard.click();
+  await page.waitForFunction(() => location.pathname === '/demos/' && location.hash === '#annotation-verification');
   await page.goto(new URL('/products/', base).href, { waitUntil: 'networkidle2' });
   const demoMenuTrigger = await page.$('[data-nav-trigger][href="/products/"]');
   const demoMenuTriggerBounds = await demoMenuTrigger.boundingBox();
   await page.mouse.move(demoMenuTriggerBounds.x + demoMenuTriggerBounds.width / 2, demoMenuTriggerBounds.y + demoMenuTriggerBounds.height / 2);
   await page.waitForSelector('.mega-menu-products:not([hidden])');
-  await page.$eval('.product-menu-annotation .mega-link', (link) => link.click());
+  await page.$eval('.product-menu-annotation.product-demo-card', (link) => link.click());
   await page.waitForFunction(() => location.pathname === '/demos/' && location.hash === '#annotation-verification');
 
   // Agentic walkthrough: inspect the full graph, all sample outputs, parallel execution, pause/resume and approval gate.
@@ -139,12 +136,12 @@ try {
   // Annotation review and export interaction.
   await page.goto(new URL('/demos/#annotation-verification', base).href, { waitUntil: 'networkidle2' });
   await page.waitForFunction(() => scrollY > 100);
-  const annotationRegion = await page.$eval('[data-annotation-workspace] .annotated-image svg', (svg) => ({ box: [...svg.querySelectorAll('rect')].map((rect) => rect.getAttribute('x')), mask: svg.querySelector('path')?.getAttribute('d') }));
-  if (!annotationRegion.box.includes('336') || !annotationRegion.mask?.startsWith('M350')) throw new Error('Annotation overlays are not aligned to the selected sedan region');
+  const annotationRegion = await page.$eval('[data-annotation-workspace] .annotated-image svg', (svg) => ({ boxes: [...svg.querySelectorAll('rect')].map((rect) => rect.getAttribute('x')), mask: svg.querySelector('path')?.getAttribute('d'), labels: [...svg.parentElement.querySelectorAll('.region-label')].map((label) => label.textContent?.trim()) }));
+  if (annotationRegion.boxes.length !== 3 || !['194', '434', '560'].every((x) => annotationRegion.boxes.includes(x)) || !annotationRegion.mask?.startsWith('M583') || annotationRegion.labels.join('|') !== 'Car 1|Car 2|Car 3') throw new Error('Annotation overlays must mark all three cars and align the mask with the blue sedan');
   await page.$eval('[data-annotation-workspace] [data-review-tab="b"]', (button) => button.click());
   const secondLabel = await page.$eval('[data-annotation-workspace] [data-object-label]', (node) => node.textContent);
   const secondTitle = await page.$eval('[data-annotation-workspace] [data-annotation-title]', (node) => node.textContent);
-  if (secondLabel !== 'Car' || secondTitle !== 'Segmentation mask') throw new Error('Annotator comparison tab did not describe the same car with a segmentation mask');
+  if (secondLabel !== 'Blue sedan' || secondTitle !== 'Segmentation mask') throw new Error('Annotator comparison tab did not describe the blue sedan with a segmentation mask');
   await page.$eval('[data-annotation-workspace] [data-correct]', (button) => button.click());
   await page.$eval('[data-annotation-workspace] [data-approve]', (button) => button.click());
   const reviewStatus = await page.$eval('[data-annotation-workspace] [data-review-state]', (node) => node.textContent);
