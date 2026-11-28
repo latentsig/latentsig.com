@@ -24,8 +24,14 @@ const year = new Date().getFullYear();
       <a href="/" class="footer-logo" aria-label="LatentSig home"><Logo height={46} /></a>
       <p>Researching, designing, and building AI systems, data quality platforms, and industry solutions.</p>
       <div class="footer-socials">
+        <a href="https://x.com/latentsig" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>
+        </a>
+        <a href="https://www.linkedin.com/company/latentsig-ai/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93zM6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37z" /></svg>
+        </a>
         <a href="https://github.com/latentsig" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M14 4l-4 16" /></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2" /></svg>
         </a>
         <a href="mailto:latentsig@gmail.com" aria-label="Email">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6" /></svg>
@@ -62,7 +68,10 @@ const year = new Date().getFullYear();
       <a href="/terms/">Terms of Service</a>
     </nav>
 
-    <p class="footer-copyright">© {year} Latentsig Software Private Limited. All rights reserved.</p>
+    <div class="footer-bottom">
+      <p class="footer-copyright">© {year} Latentsig Software Private Limited. All rights reserved.</p>
+      <p class="footer-made">Made with <span class="footer-heart" role="img" aria-label="love">❤️</span> in Bengaluru</p>
+    </div>
   </div>
 </footer>
 
@@ -95,15 +104,18 @@ const year = new Date().getFullYear();
   .footer-logo img{display:block;width:auto;height:46px;max-width:100%!important;object-fit:contain}
   .brand-wordmark{display:block;max-width:100%;padding:5px 8px;border-radius:3px;background:#080c2b;object-fit:contain}
   .footer-brand p{max-width:390px;margin:0;color:#676b60;font-size:16px;line-height:1.65}
-  .footer-socials{display:flex;gap:12px}
-  .footer-socials a{width:44px;height:44px;display:inline-flex;align-items:center;justify-content:center;border:1px solid #dedbd1;border-radius:50%;color:#3e4438;text-decoration:none;transition:color .18s ease,border-color .18s ease,background .18s ease,transform .18s ease}
-  .footer-socials a:hover{border-color:#6d7b50;background:#f7f4ec;color:#596742;transform:translateY(-2px)}
-  .footer-socials svg{width:21px;height:21px;flex:none}
+  .footer-socials{display:flex;align-items:center;gap:10px}
+  .footer-socials a{width:42px;height:42px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(41,44,37,.16);border-radius:50%;background:rgba(255,255,255,.58);color:#292c25;text-decoration:none;transition:color .18s ease,border-color .18s ease,background .18s ease,transform .18s ease,box-shadow .18s ease}
+  .footer-socials a:hover{border-color:#050f34;background:#fff;color:#050f34;transform:translateY(-2px);box-shadow:0 6px 16px rgba(5,15,52,.12)}
+  .footer-socials svg{width:18px;height:18px;flex:none}
   .footer-group{min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:4px}
   .footer-group h2{margin:0 0 8px;color:#34382f;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
   .footer-group a{min-height:40px;display:flex;align-items:center;color:#50554b;text-decoration:none;font-size:13px;line-height:1.45;transition:color .18s ease,transform .18s ease}
   .footer-group a:hover{color:#596742;transform:translateX(3px)}
-  .footer-copyright{grid-column:1/-1;margin:4px 0 0;padding-top:20px;border-top:1px solid rgba(69,74,62,.22);color:#555a50;font-size:12px;line-height:1.5}
+  .footer-bottom{grid-column:1/-1;margin-top:8px;padding-top:20px;border-top:1px solid rgba(255,255,255,.32);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px 24px}
+  .footer-copyright,.footer-made{margin:0;font-family:Geist,system-ui,sans-serif;font-size:13.5px;line-height:1.5;letter-spacing:-.01em;color:#ffffff;font-weight:600;text-shadow:0 1px 10px rgba(5,15,52,.55),0 1px 2px rgba(5,15,52,.4)}
+  .footer-made{display:inline-flex;align-items:center;gap:5px}
+  .footer-heart{font-size:14px;line-height:1}
   .footer-group a:focus-visible,.footer-socials a:focus-visible,.footer-logo:focus-visible{outline:3px solid #74629e;outline-offset:3px;border-radius:4px}
   @media(max-width:1000px){.site-footer{min-height:800px}.footer-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:32px 20px}.footer-brand{grid-column:1/-1}.footer-brand p{max-width:520px}.footer-group{grid-column:span 1}}
   @media(max-width:700px){
@@ -116,10 +128,11 @@ const year = new Date().getFullYear();
     .footer-brand p{font-size:16px;line-height:1.6}
     .footer-group{gap:2px}
     .footer-group a{min-height:44px;font-size:14px;line-height:1.45}
-    .footer-copyright{margin-top:0;font-size:13px;line-height:1.55}
+    .footer-bottom{margin-top:0;flex-direction:column;align-items:flex-start;gap:8px}
+    .footer-copyright,.footer-made{font-size:13px;line-height:1.55}
     .footer-wordmark{bottom:-.12em;font-size:clamp(76px,20vw,120px)}
     .footer-fog{height:80px;background:linear-gradient(to top,rgba(226,227,241,.52),transparent)}
   }
-  @media(max-width:360px){.footer-grid{grid-template-columns:minmax(0,1fr);padding-right:20px;padding-left:20px}.footer-brand,.footer-copyright{grid-column:1/-1}}
+  @media(max-width:360px){.footer-grid{grid-template-columns:minmax(0,1fr);padding-right:20px;padding-left:20px}.footer-brand,.footer-bottom{grid-column:1/-1}}
   @media(prefers-reduced-motion:reduce){.footer-video{visibility:hidden}.footer-socials a,.footer-group a{transition:none}}
 </style>

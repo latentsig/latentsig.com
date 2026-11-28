@@ -30,7 +30,11 @@ const organizationJsonLd = {
   url: 'https://latentsig.com/',
   logo: new URL('/logo.png', Astro.site ?? Astro.url.origin).href,
   email: 'latentsig@gmail.com',
-  sameAs: ['https://github.com/latentsig'],
+  sameAs: [
+    'https://github.com/latentsig',
+    'https://x.com/latentsig',
+    'https://www.linkedin.com/company/latentsig-ai/',
+  ],
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Bengaluru',
