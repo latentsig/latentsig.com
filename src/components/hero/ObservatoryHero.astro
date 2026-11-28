@@ -1,10 +1,10 @@
 ---
-import { CALENDLY_URL } from '../../consts';
+import { BOOK_DEMO_URL } from '../../consts';
 const stories = [
-  { title: 'Engineering the', accent: 'Latent Potential', end: 'of AI.', text: 'We bridge the gap between academic research and industrial deployment. Latentsig AI provides enterprise-grade AI architecture, R&D advisory, and implementation for the most demanding technical environments.', cue: 'FROM RESEARCH TO THE REAL WORLD' },
-  { title: 'Find the', accent: 'possibility.', text: 'Good engineering starts with better questions. Explore ideas, uncover patterns, and find a direction worth pursuing.', cue: 'R&D ADVISORY · RESEARCH · PROTOTYPING' },
-  { title: 'Give ideas', accent: 'structure.', text: 'Connect models, data, and infrastructure. Every layer has a purpose. Every connection is intentional.', cue: 'AI ARCHITECTURE · SYSTEM DESIGN' },
-  { title: 'Make it', accent: 'work.', text: 'Move from possibility to practice. Implement, test, observe, and refine AI for the real world.', cue: 'IMPLEMENTATION · TESTING · OBSERVABILITY' },
+  { title: 'Engineering the', accent: 'Latent Potential', end: 'of AI.', text: 'We turn frontier AI research into observable agentic systems, verified data platforms, and reliable production deployments.' },
+  { title: 'Find the', accent: 'signal.', text: 'Strong AI systems start with rigorous questions. Prototype fast, measure honestly, and validate what actually works.' },
+  { title: 'Give ideas', accent: 'structure.', text: 'Connect models, data quality, and serving infrastructure so every layer is testable, auditable, and intentional.' },
+  { title: 'Ship with', accent: 'certainty.', text: 'Move from research to production with continuous evaluation, human approval gates, and full runtime observability.' },
 ];
 ---
 <section class="observatory-hero" aria-labelledby="hero-heading">
@@ -31,19 +31,17 @@ const stories = [
         {stories.map((story, i) => <div class="hero-story" data-story={i} style={i === 0 ? '' : 'opacity:0;visibility:hidden'}>
           <h2><span>{story.title}</span>{' '}<span class="hero-title-accent">{story.accent}</span>{' '}{story.end && <span>{story.end}</span>}</h2>
           <p class="hero-description">{story.text}</p>
-          <p class="hero-cue">{story.cue}</p>
         </div>)}
       </div>
       <div class="hero-actions">
-        <a href={CALENDLY_URL} target="_blank" rel="noopener" class="hero-primary">Partner with Us <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6" /></svg></a>
-        <a href="/implementation/" class="hero-secondary">Our Capabilities <span aria-hidden="true">↗</span></a>
+        <a href={BOOK_DEMO_URL} class="hero-primary">Book a Demo <span aria-hidden="true">→</span></a>
       </div>
     </div>
     <div class="hero-process" aria-hidden="true">
       <span data-chapter="0" data-active="true"><i></i><b>Latentsig</b><small>The signal</small></span>
-      <span data-chapter="1"><i></i><b>Research</b><small>Discover the possibility</small></span>
+      <span data-chapter="1"><i></i><b>Research</b><small>Discover what works</small></span>
       <span data-chapter="2"><i></i><b>Architecture</b><small>Shape the system</small></span>
-      <span data-chapter="3"><i></i><b>Deployment</b><small>Bring it to life</small></span>
+      <span data-chapter="3"><i></i><b>Deployment</b><small>Ship to production</small></span>
     </div>
   </div>
 </section>
@@ -51,38 +49,37 @@ const stories = [
   import '../../scripts/hero-bootstrap';
 </script>
 <style>
-  .observatory-hero{--hero-bg:#0b1326;--hero-ink:#dae2fd;--hero-muted:#b4bad2;--hero-accent:#c0c1ff;position:relative;isolation:isolate;overflow:hidden;background:var(--hero-bg);min-height:clamp(700px,calc(100svh - 80px),850px)}
+  .observatory-hero{--hero-bg:#0b1326;--hero-ink:#edf0ff;--hero-muted:#c1c8df;--hero-accent:#c0c1ff;position:relative;isolation:isolate;overflow:hidden;background:var(--hero-bg);min-height:clamp(680px,calc(100svh - 80px),860px)}
   .hero-accessible-title{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
   .hero-visual{z-index:0;position:absolute;inset:0;background:radial-gradient(ellipse at 75% 45%,#292b5755,transparent 65%)}
   .hero-scene{display:block;position:absolute;inset:0;width:100%;height:100%}
-  .hero-poster,.hero-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}.hero-poster{object-fit:cover;opacity:1;transition:opacity .5s}.hero-canvas{opacity:0;transition:opacity .7s}.hero-canvas :global(canvas){display:block;width:100%;height:100%}
+  .hero-poster,.hero-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}.hero-poster{object-fit:cover;opacity:1;transition:opacity .5s cubic-bezier(.22,1,.36,1)}.hero-canvas{opacity:0;transition:opacity .7s cubic-bezier(.22,1,.36,1)}.hero-canvas :global(canvas){display:block;width:100%;height:100%}
   .hero-scene[data-state="ready"] .hero-canvas,.hero-scene[data-state="paused"] .hero-canvas{opacity:1}.hero-scene[data-state="ready"] .hero-poster,.hero-scene[data-state="paused"] .hero-poster{opacity:0}
-  .hero-anatomy{position:absolute;inset:0;pointer-events:none;z-index:2}.hero-anatomy>span{position:absolute;top:0;left:0;opacity:0;visibility:hidden;padding:5px 10px;margin-left:20px;background:#0b1326dc;border:1px solid #a6acdf66;border-radius:3px;color:#dae2fd;font:500 11px/1.3 Geist,sans-serif;letter-spacing:.03em}.hero-anatomy>span::before{content:"";position:absolute;right:100%;top:50%;width:20px;border-top:1px solid #a6acdf88}.hero-scene[data-state="poster"] .hero-anatomy,.hero-scene[data-state="fallback"] .hero-anatomy{display:none}
-  .hero-shade{z-index:1;position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,#0b1326 3%,#0b1326f5 43%,#0b1326b3 53%,transparent 72%),linear-gradient(0deg,#0b1326 1%,transparent 23%)}
-  .hero-inner{z-index:2;position:relative;max-width:1280px;padding:60px 64px 140px;margin:0 auto;min-height:inherit;height:auto;display:flex;flex-direction:column;justify-content:center;pointer-events:none}
-  .hero-copy{width:490px;max-width:46%;margin-top:0}
-  .hero-stories{display:grid;align-items:center;min-height:408px}
+  .hero-anatomy{position:absolute;inset:0;pointer-events:none;z-index:2}.hero-anatomy>span{position:absolute;top:0;left:0;opacity:0;visibility:hidden;padding:6px 11px;margin-left:20px;background:#0b1326e6;border:1px solid #a6acdf66;border-radius:4px;color:#edf0ff;font:500 13px/1.3 Geist,sans-serif}.hero-anatomy>span::before{content:"";position:absolute;right:100%;top:50%;width:20px;border-top:1px solid #a6acdf88}.hero-scene[data-state="poster"] .hero-anatomy,.hero-scene[data-state="fallback"] .hero-anatomy{display:none}
+  .hero-shade{z-index:1;position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,#0b1326 4%,#0b1326f2 42%,#0b1326ad 54%,transparent 74%),linear-gradient(0deg,#0b1326 2%,transparent 24%)}
+  .hero-inner{z-index:2;position:relative;max-width:1280px;padding:64px 64px 136px;margin:0 auto;min-height:inherit;height:auto;display:flex;flex-direction:column;justify-content:center;pointer-events:none}
+  .hero-copy{width:560px;max-width:50%;margin-top:0}
+  .hero-stories{display:grid;align-items:center;min-height:310px}
   .hero-story{grid-area:1/1;will-change:opacity}
-  h2{margin:0 0 24px;color:var(--hero-ink);font-family:'Geist',ui-sans-serif,system-ui,sans-serif;font-size:clamp(2.75rem,4vw,3.5rem);font-weight:500;line-height:1.12;letter-spacing:-.025em}h2>span{display:block}.hero-title-accent{color:var(--hero-accent)}
-  .hero-description{max-width:455px;margin:0;color:var(--hero-muted);font:400 16px/1.75 Geist,sans-serif}
-  .hero-cue{font:500 10px/1.6 Geist,sans-serif;letter-spacing:.12em;color:#919bb8;margin:24px 0 0}
-  .hero-actions{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin-top:27px;pointer-events:auto}
-  .hero-actions>a{display:inline-flex;align-items:center;gap:17px;min-height:48px;padding:0 20px;border-radius:5px;font:550 14px/1.3 Geist,sans-serif;transition:background .2s,color .2s,border-color .2s}
-  .hero-primary{background:#c0c1ff;color:#17123c;border:1px solid #c0c1ff}.hero-primary:hover{background:#dedfff;border-color:#dedfff}.hero-secondary{color:#dae2fd;border:1px solid #464d64;background:#0b1326aa}.hero-secondary:hover{background:#1e2740;border-color:#7984a4}.hero-secondary>span{font-size:20px;font-weight:400}
-  .hero-actions>a:focus-visible{outline:2px solid #dae2fd;outline-offset:5px}
-  .hero-process{position:absolute;bottom:30px;left:64px;right:64px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:30px;font-family:Geist,sans-serif;color:#7d89a6}
-  .hero-process>span{min-width:0;overflow-wrap:anywhere;position:relative;padding:14px 0 0;border-top:1px solid #7d89a639;display:grid;gap:4px}.hero-process b{font-size:13px;font-weight:500}.hero-process small{font-size:11px}.hero-process i{position:absolute;top:-1px;height:1px;left:0;width:0;background:#c0c1ff;transition:width .9s}.hero-process [data-active="true"]{color:#dae2fd}.hero-process [data-active="true"] i{width:100%}
-  @media(max-width:1100px) and (min-width:901px){.hero-inner{padding-left:36px;padding-right:36px}.hero-copy{max-width:48%}.hero-description{font-size:15px}.hero-process{left:36px;right:36px}.hero-actions>a{font-size:13px;padding:0 14px}}
+  h2{margin:0 0 22px;color:var(--hero-ink);font-family:'Hanken Grotesk',ui-sans-serif,system-ui,sans-serif;font-size:clamp(3rem,5vw,4.5rem);font-weight:600;line-height:1.03;letter-spacing:-.035em}h2>span{display:block}.hero-title-accent{color:var(--hero-accent)}
+  .hero-description{max-width:46ch;margin:0;color:var(--hero-muted);font:400 18px/1.6 Geist,sans-serif}
+  .hero-actions{display:flex;align-items:center;gap:14px;margin-top:32px;pointer-events:auto}
+  .hero-actions>a{display:inline-flex;align-items:center;gap:12px;min-height:50px;padding:0 24px;border-radius:999px;font:600 15px/1 Geist,sans-serif;text-decoration:none;transition:background-color .2s cubic-bezier(.22,1,.36,1),color .2s cubic-bezier(.22,1,.36,1),transform .2s cubic-bezier(.22,1,.36,1)}
+  .hero-primary{background:#c0c1ff;color:#0a0d2e}.hero-primary:hover{background:#dedfff;transform:translateY(-1px)}
+  .hero-actions>a:focus-visible{outline:2px solid #edf0ff;outline-offset:4px}
+  .hero-process{position:absolute;bottom:28px;left:64px;right:64px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;font-family:Geist,sans-serif;color:#8994b0}
+  .hero-process>span{min-width:0;overflow-wrap:anywhere;position:relative;padding:14px 0 0;border-top:1px solid #8994b038;display:grid;gap:3px}.hero-process b{font-size:14px;font-weight:500}.hero-process small{font-size:13px;opacity:.82}.hero-process i{position:absolute;top:-1px;height:2px;left:0;width:0;background:#c0c1ff;transition:width .9s cubic-bezier(.22,1,.36,1)}.hero-process [data-active="true"]{color:#edf0ff}.hero-process [data-active="true"] i{width:100%}
+  @media(max-width:1100px) and (min-width:901px){.hero-inner{padding-left:36px;padding-right:36px}.hero-copy{max-width:52%}.hero-description{font-size:16px}.hero-process{left:36px;right:36px}}
   @media(max-width:900px){
     .observatory-hero{min-height:0;display:grid;grid-template-areas:"copy" "scene" "process";grid-template-columns:minmax(0,1fr)}
-    .hero-inner{display:contents}.hero-copy{grid-area:copy;max-width:none;width:auto;margin:0;padding:38px 24px 0;z-index:2}
+    .hero-inner{display:contents}.hero-copy{grid-area:copy;max-width:none;width:auto;margin:0;padding:40px 24px 0;z-index:2}
     .hero-stories{min-height:0;align-items:start}
-    h2{font-size:clamp(2.125rem,7.5vw,3rem);line-height:1.12;margin-bottom:20px;overflow-wrap:anywhere}
-    .hero-description{font-size:1rem;line-height:1.65;max-width:520px}.hero-cue{font-size:.625rem;margin-top:18px}
-    .hero-actions{margin-top:24px;gap:10px}.hero-actions>a{font-size:.8125rem;padding:0 15px;min-height:44px;gap:12px}
-    .hero-visual{position:relative;grid-area:scene;inset:auto;height:clamp(320px,100vw,480px);width:100%;min-width:0}
+    h2{font-size:clamp(2.5rem,9vw,3.4rem);line-height:1.05;margin-bottom:18px;overflow-wrap:anywhere}
+    .hero-description{font-size:16px;line-height:1.6;max-width:50ch}
+    .hero-actions{margin-top:24px}
+    .hero-visual{position:relative;grid-area:scene;inset:auto;height:clamp(320px,92vw,460px);width:100%;min-width:0}
     .hero-shade{display:none}.hero-visual::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,#0b1326,transparent 12%,transparent 88%,#0b1326)}
-    .hero-process{position:relative;grid-area:process;left:auto;right:auto;bottom:auto;margin:12px 24px 30px;gap:14px}.hero-process b{font-size:.6875rem}.hero-process small{display:none}.hero-process>span{padding-top:11px}
+    .hero-process{position:relative;grid-area:process;left:auto;right:auto;bottom:auto;margin:12px 24px 32px;gap:14px}.hero-process b{font-size:13px}.hero-process small{display:none}.hero-process>span{padding-top:11px}
     .hero-poster{object-fit:contain;object-position:center}
   }
   @media(max-width:480px){.hero-process{grid-template-columns:repeat(2,minmax(0,1fr))}}

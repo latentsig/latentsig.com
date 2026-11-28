@@ -15,7 +15,7 @@ const countries = getCountries().map((code) => ({ code, name: names.of(code) ?? 
         <span class="eyebrow">CONTACT / LATENTSIG AI</span>
         <h1 id="contact-title">Let’s talk about the work.</h1>
         <p>Tell us what you are building or reviewing. We’ll bring the right product or engineering context to the conversation.</p>
-        <div class="intro-detail"><span>01</span><div><strong>Product demonstrations</strong><p>Explore Agentic AI Studio or Annotation & Verification Platform with your use case in mind.</p></div></div>
+        <div class="intro-detail"><span>01</span><div><strong>Product demonstrations</strong><p>Explore Agentic AI Studio or LatentVerify with your use case in mind.</p></div></div>
         <div class="intro-detail"><span>02</span><div><strong>Engineering conversations</strong><p>Discuss research, model engineering, consulting, or implementation.</p></div></div>
         <div class="direct"><span>Prefer to write directly?</span><a href="mailto:latentsig@gmail.com">latentsig@gmail.com ↗</a><small>Bengaluru, India · Remote conversations welcome</small></div>
       </div>
@@ -28,7 +28,7 @@ const countries = getCountries().map((code) => ({ code, name: names.of(code) ?? 
         <div class="field"><label for="phone">Phone number *</label><div class="phone-field"><details id="phone-country-picker" class="country-picker"><summary aria-label="Choose phone country code"><span id="selected-flag" class="fi fi-in country-flag" aria-hidden="true"></span><span id="phone-prefix">+91</span><span class="picker-chevron" aria-hidden="true">⌄</span></summary><div class="picker-panel"><label for="country-search" class="sr-only">Search countries</label><input id="country-search" type="search" autocomplete="off" placeholder="Search country or code" /><div class="picker-options" aria-label="Phone country codes">{countries.map((item) => <button type="button" class="country-choice" data-country={item.code} data-dial={item.dial} data-search={`${item.name} ${item.code} ${item.dial}`}><span class={`fi fi-${item.code.toLowerCase()} country-flag`} aria-hidden="true"></span><span>{item.name}</span><span>{item.dial}</span></button>)}</div></div></details><input id="phone" name="contactPhone" type="tel" autocomplete="off" inputmode="tel" required aria-describedby="phone-hint" placeholder="Phone number" /></div><small id="phone-hint">Choose your country code and enter a valid phone number.</small></div>
         <fieldset class="field choices" aria-describedby="interest-hint"><legend>What can we help with? *</legend><small id="interest-hint">Choose one or more.</small><div class="choice-grid">
           <label><input type="checkbox" name="interest" value="Agentic AI Studio demo" /><span>Agentic AI Studio demo</span></label>
-          <label><input type="checkbox" name="interest" value="Annotation & Verification Platform demo" /><span>Annotation & Verification demo</span></label>
+          <label><input type="checkbox" name="interest" value="LatentVerify demo" /><span>LatentVerify demo</span></label>
           <label><input type="checkbox" name="interest" value="Applied AI research or custom models" /><span>AI research or custom models</span></label>
           <label><input type="checkbox" name="interest" value="AI implementation or consulting" /><span>Implementation or consulting</span></label>
           <label><input type="checkbox" name="interest" value="Partnership" /><span>Partnership</span></label>
@@ -36,9 +36,14 @@ const countries = getCountries().map((code) => ({ code, name: names.of(code) ?? 
         </div></fieldset>
         <div class="field"><label for="industry">Industry</label><select id="industry" name="industry"><option value="">Select if relevant</option><option>Healthcare</option><option>Industrial AI &amp; manufacturing</option><option>Retail</option><option>Education</option><option>Technology</option><option>Other</option></select></div>
         <div class="field"><label for="context">Anything we should know before we talk?</label><textarea id="context" name="context" rows="4" placeholder="A sentence or two about your goal, workflow, or question."></textarea></div>
+        <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="sr-only" aria-hidden="true" />
         <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
-        <button type="submit">Prepare inquiry <span aria-hidden="true">↗</span></button>
-        <p class="form-note">This opens an email draft in your mail app with your answers. You can review it before sending.</p>
+        <div class="form-fallback" id="form-fallback" hidden>
+          <a id="fallback-mailto" href="mailto:latentsig@gmail.com">Open in email app ↗</a>
+          <button type="button" id="fallback-copy">Copy inquiry</button>
+        </div>
+        <button type="submit" id="form-submit">Send inquiry <span aria-hidden="true">↗</span></button>
+        <p class="form-note">Sent directly to our engineering team at latentsig@gmail.com. We typically respond within one business day.</p>
       </form>
     </section>
     <section id="schedule" class="schedule" aria-labelledby="schedule-title"><div><span class="eyebrow">PREFER TO SCHEDULE?</span><h2 id="schedule-title">Choose a time directly.</h2><p>If you already know when you’re available, you can book a conversation on our calendar.</p></div><div class="calendar-card"><span class="calendar-icon" aria-hidden="true">↗</span><strong>Find a time that works for you.</strong><p>Open our scheduling page to choose an available conversation slot.</p><a href={CALENDLY_URL} target="_blank" rel="noopener">Open calendar <span aria-hidden="true">↗</span></a></div></section>
@@ -56,7 +61,12 @@ const countries = getCountries().map((code) => ({ code, name: names.of(code) ?? 
   const search = document.querySelector<HTMLInputElement>('#country-search');
   const choices = [...document.querySelectorAll<HTMLButtonElement>('.country-choice')];
   const status = document.querySelector<HTMLElement>('#form-status');
-  if (form && country && phone && prefix && flag && picker && search && status) {
+  const submitButton = document.querySelector<HTMLButtonElement>('#form-submit');
+  const fallbackBox = document.querySelector<HTMLElement>('#form-fallback');
+  const fallbackMailto = document.querySelector<HTMLAnchorElement>('#fallback-mailto');
+  const fallbackCopy = document.querySelector<HTMLButtonElement>('#fallback-copy');
+  let lastSummary = '';
+  if (form && country && phone && prefix && flag && picker && search && status && submitButton) {
     const selectCountry = (code: string, focusPhone = false) => {
       const choice = choices.find((item) => item.dataset.country === code);
       if (!choice) return;
@@ -73,26 +83,100 @@ const countries = getCountries().map((code) => ({ code, name: names.of(code) ?? 
     picker.addEventListener('keydown', (event) => { if (event.key === 'Escape') { picker.open = false; picker.querySelector('summary')?.focus(); } });
     search.addEventListener('input', () => { const query = search.value.trim().toLowerCase(); choices.forEach((choice) => choice.hidden = !choice.dataset.search?.toLowerCase().includes(query)); });
     phone.addEventListener('input', () => phone.setCustomValidity(''));
-    form.addEventListener('submit', (event) => {
+    fallbackCopy?.addEventListener('click', async () => {
+      if (!lastSummary) return;
+      try {
+        await navigator.clipboard.writeText(lastSummary);
+        fallbackCopy.textContent = 'Copied ✓';
+        window.setTimeout(() => { fallbackCopy.textContent = 'Copy inquiry'; }, 2500);
+      } catch {
+        status.textContent = 'Could not copy automatically. Use the email link to send.';
+      }
+    });
+    form.addEventListener('submit', async (event) => {
       event.preventDefault();
       status.textContent = '';
+      status.dataset.tone = '';
+      if (fallbackBox) fallbackBox.hidden = true;
       const interests = [...form.querySelectorAll<HTMLInputElement>('input[name="interest"]:checked')].map((input) => input.value);
-      if (!interests.length) { status.textContent = 'Choose at least one topic so we know how to help.'; form.querySelector<HTMLInputElement>('input[name="interest"]')?.focus(); return; }
+      if (!interests.length) { status.textContent = 'Choose at least one topic so we know how to help.'; status.dataset.tone = 'error'; form.querySelector<HTMLInputElement>('input[name="interest"]')?.focus(); return; }
       const parsed = parsePhoneNumberFromString(phone.value.trim(), country.value as CountryCode);
       if (!parsed?.isValid() || parsed.country !== country.value) { phone.setCustomValidity('Enter a valid phone number for the selected country.'); phone.reportValidity(); return; }
       const phoneNumber = parsed.number;
       const values = new FormData(form);
-      const fullName = `${values.get('firstName')} ${values.get('lastName')}`.trim();
-      const lines = [`Name: ${fullName}`, `Work email: ${values.get('email')}`, `Job title: ${values.get('jobTitle') || '—'}`, `Organization: ${values.get('organization') || '—'}`, `Country: ${country.selectedOptions[0]?.textContent ?? ''}`, `Phone: ${phoneNumber || '—'}`, `Interested in: ${interests.join(', ')}`, `Industry: ${values.get('industry') || '—'}`, '', 'Anything to know before we talk:', String(values.get('context') || '—')];
-      status.textContent = 'Opening an email draft for you to review and send.';
-      window.location.href = `mailto:latentsig@gmail.com?subject=${encodeURIComponent(`Latentsig AI inquiry — ${fullName}`)}&body=${encodeURIComponent(lines.join('\n'))}`;
+      const firstName = String(values.get('firstName') ?? '').trim();
+      const lastName = String(values.get('lastName') ?? '').trim();
+      const fullName = `${firstName} ${lastName}`.trim();
+      const email = String(values.get('email') ?? '').trim();
+      const countryName = country.selectedOptions[0]?.textContent ?? country.value;
+      const lines = [
+        `Name: ${fullName}`,
+        `Work email: ${email}`,
+        `Job title: ${values.get('jobTitle') || '—'}`,
+        `Organization: ${values.get('organization') || '—'}`,
+        `Country: ${countryName}`,
+        `Phone: ${phoneNumber || '—'}`,
+        `Interested in: ${interests.join(', ')}`,
+        `Industry: ${values.get('industry') || '—'}`,
+        '',
+        'Anything to know before we talk:',
+        String(values.get('context') || '—'),
+      ];
+      lastSummary = lines.join('\n');
+      const mailtoHref = `mailto:latentsig@gmail.com?subject=${encodeURIComponent(`Latentsig AI inquiry — ${fullName}`)}&body=${encodeURIComponent(lastSummary)}`;
+      if (fallbackMailto) fallbackMailto.href = mailtoHref;
+
+      submitButton.disabled = true;
+      submitButton.textContent = 'Sending inquiry…';
+      status.textContent = 'Sending your inquiry to Latentsig AI…';
+
+      try {
+        const response = await fetch('https://formsubmit.co/ajax/latentsig@gmail.com', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({
+            name: fullName,
+            email,
+            jobTitle: String(values.get('jobTitle') || '—'),
+            organization: String(values.get('organization') || '—'),
+            country: countryName,
+            phone: phoneNumber,
+            interests: interests.join(', '),
+            industry: String(values.get('industry') || '—'),
+            message: String(values.get('context') || '—'),
+            _subject: `Latentsig AI inquiry — ${fullName}`,
+            _replyto: email,
+            _template: 'table',
+            _captcha: 'false',
+            _honey: String(values.get('_honey') || ''),
+          }),
+        });
+        const data = await response.json().catch(() => null);
+        if (!response.ok || data?.success === 'false' || data?.success === false) {
+          throw new Error(typeof data?.message === 'string' ? data.message : 'Submission could not be delivered.');
+        }
+        status.dataset.tone = 'success';
+        status.textContent = `Inquiry sent. Thank you, ${firstName} — we’ll reply to ${email} shortly.`;
+        form.reset();
+        selectCountry('IN');
+      } catch (err) {
+        status.dataset.tone = 'error';
+        const message = err instanceof Error ? err.message : '';
+        status.textContent = message.toLowerCase().includes('activation')
+          ? 'Form activation is pending in latentsig@gmail.com. Once activated, submissions will send directly — or use an option below now.'
+          : 'We could not send directly right now. Use one of the options below to send your inquiry.';
+        if (fallbackBox) fallbackBox.hidden = false;
+      } finally {
+        submitButton.disabled = false;
+        submitButton.innerHTML = 'Send inquiry <span aria-hidden="true">↗</span>';
+      }
     });
   }
 </script>
 
 <style>
   .contact-page{background:#0b1326;color:#e9edff;font-family:Geist,system-ui,sans-serif}.intro,.schedule{width:min(1320px,100%);margin:auto;padding:clamp(60px,8vw,120px) clamp(20px,4.5vw,72px)}.intro{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1fr);gap:clamp(35px,6vw,90px);align-items:start}.intro-copy{padding-top:24px}.eyebrow{color:#aeb2f2;font-size:11px;font-weight:700;letter-spacing:.13em}.intro h1{max-width:610px;margin:20px 0;color:#f2f3ff;font-family:'Hanken Grotesk',Geist,sans-serif;font-size:clamp(45px,5.5vw,76px);font-weight:600;letter-spacing:-.045em;line-height:1.06}.intro-copy>p{max-width:550px;margin:0 0 55px;color:#bac5dc;font-size:18px;line-height:1.65}.intro-detail{display:grid;grid-template-columns:26px 1fr;gap:12px;padding:22px 0;border-top:1px solid #45516d}.intro-detail span{color:#aaaefa;font-size:11px;font-weight:700}.intro-detail strong{font-size:16px}.intro-detail p{margin:7px 0 0;color:#aebad3;font-size:13px;line-height:1.55}.direct{display:flex;flex-direction:column;align-items:start;gap:8px;margin-top:40px}.direct span{color:#aebad3;font-size:12px}.direct a{color:#c7c8ff;font-weight:650;text-decoration:none}.direct small{margin-top:9px;color:#8e9cba;font-size:11px}
-  .inquiry-form{min-width:0;padding:clamp(20px,3vw,37px);border:1px solid #4c5877;border-radius:20px;background:#121c32;box-shadow:0 24px 70px rgba(0,0,0,.13);scroll-margin-top:110px}.form-heading{margin-bottom:29px}.form-heading h2{margin:9px 0 5px;color:#f4f5ff;font-size:clamp(28px,3vw,36px);font-weight:650;letter-spacing:-.035em}.form-heading p{margin:0;color:#aebbd4;font-size:13px}.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{display:flex;flex-direction:column;min-width:0;gap:8px;margin-bottom:20px}.field label,.field legend{color:#dfe4f6;font-size:12px;font-weight:650}.optional{margin-left:5px;color:#8f9db7;font-size:11px;font-weight:500}.field input:not([type=checkbox]),.field select,.field textarea{width:100%;min-width:0;min-height:48px;padding:11px 13px;border:1px solid #56627e;border-radius:8px;background:#1a2640;color:#eff1ff;font:500 13px Geist,system-ui,sans-serif}.field textarea{min-height:108px;resize:vertical}.field input::placeholder,.field textarea::placeholder{color:#8694b0}.field select:invalid{color:#8694b0}.field small{color:#9eabc7;font-size:10px;line-height:1.4}.phone-field{display:flex;min-width:0;border:1px solid #56627e;border-radius:8px;background:#1a2640}.phone-field>span{display:grid;place-items:center;min-width:64px;padding:0 10px;border-right:1px solid #56627e;color:#d7dcf1;font-size:12px;white-space:nowrap}.phone-field input{border:0!important;background:transparent!important}.choices{padding:0;border:0}.choices legend{padding:0}.choices>small{margin-top:3px}.choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}.choice-grid label{display:flex;align-items:center;gap:9px;min-height:50px;padding:9px 11px;border:1px solid #56627e;border-radius:8px;background:#1a2640;cursor:pointer;font-size:11px;font-weight:550;line-height:1.3}.choice-grid label:has(input:checked){border-color:#aab1ff;background:#2e355b}.choice-grid input{width:16px;height:16px;flex:none;accent-color:#b9baff}.form-status{min-height:17px;margin:0 0 8px;color:#e3c7d2;font-size:12px}.inquiry-form>button{width:100%;display:flex;align-items:center;justify-content:center;gap:12px;min-height:52px;border:1px solid #bfc1ff;border-radius:8px;background:#bebfff;color:#151a3c;font:700 13px Geist,system-ui,sans-serif;cursor:pointer}.inquiry-form>button:hover{filter:brightness(1.08)}.form-note{margin:12px 0 0;color:#99a8c4;font-size:10px;line-height:1.5}.schedule{display:grid;grid-template-columns:minmax(0,.55fr) minmax(0,1fr);gap:clamp(35px,5vw,75px);border-top:1px solid #3d4865}.schedule h2{margin:13px 0;color:#f1f3ff;font-size:clamp(30px,3.5vw,46px);font-weight:600;letter-spacing:-.04em}.schedule p{max-width:370px;margin:0;color:#b8c4db;font-size:14px;line-height:1.6}.calendar-frame{overflow:hidden;border:1px solid #4c5877;border-radius:18px;background:#f7f8fc}.calendar-frame iframe{display:block;width:100%;border:0}
+  .inquiry-form{min-width:0;padding:clamp(20px,3vw,37px);border:1px solid #4c5877;border-radius:20px;background:#121c32;box-shadow:0 24px 70px rgba(0,0,0,.13);scroll-margin-top:110px}.form-heading{margin-bottom:29px}.form-heading h2{margin:9px 0 5px;color:#f4f5ff;font-size:clamp(28px,3vw,36px);font-weight:650;letter-spacing:-.035em}.form-heading p{margin:0;color:#aebbd4;font-size:13px}.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{display:flex;flex-direction:column;min-width:0;gap:8px;margin-bottom:20px}.field label,.field legend{color:#dfe4f6;font-size:12px;font-weight:650}.optional{margin-left:5px;color:#8f9db7;font-size:11px;font-weight:500}.field input:not([type=checkbox]),.field select,.field textarea{width:100%;min-width:0;min-height:48px;padding:11px 13px;border:1px solid #56627e;border-radius:8px;background:#1a2640;color:#eff1ff;font:500 13px Geist,system-ui,sans-serif}.field textarea{min-height:108px;resize:vertical}.field input::placeholder,.field textarea::placeholder{color:#8694b0}.field select:invalid{color:#8694b0}.field small{color:#9eabc7;font-size:10px;line-height:1.4}.phone-field{display:flex;min-width:0;border:1px solid #56627e;border-radius:8px;background:#1a2640}.phone-field>span{display:grid;place-items:center;min-width:64px;padding:0 10px;border-right:1px solid #56627e;color:#d7dcf1;font-size:12px;white-space:nowrap}.phone-field input{border:0!important;background:transparent!important}.choices{padding:0;border:0}.choices legend{padding:0}.choices>small{margin-top:3px}.choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}.choice-grid label{display:flex;align-items:center;gap:9px;min-height:50px;padding:9px 11px;border:1px solid #56627e;border-radius:8px;background:#1a2640;cursor:pointer;font-size:11px;font-weight:550;line-height:1.3}.choice-grid label:has(input:checked){border-color:#aab1ff;background:#2e355b}.choice-grid input{width:16px;height:16px;flex:none;accent-color:#b9baff}.form-status{min-height:17px;margin:0 0 10px;color:#d6def5;font-size:13px;line-height:1.5}.form-status[data-tone="success"]{color:#a7f3c8;font-weight:550}.form-status[data-tone="error"]{color:#fca5a5}.form-fallback{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 14px}.form-fallback[hidden]{display:none}.form-fallback a,.form-fallback button{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 14px;border:1px solid #6c7799;border-radius:7px;background:#1a2640;color:#e7ebff;font:600 12px Geist,system-ui,sans-serif;text-decoration:none;cursor:pointer}.form-fallback a:hover,.form-fallback button:hover{border-color:#c0c1ff;background:#243356}.inquiry-form>button:disabled{opacity:.65;cursor:wait}.inquiry-form>button{width:100%;display:flex;align-items:center;justify-content:center;gap:12px;min-height:52px;border:1px solid #bfc1ff;border-radius:8px;background:#bebfff;color:#151a3c;font:700 13px Geist,system-ui,sans-serif;cursor:pointer}.inquiry-form>button:hover{filter:brightness(1.08)}.form-note{margin:12px 0 0;color:#99a8c4;font-size:10px;line-height:1.5}.schedule{display:grid;grid-template-columns:minmax(0,.55fr) minmax(0,1fr);gap:clamp(35px,5vw,75px);border-top:1px solid #3d4865}.schedule h2{margin:13px 0;color:#f1f3ff;font-size:clamp(30px,3.5vw,46px);font-weight:600;letter-spacing:-.04em}.schedule p{max-width:370px;margin:0;color:#b8c4db;font-size:14px;line-height:1.6}.calendar-frame{overflow:hidden;border:1px solid #4c5877;border-radius:18px;background:#f7f8fc}.calendar-frame iframe{display:block;width:100%;border:0}
   :where(input,select,textarea,button,a):focus-visible{outline:3px solid #c2c4ff;outline-offset:3px}@media(max-width:900px){.intro,.schedule{grid-template-columns:1fr}.intro-copy{padding-top:0}.intro-copy>p{margin-bottom:32px}.direct{margin-top:25px}}@media(max-width:560px){.intro,.schedule{padding-top:55px;padding-bottom:65px}.row,.choice-grid{grid-template-columns:1fr}.intro-copy>p{font-size:16px}.inquiry-form{padding:20px}.calendar-frame iframe{height:650px}}
   .choice-grid input{appearance:none;width:17px;height:17px;border:1px solid #a4aed0;border-radius:4px;background:#26324c;display:grid;place-items:center}.choice-grid input:checked{background:#b9baff;border-color:#b9baff}.choice-grid input:checked::after{content:'✓';color:#171b3d;font-size:13px;font-weight:800;line-height:1}.calendar-card{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;min-height:280px;padding:clamp(25px,4vw,50px);border:1px solid #4c5877;border-radius:18px;background:#172139}.calendar-icon{display:grid;place-items:center;width:46px;height:46px;margin-bottom:22px;border:1px solid #7e87b9;border-radius:12px;color:#c3c6ff;font-size:23px}.calendar-card strong{color:#f1f3ff;font-size:23px;line-height:1.25}.calendar-card p{margin:9px 0 23px;color:#b8c4db;font-size:13px}.calendar-card a{display:inline-flex;align-items:center;gap:16px;min-height:44px;padding:10px 15px;border:1px solid #bfc1ff;border-radius:7px;background:#bebfff;color:#151a3c;font-size:12px;font-weight:700;text-decoration:none}
   .country-picker{position:relative;flex:none;min-width:112px;border-right:1px solid #56627e}.country-picker summary{display:flex;align-items:center;justify-content:center;gap:7px;min-height:47px;padding:0 9px;color:#d7dcf1;cursor:pointer;list-style:none;font-size:12px;white-space:nowrap}.country-picker summary::-webkit-details-marker{display:none}.country-flag{display:inline-block;width:20px;height:15px;flex:none;border-radius:2px;box-shadow:0 0 0 1px rgba(155,166,206,.35)}.picker-chevron{font-size:17px;line-height:1}.picker-panel{position:absolute;top:calc(100% + 7px);left:0;z-index:30;width:min(330px,calc(100vw - 68px));padding:10px;border:1px solid #677393;border-radius:10px;background:#18233a;box-shadow:0 20px 50px rgba(0,0,0,.28)}.picker-panel input{min-height:39px!important;border:1px solid #677393!important;background:#22304a!important}.picker-options{max-height:230px;margin-top:7px;overflow-y:auto}.country-choice{display:flex;align-items:center;gap:10px;width:100%;min-height:38px;padding:6px 7px;border:0;border-radius:6px;background:transparent;color:#e9edff;text-align:left;font:500 12px Geist,system-ui,sans-serif;cursor:pointer}.country-choice:hover,.country-choice:focus-visible{background:#303d5c}.country-choice[hidden]{display:none}.country-choice span:nth-child(2){flex:1}.country-choice span:last-child{color:#b8c4da}.phone-field>input{flex:1;min-width:0}.phone-field:focus-within{outline:2px solid #b9baff;outline-offset:2px}.phone-field>input:focus-visible{outline:none;outline-offset:0}:global(html.light-theme-preview) .country-flag{filter:invert(1) hue-rotate(180deg)}

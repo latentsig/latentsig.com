@@ -55,11 +55,11 @@ const menus = [
 ];
 
 const previewImages: Record<string, string> = {
-  '/products/': '/images/nav/product-agentic-menu.webp',
+  '/products/': '/images/nav/product-agentic-studio.webp',
   '/products/annotation-verification/': '/images/nav/product-annotation-menu.webp',
   '/demos/#annotation-verification': '/images/nav/product-annotation-menu.webp',
-  '/products/agentic-ai-platform/': '/images/nav/product-agentic-menu.webp',
-  '/demos/#agentic-ai-platform': '/images/nav/product-agentic-menu.webp',
+  '/products/agentic-ai-platform/': '/images/nav/product-agentic-studio.webp',
+  '/demos/#agentic-ai-platform': '/images/nav/product-agentic-studio.webp',
   '/solutions/healthcare/': '/images/nav/solutions-healthcare.webp',
   '/solutions/industry/': '/images/nav/solutions-industry.webp',
   '/solutions/retail/': '/images/nav/solutions-retail.webp',
@@ -140,24 +140,24 @@ const mobileIcon = (href: string) => mobileIcons[mobileIconByHref[href] ?? 'docu
               <div class="products-mega-layout">
                 <div class="products-mega-feature">
                   <div class="feature-visual">
-                    <img class="feature-image is-active" data-preview-image src="/images/nav/product-agentic-menu.webp" alt="Agentic AI Studio modular orchestration preview" width="720" height="440" loading="eager" decoding="async" />
+                    <img class="feature-image is-active" data-preview-image src="/images/nav/product-agentic-studio.webp" alt="Agentic AI Studio modular orchestration preview" width="720" height="440" loading="eager" decoding="async" />
                     <img class="feature-image" data-preview-image src="/images/nav/product-annotation-menu.webp" alt="Annotation and Verification optical inspection preview" width="720" height="440" loading="eager" decoding="async" />
                   </div>
                   <span class="menu-overline" data-feature-overline>Agentic AI Studio</span>
                   <h2 data-feature-title>Build agentic workflows visually or in plain language.</h2>
-                  <p data-feature-copy>Author multi-agent pipelines in an intuitive UI or via natural queries, with full traces and human checkpoints.</p>
+                  <p data-feature-copy>Author multi-agent pipelines in an intuitive workflow editor or via natural queries, with full traces and human checkpoints.</p>
                 </div>
                 <div class="products-mega-list"><span class="menu-overline">Our products</span>
                   <a
                     class="product-menu-group product-menu-agentic product-demo-card is-previewed"
                     href="/demos/#agentic-ai-platform"
-                    data-preview-src="/images/nav/product-agentic-menu.webp"
+                    data-preview-src="/images/nav/product-agentic-studio.webp"
                     data-preview-overline="Agentic AI Studio"
                     data-preview-title="Build agentic workflows visually or in plain language."
-                    data-preview-copy="Author multi-agent pipelines in an intuitive UI or via natural queries, with full traces and human checkpoints."
+                    data-preview-copy="Author multi-agent pipelines in an intuitive workflow editor or via natural queries, with full traces and human checkpoints."
                   >
                     <h3>Agentic AI Studio</h3>
-                    <p>Build workflows in an intuitive UI or via natural queries, with human review.</p>
+                    <p>Build workflows in an intuitive workflow editor or via natural queries, with human review.</p>
                     <span class="product-card-arrow" aria-hidden="true">↗</span>
                   </a>
                   <a
@@ -173,7 +173,15 @@ const mobileIcon = (href: string) => mobileIcons[mobileIconByHref[href] ?? 'docu
                     <span class="product-card-arrow" aria-hidden="true">↗</span>
                   </a>
                 </div>
-                <div class="products-mega-trust" role="group" aria-label="Trust and capabilities information"><span class="menu-overline">Built for careful work</span><div><i aria-hidden="true">✓</i>Human approvals</div><div><i aria-hidden="true">◇</i>LLM &amp; human evaluation</div><div><i aria-hidden="true">◷</i>Observable, auditable runs</div><div><i aria-hidden="true">⌑</i>Security-minded workflows</div><div><i aria-hidden="true">▤</i>Reliable data foundations</div><div class="deployment-info"><i aria-hidden="true">•</i><span>Deployment fit<br /><small>On-premises, Google Cloud, or AWS discussed per engagement.</small></span></div></div>
+                <div class="products-mega-trust" role="group" aria-label="Enterprise capabilities">
+                  <span class="menu-overline">Built for production AI</span>
+                  <div><i aria-hidden="true">✓</i>Human-in-the-loop approvals</div>
+                  <div><i aria-hidden="true">✓</i>Automated &amp; expert evaluation</div>
+                  <div><i aria-hidden="true">✓</i>Full execution trace &amp; audit logs</div>
+                  <div><i aria-hidden="true">✓</i>Private VPC &amp; strict data control</div>
+                  <div><i aria-hidden="true">✓</i>Verified ground-truth pipelines</div>
+                  <div class="deployment-info"><i aria-hidden="true">↗</i><span>Flexible deployment<br /><small>Runs on-premises, Google Cloud, or AWS.</small></span></div>
+                </div>
               </div>
             ) : (
             <div class="mega-feature" aria-hidden="true">
