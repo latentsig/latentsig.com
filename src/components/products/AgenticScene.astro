@@ -1,0 +1,335 @@
+<section class="agent-workspace" data-agent-workspace data-execution-state="idle" data-evaluation-mode="llm" data-inspector-open="false" aria-label="Interactive Agentic AI Studio demonstration">
+  <header class="workspace-head">
+    <div class="studio-mark"><span class="studio-symbol" aria-hidden="true">✳</span><div><span class="workspace-kicker">AGENTIC AI STUDIO · RUN #AS-904</span><h3>Clinical Diagnostics Orchestration</h3></div></div>
+    <span class="run-state" data-run-state aria-live="polite">Ready</span>
+    <button class="workspace-expand" type="button" data-open-dialog aria-label="Enter fullscreen">⤢</button>
+  </header>
+
+  <div class="orchestration-canvas" aria-label="Visual workflow from medical scan review through three parallel agents, evaluation and approval to a verified result">
+    <div class="scene-atmosphere" aria-hidden="true"></div>
+    <svg class="connections" viewBox="0 0 1000 600" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <linearGradient id="agent-signal" x1="0" x2="1"><stop stop-color="#798eff"/><stop offset=".55" stop-color="#69c8b0"/><stop offset="1" stop-color="#b9df9d"/></linearGradient>
+        <marker id="agent-flow-arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0L7 3.5L0 7Z"/></marker>
+      </defs>
+      <path data-connection="input-document" marker-end="url(#agent-flow-arrow)"/><path data-connection="input-analytics" marker-end="url(#agent-flow-arrow)"/><path data-connection="input-retrieval" marker-end="url(#agent-flow-arrow)"/>
+      <path data-connection="document-merge" marker-end="url(#agent-flow-arrow)"/><path data-connection="analytics-merge" marker-end="url(#agent-flow-arrow)"/><path data-connection="retrieval-merge" marker-end="url(#agent-flow-arrow)"/>
+      <path data-connection="merge-llm" marker-end="url(#agent-flow-arrow)"/><path data-connection="merge-manual" marker-end="url(#agent-flow-arrow)"/>
+      <path data-connection="llm-approval" marker-end="url(#agent-flow-arrow)"/><path data-connection="manual-approval" marker-end="url(#agent-flow-arrow)"/><path data-connection="approval-output" marker-end="url(#agent-flow-arrow)"/>
+      <circle class="flow-token" data-flow-token="input-document" r="4"><animateMotion dur=".8s" begin="indefinite" fill="freeze"/></circle><circle class="flow-token" data-flow-token="input-analytics" r="4"><animateMotion dur=".8s" begin="indefinite" fill="freeze"/></circle><circle class="flow-token" data-flow-token="input-retrieval" r="4"><animateMotion dur=".8s" begin="indefinite" fill="freeze"/></circle>
+      <circle class="flow-token" data-flow-token="document-merge" r="4"><animateMotion dur=".8s" begin="indefinite" fill="freeze"/></circle><circle class="flow-token" data-flow-token="analytics-merge" r="4"><animateMotion dur=".8s" begin="indefinite" fill="freeze"/></circle><circle class="flow-token" data-flow-token="retrieval-merge" r="4"><animateMotion dur=".8s" begin="indefinite" fill="freeze"/></circle>
+      <circle class="flow-token" data-flow-token="merge-llm" r="4"><animateMotion dur=".7s" begin="indefinite" fill="freeze"/></circle><circle class="flow-token" data-flow-token="merge-manual" r="4"><animateMotion dur=".7s" begin="indefinite" fill="freeze"/></circle>
+      <circle class="flow-token" data-flow-token="llm-approval" r="4"><animateMotion dur=".7s" begin="indefinite" fill="freeze"/></circle><circle class="flow-token" data-flow-token="manual-approval" r="4"><animateMotion dur=".7s" begin="indefinite" fill="freeze"/></circle><circle class="flow-token" data-flow-token="approval-output" r="4"><animateMotion dur=".75s" begin="indefinite" fill="freeze"/></circle>
+    </svg>
+
+    <div class="scene-caption"><span class="live-dot" aria-hidden="true"></span> LIVE TRACE <span class="caption-divider">·</span> 3 SPECIALISTS <span class="caption-divider">·</span> AUDIT ON</div>
+
+    <div class="scene-flow-grid">
+      <div class="input-lane scene-lane">
+        <span class="scene-zone-label">INTAKE</span>
+        <button class="flow-node input-node" type="button" data-work-node="input" aria-pressed="true" aria-label="Inspect sample input">
+          <span class="input-photo" aria-hidden="true"><img src="/images/agentic-healthcare-diagnostics.png" alt="" loading="lazy"/><span class="scan-frame"></span><span class="photo-reticle">＋</span><span class="input-chip">01 / SCAN</span></span>
+          <span class="input-bottom"><span class="file-icon" aria-hidden="true">▧</span><span><strong>Diagnostic scan</strong><small>CT + case record</small></span><i class="node-state" data-node-status>Ready</i></span>
+        </button>
+      </div>
+
+      <div class="specialist-lane scene-lane">
+        <span class="scene-zone-label">PARALLEL SPECIALISTS</span>
+        <div class="specialist-stage" aria-label="Document intelligence, analytics and retrieval agents">
+          <button class="flow-node agent-node document-node" type="button" data-work-node="document" aria-pressed="false" aria-label="Inspect document intelligence result"><span class="module-top"><span class="module-icon" aria-hidden="true">▤</span><span class="node-label">Document intelligence</span><i class="node-state" data-node-status>Ready</i></span><span class="paper-stack" aria-hidden="true"><span class="paper-back"></span><span class="paper-front"><i></i><i></i><i class="lit"></i><i></i><b>✓</b></span><span class="paper-glint"></span></span></button>
+          <button class="flow-node agent-node analytics-node" type="button" data-work-node="analytics" aria-pressed="false" aria-label="Inspect analytics result"><span class="module-top"><span class="module-icon chart-icon" aria-hidden="true">⌁</span><span class="node-label">Analytics</span><i class="node-state" data-node-status>Ready</i></span><span class="mini-chart" aria-hidden="true"><svg viewBox="0 0 150 64" preserveAspectRatio="none"><path class="grid" d="M0 16H150M0 32H150M0 48H150"/><path class="area" d="M0 52L25 42L45 47L65 29L84 35L107 19L128 24L150 7V64H0Z"/><path class="trend" d="M0 52L25 42L45 47L65 29L84 35L107 19L128 24L150 7"/></svg><span class="chart-point"></span><span class="chart-axis"><i>01</i><i>04</i><i>08</i></span></span></button>
+          <button class="flow-node agent-node retrieval-node" type="button" data-work-node="retrieval" aria-pressed="false" aria-label="Inspect retrieval evidence"><span class="module-top"><span class="module-icon retrieval-icon" aria-hidden="true">◎</span><span class="node-label">RAG retrieval</span><i class="node-state" data-node-status>Ready</i></span><span class="evidence-film" aria-hidden="true"><span class="evidence-image"></span><span class="evidence-snippets"><i><b>4.2</b><em></em></i><i><b>7.1</b><em></em></i></span><span class="evidence-match">✓</span></span></button>
+        </div>
+      </div>
+
+      <button class="flow-node merge-node" type="button" data-work-node="merge" aria-pressed="false" aria-label="Inspect combined findings"><span class="merge-rings" aria-hidden="true"><i></i><i></i><b>✦</b></span><span class="node-label">Synthesis</span><i class="node-state" data-node-status>Ready</i></button>
+
+      <div class="review-stage">
+        <div class="evaluation-stage"><span class="eval-heading">EVALUATION</span><div class="evaluation-switch">
+          <button class="flow-node evaluation-node llm-node" type="button" data-work-node="llm-evaluation" data-evaluation-choice="llm" aria-pressed="true"><span class="eval-visual" aria-hidden="true"><i></i><i></i><b>✓</b></span><span class="node-label">LLM evaluation</span><i class="node-state" data-node-status>Ready</i></button>
+          <button class="flow-node evaluation-node manual-node" type="button" data-work-node="manual-evaluation" data-evaluation-choice="manual" aria-pressed="false"><span class="review-avatar" aria-hidden="true">JR</span><span class="node-label">Human evaluation</span><i class="node-state" data-node-status>Available</i></button>
+        </div></div>
+        <button class="flow-node approval-node" type="button" data-work-node="approval" aria-pressed="false" aria-label="Inspect approval checkpoint"><span class="approval-orbit" aria-hidden="true"><i>✓</i></span><span class="node-label">Approval</span><i class="node-state" data-node-status>Waiting</i></button>
+      </div>
+
+      <button class="flow-node output-node" type="button" data-work-node="output" aria-pressed="false" aria-label="Inspect verified output" disabled><span class="output-top"><span class="node-label">Reviewed result</span><i class="node-state" data-node-status>Pending</i></span><span class="output-pending" aria-hidden="true"><i></i><i></i><b>Awaiting review</b></span><span class="output-preview" aria-hidden="true"><span class="output-image"></span><span class="output-sheet"><i></i><i></i><i class="lit"></i><i></i><b>✓</b></span><span class="output-check">✓</span></span><span class="output-meta"><span>2 SOURCES</span><span data-output-verdict>NOT VERIFIED</span></span></button>
+    </div>
+
+    <section class="workspace-inspector" aria-live="polite" aria-atomic="true" aria-hidden="true"><button class="inspector-close" type="button" data-close-inspector aria-label="Close visual detail">×</button><div class="inspector-heading"><span class="workspace-kicker">EXECUTION TRACE</span><strong data-detail-title>Input</strong><p data-detail-copy>Diagnostic CT scan and structured clinical case record.</p><ul data-preview-items><li>CT scan</li><li>Case record</li></ul></div><div class="inspector-visual" data-preview-stage aria-label="Selected module visual preview"></div><button class="human-approve" type="button" data-human-approve hidden disabled>Approve <span aria-hidden="true">↗</span></button></section>
+  </div>
+
+  <footer class="workspace-toolbar"><span>Trace persisted · Evidence links &amp; approval gate enforced</span><div><button type="button" data-run>Run <span aria-hidden="true">→</span></button><button type="button" data-pause disabled>Pause</button><button type="button" data-replay>Replay</button><button type="button" data-reset>Reset</button></div></footer>
+
+  <template data-preview-template="input"><div class="preview-document"><span class="preview-caption">SOURCE / CT + CASE</span><div class="detail-photo"><img src="/images/agentic-healthcare-diagnostics.png" alt="Diagnostic scan review"/><span>＋</span></div></div></template>
+  <template data-preview-template="document"><div class="preview-document"><span class="preview-caption">DOCUMENT / EXTRACT</span><div class="detail-paper"><i></i><i></i><i class="highlight"></i><i></i><i></i><b>✓</b></div></div></template>
+  <template data-preview-template="analytics"><div class="preview-chart"><span class="preview-caption">ANALYTICS / SIGNAL</span><div class="detail-chart"><svg viewBox="0 0 220 95" preserveAspectRatio="none"><path d="M0 74L35 60L67 69L97 39L132 48L168 26L190 31L220 9"/></svg><span>↗ 12%</span></div></div></template>
+  <template data-preview-template="retrieval"><div class="preview-evidence"><span class="preview-caption">RETRIEVED / SOURCES</span><div class="detail-source"><span>01</span><i></i><i></i><b>✓</b></div><div class="detail-source"><span>02</span><i></i><i></i><b>✓</b></div></div></template>
+  <template data-preview-template="merge"><div class="preview-merge"><span class="preview-caption">SYNTHESIS / SIGNALS</span><div class="detail-merge"><span>▤</span><i></i><b>✦</b><i></i><span>⌁</span></div></div></template>
+  <template data-preview-template="llm-evaluation"><div class="preview-checks"><span class="preview-caption">LLM / EVALUATION</span><div class="detail-check"><span>✓</span><span>✓</span><span>✓</span></div><small>3 checks</small></div></template>
+  <template data-preview-template="manual-evaluation"><div class="preview-manual"><span class="preview-caption">HUMAN / REVIEW</span><label><input type="checkbox" data-review-check/><span>Source</span></label><label><input type="checkbox" data-review-check/><span>Result</span></label></div></template>
+  <template data-preview-template="approval"><div class="preview-approval"><span class="preview-caption">REVIEW / APPROVAL</span><div class="detail-approval"><span>JR</span><i></i><b>✓</b></div></div></template>
+  <template data-preview-template="output"><div class="preview-output"><span class="preview-caption">VERIFIED / 2 SOURCES</span><div class="detail-output"><img src="/images/agentic-healthcare-diagnostics.png" alt="Reviewed diagnostic result"/><span><b>✓</b><i>4.2</i><i>7.1</i></span></div></div></template>
+</section>
+
+<style>
+  .agent-workspace{--ink:#273129;--muted:#6c756b;--olive:#71825d;--olive-strong:#60764b;--line:#e1dfd3;--paper:#fffefa;position:relative;isolation:isolate;overflow:hidden;border:1px solid #dfddd2;border-radius:24px;background:#f7f5ee;color:var(--ink);color-scheme:light;font-family:Geist,system-ui,sans-serif;box-shadow:0 28px 72px rgba(54,51,40,.12)}
+  .agent-workspace *,.agent-workspace *:before,.agent-workspace *:after{animation:none!important;transition:none!important}
+  .workspace-head{display:flex;align-items:center;gap:14px;padding:13px 18px;border-bottom:1px solid var(--line);background:#fffefa}
+  .studio-mark{display:flex;align-items:center;gap:10px;margin-right:auto}
+  .studio-symbol{display:grid;place-items:center;width:31px;height:31px;border:1px solid #e0e2d5;border-radius:10px;background:#edf0e6;color:#687b50;font-size:17px}
+  .workspace-kicker,.scene-zone-label,.scene-caption,.eval-heading,.preview-caption{font-size:8px;letter-spacing:.13em;font-weight:760;color:#78816f}
+  .workspace-head h3{margin:2px 0 0;color:#293229;font-size:14px;font-weight:650;letter-spacing:-.025em}
+  .run-state{display:flex;align-items:center;gap:7px;color:#53684b;font-size:9px;white-space:nowrap}
+  .run-state:before,.live-dot{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:#81976a}
+  .workspace-expand{display:grid;place-items:center;width:31px;height:31px;border:1px solid #e4e2d8;border-radius:9px;background:#f8f7f1;color:#4f594e;font-size:16px;cursor:pointer}
+  .workspace-expand:hover{border-color:#b8c2a3;background:#f0f2e9;color:#526a3c}
+  .orchestration-canvas{position:relative;isolation:isolate;display:grid;grid-template-rows:auto 1fr auto;gap:12px;padding:15px 22px 18px;min-height:610px;background:radial-gradient(ellipse at 82% 7%,rgba(206,211,178,.23),transparent 32%),linear-gradient(135deg,#fcfbf7,#f3f1e8 72%,#f1efe6)}
+  .scene-atmosphere{position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse at 14% 76%,rgba(224,220,199,.28),transparent 34%);pointer-events:none}
+  .scene-caption{grid-row:1;justify-self:end;display:flex;align-items:center;gap:7px;color:#788075;font-size:7px}
+  .live-dot{width:5px;height:5px}
+  .caption-divider{color:#a6a899}
+  .scene-flow-grid{position:relative;z-index:1;grid-row:2;display:grid;grid-template-columns:minmax(155px,.9fr) minmax(235px,1.3fr) minmax(46px,.28fr) minmax(155px,.8fr) minmax(170px,.9fr);grid-template-areas:"input agents merge review output";align-items:center;gap:clamp(13px,1.5vw,24px);min-height:450px}
+  .connections{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;overflow:visible}
+  .connections>path{fill:none;stroke:#889474;stroke-width:1.3;stroke-opacity:.32;vector-effect:non-scaling-stroke}
+  .connections>path.is-active{stroke:#63794f;stroke-opacity:.92;stroke-width:2}
+  .connections marker path{fill:#63794f}
+  .flow-token{fill:#657d4d;opacity:0;filter:drop-shadow(0 0 3px rgba(110,131,80,.35));pointer-events:none}
+  .flow-token.is-moving{opacity:1}
+  .scene-lane{display:grid;grid-template-rows:auto 1fr;gap:9px;min-width:0}
+  .input-lane{grid-area:input}
+  .specialist-lane{grid-area:agents}
+  .scene-zone-label{color:#78816f;font-size:7px}
+  .flow-node{font:inherit;color:var(--ink);cursor:pointer}
+  .flow-node:hover:not(:disabled){filter:brightness(.985)}
+  .flow-node:focus-visible,.workspace-toolbar button:focus-visible,.workspace-expand:focus-visible,.human-approve:focus-visible,.inspector-close:focus-visible,.preview-manual input:focus-visible{outline:2px solid #7f9466;outline-offset:3px}
+  .flow-node[data-phase=active]{filter:drop-shadow(0 4px 8px rgba(107,128,81,.18))}
+  .flow-node[data-phase=review]{filter:drop-shadow(0 4px 8px rgba(164,141,91,.16))}
+  .node-label{font-size:9px;font-weight:680;letter-spacing:.005em}
+  .node-state{color:#7c8479;font-size:7px;font-style:normal;white-space:nowrap}
+  .flow-node[data-phase=active] .node-state,.flow-node[data-phase=complete] .node-state{color:#5e7449}
+  .flow-node[data-phase=review] .node-state{color:#947648}
+  .input-node{display:grid;grid-template-rows:minmax(0,1fr) auto;position:relative;width:100%;min-width:0;min-height:300px;max-height:375px;aspect-ratio:.78;padding:0;border:1px solid #d8d7ca;border-radius:17px;background:#fffefa;text-align:left;overflow:hidden;box-shadow:0 16px 34px rgba(67,63,48,.13)}
+  .input-node[aria-pressed=true]{border-color:#9ca984;box-shadow:0 0 0 2px rgba(126,145,98,.16),0 17px 34px rgba(67,63,48,.15)}
+  .input-photo{position:relative;display:block;min-height:0;overflow:hidden;background:#e6e3d8}
+  .input-photo:after{content:"";position:absolute;inset:55% 0 0;background:linear-gradient(180deg,transparent,rgba(35,42,31,.12));pointer-events:none}
+  .input-photo img{display:block;width:100%;height:100%;object-fit:cover;object-position:71% center;filter:none!important}
+  .scan-frame{position:absolute;left:60%;top:34%;width:21%;height:31%;border:1px solid rgba(240,239,221,.88);border-radius:48% 43% 40% 46%;box-shadow:0 0 0 4px rgba(110,131,80,.13)}
+  .photo-reticle{position:absolute;right:11px;top:10px;z-index:1;display:grid;place-items:center;width:20px;height:20px;border:1px solid rgba(255,255,255,.72);border-radius:50%;background:rgba(255,255,255,.35);color:#fff;font-size:14px}
+  .input-chip{position:absolute;left:10px;top:10px;z-index:1;padding:5px 7px;border:1px solid rgba(255,255,255,.65);border-radius:5px;background:rgba(250,249,243,.82);color:#46533d;font-size:6px;font-weight:750;letter-spacing:.1em}
+  .input-bottom{display:flex;align-items:center;gap:8px;min-width:0;padding:10px 11px;background:#fffefa}
+  .input-bottom strong,.input-bottom small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .input-bottom strong{color:#313b31;font-size:8px;font-weight:680}
+  .input-bottom small{margin-top:3px;color:#7a8278;font-size:7px}
+  .input-bottom .node-state{margin-left:auto}
+  .file-icon{display:grid;place-items:center;width:27px;height:27px;flex:none;border:1px solid #e5e4d9;border-radius:8px;background:#f4f3eb;color:#788a60;font-size:13px}
+  .specialist-stage{display:grid;grid-template-rows:repeat(3,minmax(86px,1fr));gap:10px;min-width:0}
+  .agent-node{position:relative;display:grid;grid-template-rows:auto 1fr;min-width:0;min-height:86px;padding:9px 11px 8px;border:1px solid #e4e1d5;border-radius:13px;background:linear-gradient(135deg,#fffefa,#f7f6ef);box-shadow:0 7px 17px rgba(65,62,48,.07);overflow:hidden;text-align:left}
+  .agent-node[aria-pressed=true]{border-color:#9ca984;background:#fffefa;box-shadow:0 0 0 2px rgba(126,145,98,.12),0 9px 20px rgba(65,62,48,.09)}
+  .module-top{display:flex;align-items:center;gap:7px;min-width:0}
+  .module-icon{display:grid;place-items:center;width:22px;height:22px;flex:none;border:1px solid #e5e5d9;border-radius:7px;background:#f0f1e8;color:#76885c;font-size:12px}
+  .chart-icon{background:#f2eee4;color:#9a855b}
+  .retrieval-icon{background:#eaf0e8;color:#66826b}
+  .module-top .node-label{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#354035;font-size:8px}
+  .module-top .node-state{margin-left:auto;font-size:6px}
+  .paper-stack{position:relative;display:block;width:60px;height:42px;justify-self:end;align-self:end;margin:1px 8px 0 0}
+  .paper-back,.paper-front{position:absolute;display:block;width:42px;height:37px;border:1px solid #dedecf;border-radius:4px;background:#fbfaf3;box-shadow:0 3px 7px rgba(53,57,43,.08)}
+  .paper-back{right:4px;top:1px;transform:rotate(7deg);background:#eeeee3}
+  .paper-front{right:10px;top:3px;padding:7px 5px}
+  .paper-front i,.output-sheet i{display:block;height:2px;margin:0 0 4px;border-radius:2px;background:#d9d9ce}
+  .paper-front i:nth-child(2){width:72%}
+  .paper-front i.lit,.output-sheet i.lit{width:78%;background:#b5c397}
+  .paper-front i:nth-child(4){width:56%}
+  .paper-front b,.output-sheet b{position:absolute;right:4px;bottom:3px;color:#73895c;font-size:8px}
+  .paper-glint{display:none}
+  .mini-chart{position:relative;width:100%;height:44px;align-self:end;margin:1px 0 0;overflow:hidden}
+  .mini-chart:after{content:"";position:absolute;right:4px;top:2px;width:6px;height:6px;border:1px solid #a4aa84;border-radius:50%;background:#fbfaf4}
+  .mini-chart svg{display:block;width:100%;height:100%;filter:none!important}
+  .mini-chart .grid{fill:none;stroke:#e9e7dc;stroke-width:1}
+  .mini-chart .area{fill:rgba(172,185,139,.18)}
+  .mini-chart .trend{fill:none;stroke:#84936b;stroke-width:2}
+  .chart-point{display:none}
+  .chart-axis{display:flex;justify-content:space-between;color:#9a9b8d;font-size:5px}
+  .evidence-film{display:flex;align-items:center;gap:7px;min-height:40px;align-self:end;margin:0 0 0 auto}
+  .evidence-image{position:relative;width:46px;height:31px;overflow:hidden;border:1px solid #d9d9ca;border-radius:5px;background:linear-gradient(135deg,#d8ded0,#f1eee2 55%,#afb99d)}
+  .evidence-image:after{content:"";position:absolute;inset:30% 20% 24%;border:1px solid rgba(102,126,84,.6);border-radius:4px}
+  .evidence-snippets{display:grid;gap:4px}
+  .evidence-snippets i{display:flex;align-items:center;gap:4px;width:56px;font-style:normal}
+  .evidence-snippets b{color:#76835f;font-size:6px}
+  .evidence-snippets em{height:2px;flex:1;border-radius:2px;background:#d3d4c6}
+  .evidence-snippets i:nth-child(2) em{background:#aebd97}
+  .evidence-match{display:grid;place-items:center;width:15px;height:15px;border:1px solid #cfd8bd;border-radius:50%;background:#eef2e6;color:#6d8455;font-size:8px}
+  .merge-node{grid-area:merge;display:grid;justify-items:center;align-content:center;gap:6px;min-width:0;padding:4px;border:0;background:transparent;z-index:1}
+  .merge-rings{position:relative;display:grid;place-items:center;width:58px;height:58px;border:1px solid #d5d9c8;border-radius:50%;background:radial-gradient(circle,#fffefa 0,#f4f4ea 68%,#edf0e4);box-shadow:0 0 0 6px rgba(128,145,102,.08)}
+  .merge-rings:after{content:"";position:absolute;inset:-7px;border:1px solid #e1e2d6;border-radius:50%}
+  .merge-rings i{position:absolute;width:22px;height:22px;border:1px solid #98a584;border-radius:50%;transform:translateX(-8px);background:#f5f4ec}
+  .merge-rings i:nth-child(2){transform:translateX(8px);border-color:#b4a482}
+  .merge-rings b{z-index:1;color:#6f8358;font-size:15px}
+  .merge-node .node-label,.merge-node .node-state{font-size:6px}
+  .review-stage{grid-area:review;display:grid;justify-items:stretch;align-content:center;gap:16px;min-width:0}
+  .evaluation-stage{display:grid;gap:8px;width:100%}
+  .eval-heading{display:block;margin:0 0 1px 4px;font-size:7px;color:#7d8674}
+  .evaluation-switch{display:grid;gap:8px}
+  .evaluation-node{position:relative;display:flex;align-items:center;gap:7px;width:100%;min-width:0;min-height:45px;padding:6px 8px;border:1px solid #e1dfd3;border-radius:11px;background:linear-gradient(120deg,#fffefa,#f4f3eb);text-align:left;box-shadow:0 5px 12px rgba(65,62,48,.06)}
+  .evaluation-node[aria-pressed=true]{border-color:#9eaa86;background:#f0f2e9;box-shadow:0 0 0 2px rgba(126,145,98,.12)}
+  .evaluation-node .node-label{font-size:7px;color:#364034}
+  .evaluation-node .node-state{position:absolute;right:7px;bottom:4px;color:#7d8478;font-size:5px}
+  .eval-visual{position:relative;display:grid;place-items:center;width:24px;height:24px;flex:none;border:1px solid #dce2d2;border-radius:50%;background:#f3f5ed}
+  .eval-visual i{position:absolute;width:14px;height:14px;border:1px solid #94a580;border-radius:50%}
+  .eval-visual i:nth-child(2){width:6px;height:6px;background:#9cab83}
+  .eval-visual b{position:absolute;right:-2px;bottom:-2px;display:grid;place-items:center;width:11px;height:11px;border-radius:50%;background:#758a5e;color:white;font-size:7px}
+  .review-avatar{display:grid;place-items:center;width:24px;height:24px;flex:none;border:1px solid #d9d5c5;border-radius:50%;background:#eee9dc;color:#827152;font-size:7px;font-weight:700}
+  .approval-node{display:grid;justify-items:center;gap:4px;width:100%;padding:5px;border:0;background:transparent;z-index:1}
+  .approval-orbit{position:relative;display:grid;place-items:center;width:42px;height:42px;border:1px solid #b6c19f;border-radius:50%;background:#f2f4eb;box-shadow:0 0 0 5px rgba(135,152,110,.09)}
+  .approval-orbit:before,.approval-orbit:after{content:"";position:absolute;inset:-4px;border:1px solid #d9dfce;border-radius:50%}
+  .approval-orbit:after{inset:4px;border-color:#e2e4d8}
+  .approval-orbit i{display:grid;place-items:center;width:23px;height:23px;border-radius:50%;background:#788d61;color:#fff;font-size:12px;font-style:normal}
+  .approval-node .node-label,.approval-node .node-state{font-size:6px}
+  .output-node{grid-area:output;display:grid;grid-template-rows:auto minmax(124px,1fr) auto;gap:5px;width:100%;min-width:0;min-height:235px;padding:0 0 7px;border:1px solid #d8dece;border-radius:16px;background:linear-gradient(150deg,#f5f6ed,#e9eee1);z-index:1;text-align:left;overflow:hidden;box-shadow:0 14px 29px rgba(62,75,49,.1)}
+  .output-node[aria-pressed=true]{border-color:#8d9f72}
+  .output-node:disabled{cursor:default;filter:saturate(.62)}
+  .output-top,.output-meta{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 10px 0}
+  .output-top .node-label{font-size:8px;color:#344033}
+  .output-pending{position:relative;display:grid;place-items:center;min-height:124px;overflow:hidden;background:linear-gradient(135deg,#f5f4ed,#e7e8dc)}
+  .output-pending i{position:absolute;left:19%;top:32%;width:57%;height:1px;background:#d7d8ca;transform:rotate(-18deg)}
+  .output-pending i:nth-child(2){left:27%;top:59%;width:43%;transform:rotate(12deg)}
+  .output-pending b{position:relative;padding:5px 8px;border:1px solid #e1e1d6;border-radius:99px;background:rgba(255,254,250,.88);color:#788075;font-size:6px;font-weight:650}
+  .output-preview{display:none;position:relative;align-items:center;justify-content:center;min-height:124px;overflow:hidden;background:#e5e8dc}
+  .output-node[data-phase=complete] .output-pending{display:none}
+  .output-node[data-phase=complete] .output-preview{display:flex}
+  .output-image{position:absolute;inset:0;background:linear-gradient(0deg,rgba(57,68,48,.22),transparent 65%),url('/images/agentic-healthcare-diagnostics.png') 66% 47%/cover}
+  .output-sheet{position:relative;display:block;width:68px;height:82px;padding:15px 10px;border:1px solid rgba(255,255,255,.74);border-radius:6px;background:rgba(255,254,249,.88);box-shadow:0 8px 20px rgba(46,52,39,.15);transform:rotate(-2deg)}
+  .output-sheet b{right:8px;bottom:7px}
+  .output-check{position:absolute;right:10px;top:9px;display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:#71885a;color:#fff;font-size:12px}
+  .output-meta{padding:0 10px;color:#78816f;font-size:6px;letter-spacing:.08em}
+  .output-meta span:last-child{color:#8a8b7e}
+  .output-node[data-phase=complete] .output-meta span:last-child{color:#566e42;font-weight:750}
+  .workspace-inspector{position:relative;grid-row:3;display:none;align-items:center;gap:13px;width:min(58%,680px);min-height:96px;justify-self:center;padding:11px 37px 11px 14px;border:1px solid #e1dfd3;border-radius:14px;background:rgba(255,254,250,.96);z-index:2;box-shadow:0 12px 28px rgba(62,60,47,.12)}
+  .agent-workspace[data-inspector-open=true] .workspace-inspector{display:flex}
+  .workspace-inspector[aria-hidden=true]{visibility:hidden}
+  .workspace-inspector[aria-hidden=false]{visibility:visible}
+  .inspector-heading{width:24%;flex:none}
+  .inspector-heading strong{display:block;margin-top:5px;color:#333e33;font-size:10px}
+  .inspector-heading p,.inspector-heading ul{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  .inspector-visual{flex:1;min-width:0;min-height:66px}
+  .inspector-visual>div{height:70px}
+  .inspector-close{position:absolute;right:8px;top:8px;display:grid;place-items:center;width:22px;height:22px;padding:0;border:1px solid #e1dfd3;border-radius:50%;background:#f7f6ef;color:#63705b;font-size:14px;line-height:1;cursor:pointer}
+  .preview-caption{display:block;color:#8a8e7c;font-size:6px}
+  .detail-photo,.detail-paper,.detail-chart,.detail-source,.detail-merge,.detail-check,.detail-approval,.detail-output{height:100%;overflow:hidden;border:1px solid #e3e0d4;border-radius:9px;background:#f7f6ef}
+  .detail-photo{position:relative}
+  .detail-photo img{width:100%;height:100%;object-fit:cover;object-position:70% 45%;filter:none!important}
+  .detail-photo span{position:absolute;right:8px;top:8px;display:grid;place-items:center;width:18px;height:18px;border:1px solid rgba(255,255,255,.8);border-radius:50%;background:rgba(255,255,255,.46);color:#596e47;font-size:13px}
+  .detail-paper{position:relative;width:62px;margin:auto;padding:13px 9px;border-radius:5px;background:#fffefa;box-shadow:0 4px 10px rgba(55,58,45,.07)}
+  .detail-paper i{display:block;height:3px;margin-bottom:6px;border-radius:3px;background:#d9d9ce}
+  .detail-paper i:nth-child(2){width:70%}
+  .detail-paper i.highlight{width:82%;background:#bac79f}
+  .detail-paper b{position:absolute;right:5px;bottom:5px;color:#708455;font-size:10px}
+  .preview-chart{height:100%;padding:4px 8px}
+  .detail-chart{position:relative;height:calc(100% - 15px);background:linear-gradient(180deg,#fbfaf5,#eef0e7)}
+  .detail-chart svg{width:100%;height:100%;filter:none!important}
+  .detail-chart path{fill:none;stroke:#80906a;stroke-width:2}
+  .detail-chart span{position:absolute;right:8px;top:6px;color:#60754d;font-size:8px;font-weight:700}
+  .preview-evidence{display:flex;align-items:center;gap:6px;height:100%;padding:2px 5px}
+  .preview-evidence .preview-caption{position:absolute;left:-10000px}
+  .detail-source{position:relative;display:grid;align-content:center;gap:5px;flex:1;padding:6px 8px;background:#fffefa}
+  .detail-source span{color:#7e8b68;font-size:7px}
+  .detail-source i{display:block;width:78%;height:3px;border-radius:3px;background:#dbddd1}
+  .detail-source i:nth-of-type(2){width:53%;background:#b8c49f}
+  .detail-source b{position:absolute;right:5px;top:5px;color:#708455;font-size:8px}
+  .detail-merge{display:flex;align-items:center;justify-content:center;gap:7px;background:#f5f5ec}
+  .detail-merge i{width:18px;height:1px;background:#a6ad92}
+  .detail-merge b{display:grid;place-items:center;width:27px;height:27px;border:1px solid #d8decb;border-radius:50%;background:#eaf0e3;color:#72875b}
+  .detail-check{display:flex;align-items:center;justify-content:center;gap:7px;background:#f4f5ed}
+  .detail-check span{display:grid;place-items:center;width:25px;height:25px;border:1px solid #dbe0d2;border-radius:50%;background:#e8efe0;color:#687e50;font-size:11px}
+  .preview-checks small{display:block;margin-top:3px;color:#77816d;text-align:center;font-size:7px}
+  .preview-manual{display:flex;align-items:center;justify-content:center;gap:7px;height:100%}
+  .preview-manual label{display:flex;align-items:center;gap:4px;padding:6px 7px;border:1px solid #e2e1d7;border-radius:6px;background:#fffefa;color:#66705f;font-size:7px}
+  .preview-manual input{width:10px;height:10px;margin:0;accent-color:#71875a}
+  .detail-approval{display:flex;align-items:center;justify-content:center;gap:8px;background:#f3f4eb}
+  .detail-approval span{display:grid;place-items:center;width:27px;height:27px;border-radius:50%;background:#eee8d8;color:#887653;font-size:8px}
+  .detail-approval i{width:30px;height:1px;background:#aab198}
+  .detail-approval b{display:grid;place-items:center;width:25px;height:25px;border-radius:50%;background:#73895b;color:white;font-size:11px}
+  .detail-output{position:relative}
+  .detail-output img{width:100%;height:100%;object-fit:cover;object-position:69% 45%;filter:none!important}
+  .detail-output span{position:absolute;right:6px;bottom:6px;display:flex;align-items:center;gap:4px;padding:4px 5px;border:1px solid rgba(255,255,255,.7);border-radius:5px;background:rgba(255,254,249,.9)}
+  .detail-output b{color:#67804f;font-size:8px}
+  .detail-output i{color:#687260;font-size:6px;font-style:normal}
+  .human-approve{flex:none;min-height:31px;padding:6px 10px;border:1px solid #718659;border-radius:7px;background:#718659;color:#fff;font-size:8px;font-weight:700;cursor:pointer}
+  .human-approve:disabled{opacity:.45;cursor:not-allowed}
+  .human-approve[hidden]{display:none}
+  .workspace-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 16px;border-top:1px solid var(--line);background:#fffefa}
+  .workspace-toolbar>span{color:#7c8276;font-size:7px}
+  .workspace-toolbar>div{display:flex;gap:6px}
+  .workspace-toolbar button{min-width:52px;padding:7px 9px;border:1px solid #e1dfd3;border-radius:7px;background:#f6f5ef;color:#586253;font:650 8px Geist,system-ui,sans-serif;cursor:pointer}
+  .workspace-toolbar button[data-run]{border-color:#70855a;background:#71875b;color:#fff}
+  .workspace-toolbar button:not(:disabled):hover{border-color:#b6c2a3;background:#ecefe4}
+  .workspace-toolbar button[data-run]:not(:disabled):hover{background:#637a4e;color:white}
+  .workspace-toolbar button:disabled{opacity:.42;cursor:not-allowed}
+  .workspace-toolbar button span{margin-left:3px}
+  .agent-workspace:fullscreen{display:flex;flex-direction:column;width:100vw;height:100vh;max-width:none;border:0;border-radius:0;background:#f7f5ee}
+  .agent-workspace:fullscreen .orchestration-canvas{flex:1;min-height:0}
+  .agent-workspace:fullscreen .scene-flow-grid{min-height:0}
+  .agent-workspace:fullscreen .workspace-inspector{max-height:120px}
+  :global(html.light-theme-preview main .agent-workspace){filter:invert(1) hue-rotate(180deg)}
+  :global(html.light-theme-preview main .agent-workspace :is(img,video,canvas,svg,iframe)){filter:none!important}
+  @media(max-width:1100px) and (min-width:701px){
+    .orchestration-canvas{min-height:0}
+    .scene-flow-grid{grid-template-columns:minmax(0,1fr) minmax(0,1.4fr) minmax(165px,.9fr);grid-template-rows:minmax(235px,auto) minmax(180px,auto);grid-template-areas:"input agents agents" "merge review output";gap:20px 18px;min-height:560px}
+    .input-node{min-height:278px;max-height:350px}
+    .specialist-stage{grid-template-rows:repeat(3,minmax(75px,1fr));gap:8px}
+    .output-node{min-height:220px}
+    .review-stage{grid-template-columns:minmax(0,1fr) 55px;align-items:center;gap:8px}
+    .evaluation-switch{grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
+    .evaluation-node{justify-content:center;min-height:54px;padding:5px}
+    .evaluation-node .node-label{text-align:center}
+    .approval-node{width:55px}
+    .workspace-inspector{width:min(82%,680px)}
+  }
+  @media(max-width:700px){
+    .workspace-head{gap:8px;padding:10px 11px}
+    .workspace-kicker{font-size:7px}
+    .workspace-head h3{font-size:12px}
+    .run-state{font-size:8px}
+    .orchestration-canvas{min-height:0;grid-template-rows:auto auto auto;gap:13px;padding:13px 12px 15px}
+    .scene-caption{font-size:6px}
+    .scene-flow-grid{grid-template-columns:minmax(0,1fr);grid-template-rows:auto;grid-template-areas:"input" "agents" "merge" "review" "output";gap:18px;min-height:0}
+    .scene-lane{gap:7px}
+    .input-node{min-height:238px;max-height:none;aspect-ratio:1.42}
+    .input-photo img{object-position:71% 44%}
+    .input-bottom{padding:9px 10px}
+    .specialist-stage{grid-template-columns:minmax(0,1fr);grid-template-rows:repeat(3,minmax(88px,auto));gap:9px}
+    .agent-node{min-height:88px}
+    .merge-node{justify-self:center;width:100%;min-height:82px;align-content:center}
+    .merge-rings{width:49px;height:49px}
+    .review-stage{grid-template-columns:1fr;gap:12px;padding:0 2px}
+    .evaluation-switch{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+    .evaluation-node{display:grid;justify-items:center;align-content:center;gap:4px;min-height:62px;padding:7px 4px;border-radius:10px}
+    .evaluation-node .node-label{max-width:100%;font-size:7px;line-height:1.15;text-align:center;white-space:normal}
+    .evaluation-node .node-state{right:5px;bottom:4px;font-size:5px}
+    .approval-node{display:grid;grid-template-columns:42px 1fr;grid-template-rows:1fr 1fr;justify-items:start;align-items:center;column-gap:9px;width:100%;min-height:58px;padding:6px 10px;border:1px solid #e1dfd3;border-radius:11px;background:#fffefa}
+    .approval-orbit{grid-row:1/3;width:38px;height:38px}
+    .approval-node .node-label{align-self:end;font-size:7px}
+    .approval-node .node-state{align-self:start;font-size:6px}
+    .output-node{min-height:218px;grid-template-rows:auto minmax(130px,1fr) auto}
+    .workspace-inspector{width:100%;min-height:94px;gap:7px;padding:9px 30px 9px 9px}
+    .inspector-heading{width:70px;flex:0 0 70px}
+    .inspector-heading .workspace-kicker{font-size:5px;letter-spacing:.06em;white-space:nowrap}
+    .inspector-heading strong{font-size:8px;line-height:1.15;white-space:normal}
+    .inspector-visual{min-width:0;min-height:62px}
+    .inspector-visual>div{height:64px}
+    .preview-caption{font-size:5px}
+    .detail-photo,.detail-paper,.detail-chart,.detail-source,.detail-merge,.detail-check,.detail-approval,.detail-output{border-radius:7px}
+    .preview-chart{padding:4px}
+    .preview-manual{gap:4px}
+    .preview-manual label{padding:5px 4px;font-size:6px}
+    .detail-check{gap:4px}
+    .detail-check span{width:20px;height:20px;font-size:9px}
+    .detail-approval{gap:5px}
+    .detail-approval i{width:15px}
+    .human-approve{min-height:29px;padding:5px 7px;font-size:7px}
+    .inspector-close{right:5px;top:5px;width:18px;height:18px;font-size:12px}
+    .workspace-toolbar{align-items:center;padding:9px 10px}
+    .workspace-toolbar>span{max-width:90px;font-size:6px;line-height:1.35}
+    .workspace-toolbar>div{gap:4px}
+    .workspace-toolbar button{min-width:45px;padding:7px 5px;font-size:7px}
+  }
+</style>

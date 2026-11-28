@@ -1,0 +1,296 @@
+---
+import AgenticScene from './AgenticScene.astro';
+---
+<AgenticScene />
+
+<script>
+  const agentStepData: Record<string, { title: string; copy: string; facts: string[]; visual: string }> = {
+    input: { title: 'Input', copy: 'Diagnostic CT scan and structured clinical case record.', facts: ['DICOM CT series', 'Case record #409'], visual: 'input' },
+    document: { title: 'Document Intelligence', copy: 'Clinical intervals and care-owner metadata extracted.', facts: ['§4.2 · Follow-up interval', '§7.1 · Care owner'], visual: 'document' },
+    analytics: { title: 'Analytics Agent', copy: 'Longitudinal progression signals quantified.', facts: ['Trend +12%', '2 interval changes'], visual: 'analytics' },
+    retrieval: { title: 'RAG Retrieval', copy: 'Grounded clinical guidelines and prior cases retrieved.', facts: ['Guideline §4.2', 'Prior study §7.1'], visual: 'retrieval' },
+    merge: { title: 'Synthesis', copy: 'Parallel specialist findings reconciled with citations.', facts: ['2 findings merged', '2 sources linked'], visual: 'merge' },
+    'llm-evaluation': { title: 'LLM Evaluation', copy: 'Automated policy and citation grounding checks passed.', facts: ['3/3 checks passed', 'Zero unsupported claims'], visual: 'llm-evaluation' },
+    'manual-evaluation': { title: 'Human Review', copy: 'Reviewer inspects cited evidence and synthesized summary.', facts: ['Source citations', 'Clinical summary'], visual: 'manual-evaluation' },
+    approval: { title: 'Approval Gate', copy: 'Held at sign-off checkpoint before downstream dispatch.', facts: ['2 verified sources', 'Sign-off required'], visual: 'approval' },
+    output: { title: 'Verified Result', copy: 'Approved diagnostic summary with full audit provenance.', facts: ['Cited §4.2', 'Cited §7.1'], visual: 'output' },
+  };
+  document.querySelectorAll<HTMLElement>('[data-agent-workspace]').forEach((root) => {
+    const nodes = [...root.querySelectorAll<HTMLButtonElement>('[data-work-node]')];
+    const run = root.querySelector<HTMLButtonElement>('[data-run]');
+    const pause = root.querySelector<HTMLButtonElement>('[data-pause]');
+    const state = root.querySelector<HTMLElement>('[data-run-state]');
+    const svg = root.querySelector<SVGSVGElement>('.connections');
+    const output = root.querySelector<HTMLButtonElement>('[data-work-node="output"]');
+    const verdict = root.querySelector<HTMLElement>('[data-output-verdict]');
+    let timer = 0, continuation: (() => void) | undefined, dueAt = 0, remaining = 0, paused = false, active = false, autoStarted = false;
+    const connectionEndpoints: Record<string, [string, string]> = {
+      'input-document': ['input', 'document'],
+      'input-analytics': ['input', 'analytics'],
+      'input-retrieval': ['input', 'retrieval'],
+      'document-merge': ['document', 'merge'],
+      'analytics-merge': ['analytics', 'merge'],
+      'retrieval-merge': ['retrieval', 'merge'],
+      'merge-llm': ['merge', 'llm-evaluation'],
+      'merge-manual': ['merge', 'manual-evaluation'],
+      'llm-approval': ['llm-evaluation', 'approval'],
+      'manual-approval': ['manual-evaluation', 'approval'],
+      'approval-output': ['approval', 'output'],
+    };
+    const updateConnections = () => {
+      if (!svg) return;
+      const svgRect = svg.getBoundingClientRect();
+      if (!svgRect.width || !svgRect.height) return;
+      const toViewBox = (rect: DOMRect) => ({
+        x: ((rect.left + rect.width / 2 - svgRect.left) / svgRect.width) * 1000,
+        y: ((rect.top + rect.height / 2 - svgRect.top) / svgRect.height) * 600,
+      });
+      Object.entries(connectionEndpoints).forEach(([name, [fromKey, toKey]]) => {
+        const from = root.querySelector<HTMLElement>('[data-work-node="' + fromKey + '"]');
+        const to = root.querySelector<HTMLElement>('[data-work-node="' + toKey + '"]');
+        const path = root.querySelector<SVGPathElement>('[data-connection="' + name + '"]');
+        if (!from || !to || !path) return;
+        const fromRect = from.getBoundingClientRect();
+        const toRect = to.getBoundingClientRect();
+        const start = toViewBox(fromRect);
+        const end = toViewBox(toRect);
+        const dx = end.x - start.x;
+        const dy = end.y - start.y;
+        let x1 = start.x, y1 = start.y, x2 = end.x, y2 = end.y;
+        let c1x = x1, c1y = y1, c2x = x2, c2y = y2;
+        if (Math.abs(dx) >= Math.abs(dy)) {
+          const direction = Math.sign(dx) || 1;
+          x1 += direction * (fromRect.width / svgRect.width) * 500;
+          x2 -= direction * (toRect.width / svgRect.width) * 500;
+          const curve = Math.max(22, Math.min(130, Math.abs(x2 - x1) * .42));
+          c1x = x1 + direction * curve;
+          c2x = x2 - direction * curve;
+        } else {
+          const direction = Math.sign(dy) || 1;
+          y1 += direction * (fromRect.height / svgRect.height) * 300;
+          y2 -= direction * (toRect.height / svgRect.height) * 300;
+          const curve = Math.max(22, Math.min(130, Math.abs(y2 - y1) * .42));
+          c1y = y1 + direction * curve;
+          c2y = y2 - direction * curve;
+        }
+        const d = `M ${x1.toFixed(1)} ${y1.toFixed(1)} C ${c1x.toFixed(1)} ${c1y.toFixed(1)}, ${c2x.toFixed(1)} ${c2y.toFixed(1)}, ${x2.toFixed(1)} ${y2.toFixed(1)}`;
+        path.setAttribute('d', d);
+        root.querySelector<SVGAnimateMotionElement>('[data-flow-token="' + name + '"] animateMotion')?.setAttribute('path', d);
+      });
+    };
+    const resizeObserver = typeof ResizeObserver === 'undefined' ? undefined : new ResizeObserver(updateConnections);
+    resizeObserver?.observe(root);
+    if (svg) resizeObserver?.observe(svg);
+    nodes.forEach((node) => resizeObserver?.observe(node));
+    window.addEventListener('resize', updateConnections, { passive: true });
+    requestAnimationFrame(updateConnections);
+    const setStage = (stage: string, label: string) => { root.dataset.executionState = stage; if (state) state.textContent = label; };
+    const setNode = (key: string, label: string, phase = 'idle') => {
+      const node = nodes.find((item) => item.dataset.workNode === key);
+      const status = node?.querySelector<HTMLElement>('[data-node-status]');
+      if (status) status.textContent = label;
+      if (node) node.dataset.phase = phase;
+    };
+    const updateApproval = () => {
+      const approve = root.querySelector<HTMLButtonElement>('[data-human-approve]');
+      if (!approve) return;
+      const visible = root.dataset.executionState === 'approval';
+      approve.hidden = !visible;
+      const checks = [...root.querySelectorAll<HTMLInputElement>('[data-review-check]')];
+      const ready = root.dataset.evaluationMode !== 'manual' || (checks.length === 2 && checks.every((check) => check.checked));
+      approve.disabled = !visible || !ready;
+    };
+    const select = (key: string, showInspector = true) => {
+      const item = agentStepData[key] || agentStepData.input;
+      root.querySelector<HTMLElement>('[data-detail-title]')!.textContent = item.title;
+      root.querySelector<HTMLElement>('[data-detail-copy]')!.textContent = item.copy;
+      const facts = root.querySelector<HTMLUListElement>('[data-preview-items]')!;
+      facts.replaceChildren(...item.facts.map((text) => { const li = document.createElement('li'); li.textContent = text; return li; }));
+      const visual = root.querySelector<HTMLElement>('[data-preview-stage]')!;
+      const template = root.querySelector<HTMLTemplateElement>('[data-preview-template="' + item.visual + '"]')!;
+      visual.replaceChildren(template.content.cloneNode(true));
+      nodes.forEach((node) => node.setAttribute('aria-pressed', String(node.dataset.evaluationChoice ? node.dataset.evaluationChoice === root.dataset.evaluationMode : node.dataset.workNode === key)));
+      root.dataset.selectedStep = key;
+      if (showInspector) {
+        root.dataset.inspectorOpen = 'true';
+        root.querySelector<HTMLElement>('.workspace-inspector')?.setAttribute('aria-hidden', 'false');
+        requestAnimationFrame(updateConnections);
+      }
+      updateApproval();
+    };
+    const clearConnections = () => {
+      root.querySelectorAll<SVGPathElement>('[data-connection]').forEach((path) => path.classList.remove('is-active'));
+      root.querySelectorAll<SVGCircleElement>('[data-flow-token]').forEach((token) => {
+        try { token.querySelector<SVGAnimateMotionElement>('animateMotion')?.endElement(); } catch {}
+        token.classList.remove('is-moving');
+      });
+    };
+    const activateConnections = (...names: string[]) => {
+      clearConnections();
+      names.forEach((name) => {
+        root.querySelector<SVGPathElement>('[data-connection="' + name + '"]')?.classList.add('is-active');
+        const token = root.querySelector<SVGCircleElement>('[data-flow-token="' + name + '"]');
+        if (token) {
+          token.classList.add('is-moving');
+          try { token.querySelector<SVGAnimateMotionElement>('animateMotion')?.beginElement(); } catch {}
+        }
+      });
+    };
+    const schedule = (next: () => void, delay: number) => {
+      continuation = next; remaining = delay; dueAt = Date.now() + delay;
+      timer = window.setTimeout(() => { continuation = undefined; remaining = 0; next(); }, delay);
+    };
+    const reset = (readyLabel = 'Ready') => {
+      window.clearTimeout(timer); continuation = undefined; remaining = 0; paused = false; active = false;
+      setStage('idle', readyLabel); if (run) run.disabled = false;
+      if (pause) { pause.disabled = true; pause.textContent = 'Pause'; }
+      try { svg?.unpauseAnimations(); } catch {}
+      clearConnections();
+      nodes.forEach((node) => { delete node.dataset.phase; node.setAttribute('aria-pressed', 'false'); });
+      const initial: Record<string, string> = { input: 'Ready', document: 'Ready', analytics: 'Ready', retrieval: 'Ready', merge: 'Ready', 'llm-evaluation': 'Ready', 'manual-evaluation': 'Available', approval: 'Waiting', output: 'Pending' };
+      Object.entries(initial).forEach(([key, label]) => setNode(key, label));
+      root.querySelectorAll<HTMLInputElement>('[data-review-check]').forEach((check) => { check.checked = false; });
+      root.querySelectorAll<HTMLButtonElement>('[data-evaluation-choice]').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.evaluationChoice === root.dataset.evaluationMode)));
+      if (output) output.disabled = true;
+      if (verdict) verdict.textContent = 'NOT VERIFIED';
+      root.dataset.inspectorOpen = 'false';
+      root.querySelector<HTMLElement>('.workspace-inspector')?.setAttribute('aria-hidden', 'true');
+      select('input', false);
+    };
+    const finish = () => {
+      setNode('approval', 'Approved', 'complete'); setNode('output', 'Complete', 'complete');
+      if (output) output.disabled = false;
+      if (verdict) verdict.textContent = 'VERIFIED';
+      setStage('complete', 'Reviewed'); active = false;
+      if (run) run.disabled = false; if (pause) pause.disabled = true;
+      clearConnections(); select('output');
+    };
+    const runDemo = () => {
+      autoStarted = true;
+      const mode = root.dataset.evaluationMode || 'llm';
+      reset(); root.dataset.evaluationMode = mode;
+      root.querySelectorAll<HTMLButtonElement>('[data-evaluation-choice]').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.evaluationChoice === mode)));
+      active = true; if (run) run.disabled = true; if (pause) pause.disabled = false;
+      setStage('dispatch', 'Working'); setNode('input', 'Sent', 'complete');
+      setNode('document', 'Running', 'active'); setNode('analytics', 'Running', 'active'); setNode('retrieval', 'Running', 'active'); select('input');
+      activateConnections('input-document', 'input-analytics', 'input-retrieval');
+      schedule(() => {
+        setNode('document', 'Complete', 'complete'); setNode('analytics', 'Complete', 'complete');
+        setStage('retrieval', 'Searching'); setNode('retrieval', 'Searching', 'active'); select('retrieval');
+        activateConnections('input-retrieval');
+        schedule(() => {
+          setNode('retrieval', '2 sources found', 'complete'); setStage('merge', 'Combining'); setNode('merge', 'Combining', 'active'); select('merge'); activateConnections('document-merge', 'analytics-merge', 'retrieval-merge');
+          schedule(() => {
+            setNode('merge', '2 findings ready', 'complete');
+            const chosen = mode === 'manual' ? 'manual-evaluation' : 'llm-evaluation';
+            setNode(chosen, mode === 'manual' ? 'Review required' : 'Checking', mode === 'manual' ? 'review' : 'active');
+            setStage(mode === 'manual' ? 'manual-evaluation' : 'llm-evaluation', mode === 'manual' ? 'Human review' : 'LLM check');
+            select(chosen); activateConnections(mode === 'manual' ? 'merge-manual' : 'merge-llm');
+            if (mode === 'manual') {
+              setStage('manual-evaluation', 'Human review');
+              if (pause) pause.disabled = true;
+              active = false; if (run) run.disabled = true;
+              return;
+            }
+            schedule(() => {
+              setNode('llm-evaluation', 'Passed · 3 checks', 'complete');
+              activateConnections('llm-approval');
+              setStage('auto-approval', 'Auto approval');
+              setNode('approval', 'Auto-approved', 'complete');
+              select('approval');
+              schedule(() => {
+                setStage('publishing', 'Publishing');
+                activateConnections('approval-output');
+                schedule(finish, 700);
+              }, 520);
+            }, 850);
+          }, 650);
+        }, 950);
+      }, 1250);
+    };
+    nodes.forEach((node) => node.addEventListener('click', () => {
+      if (node.dataset.evaluationChoice) {
+        if (active) return;
+        root.dataset.evaluationMode = node.dataset.evaluationChoice;
+        root.querySelectorAll<HTMLButtonElement>('[data-evaluation-choice]').forEach((choice) => choice.setAttribute('aria-pressed', String(choice === node)));
+      }
+      select(node.dataset.workNode || 'input');
+    }));
+    root.addEventListener('change', (event) => {
+      if (!(event.target as HTMLElement).matches('[data-review-check]')) return;
+      const checks = [...root.querySelectorAll<HTMLInputElement>('[data-review-check]')];
+      if (root.dataset.executionState === 'manual-evaluation' && checks.length === 2 && checks.every((check) => check.checked)) {
+        window.clearTimeout(timer); continuation = undefined;
+        setNode('manual-evaluation', 'Reviewed · 2 checks', 'complete');
+        setNode('approval', 'Review required', 'review');
+        setStage('approval', 'Approval');
+        if (pause) pause.disabled = true;
+        active = false; if (run) run.disabled = true;
+        activateConnections('manual-approval');
+      }
+      updateApproval();
+    });
+    run?.addEventListener('click', runDemo);
+    root.querySelector('[data-replay]')?.addEventListener('click', runDemo);
+    root.querySelector('[data-reset]')?.addEventListener('click', () => { root.dataset.evaluationMode = 'llm'; reset(); });
+    root.querySelector('[data-close-inspector]')?.addEventListener('click', () => {
+      root.dataset.inspectorOpen = 'false';
+      root.querySelector<HTMLElement>('.workspace-inspector')?.setAttribute('aria-hidden', 'true');
+    });
+    root.querySelector('[data-human-approve]')?.addEventListener('click', () => {
+      if (root.dataset.evaluationMode === 'manual') {
+        const checks = [...root.querySelectorAll<HTMLInputElement>('[data-review-check]')];
+        if (checks.length !== 2 || !checks.every((check) => check.checked)) return;
+        setNode('manual-evaluation', 'Reviewed', 'complete');
+      } else setNode('llm-evaluation', 'Passed · 3 checks', 'complete');
+      setStage('publishing', 'Publishing'); setNode('approval', 'Approved', 'complete');
+      active = true; if (pause) pause.disabled = false; activateConnections('approval-output'); schedule(finish, 700);
+    });
+    pause?.addEventListener('click', () => {
+      if (!active) return;
+      paused = !paused;
+      if (paused) {
+        if (continuation) { remaining = Math.max(0, dueAt - Date.now()); window.clearTimeout(timer); }
+        root.dataset.pausedStage = root.dataset.executionState; setStage('paused', 'Paused'); pause.textContent = 'Resume';
+        try { svg?.pauseAnimations(); } catch {}
+      } else {
+        root.dataset.executionState = root.dataset.pausedStage || 'dispatch'; if (state) state.textContent = 'Agents working';
+        pause.textContent = 'Pause'; try { svg?.unpauseAnimations(); } catch {}
+        if (continuation) schedule(continuation, remaining);
+      }
+    });
+    const expand = root.querySelector<HTMLButtonElement>('[data-open-dialog]');
+    const syncFullscreen = () => {
+      const fullscreen = document.fullscreenElement === root;
+      root.dataset.fullscreen = String(fullscreen);
+      if (expand) {
+        expand.textContent = fullscreen ? '⤡' : '⤢';
+        expand.setAttribute('aria-label', fullscreen ? 'Exit fullscreen' : 'Enter fullscreen');
+      }
+      requestAnimationFrame(updateConnections);
+    };
+    expand?.addEventListener('click', async () => {
+      try {
+        if (document.fullscreenElement === root) await document.exitFullscreen();
+        else await root.requestFullscreen();
+        syncFullscreen();
+      } catch {
+        if (state) state.textContent = 'No fullscreen';
+      }
+    });
+    document.addEventListener('fullscreenchange', syncFullscreen);
+    reset('Auto-ready');
+    if ('IntersectionObserver' in window) {
+      const autoStartObserver = new IntersectionObserver((entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        autoStartObserver.disconnect();
+        window.setTimeout(() => {
+          if (!autoStarted && root.dataset.executionState === 'idle') runDemo();
+        }, 360);
+      }, { threshold: 0.18 });
+      autoStartObserver.observe(root);
+    } else {
+      window.setTimeout(() => { if (!autoStarted) runDemo(); }, 500);
+    }
+  });
+</script>

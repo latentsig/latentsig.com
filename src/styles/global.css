@@ -15,3 +15,75 @@ body { overflow-wrap: anywhere; }
 @media(forced-colors:active) {
   :where(a,button):focus-visible { outline-color:Highlight; }
 }
+
+/* Reversible whole-site light preview. The rendered media is counter-filtered
+   so existing images, animation canvases, SVGs, and embedded video keep their colors. */
+html.light-theme-preview {
+  color-scheme: light;
+  background: #f7f8fc;
+}
+html.light-theme-preview body {
+  background: #f7f8fc !important;
+}
+html.light-theme-preview main {
+  filter: invert(1) hue-rotate(180deg);
+}
+html.light-theme-preview main :is(img, video, canvas, svg, iframe, .reading-progress) {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+/* Keep the top bar matched to the official logo navy (#050f34) so the logo blends seamlessly. */
+html.light-theme-preview .nav-shell {
+  color: #f2f3fc !important;
+  background: #050f34 !important;
+  border-bottom-color: rgba(199, 204, 238, .16) !important;
+}
+html.light-theme-preview .nav-link {
+  color: rgba(236, 238, 252, .88) !important;
+}
+html.light-theme-preview .nav-link:hover,
+html.light-theme-preview .nav-link:focus-visible,
+html.light-theme-preview .nav-link.is-current,
+html.light-theme-preview .nav-item.is-open > .nav-link {
+  color: #c7c4ff !important;
+}
+html.light-theme-preview .nav-cta {
+  color: #050f34 !important;
+  background: #f4f6ff !important;
+  border-color: rgba(255, 255, 255, .28) !important;
+}
+html.light-theme-preview .nav-cta:hover {
+  background: #ffffff !important;
+  border-color: #c7c4ff !important;
+}
+html.light-theme-preview .mega-menu {
+  color: #20283c !important;
+  background: rgba(250, 251, 254, .98) !important;
+  border-color: #dce1eb !important;
+  box-shadow: 0 24px 70px rgba(24, 34, 58, .16) !important;
+}
+html.light-theme-preview .mega-feature {
+  border-color: #dce1eb !important;
+  background: radial-gradient(ellipse at 10% 0%, rgba(103, 107, 211, .09), transparent 62%), #f2f4f9 !important;
+}
+html.light-theme-preview .menu-kicker,
+html.light-theme-preview .menu-overline {
+  color: #626b83 !important;
+}
+html.light-theme-preview .mega-feature p {
+  color: #586176 !important;
+}
+html.light-theme-preview .feature-link,
+html.light-theme-preview .link-arrow {
+  color: #555bc7 !important;
+}
+html.light-theme-preview .mega-link {
+  border-bottom-color: #dce1eb !important;
+}
+html.light-theme-preview .mega-link:hover {
+  background: #eef0f7 !important;
+  border-color: #dce1eb !important;
+}
+html.light-theme-preview .mega-link small {
+  color: #687188 !important;
+}

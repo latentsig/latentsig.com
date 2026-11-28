@@ -1,0 +1,77 @@
+---
+import AgenticWorkspace from './AgenticWorkspace.astro';
+import AnnotationWorkspace from './AnnotationWorkspace.astro';
+import { BOOK_DEMO_URL } from '../../consts';
+
+interface Props { kind: 'agentic' | 'annotation'; }
+const { kind } = Astro.props;
+const agentic = kind === 'agentic';
+const name = agentic ? 'Agentic AI Studio' : 'LatentVerify';
+const slug = agentic ? 'agentic-ai-platform' : 'annotation-verification';
+const headline = agentic ? 'Make every agent workflow observable.' : 'See how every label earns approval.';
+const summary = agentic
+  ? 'Build agentic workflows through an intuitive visual canvas or natural-language queries—then inspect every execution trace and require human sign-off backed by source evidence.'
+  : 'Compare independent annotation passes, surface IoU disagreements automatically, and export audit-ready ground truth.';
+const capabilities = agentic ? [
+  { number: '01', title: 'Visual UI & natural queries', copy: 'Author multi-agent pipelines by dragging nodes in an intuitive UI or describing the workflow in plain language.' },
+  { number: '02', title: 'Evidence trail', copy: 'Every synthesized claim stays anchored to the exact source passages behind it.' },
+  { number: '03', title: 'Human approval gates', copy: 'Hold high-stakes outputs for domain sign-off before downstream dispatch.' },
+] : [
+  { number: '01', title: 'Dual-pass consensus', copy: 'Annotators label isolated copies of each frame or record independently.' },
+  { number: '02', title: 'Discrepancy routing', copy: 'IoU and label conflicts below threshold route automatically to senior review.' },
+  { number: '03', title: 'Audit-ready export', copy: 'Lock verified ground truth with provenance hashes ready for model training.' },
+];
+---
+
+<div class="product-page" data-product-page>
+  <section class="product-hero" aria-labelledby="product-heading">
+    <div class="hero-copy">
+      <a href="/products/" class="back-link">← All products</a>
+      <span class="eyebrow">PRODUCT  /  {name}</span>
+      <h1 id="product-heading">{headline}</h1>
+      <p>{summary}</p>
+      <div class="hero-actions"><a class="action-primary" href={`/demos/#${slug}`}>View demo <span aria-hidden="true">↗</span></a><a class="action-secondary" href={BOOK_DEMO_URL}>Book a demo <span aria-hidden="true">↗</span></a></div>
+    </div>
+    <div class="hero-visual"><div class="visual-topline"><span>{name}</span><span>INTERACTIVE WORKSPACE</span></div><button class="screen-launch" type="button" data-open-dialog aria-haspopup="dialog" aria-controls={`${slug}-large-walkthrough`} aria-label={`Open enlarged ${name} workspace`}>Open fullscreen workspace ↗</button>{agentic ? <AgenticWorkspace /> : <AnnotationWorkspace />}</div>
+  </section>
+
+  <section id="walkthrough" class="walkthrough-section" aria-labelledby="walkthrough-heading"><div class="section-heading"><span class="eyebrow">02 / ARCHITECTURE</span><h2 id="walkthrough-heading">A clear path from source to decision.</h2><p>Use the interactive controls above to inspect every agent handoff, consensus check, and approval gate.</p></div><div class="capability-section" aria-label={`${name} capabilities`}>{capabilities.map((item) => (<div class="capability"><span>{item.number}</span><h3>{item.title}</h3><p>{item.copy}</p></div>))}</div></section>
+
+  {agentic && <section class="trust-capabilities" aria-label="Workflow trust and deployment information"><article id="human-approval"><span>01</span><h3>Human approvals</h3><p>Review gates hold high-stakes results for domain sign-off before execution proceeds.</p></article><article id="evaluation"><span>02</span><h3>Evaluation</h3><p>Automated policy checks and human-in-the-loop review run directly inside the pipeline.</p></article><article id="observability"><span>03</span><h3>Observability &amp; audit</h3><p>Every run state, tool call, and evidence link is persisted in the execution trace.</p></article><article id="security"><span>04</span><h3>Security &amp; trust</h3><p>Tool permissions and approval boundaries are enforced directly in the workflow contract.</p></article><article id="data-foundations"><span>05</span><h3>Data foundations</h3><p>Inputs, intermediate signals, and final outputs stay linked as auditable run state.</p></article><article id="deployment"><span>06</span><h3>Deployment options</h3><p>Deploy inside your own VPC on-premises, on Google Cloud, or on AWS.</p></article></section>}
+
+  <section class="last-action" aria-label="Next step"><div><span class="eyebrow">SEE IT IN CONTEXT</span><h2>Walk through your own production workflow with our team.</h2></div><div><a href={`/demos/#${slug}`}>Interactive demo ↗</a><a href={BOOK_DEMO_URL}>Book a demo ↗</a></div></section>
+
+  <dialog class="walkthrough-dialog" id={`${slug}-large-walkthrough`} data-product-dialog aria-label={`${name} fullscreen workspace`}>
+    <div class="dialog-shell"><div class="dialog-top"><div><span class="eyebrow">INTERACTIVE WORKSPACE</span><h2>{name}</h2></div><button type="button" data-close-dialog aria-label="Close fullscreen workspace">Close <span aria-hidden="true">×</span></button></div>{agentic ? <AgenticWorkspace /> : <AnnotationWorkspace />}</div>
+  </dialog>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-product-page]').forEach((page) => {
+    const dialog = page.querySelector<HTMLDialogElement>('[data-product-dialog]');
+    const close = page.querySelector<HTMLButtonElement>('[data-close-dialog]');
+    if (!dialog || !close) return;
+    let returnFocus: HTMLButtonElement | null = null;
+    page.querySelectorAll<HTMLButtonElement>('[data-open-dialog]').forEach((trigger) => trigger.addEventListener('click', () => {
+      returnFocus = trigger;
+      dialog.showModal();
+      close.focus();
+    }));
+    close.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
+    dialog.addEventListener('close', () => returnFocus?.focus());
+  });
+</script>
+
+<style>
+  .product-page{background:#0b1326;color:#e9edff;font-family:Geist,system-ui,sans-serif}.product-hero,.walkthrough-section,.capability-section,.last-action{width:min(1320px,100%);margin:auto;padding-left:clamp(20px,4.5vw,72px);padding-right:clamp(20px,4.5vw,72px)}.product-hero{padding-top:95px;padding-bottom:80px}.hero-copy{max-width:780px}.back-link{display:inline-flex;align-items:center;gap:6px;margin-bottom:45px;color:#b9c3dc;text-decoration:none;font-size:12px}.back-link:hover{color:#fff}.eyebrow{color:#aeb2f3;font-size:11px;font-weight:700;letter-spacing:.12em}.hero-copy>.eyebrow{display:block}.hero-copy h1{max-width:780px;margin:17px 0 19px;color:#edf0ff;font-family:'Hanken Grotesk',Geist,sans-serif;font-size:clamp(44px,6vw,76px);font-weight:600;line-height:1.04;letter-spacing:-.045em;text-wrap:balance}.hero-copy>p{max-width:665px;margin:0;color:#b8c2da;font-size:clamp(16px,1.6vw,20px);line-height:1.6}.hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}.hero-actions a,.last-action a{display:inline-flex;align-items:center;justify-content:center;gap:22px;min-height:49px;padding:12px 19px;border:1px solid #c3c4ff;border-radius:7px;text-decoration:none;font-size:13px;font-weight:650;transition:transform .18s ease,background .18s ease}.hero-actions a:hover,.last-action a:hover{transform:translateY(-2px)}.action-primary{background:#c0c1ff;color:#11163a}.action-secondary{background:#172039;color:#e8eafb}
+  .hero-visual{margin-top:62px}.visual-topline{display:flex;justify-content:space-between;gap:14px;padding:0 3px 13px;color:#aeb8d3;font-size:10px;font-weight:700;letter-spacing:.11em;text-transform:uppercase}.screen-launch{width:100%;display:block;position:relative;padding:0;border:0;border-radius:18px;background:transparent;cursor:zoom-in;text-align:left}.screen-launch :global(.product-screen){transition:transform .2s ease,box-shadow .2s ease}.screen-launch:hover :global(.product-screen){transform:translateY(-3px);box-shadow:0 36px 85px rgba(0,0,0,.3)}.enlarge-prompt{position:absolute;right:18px;bottom:18px;display:inline-flex;gap:12px;align-items:center;padding:10px 12px;border:1px solid #a7abd8;border-radius:7px;background:#0d1528;color:#f0f1ff;font-size:11px;font-weight:700;box-shadow:0 8px 20px rgba(0,0,0,.28)}.hero-visual>p{margin:11px 2px 0;color:#9faac5;font-size:11px}
+  .walkthrough-section{padding-top:85px;padding-bottom:74px;border-top:1px solid #303a55}.section-heading{margin-bottom:31px}.section-heading h2,.last-action h2{margin:10px 0;color:#f1f2ff;font-family:'Hanken Grotesk',Geist,sans-serif;font-size:clamp(31px,4vw,48px);font-weight:600;letter-spacing:-.035em}.section-heading p{margin:0;color:#acb7d1;font-size:14px}.capability-section{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;padding-top:18px;padding-bottom:110px}.capability{min-height:170px;padding:25px;border-top:1px solid #737ba0;background:#141e33}.capability>span{color:#adb1f2;font-size:11px;font-weight:700}.capability h3{margin:17px 0 7px;color:#f1f2ff;font-size:19px;font-weight:650}.capability p{max-width:280px;margin:0;color:#adb8d1;font-size:13px;line-height:1.5}.last-action{display:flex;align-items:center;justify-content:space-between;gap:25px;padding-top:40px;padding-bottom:115px;border-top:1px solid #303a55}.last-action h2{max-width:600px;font-size:clamp(27px,3vw,37px)}.last-action>div:last-child{display:flex;flex-wrap:wrap;gap:8px}.last-action a{color:#f1f2ff;background:#172039}.last-action a:last-child{background:#c0c1ff;color:#11163a}
+  .walkthrough-dialog{width:min(1180px,calc(100vw - 32px));max-height:calc(100dvh - 32px);padding:0;border:1px solid #505b7a;border-radius:18px;background:#0b1326;color:#eef0ff;box-shadow:0 30px 100px rgba(0,0,0,.65);overflow-y:auto}.walkthrough-dialog::backdrop{background:rgba(4,8,20,.78);backdrop-filter:blur(5px)}.dialog-shell{padding:18px}.dialog-top{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:15px}.dialog-top h2{margin:5px 0 0;color:#f1f2ff;font-size:20px}.dialog-top button{flex:none;min-height:40px;padding:7px 12px;border:1px solid #65708f;border-radius:7px;background:#202a43;color:#f2f2ff;font:600 12px Geist,sans-serif;cursor:pointer}.dialog-top button span{margin-left:10px;font-size:20px;vertical-align:middle}.walkthrough-dialog :global(.product-demo){box-shadow:none}
+  .trust-capabilities{width:min(1320px,100%);margin:auto;padding:10px clamp(20px,4.5vw,72px) 80px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.trust-capabilities article{min-height:132px;padding:18px;border:1px solid #36415b;border-radius:10px;background:#101a2c;scroll-margin-top:100px}.trust-capabilities article>span{color:#aeb1f0;font-size:10px;font-weight:700}.trust-capabilities h3{margin:12px 0 7px;color:#edf0ff;font-size:15px}.trust-capabilities p{margin:0;color:#acb7cf;font-size:11px;line-height:1.5}
+  :global(html.light-theme-preview) .walkthrough-dialog{filter:invert(1) hue-rotate(180deg)}
+  :where(a,button):focus-visible{outline:3px solid #c4c5ff;outline-offset:4px}
+  @media(max-width:900px){.trust-capabilities{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:700px){.product-hero{padding-top:51px;padding-bottom:57px}.back-link{margin-bottom:30px}.hero-visual{margin-top:42px}.walkthrough-section{padding-top:57px}.capability-section{grid-template-columns:1fr;gap:10px;padding-bottom:45px}.capability{min-height:0;padding:21px}.trust-capabilities{grid-template-columns:1fr;padding-bottom:55px}.last-action{align-items:start;flex-direction:column;padding-bottom:78px}.visual-topline{font-size:9px}.dialog-shell{padding:9px}.dialog-top{padding:6px 4px}.dialog-top h2{font-size:16px}}
+  @media(prefers-reduced-motion:reduce){.hero-actions a,.last-action a,.screen-launch :global(.product-screen){transition:none}}
+</style>

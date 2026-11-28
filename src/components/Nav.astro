@@ -1,102 +1,691 @@
 ---
 import Logo from './Logo.astro';
-import { CALENDLY_URL } from '../consts';
+import { BOOK_DEMO_URL } from '../consts';
 
 const path = Astro.url.pathname;
 
-const links = [
-  { href: '/rd-advisory/', label: 'R&D Advisory' },
-  { href: '/implementation/', label: 'Implementation' },
-  { href: '/consulting/', label: 'Consulting' },
-  { href: '/insights/', label: 'Insights' },
-  { href: '/about/', label: 'About' },
+const menus = [
+  {
+    label: 'Products',
+    href: '/products/',
+    eyebrow: 'Featured · Demos',
+    description: 'Explore LatentVerify and Agentic AI Studio — production workspaces for verified data and observable AI workflows.',
+    links: [
+      { href: '/products/', label: 'Explore all products', detail: 'Tools for verified data and observable AI workflows' },
+      { href: '/products/annotation-verification/', label: 'LatentVerify', detail: 'Dual-pass annotation, IoU consensus checks, and audit-ready ground truth.' },
+      { href: '/demos/#annotation-verification', label: 'LatentVerify demo', detail: 'Inspect the interactive verification workspace' },
+      { href: '/products/agentic-ai-platform/', label: 'Agentic AI Studio', detail: 'Multi-agent orchestration with visible traces and human approval gates.' },
+      { href: '/demos/#agentic-ai-platform', label: 'Agentic AI Studio demo', detail: 'Run an end-to-end multi-agent pipeline' },
+    ],
+  },
+  {
+    label: 'Solutions',
+    href: '/solutions/',
+    eyebrow: 'Digital Solutions',
+    description: 'Applied AI and engineering for healthcare, industrial AI, retail, and education.',
+    links: [
+      { href: '/solutions/healthcare/', label: 'Healthcare', detail: 'Care and clinical workflows' },
+      { href: '/solutions/industry/', label: 'Industrial AI', detail: 'Operations and quality systems' },
+      { href: '/solutions/retail/', label: 'Retail', detail: 'Customer and commerce workflows' },
+      { href: '/solutions/education/', label: 'Education', detail: 'Learning and knowledge systems' },
+    ],
+  },
+  {
+    label: 'Services',
+    href: '/services/',
+    eyebrow: 'How We Work',
+    description: 'Focused R&D advisory, technical consulting, and practical delivery.',
+    links: [
+      { href: '/services/', label: 'Explore all services', detail: 'From research to production' },
+      { href: '/rd-advisory/', label: 'Applied AI Research & Model Engineering', detail: 'Research and model engineering' },
+      { href: '/consulting/', label: 'AI Consulting', detail: 'Focused technical guidance' },
+      { href: '/implementation/', label: 'AI Implementation', detail: 'Practical delivery for production' },
+    ],
+  },
+  {
+    label: 'About',
+    href: '/about/',
+    eyebrow: 'LatentSig AI',
+    description: 'Independent AI engineering and software studio based in Bengaluru.',
+    links: [
+      { href: '/about/', label: 'Company', detail: 'Research, products, and apps' },
+      { href: '/contact/', label: 'Contact', detail: 'Get in touch with our team' },
+    ],
+  },
 ];
+
+const previewImages: Record<string, string> = {
+  '/products/': '/images/nav/product-agentic-menu.webp',
+  '/products/annotation-verification/': '/images/nav/product-annotation-menu.webp',
+  '/demos/#annotation-verification': '/images/nav/product-annotation-menu.webp',
+  '/products/agentic-ai-platform/': '/images/nav/product-agentic-menu.webp',
+  '/demos/#agentic-ai-platform': '/images/nav/product-agentic-menu.webp',
+  '/solutions/healthcare/': '/images/nav/solutions-healthcare.webp',
+  '/solutions/industry/': '/images/nav/solutions-industry.webp',
+  '/solutions/retail/': '/images/nav/solutions-retail.webp',
+  '/solutions/education/': '/images/nav/solutions-education.webp',
+  '/services/': '/images/nav/services-research.webp',
+  '/rd-advisory/': '/images/nav/services-research.webp',
+  '/consulting/': '/images/nav/services-consulting.webp',
+  '/implementation/': '/images/nav/services-implementation.webp',
+  '/about/': '/images/nav/about-research.webp',
+  '/contact/': '/images/nav/services-consulting.webp',
+};
+const previewFor = (href: string) => previewImages[href] ?? '/3d/hero/observatory.webp';
+
+const directLinks = [{ href: '/insights/', label: 'Insights' }];
+const mobileIcons: Record<string, string> = {
+  grid: '<rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/>',
+  layers: '<path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5"/>',
+  spark: '<path d="m12 3 1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3Z"/>',
+  document: '<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v5h5M9 12h6M9 16h6"/>',
+  network: '<circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="18" r="2.5"/><circle cx="19" cy="18" r="2.5"/><path d="m10.8 7.2-4.6 8.6m7-8.6 4.6 8.6M7.5 18h9"/>',
+  globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
+  flask: '<path d="M9 3h6M10 3v6l-5 8.2A2.5 2.5 0 0 0 7.1 21h9.8a2.5 2.5 0 0 0 2.1-3.8L14 9V3"/><path d="M8 15h8"/>',
+  code: '<path d="m8 8-4 4 4 4M16 8l4 4-4 4M14 5l-4 14"/>',
+  building: '<path d="M4 21V5l8-3 8 3v16M8 8h1M15 8h1M8 12h1M15 12h1M8 16h1M15 16h1M10 21v-3h4v3"/>',
+  mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/>',
+  chart: '<path d="M4 19V5M4 19h17"/><path d="m7 15 4-4 3 2 6-7"/>',
+  healthcare: '<path d="M12 4v16M4 12h16"/><circle cx="12" cy="12" r="9"/>',
+  industry: '<path d="M3 21V9l6 4V9l6 4V5h6v16H3ZM17 8h1M17 12h1M17 16h1"/>',
+  education: '<path d="m3 9 9-5 9 5-9 5-9-5Z"/><path d="M7 12v5c3 2 7 2 10 0v-5M21 9v6"/>',
+};
+const mobileIconByHref: Record<string, string> = {
+  '/products/': 'grid',
+  '/products/annotation-verification/': 'layers',
+  '/demos/#annotation-verification': 'document',
+  '/products/agentic-ai-platform/': 'spark',
+  '/demos/#agentic-ai-platform': 'network',
+  '/solutions/healthcare/': 'healthcare',
+  '/solutions/industry/': 'industry',
+  '/solutions/retail/': 'chart',
+  '/solutions/education/': 'education',
+  '/services/': 'grid',
+  '/rd-advisory/': 'flask',
+  '/consulting/': 'chart',
+  '/implementation/': 'code',
+  '/about/': 'building',
+  '/contact/': 'mail',
+  '/insights/': 'chart',
+  '/insights/latent-signals-activation-probing/': 'network',
+  '/insights/laya-rlcd-system-one/': 'spark',
+  '/insights/dflash-muse-spark-1-2/': 'spark',
+  '/blog/quantization-without-tears/': 'document',
+};
+const mobileIcon = (href: string) => mobileIcons[mobileIconByHref[href] ?? 'document'];
 ---
 
-<nav aria-label="Main navigation" class="fixed w-full top-0 z-50 bg-surface/80 backdrop-blur-xl border-b border-outline-variant/30">
-  <div class="flex justify-between items-center max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop h-20">
-    <a href="/" class="flex items-center text-on-surface hover:opacity-90 transition-opacity" aria-label="Latentsig home">
-      <Logo height={72} class="hidden xl:block" />
-      <Logo height={44} class="xl:hidden" />
+<header class="site-header">
+  <nav aria-label="Main navigation" class="nav-shell">
+    <a href="/" class="brand" aria-label="Latentsig home">
+      <Logo height={46} class="brand-logo" />
     </a>
-    <div class="hidden xl:flex items-center gap-gutter">
-      {
-        links.map((l) => (
-          <a
-            href={l.href}
-            aria-current={path === l.href ? "page" : undefined}
-            class={`inline-flex items-center min-h-11 font-label-md text-label-md transition-colors duration-200 ${
-              path === l.href
-                ? 'text-primary'
-                : 'text-on-surface-variant hover:text-primary'
-            }`}
-          >
-            {l.label}
-          </a>
-        ))
-      }
-    </div>
-    <a
-      href={CALENDLY_URL}
-      target="_blank"
-      rel="noopener"
-      class="hidden sm:inline-flex bg-primary-container text-on-primary-container px-6 py-2.5 rounded-lg font-label-md text-label-md font-bold hover:brightness-110 transition-all"
-    >
-      Get a Consultation
-    </a>
-    <button id="mobile-menu-toggle" type="button" class="xl:hidden text-on-surface" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" /></svg>
-    </button>
-  </div>
-  <div id="mobile-menu" hidden class="xl:hidden hidden border-t border-outline-variant/30 bg-surface">
-    <div class="flex flex-col px-margin-mobile py-4 gap-3">
-      {
-        links.map((l) => (
-          <a
-            href={l.href}
-            aria-current={path === l.href ? "page" : undefined}
-            class={`font-label-md text-label-md py-2 ${
-              path === l.href ? 'text-primary' : 'text-on-surface-variant'
-            }`}
-          >
-            {l.label}
-          </a>
-        ))
-      }
-      <a
-        href={CALENDLY_URL}
-        target="_blank"
-        rel="noopener"
-        class="mt-2 bg-primary-container text-on-primary-container px-6 py-3 rounded-lg font-label-md text-label-md font-bold text-center"
-      >
-        Get a Consultation
-      </a>
-    </div>
-  </div>
-</nav>
 
-<noscript><style>nav[aria-label="Main navigation"]{position:static}#mobile-menu{display:block!important}#mobile-menu-toggle{display:none}#main-content{padding-top:0}</style></noscript>
+    <div class="desktop-navigation" aria-label="Site sections">
+      {menus.map((menu) => (
+        <div class="nav-item" data-nav-item>
+          <a
+            class:list={['nav-link', path === menu.href && 'is-current']}
+            href={menu.href}
+            aria-current={path === menu.href ? 'page' : undefined}
+            aria-haspopup="true"
+            aria-expanded="false"
+            data-nav-trigger
+          >
+            {menu.label}
+            <svg class="chevron" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m4 6 4 4 4-4" /></svg>
+          </a>
+          <section class:list={['mega-menu', `mega-menu-${menu.label.toLowerCase()}`]} data-nav-panel aria-label={`${menu.label} menu`} hidden>
+            {menu.label === 'Products' ? (
+              <div class="products-mega-layout">
+                <div class="products-mega-feature">
+                  <div class="feature-visual">
+                    <img class="feature-image is-active" data-preview-image src="/images/nav/product-agentic-menu.webp" alt="Agentic AI Studio modular orchestration preview" width="720" height="440" loading="eager" decoding="async" />
+                    <img class="feature-image" data-preview-image src="/images/nav/product-annotation-menu.webp" alt="Annotation and Verification optical inspection preview" width="720" height="440" loading="eager" decoding="async" />
+                  </div>
+                  <span class="menu-overline" data-feature-overline>Agentic AI Studio</span>
+                  <h2 data-feature-title>Build agentic workflows visually or in plain language.</h2>
+                  <p data-feature-copy>Author multi-agent pipelines in an intuitive UI or via natural queries, with full traces and human checkpoints.</p>
+                </div>
+                <div class="products-mega-list"><span class="menu-overline">Our products</span>
+                  <a
+                    class="product-menu-group product-menu-agentic product-demo-card is-previewed"
+                    href="/demos/#agentic-ai-platform"
+                    data-preview-src="/images/nav/product-agentic-menu.webp"
+                    data-preview-overline="Agentic AI Studio"
+                    data-preview-title="Build agentic workflows visually or in plain language."
+                    data-preview-copy="Author multi-agent pipelines in an intuitive UI or via natural queries, with full traces and human checkpoints."
+                  >
+                    <h3>Agentic AI Studio</h3>
+                    <p>Build workflows in an intuitive UI or via natural queries, with human review.</p>
+                    <span class="product-card-arrow" aria-hidden="true">↗</span>
+                  </a>
+                  <a
+                    class="product-menu-group product-menu-annotation product-demo-card"
+                    href="/demos/#annotation-verification"
+                    data-preview-src="/images/nav/product-annotation-menu.webp"
+                    data-preview-overline="LatentVerify · Annotation & Verification"
+                    data-preview-title="Ground truth, verified by experts."
+                    data-preview-copy="Detect label disagreements, route edge cases to reviewers, and export audited datasets."
+                  >
+                    <h3>LatentVerify</h3>
+                    <p>Annotation &amp; verification with dual-pass consensus and audit trails.</p>
+                    <span class="product-card-arrow" aria-hidden="true">↗</span>
+                  </a>
+                </div>
+                <div class="products-mega-trust" role="group" aria-label="Trust and capabilities information"><span class="menu-overline">Built for careful work</span><div><i aria-hidden="true">✓</i>Human approvals</div><div><i aria-hidden="true">◇</i>LLM &amp; human evaluation</div><div><i aria-hidden="true">◷</i>Observable, auditable runs</div><div><i aria-hidden="true">⌑</i>Security-minded workflows</div><div><i aria-hidden="true">▤</i>Reliable data foundations</div><div class="deployment-info"><i aria-hidden="true">•</i><span>Deployment fit<br /><small>On-premises, Google Cloud, or AWS discussed per engagement.</small></span></div></div>
+              </div>
+            ) : (
+            <div class="mega-feature" aria-hidden="true">
+                <div class="feature-visual" data-agentic={previewFor(menu.links[0].href).endsWith('products-agentic.webp') ? 'true' : 'false'}>
+                <img class="feature-image is-active" data-preview-image src={previewFor(menu.links[0].href)} alt="" width="720" height="440" loading="eager" decoding="async" />
+                <img class="feature-image" data-preview-image src={previewFor(menu.links[0].href)} alt="" width="720" height="440" loading="eager" decoding="async" />
+                {menu.label === 'Products' && (
+                  <svg class="agent-flow" data-agent-flow aria-hidden="true" viewBox="0 0 340 260" preserveAspectRatio="none">
+                    <path class="agent-flow-path" d="M22 145 C79 68 114 201 167 130 S253 70 318 144" />
+                    <circle class="agent-flow-pulse" r="3.5"><animateMotion dur="4.2s" repeatCount="indefinite" path="M22 145 C79 68 114 201 167 130 S253 70 318 144" /></circle>
+                  </svg>
+                )}
+              </div>
+            </div>
+            <div class="mega-links">
+              <span class="menu-overline">Discover</span>
+              <h2>{menu.label}</h2>
+              <div class="mega-link-grid">
+                {menu.links.map((link) => (
+                  <a class="mega-link" href={link.href} data-preview-src={previewFor(link.href)}>
+                    <span><strong>{link.label}</strong><small>{link.detail}</small></span>
+                    <span class="link-arrow" aria-hidden="true">↗</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+            )}
+          </section>
+        </div>
+      ))}
+      {directLinks.map((link) => (
+        <a
+          href={link.href}
+          aria-current={path === link.href ? 'page' : undefined}
+          class:list={['nav-link', path === link.href && 'is-current']}
+        >{link.label}</a>
+      ))}
+    </div>
+
+    <a class="nav-cta" href={BOOK_DEMO_URL}>
+      <span>Book a Demo</span><span aria-hidden="true">↗</span>
+    </a>
+
+    <button id="mobile-menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+    </button>
+  </nav>
+
+  <div id="mobile-menu" class="mobile-menu" hidden>
+    <button class="mobile-menu-backdrop" type="button" aria-label="Close navigation menu" data-mobile-backdrop></button>
+    <section class="mobile-drawer" role="dialog" aria-modal="true" aria-label="Mobile navigation" tabindex="-1">
+      <div class="mobile-drawer-header">
+        <a href="/" class="mobile-brand" aria-label="Latentsig home">
+          <Logo height={36} class="mobile-brand-logo" />
+        </a>
+        <button class="mobile-menu-close" type="button" aria-label="Close navigation menu" data-mobile-close>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg>
+        </button>
+      </div>
+      <nav class="mobile-drawer-content" aria-label="Mobile navigation links">
+        <div class="mobile-panel-inner">
+          {menus.map((menu) => (
+            <details class="mobile-menu-section" name="mobile-nav-sections" open={menu.href === '/products/'}>
+              <summary>{menu.label}<svg class="mobile-section-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5" /></svg></summary>
+              <div class="mobile-section-links">
+                {menu.links.map((link) => (
+                  <a class="mobile-nav-link" href={link.href} aria-current={path === link.href ? 'page' : undefined}>
+                    <span class="mobile-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" set:html={mobileIcon(link.href)}></svg></span>
+                    <span class="mobile-nav-label">{link.label}</span>
+                    <svg class="mobile-nav-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" /></svg>
+                  </a>
+                ))}
+              </div>
+            </details>
+          ))}
+          <a class="mobile-insights-link" href="/insights/" aria-current={path === '/insights/' ? 'page' : undefined}>Insights</a>
+        </div>
+      </nav>
+      <div class="mobile-drawer-footer">
+        <a class="mobile-contact-cta" href="/contact/">Talk to us</a>
+        <a class="mobile-demo-cta" href={BOOK_DEMO_URL}>Book a Demo<span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+  </div>
+</header>
+
+<noscript><style>.site-header{position:static!important}#mobile-menu{display:block!important}#mobile-menu-toggle{display:none!important}#main-content{padding-top:0}</style></noscript>
+
 <style>
-  #mobile-menu-toggle{min-width:44px;min-height:44px;align-items:center;justify-content:center}
-  #mobile-menu{max-height:calc(100vh - 80px);max-height:calc(100dvh - 80px);overflow-y:auto;overscroll-behavior:contain}
-  #mobile-menu a{display:flex;align-items:center;min-height:44px}
-  @media(max-width:1279px){#mobile-menu-toggle{display:inline-flex}}
+  .site-header {
+    position: fixed;
+    z-index: 50;
+    inset: 0 0 auto;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+  }
+  .nav-shell {
+    pointer-events: auto;
+    position: relative;
+    width: 100%;
+    min-height: 84px;
+    padding: 0 clamp(24px, 7vw, 132px);
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    border: 0;
+    border-bottom: 1px solid rgba(200, 204, 231, .16);
+    border-radius: 0;
+    color: #f2f3fc;
+    background: #050f34;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    box-shadow: none;
+  }
+  .brand {
+    color: inherit;
+    display: inline-flex;
+    align-items: center;
+    flex: 0 0 auto;
+    padding: 0 10px 0 0;
+    text-decoration: none;
+  }
+  .brand-logo {
+    display: block;
+    width: auto;
+    height: 46px;
+    max-width: 100%;
+    object-fit: contain;
+  }
+  .desktop-navigation { display:flex; align-self:stretch; align-items:center; justify-content:center; gap:clamp(4px, 1.1vw, 18px); flex:1; }
+  .nav-item { align-self:stretch; display:flex; align-items:center; }
+  .nav-link {
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    min-height:44px;
+    padding:0 10px;
+    color:rgba(232,233,246,.83);
+    font:500 15px/1.2 'Geist', ui-sans-serif, system-ui, sans-serif;
+    text-decoration:none;
+    white-space:nowrap;
+    transition:color .18s ease, background .18s ease;
+  }
+  .nav-link:hover,.nav-link:focus-visible,.nav-link.is-current,.nav-item.is-open>.nav-link { color:#c7c4ff; }
+  .nav-link:focus-visible,.nav-cta:focus-visible,.brand:focus-visible { outline:2px solid #aaa6ff; outline-offset:3px; }
+  .chevron { width:14px; height:14px; stroke:currentColor; stroke-width:1.35; transition:transform .2s ease; }
+  .nav-item.is-open .chevron { transform:rotate(180deg); }
+  .nav-cta {
+    flex:0 0 auto;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:11px;
+    min-height:52px;
+    padding:0 22px;
+    border-radius:999px;
+    color:#f7f7ff;
+    background:#171922;
+    border:1px solid rgba(255,255,255,.12);
+    font:650 14px/1 'Geist', ui-sans-serif, system-ui, sans-serif;
+    text-decoration:none;
+    transition:background .2s ease, transform .2s ease, border-color .2s ease;
+  }
+  .nav-cta:hover { background:#25283a; border-color:rgba(190,187,255,.4); transform:translateY(-1px); }
+  .nav-cta span:last-child { font-size:16px; }
+  .mega-menu {
+    position:absolute;
+    top:100%;
+    left:0;
+    right:0;
+    display:grid;
+    grid-template-columns:minmax(270px, 360px) minmax(0, 1fr);
+    gap:24px;
+    padding:16px;
+    color:#f2f3f8;
+    border:1px solid rgba(200,204,231,.18);
+    border-top:0;
+    border-radius:0 0 24px 24px;
+    background:rgba(12,15,22,.94);
+    -webkit-backdrop-filter:blur(26px) saturate(135%);
+    backdrop-filter:blur(26px) saturate(135%);
+    box-shadow:0 24px 70px rgba(0,0,0,.42);
+    animation:menu-in .18s ease both;
+  }
+  .mega-menu[hidden] { display:none; }
+  .mega-menu-products { display:block; }
+  .products-mega-layout{display:grid;grid-template-columns:minmax(270px,1fr) minmax(330px,1.15fr) minmax(240px,.82fr);gap:24px;align-items:stretch;color:#f2f3f8}
+  .products-mega-feature{display:flex;flex-direction:column;min-width:0;padding:4px 2px 6px}.products-mega-feature .feature-visual{flex:1;min-height:190px;margin-bottom:14px}.products-mega-feature .menu-overline{margin-top:auto}.products-mega-feature h2{margin:6px 0 6px;font:600 19px/1.22 'Geist',ui-sans-serif,system-ui,sans-serif;letter-spacing:-.025em}.products-mega-feature p{max-width:340px;margin:0;color:rgba(223,225,235,.72);font:400 13px/1.5 'Geist',ui-sans-serif,system-ui,sans-serif}
+  .products-mega-list{display:grid;align-content:start;gap:12px}.products-mega-list>.menu-overline,.products-mega-trust>.menu-overline{display:block;margin:3px 0 2px}.product-menu-group{padding:14px 14px 12px;border:1px solid rgba(255,255,255,.11);border-radius:12px;background:rgba(255,255,255,.025)}.product-menu-group h3{margin:0;color:#f2f3f8;font:600 14.5px/1.3 'Geist',ui-sans-serif,system-ui,sans-serif}.product-menu-group p{margin:5px 0 0;color:rgba(223,225,235,.72);font:400 12.5px/1.45 'Geist',ui-sans-serif,system-ui,sans-serif}.product-menu-group>div{display:grid;grid-template-columns:1fr;gap:6px}.product-menu-group .mega-link{min-height:37px;padding:8px;border:1px solid rgba(255,255,255,.1);border-radius:6px;background:rgba(10,14,27,.34)}.product-menu-group .mega-link strong{font-size:11px;font-weight:600}.product-menu-group .mega-link strong span{margin-left:5px;color:#c3c0ff}
+  .mega-menu-products .product-menu-group{position:relative;isolation:isolate;display:flex;min-height:126px;flex-direction:column;justify-content:center;align-items:flex-start;overflow:hidden;padding:16px 18px;border:1px solid rgba(192,201,233,.22);border-radius:14px;background:#0a1026;color:#fff}
+  .mega-menu-products .product-menu-group::before{position:absolute;inset:0;z-index:-1;content:"";background-size:cover;background-position:center 52%;opacity:.96;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+  .mega-menu-products .product-menu-agentic::before{background-image:linear-gradient(95deg,rgba(5,15,52,.96) 0%,rgba(5,15,52,.84) 48%,rgba(5,15,52,.18) 100%),url('/images/nav/product-agentic-menu.webp')}
+  .mega-menu-products .product-menu-annotation::before{background-image:linear-gradient(95deg,rgba(5,15,52,.96) 0%,rgba(5,15,52,.84) 48%,rgba(5,15,52,.18) 100%),url('/images/nav/product-annotation-menu.webp')}
+  .mega-menu-products .product-menu-group:hover::before,.mega-menu-products .product-menu-group:focus-within::before,.mega-menu-products .product-menu-group.is-previewed::before{transform:scale(1.04)}
+  .mega-menu-products .product-menu-group h3,.mega-menu-products .product-menu-group h3 a{position:relative;color:#fff!important;text-decoration:none}
+  .mega-menu-products .product-menu-group p{position:relative;max-width:74%;margin:5px 0 0;color:rgba(244,246,255,.82)!important}
+  .mega-menu-products .product-menu-group>div{position:relative;display:flex;grid-template-columns:none;gap:6px}
+  .mega-menu-products .product-menu-group .mega-link{display:inline-flex;width:max-content;min-height:0;align-items:center;padding:2px 0;border:1px solid transparent;border-radius:0;background:transparent;color:#fff}
+  .mega-menu-products .product-menu-group .mega-link:hover,.mega-menu-products .product-menu-group .mega-link:focus-visible{border-color:transparent;background:transparent;color:#cbc6ff;transform:none}
+  .mega-menu-products .product-menu-group .mega-link strong{font-size:11px;font-weight:600}
+  .mega-menu-products .product-menu-group .mega-link strong span{color:#cbc6ff}
+  .products-mega-trust{display:grid;align-content:start;gap:10px;padding-left:20px;border-left:1px solid rgba(255,255,255,.12);cursor:default}.products-mega-trust>div{display:flex;align-items:center;gap:10px;min-height:24px;color:#e8eaf4;font:500 12.5px/1.35 'Geist',ui-sans-serif,system-ui,sans-serif;cursor:default;user-select:none}.products-mega-trust>div>i{width:22px;height:22px;flex:none;display:grid;place-items:center;border:1px solid rgba(177,178,255,.27);border-radius:6px;color:#c2c0ff;background:rgba(137,131,255,.1);font-size:11px;font-style:normal}.products-mega-trust .deployment-info{align-items:flex-start;margin-top:4px;padding-top:10px;border-top:1px solid rgba(140,152,184,.2)}.products-mega-trust .deployment-info>span{display:block}.products-mega-trust .deployment-info small{display:block;margin-top:2px;color:#8691aa;font-size:11px;line-height:1.4}
+  .mega-feature {
+    min-width:0;
+    min-height:268px;
+    padding:10px;
+    border:1px solid rgba(177,178,255,.24);
+    border-radius:18px;
+    background:radial-gradient(ellipse at 30% 10%,rgba(126,119,245,.24),transparent 64%),#141a34;
+    box-shadow:inset 0 1px rgba(255,255,255,.08);
+  }
+  .feature-visual { position:relative;isolation:isolate;width:100%;height:100%;min-height:246px;overflow:hidden;border:1px solid rgba(255,255,255,.2);border-radius:11px;background:#10152b;box-shadow:0 15px 32px rgba(0,0,0,.25); }
+  .feature-image { position:absolute;inset:0;width:100%;height:100%;padding:0;object-fit:cover;object-position:center;opacity:0;transform:scale(1);filter:drop-shadow(0 12px 18px rgba(0,0,0,.27));transition:opacity .3s ease,transform .55s cubic-bezier(.2,.7,.2,1); }
+  .feature-image.is-active { opacity:1; }
+  .mega-menu:not(.mega-menu-products):has(.mega-link.is-previewed) .feature-image.is-active { transform:scale(1.045); }
+  .agent-flow { position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0;transition:opacity .24s ease; }
+  .mega-menu-products .feature-visual[data-agentic="true"] .agent-flow { opacity:.92; }
+  .agent-flow-path { fill:none;stroke:rgba(178,206,255,.5);stroke-width:1.4;stroke-dasharray:4 8; }
+  .agent-flow-pulse { fill:#d9d6ff;filter:drop-shadow(0 0 5px #9b9aff); }
+  @media (prefers-reduced-motion:reduce) { .agent-flow-pulse { display:none; } }
+  .menu-overline { color:#aaa8d7; font:700 10px/1.3 'Geist',ui-sans-serif,system-ui,sans-serif; letter-spacing:.13em; text-transform:uppercase; }
+  .mega-links { padding:13px 12px 8px 0; }
+  .mega-links h2 { margin:7px 0 18px; font:600 24px/1.15 'Geist',ui-sans-serif,system-ui,sans-serif; letter-spacing:-.035em; }
+  .mega-link-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+  .mega-link {
+    min-height:74px;
+    padding:14px 13px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    border:1px solid transparent;
+    border-bottom-color:rgba(255,255,255,.12);
+    border-radius:12px 12px 5px 5px;
+    color:inherit;
+    text-decoration:none;
+    transition:background .18s ease,border-color .18s ease,transform .18s ease,opacity .18s ease;
+  }
+  .mega-link:hover,.mega-link:focus-visible,.mega-link.is-previewed { background:rgba(255,255,255,.07); border-color:rgba(180,177,255,.28); transform:translateY(-1px); }
+  .mega-link-grid[data-preview-active="true"] .mega-link:not(.is-previewed) { opacity:.62; }
+  .products-mega-list[data-preview-active="true"] .mega-link:not(.is-previewed) { opacity:.58; }
+  .mega-link:focus-visible { outline:2px solid #aaa6ff;outline-offset:2px; }
+  :global(html.light-theme-preview) .mega-link.is-previewed { background:#eef0f7;border-color:#dce1eb; }
+  :global(html.light-theme-preview) .mega-link-grid[data-preview-active="true"] .mega-link:not(.is-previewed) { opacity:.7; }
+  .mega-link strong,.mega-link small { display:block; }
+  .mega-link strong { font:600 14px/1.35 'Geist',ui-sans-serif,system-ui,sans-serif; }
+  .mega-link small { margin-top:5px; color:rgba(223,225,235,.58); font:400 12px/1.35 'Geist',ui-sans-serif,system-ui,sans-serif; }
+  .link-arrow { color:#c3c0ff; font-size:16px; }
+  #mobile-menu-toggle { display:none; color:inherit; border:0; background:transparent; border-radius:50%; width:46px; height:46px; align-items:center; justify-content:center; cursor:pointer; }
+  .mobile-menu { display:none; }
+  .mobile-menu[hidden] { display:none!important; }
+  .mobile-menu-backdrop { position:absolute;inset:0;width:100%;height:100%;padding:0;border:0;background:rgba(2,6,18,.64);-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px); }
+  .mobile-drawer { position:absolute;inset:0;width:100%;height:100dvh;display:grid;grid-template-rows:68px minmax(0,1fr) auto;overflow:hidden;background:#fff;color:#18181b;box-shadow:0 20px 60px rgba(15,23,42,.14); }
+  .mobile-drawer-header { display:flex;align-items:center;justify-content:space-between;padding:0 max(18px,env(safe-area-inset-right)) 0 max(18px,env(safe-area-inset-left));border-bottom:1px solid rgba(199,204,238,.18);background:#050f34; }
+  .mobile-brand { display:inline-flex;align-items:center;min-height:44px;text-decoration:none; }
+  .mobile-brand-logo { display:block;width:auto;height:36px;max-width:100%;object-fit:contain; }
+  .mobile-menu-close { width:42px;height:42px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.18);border-radius:50%;background:rgba(255,255,255,.08);color:#f2f3fc;cursor:pointer; }
+  .mobile-menu-close svg { width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round; }
+  .mobile-drawer-content { min-height:0;overflow-y:auto;overscroll-behavior:contain;background:#fff;scrollbar-color:#d4d4d8 transparent; }
+  .mobile-panel-inner { width:min(100%,560px);margin:0 auto;padding:8px 20px 20px; }
+  .mobile-menu-section { border-bottom:1px solid #f0f0f2; }
+  .mobile-menu-section summary { min-height:60px;display:flex;align-items:center;justify-content:space-between;gap:14px;color:#18181b;list-style:none;cursor:pointer;font:600 18px/1.25 'Geist',ui-sans-serif,system-ui,sans-serif;letter-spacing:-.015em; }
+  .mobile-menu-section summary::-webkit-details-marker { display:none; }
+  .mobile-insights-link { min-height:60px;display:flex;align-items:center;color:#18181b;border-bottom:1px solid #f0f0f2;text-decoration:none;font:600 18px/1.25 'Geist',ui-sans-serif,system-ui,sans-serif;letter-spacing:-.015em; }
+  .mobile-insights-link:hover,.mobile-insights-link:focus-visible,.mobile-insights-link[aria-current="page"] { color:#10152d; }
+  .mobile-section-chevron { width:18px;height:18px;flex:none;fill:none;stroke:#52525b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s ease; }
+  .mobile-menu-section[open] .mobile-section-chevron { transform:rotate(180deg);stroke:#18181b; }
+  .mobile-section-links { display:grid;gap:3px;padding:0 0 12px; }
+  .mobile-nav-link { min-height:50px;display:flex;align-items:center;gap:12px;padding:8px 12px;border:1px solid transparent;border-radius:10px;color:#27272a;text-decoration:none;font:500 14.5px/1.35 'Geist',ui-sans-serif,system-ui,sans-serif;transition:background .16s ease,color .16s ease; }
+  .mobile-nav-link:hover,.mobile-nav-link:focus-visible,.mobile-nav-link[aria-current="page"] { background:#f4f4f5;color:#09090b; }
+  .mobile-nav-icon { width:36px;height:36px;display:grid;place-items:center;flex:none;border:1px solid #e4e4e7;border-radius:9px;background:#f4f4f5;color:#52525b; }
+  .mobile-nav-icon svg { width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round; }
+  .mobile-nav-link[aria-current="page"] .mobile-nav-icon { border-color:#6d7b50;background:#edf2e4;color:#4f5e3b; }
+  .mobile-nav-label { min-width:0;flex:1; }
+  .mobile-nav-arrow { width:16px;height:16px;flex:none;fill:none;stroke:#a1a1aa;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round; }
+  .mobile-drawer-footer { display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:14px 18px max(16px,env(safe-area-inset-bottom));border-top:1px solid #e4e4e7;background:#fafafa; }
+  .mobile-contact-cta,.mobile-demo-cta { min-height:48px;display:flex;align-items:center;justify-content:center;gap:8px;padding:0 12px;border-radius:9px;text-decoration:none;text-align:center;font:600 14px/1.2 'Geist',ui-sans-serif,system-ui,sans-serif; }
+  .mobile-contact-cta { border:1px solid #d4d4d8;color:#18181b;background:#fff; }
+  .mobile-demo-cta { border:1px solid #10152d;background:#10152d;color:#fff;box-shadow:0 2px 8px rgba(16,21,45,.2); }
+  .mobile-demo-cta:hover { background:#0b1326;border-color:#0b1326; }
+  .mobile-demo-cta span { margin-left:5px;font-size:16px; }
+  @media(max-width:380px) { .mobile-panel-inner { padding-right:14px;padding-left:14px; }.mobile-drawer-footer { padding-right:12px;padding-left:12px;gap:8px; }.mobile-contact-cta,.mobile-demo-cta { padding:0 8px;font-size:13px; } }
+  @keyframes menu-in { from { opacity:0; transform:translateY(-5px); } to { opacity:1; transform:translateY(0); } }
+  @media(max-width:1100px) { .nav-shell { gap:12px; } .desktop-navigation { gap:2px; } .nav-link { padding:0 7px; font-size:13px; } .nav-cta { padding:0 16px; } }
+  @media(max-width:1100px) and (min-width:881px){.products-mega-layout{grid-template-columns:minmax(190px,.8fr) minmax(290px,1.2fr) minmax(190px,.8fr);gap:13px}.products-mega-trust{padding-left:10px}.product-menu-group{padding:10px 8px}.product-menu-group>div{grid-template-columns:1fr}.product-menu-group .mega-link{min-height:30px}}
+  :global(html.light-theme-preview) .products-mega-layout{color:#20263a}.products-mega-feature h2{color:inherit}.products-mega-feature p{color:#586176!important}.product-menu-group{padding:10px 0;border:0;border-bottom:1px solid #e2e5ec;border-radius:0;background:transparent}.product-menu-group h3{color:#20283c!important}.product-menu-group h3 a{color:inherit;text-decoration:none}.product-menu-group h3 a:hover{color:#555bc7}.product-menu-group p{color:#687188!important}.product-menu-group .mega-link{border:0;border-radius:5px;background:transparent;color:#30394e}.product-menu-group .mega-link:hover{background:#eef0f7}.product-menu-group .mega-link strong span{color:#555bc7}.products-mega-trust{border-left-color:#dce1eb}.products-mega-trust>div{color:#394257}.products-mega-trust>div>i{border-color:#dce1eb;color:#555bc7;background:#f2f4f8}.products-mega-trust .deployment-info small{color:#687188}.mega-menu-products .feature-visual{border:0;border-radius:8px;box-shadow:none}.mega-menu-products .feature-image{object-position:center;background:#e8edf6}
+  .mega-menu-products .product-menu-group .mega-link,.mega-menu-products .product-menu-group .mega-link:hover,.mega-menu-products .product-menu-group .mega-link:focus-visible,.mega-menu-products .product-menu-group .mega-link.is-previewed{min-height:0;padding:2px 0;border:0;border-bottom:0;border-radius:0;background:transparent;box-shadow:none;text-decoration:none}
+  .mega-menu-products .product-demo-card{color:#fff;text-decoration:none;cursor:pointer;transition:border-color .2s ease,transform .2s ease,box-shadow .2s ease}.mega-menu-products .product-demo-card:hover,.mega-menu-products .product-demo-card.is-previewed{border-color:#7c82ff;box-shadow:0 8px 24px rgba(5,15,52,.22);transform:translateY(-1px);text-decoration:none}.mega-menu-products .product-demo-card:focus-visible{outline:2px solid #cbc6ff;outline-offset:3px}.mega-menu-products .product-demo-card h3{font-size:15px}.mega-menu-products .product-demo-card p{max-width:74%}.mega-menu-products .product-card-arrow{position:absolute;right:16px;bottom:14px;color:#cbc6ff;font:600 15px/1 'Geist',ui-sans-serif,system-ui,sans-serif;transition:transform .18s ease}.mega-menu-products .product-demo-card:hover .product-card-arrow,.mega-menu-products .product-demo-card.is-previewed .product-card-arrow{transform:translate(2px,-2px)}
+  @media(max-width:880px) {
+    .site-header { inset:0 0 auto; }
+    .nav-shell { min-height:68px; padding:7px 18px; gap:8px; }
+    .brand-logo { height:38px!important; width:auto!important; }
+    .desktop-navigation { display:none; }
+    .nav-cta { margin-left:auto; min-height:44px; padding:0 16px; font-size:13px; }
+    #mobile-menu-toggle { display:inline-flex; flex:0 0 auto; }
+    .mobile-menu:not([hidden]) { display:block;position:fixed;z-index:100;inset:0;pointer-events:auto; }
+  }
+  @media(max-width:460px) { .nav-shell { min-height:62px; padding:6px 12px; } .brand-logo { height:34px!important; width:auto!important; } .nav-cta { min-height:40px; padding:0 12px; gap:7px; font-size:12px; } #mobile-menu-toggle { width:40px; height:40px; } }
+  @media(prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; animation-duration:.01ms!important; animation-iteration-count:1!important; transition-duration:.01ms!important; } }
 </style>
+
 <script>
+  const triggers = [...document.querySelectorAll<HTMLAnchorElement>('[data-nav-trigger]')];
+  const desktopQuery = matchMedia('(min-width: 881px)');
+  const directLinks = [...document.querySelectorAll<HTMLAnchorElement>('.desktop-navigation > .nav-link')];
+  const topLevelLinks = [...document.querySelectorAll<HTMLAnchorElement>('.desktop-navigation > .nav-item > .nav-link, .desktop-navigation > .nav-link')];
+  let openTrigger: HTMLAnchorElement | null = null;
+  let closeTimer = 0;
+  let restoringFocus = false;
+  let lastPointerPoint: { x: number; y: number } | null = null;
+  document.addEventListener('pointermove', (event) => {
+    if (event.pointerType === 'mouse') lastPointerPoint = { x: event.clientX, y: event.clientY };
+  }, { passive: true });
+  const cancelClose = () => {
+    if (closeTimer) window.clearTimeout(closeTimer);
+    closeTimer = 0;
+  };
+  const closeMenus = (restoreFocus = false) => {
+    cancelClose();
+    const previouslyOpen = openTrigger;
+    triggers.forEach((trigger) => {
+      const item = trigger.closest<HTMLElement>('[data-nav-item]');
+      const panel = item?.querySelector<HTMLElement>('[data-nav-panel]');
+      trigger.setAttribute('aria-expanded', 'false');
+      item?.classList.remove('is-open');
+      if (panel) panel.hidden = true;
+    });
+    openTrigger = null;
+    if (restoreFocus && previouslyOpen) {
+      restoringFocus = true;
+      previouslyOpen.focus();
+      restoringFocus = false;
+    }
+  };
+  const openMenu = (trigger: HTMLAnchorElement) => {
+    if (!desktopQuery.matches) return;
+    cancelClose();
+    if (openTrigger === trigger) return;
+    closeMenus();
+    const item = trigger.closest<HTMLElement>('[data-nav-item]');
+    const panel = item?.querySelector<HTMLElement>('[data-nav-panel]');
+    if (!item || !panel) return;
+    openTrigger = trigger;
+    trigger.setAttribute('aria-expanded', 'true');
+    item.classList.add('is-open');
+    panel.hidden = false;
+  };
+  const scheduleClose = (event: PointerEvent) => {
+    if (event.pointerType !== 'mouse' || !openTrigger) return;
+    cancelClose();
+    closeTimer = window.setTimeout(() => {
+      closeTimer = 0;
+      const item = openTrigger?.closest<HTMLElement>('[data-nav-item]');
+      if (item?.matches(':hover') || item?.contains(document.activeElement)) return;
+      const pointerTarget = lastPointerPoint && document.elementFromPoint(lastPointerPoint.x, lastPointerPoint.y);
+      if (pointerTarget?.closest('.nav-shell')) {
+        // Keep the panel alive while a diagonal cursor crosses the navbar's open space.
+        closeTimer = window.setTimeout(() => closeMenus(), 300);
+        return;
+      }
+      closeMenus();
+    }, 300);
+  };
+  triggers.forEach((trigger) => {
+    const item = trigger.closest<HTMLElement>('[data-nav-item]');
+    const panel = item?.querySelector<HTMLElement>('[data-nav-panel]');
+    let touchShouldOpen = false;
+    trigger.addEventListener('pointerdown', (event) => {
+      touchShouldOpen = event.pointerType === 'touch' && trigger.getAttribute('aria-expanded') !== 'true';
+    });
+    trigger.addEventListener('click', (event) => {
+      if (touchShouldOpen) {
+        event.preventDefault();
+        openMenu(trigger);
+      }
+      touchShouldOpen = false;
+    });
+    trigger.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        openMenu(trigger);
+        panel?.querySelector<HTMLAnchorElement>('.product-demo-card, .mega-link')?.focus();
+      } else if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+        event.preventDefault();
+        const index = topLevelLinks.indexOf(trigger);
+        const step = event.key === 'ArrowRight' ? 1 : -1;
+        topLevelLinks[(index + step + topLevelLinks.length) % topLevelLinks.length]?.focus();
+      }
+    });
+    item?.addEventListener('pointerenter', (event) => {
+      if (event.pointerType === 'mouse') openMenu(trigger);
+    });
+    item?.addEventListener('focusin', () => { if (!restoringFocus) openMenu(trigger); });
+    panel?.addEventListener('pointerenter', cancelClose);
+
+    const grid = panel?.querySelector<HTMLElement>('.mega-link-grid, .products-mega-list');
+    const links = [...(grid?.querySelectorAll<HTMLAnchorElement>('.mega-link, .product-demo-card, .product-menu-group h3 a') ?? [])];
+    const images = [...(panel?.querySelectorAll<HTMLImageElement>('[data-preview-image]') ?? [])];
+    let previewRequest = 0;
+    links.forEach((link) => {
+      const selectPreview = () => {
+        links.forEach((sibling) => sibling.classList.toggle('is-previewed', sibling === link));
+        if (grid) grid.dataset.previewActive = 'true';
+        const src = link.dataset.previewSrc;
+        if (!src) return;
+        const visual = panel?.querySelector<HTMLElement>('.feature-visual');
+        if (visual) visual.dataset.agentic = String(src.endsWith('product-agentic-menu.webp'));
+        const featureOverline = panel?.querySelector<HTMLElement>('[data-feature-overline]');
+        const featureTitle = panel?.querySelector<HTMLElement>('[data-feature-title]');
+        const featureCopy = panel?.querySelector<HTMLElement>('[data-feature-copy]');
+        if (featureOverline && link.dataset.previewOverline) featureOverline.textContent = link.dataset.previewOverline;
+        if (featureTitle && link.dataset.previewTitle) featureTitle.textContent = link.dataset.previewTitle;
+        if (featureCopy && link.dataset.previewCopy) featureCopy.textContent = link.dataset.previewCopy;
+        const request = ++previewRequest;
+        const active = images.find((image) => image.classList.contains('is-active'));
+        if (active?.getAttribute('src') === src) return;
+        const preloader = new Image();
+        preloader.src = src;
+        const swap = () => {
+          if (request !== previewRequest || !preloader.naturalWidth) return;
+          const current = images.find((image) => image.classList.contains('is-active'));
+          const next = images.find((image) => image !== current);
+          if (!next) return;
+          next.src = src;
+          requestAnimationFrame(() => {
+            if (request !== previewRequest) return;
+            next.classList.add('is-active');
+            current?.classList.remove('is-active');
+          });
+        };
+        if (preloader.complete) swap();
+        else preloader.onload = swap;
+      };
+      link.addEventListener('pointerenter', (event) => {
+        if (event.pointerType === 'mouse') selectPreview();
+      });
+      link.addEventListener('focus', selectPreview);
+    });
+    grid?.addEventListener('pointerleave', () => {
+      if (grid) grid.dataset.previewActive = 'false';
+      links.forEach((link) => link.classList.remove('is-previewed'));
+    });
+  });
+  directLinks.forEach((link) => link.addEventListener('pointerenter', (event) => {
+    if (event.pointerType === 'mouse') closeMenus();
+  }));
+  document.querySelector<HTMLElement>('.nav-shell')?.addEventListener('pointerleave', scheduleClose);
+  document.addEventListener('pointerdown', (event) => {
+    if (!(event.target as Element).closest('[data-nav-item]')) closeMenus();
+  });
+  document.addEventListener('focusin', (event) => {
+    if (openTrigger && !openTrigger.closest('[data-nav-item]')?.contains(event.target as Node)) closeMenus();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && openTrigger) {
+      event.preventDefault();
+      closeMenus(true);
+    }
+  });
+  desktopQuery.addEventListener('change', () => closeMenus());
+
   const button = document.querySelector<HTMLButtonElement>('#mobile-menu-toggle');
-  const menu = document.querySelector<HTMLElement>('#mobile-menu');
-  if (button && menu) {
+  const mobileMenu = document.querySelector<HTMLElement>('#mobile-menu');
+  const mobileClose = mobileMenu?.querySelector<HTMLButtonElement>('[data-mobile-close]');
+  const mobileBackdrop = mobileMenu?.querySelector<HTMLButtonElement>('[data-mobile-backdrop]');
+  const mobileSections = [...(mobileMenu?.querySelectorAll<HTMLDetailsElement>('.mobile-menu-section') ?? [])];
+  mobileSections.forEach((section) => {
+    section.addEventListener('toggle', () => {
+      if (section.open) mobileSections.forEach((other) => { if (other !== section) other.open = false; });
+    });
+  });
+  let previousBodyOverflow: string | undefined;
+  if (button && mobileMenu) {
     const setOpen = (open: boolean, restoreFocus = false) => {
       button.setAttribute('aria-expanded', String(open));
       button.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
-      menu.hidden = !open; menu.classList.toggle('hidden', !open);
+      mobileMenu.hidden = !open;
+      if (open) {
+        previousBodyOverflow = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
+        mobileClose?.focus();
+      } else if (previousBodyOverflow !== undefined) {
+        document.body.style.overflow = previousBodyOverflow;
+        previousBodyOverflow = undefined;
+      }
       if (restoreFocus) button.focus();
     };
-    button.addEventListener('click', () => setOpen(menu.hidden));
-    document.addEventListener('keydown', event => { if(event.key === 'Escape' && !menu.hidden) setOpen(false, true); });
-    document.addEventListener('pointerdown', event => { if(!menu.hidden && !menu.contains(event.target as Node) && !button.contains(event.target as Node)) setOpen(false); });
-    document.addEventListener('focusin', event => { if(!menu.hidden && !menu.contains(event.target as Node) && !button.contains(event.target as Node)) setOpen(false); });
-    menu.addEventListener('click', event => { if((event.target as Element).closest('a')) setOpen(false); });
-    matchMedia('(min-width: 1280px)').addEventListener('change', event => { if(event.matches) setOpen(false); });
+    button.addEventListener('click', () => setOpen(mobileMenu.hidden));
+    mobileClose?.addEventListener('click', () => setOpen(false, true));
+    mobileBackdrop?.addEventListener('click', () => setOpen(false, true));
+    mobileMenu.addEventListener('click', (event) => {
+      if ((event.target as Element).closest('a')) setOpen(false);
+    });
+    mobileMenu.addEventListener('keydown', (event) => {
+      if (event.key !== 'Tab') return;
+      const focusable = [...mobileMenu.querySelectorAll<HTMLElement>('a[href],button:not([disabled]),summary')]
+        .filter((element) => !element.closest('[hidden]') && element.getClientRects().length > 0);
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+    });
+    document.addEventListener('pointerdown', (event) => {
+      if (!mobileMenu.hidden && !mobileMenu.contains(event.target as Node) && !button.contains(event.target as Node)) setOpen(false);
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !mobileMenu.hidden) setOpen(false, true);
+    });
+    matchMedia('(min-width: 881px)').addEventListener('change', (event) => {
+      if (event.matches) setOpen(false);
+    });
   }
 </script>

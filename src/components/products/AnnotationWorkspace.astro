@@ -1,0 +1,279 @@
+<section class="annotation-workspace" data-annotation-workspace aria-label="LatentVerify annotation and verification workspace">
+  <div class="annotation-head"><div><span class="annotation-kicker">LATENTVERIFY · CONSENSUS ENGINE</span><h3>Batch #LV-4082 · Urban Perception QA</h3></div><span class="sample-tag">Dual-pass · IoU ≥ 0.85</span><button class="annotation-expand" type="button" data-open-dialog aria-haspopup="dialog" aria-label="Open enlarged LatentVerify workspace">⤢</button></div>
+  <div class="annotation-runbar" aria-label="Verification workflow playback">
+    <div class="run-state"><span class="run-indicator" data-run-indicator></span><span data-run-status aria-live="polite">Ready to inspect</span></div>
+    <div class="run-track" aria-hidden="true"><span data-run-track></span><i data-run-step="input"></i><i data-run-step="label"></i><i data-run-step="compare"></i><i data-run-step="review"></i></div>
+    <div class="run-controls"><button type="button" data-run>Run</button><button type="button" data-pause>Pause</button><button type="button" data-replay>Replay</button><button type="button" data-reset>Reset</button></div>
+  </div>
+  <div class="annotation-layout">
+    <div class="image-review">
+      <div class="image-toolbar"><span>CAM_FRONT_0142.jpg · 1920×1080</span><span data-region-label>3 vehicles · 1 boundary delta</span></div>
+      <button class="annotated-image" type="button" data-region="vehicle" aria-label="Inspect annotated road frame with three marked vehicles">
+        <img src="/images/nav/products-annotation-sample.webp" alt="Urban road frame with bounding boxes around three vehicles and a segmentation mask on the blue sedan" loading="lazy" decoding="async" />
+        <svg viewBox="0 0 1200 800" preserveAspectRatio="none" aria-hidden="true"><rect class="box-a" x="194" y="28" width="130" height="105" rx="7"/><rect class="box-a" x="434" y="0" width="112" height="75" rx="7"/><rect class="box-a" x="560" y="218" width="355" height="276" rx="9"/><path class="mask-b" d="M583 298Q590 265 628 255L680 238 745 236Q797 247 832 271L865 304Q895 336 902 373L898 404Q885 427 857 438L795 464 727 456 672 436 633 404 605 362Z"/></svg>
+        <span class="region-label label-car-one">Car 1 · 0.96</span><span class="region-label label-car-two">Car 2 · 0.94</span><span class="region-label label-car-three">Car 3 · Δ IoU</span>
+        <span class="approval-stamp" aria-hidden="true"><i>✓</i><b>VERIFIED</b></span>
+      </button>
+      <div class="image-legend"><span><i class="legend-box"></i> Pass A · Bounding boxes</span><span><i class="legend-mask"></i> Pass B · Polygon mask</span><span data-region-confidence>IoU 0.62 · Review queued</span></div>
+    </div>
+    <aside class="annotation-side">
+      <div class="review-tabs" role="tablist" aria-label="Independent annotation passes"><button type="button" role="tab" aria-selected="true" data-review-tab="a">Pass A</button><button type="button" role="tab" aria-selected="false" data-review-tab="b">Pass B</button><button type="button" role="tab" aria-selected="false" data-review-tab="review">Reviewer</button></div>
+      <div class="annotation-card"><span class="annotation-kicker" data-annotation-label>PASS A · BOUNDING BOXES</span><strong data-annotation-title>Three vehicle detections</strong><div class="label-chip" data-object-label>3 vehicles · Car</div><p data-annotation-copy>All visible vehicles carry 2D bounding boxes; Car 3 is cross-checked against an independent polygon segmentation pass.</p><div class="confidence-row"><span>Consensus IoU</span><b data-confidence>0.91</b></div><div class="confidence-meter"><span data-confidence-bar></span></div><div class="region-actions"><button type="button" data-region-select="vehicle" aria-pressed="true">Vehicle layer</button><button type="button" data-region-select="background" aria-pressed="false">Context layer</button></div></div>
+      <div class="disagreement-card"><div><span class="annotation-kicker">CONSENSUS CHECK</span><b data-agreement-state>IoU delta flagged</b></div><div class="agreement-meter"><span></span><i></i></div><p>Discrepancies below the 0.85 IoU threshold route automatically to senior review.</p></div>
+      <div class="review-card"><div><span class="annotation-kicker">REVIEWER SIGN-OFF</span><b data-review-state>Queued</b></div><div class="review-actions"><button type="button" data-correct disabled>Align boundary</button><button type="button" data-approve disabled>Approve &amp; lock</button></div></div>
+    </aside>
+  </div>
+  <div class="annotation-footer"><span data-export-state>Audit trail active · Verified CSV export unlocks on reviewer sign-off</span><button type="button" data-export-reviewed disabled>Export verified labels (.csv)</button></div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-annotation-workspace]').forEach((root) => {
+    const expand = root.querySelector<HTMLButtonElement>('[data-open-dialog]');
+    if (expand && !root.closest('.product-page')) expand.hidden = true;
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>('[data-review-tab]')];
+    const label = root.querySelector<HTMLElement>('[data-object-label]');
+    const title = root.querySelector<HTMLElement>('[data-annotation-title]');
+    const copy = root.querySelector<HTMLElement>('[data-annotation-copy]');
+    const confidence = root.querySelector<HTMLElement>('[data-confidence]');
+    const confidenceBar = root.querySelector<HTMLElement>('[data-confidence-bar]');
+    const state = root.querySelector<HTMLElement>('[data-review-state]');
+    const agreement = root.querySelector<HTMLElement>('[data-agreement-state]');
+    const selects = [...root.querySelectorAll<HTMLButtonElement>('[data-region-select]')];
+    let reviewerLabel = 'Car';
+    const runStatus = root.querySelector<HTMLElement>('[data-run-status]');
+    const runTrack = root.querySelector<HTMLElement>('[data-run-track]');
+    const runSteps = [...root.querySelectorAll<HTMLElement>('[data-run-step]')];
+    const runButton = root.querySelector<HTMLButtonElement>('[data-run]');
+    const pauseButton = root.querySelector<HTMLButtonElement>('[data-pause]');
+    const correctButton = root.querySelector<HTMLButtonElement>('[data-correct]');
+    const approveButton = root.querySelector<HTMLButtonElement>('[data-approve]');
+    const exportButton = root.querySelector<HTMLButtonElement>('[data-export-reviewed]');
+    const stepSequence = [
+      { stage: 'input', status: 'Reading image', tab: 'a' },
+      { stage: 'label', status: 'Annotator A · regions mapped', tab: 'a' },
+      { stage: 'label', status: 'Annotator B · mask traced', tab: 'b' },
+      { stage: 'compare', status: 'Comparing annotation overlap' },
+      { stage: 'review', status: 'Boundary aligned', action: 'correct' },
+      { stage: 'review', status: 'Verified · ready for export', action: 'approve' },
+    ] as const;
+    let timer = 0;
+    let nextStep = 0;
+    let playing = false;
+    let corrected = false;
+    let approved = false;
+    let autoStarted = false;
+
+    const updateRunControls = () => {
+      if (runButton) runButton.disabled = playing;
+      if (pauseButton) pauseButton.disabled = !playing;
+      if (correctButton) correctButton.disabled = corrected || approved || nextStep < 4;
+      if (approveButton) approveButton.disabled = !corrected || approved;
+      if (exportButton) exportButton.disabled = !approved;
+    };
+    const updateProgress = (stage: string) => {
+      root.dataset.runStage = stage;
+      const currentIndex = stage === 'input' ? 0 : stage === 'label' ? 1 : stage === 'compare' ? 2 : 3;
+      runSteps.forEach((item, index) => {
+        item.classList.toggle('is-active', index === currentIndex);
+        item.classList.toggle('is-done', index < currentIndex || (stage === 'review' && approved));
+      });
+      if (runTrack) runTrack.style.setProperty('--progress', `${approved ? 100 : currentIndex * 33.33}%`);
+    };
+    const setRunStatus = (status: string) => { if (runStatus) runStatus.textContent = status; };
+    const showTab = (tab: string) => {
+      tabs.forEach((item) => item.setAttribute('aria-selected', String(item.dataset.reviewTab === tab)));
+      const labelKicker = root.querySelector<HTMLElement>('[data-annotation-label]');
+      if (tab === 'a') { if(label)label.textContent='3 vehicles · Car'; if(title)title.textContent='Three vehicle detections'; if(copy)copy.textContent='All visible vehicles carry 2D bounding boxes; Car 3 is cross-checked against an independent polygon segmentation pass.'; if(confidence)confidence.textContent='0.91'; if(confidenceBar)confidenceBar.style.width='91%'; if(labelKicker)labelKicker.textContent='PASS A · BOUNDING BOXES'; }
+      else if (tab === 'b') { if(label)label.textContent='Car 3 · Polygon mask'; if(title)title.textContent='Segmentation mask delta'; if(copy)copy.textContent='Pass B traced a tighter contour around the blue sedan, dropping IoU below the 0.85 auto-accept threshold.'; if(confidence)confidence.textContent='0.62 · Review'; if(confidenceBar)confidenceBar.style.width='62%'; if(labelKicker)labelKicker.textContent='PASS B · SEGMENTATION'; }
+      else { if(label)label.textContent=reviewerLabel; if(title)title.textContent='Reviewer adjudication'; if(copy)copy.textContent='Align the highlighted polygon contour with the verified ground-truth boundary, then lock for dataset export.'; if(confidence)confidence.textContent='0.98 · Verified'; if(confidenceBar)confidenceBar.style.width='98%'; if(labelKicker)labelKicker.textContent='REVIEWER · GROUND TRUTH'; }
+    };
+    tabs.forEach((tab) => tab.addEventListener('click', () => showTab(tab.dataset.reviewTab ?? 'a')));
+    const region = root.querySelector<HTMLButtonElement>('.annotated-image');
+    const regionLabel = root.querySelector<HTMLElement>('[data-region-label]');
+    const confidenceLabel = root.querySelector<HTMLElement>('[data-region-confidence]');
+    const setRegion = (name: string) => {
+      if(region)region.dataset.region=name;
+      if(regionLabel)regionLabel.textContent=name === 'vehicle' ? '3 vehicles · 1 boundary delta' : 'Context layer';
+      if(confidenceLabel)confidenceLabel.textContent=name === 'vehicle' ? 'IoU 0.62 · Review queued' : 'Context · verified';
+      selects.forEach((button)=>button.setAttribute('aria-pressed',String(button.dataset.regionSelect===name)));
+    };
+    region?.addEventListener('click',()=>{
+      const dialog=root.closest('.product-page')?.querySelector<HTMLDialogElement>('[data-product-dialog]');
+      if(dialog && !dialog.open) dialog.showModal();
+      else setRegion(region.dataset.region==='vehicle'?'background':'vehicle');
+    });
+    selects.forEach((button)=>button.addEventListener('click',()=>setRegion(button.dataset.regionSelect??'vehicle')));
+    const pause = () => {
+      if (timer) window.clearTimeout(timer);
+      timer = 0;
+      playing = false;
+      root.dataset.runState = 'paused';
+      setRunStatus('Paused');
+      updateRunControls();
+    };
+    const correct = (manual = false) => {
+      if (manual) pause();
+      reviewerLabel = 'Car';
+      corrected = true;
+      showTab('review');
+      if (state) state.textContent = 'Label corrected';
+      if (agreement) agreement.textContent = 'Correction ready';
+      root.dataset.corrected = 'true';
+      if (manual) setRunStatus('Correction applied');
+      updateRunControls();
+    };
+    const approve = (manual = false) => {
+      if (!corrected || approved) return;
+      if (manual) pause();
+      approved = true;
+      showTab('review');
+      if (state) state.textContent = 'Approved';
+      if (agreement) agreement.textContent = 'Verified';
+      root.classList.add('is-approved');
+      root.dataset.runState = 'complete';
+      updateProgress('review');
+      setRunStatus('Verified · ready for export');
+      const status = root.querySelector<HTMLElement>('[data-export-state]');
+      if (status) status.textContent = 'Verified by reviewer · Audit hash #8f3a1c ready for export';
+      updateRunControls();
+    };
+    const reset = () => {
+      if (timer) window.clearTimeout(timer);
+      timer = 0;
+      playing = false;
+      nextStep = 0;
+      corrected = false;
+      approved = false;
+      reviewerLabel = 'Car · Verified';
+      root.classList.remove('is-approved');
+      delete root.dataset.corrected;
+      root.dataset.runState = 'ready';
+      root.dataset.runStage = 'input';
+      showTab('a');
+      if (state) state.textContent = 'Queued';
+      if (agreement) agreement.textContent = 'Awaiting consensus';
+      const status = root.querySelector<HTMLElement>('[data-export-state]');
+      if (status) status.textContent = 'Audit trail active · Verified CSV export unlocks on reviewer sign-off';
+      setRunStatus('Ready to inspect');
+      updateProgress('input');
+      updateRunControls();
+    };
+    const advance = () => {
+      const step = stepSequence[nextStep];
+      if (!step) {
+        playing = false;
+        root.dataset.runState = 'complete';
+        updateRunControls();
+        return;
+      }
+      nextStep += 1;
+      root.dataset.runState = 'running';
+      setRunStatus(step.status);
+      updateProgress(step.stage);
+      if (step.tab) showTab(step.tab);
+      if (step.stage === 'compare') {
+        if (agreement) agreement.textContent = 'Overlap differs';
+        if (state) state.textContent = 'Review in progress';
+      }
+      if (step.action === 'correct') correct();
+      if (step.action === 'approve') approve();
+      updateRunControls();
+      if (step.action === 'approve') {
+        playing = false;
+        root.dataset.runState = 'complete';
+        updateRunControls();
+      } else {
+        timer = window.setTimeout(advance, 1450);
+      }
+    };
+    const run = () => {
+      if (playing) return;
+      if (approved || nextStep >= stepSequence.length) reset();
+      playing = true;
+      root.dataset.runState = 'running';
+      updateRunControls();
+      advance();
+    };
+    runButton?.addEventListener('click', run);
+    pauseButton?.addEventListener('click', pause);
+    root.querySelector('[data-replay]')?.addEventListener('click', () => { reset(); run(); });
+    root.querySelector('[data-reset]')?.addEventListener('click', reset);
+    correctButton?.addEventListener('click', () => correct(true));
+    approveButton?.addEventListener('click', () => approve(true));
+    exportButton?.addEventListener('click', () => {
+      if (!approved) return;
+      const blob = new Blob(['region,object,annotator,annotation,review_status\nCar 1,Car,Annotator A,Bounding box,approved\nCar 2,Car,Annotator A,Bounding box,approved\nCar 3,Car,Annotator A,Bounding box,approved\nCar 3,Car,Annotator B,Segmentation mask,approved\n'], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement('a');
+      anchor.href = url;
+      anchor.download = 'latentverify-batch-lv4082.csv';
+      anchor.click();
+      window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+      const status = root.querySelector<HTMLElement>('[data-export-state]');
+      if (status) status.textContent = 'Exported latentverify-batch-lv4082.csv';
+    });
+
+    reset();
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        if (autoStarted || !entries.some((entry) => entry.isIntersecting)) return;
+        autoStarted = true;
+        observer.disconnect();
+        run();
+      }, { threshold: 0.25 });
+      observer.observe(root);
+    } else {
+      autoStarted = true;
+      run();
+    }
+  });
+</script>
+
+<style>
+  .annotation-workspace{--ink:#edf2f8;--muted:#aab5c6;--line:rgba(191,205,224,.18);overflow:hidden;border:1px solid var(--line);border-radius:18px;background:#101923;color:var(--ink);font-family:Geist,system-ui,sans-serif;box-shadow:0 26px 75px rgba(0,0,0,.29)}.annotation-head,.annotation-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 20px;border-bottom:1px solid var(--line)}.annotation-head h3{margin:5px 0 0;font-size:19px;letter-spacing:-.03em}.annotation-kicker{color:#b7c7b5;font-size:10px;font-weight:750;letter-spacing:.12em}.sample-tag{padding:6px 11px;border:1px solid rgba(183,208,139,.34);border-radius:99px;background:rgba(183,208,139,.08);color:#d7e7c5;font-size:11px;font-weight:600}.annotation-layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(290px,.76fr);gap:16px;padding:18px}.image-review,.annotation-side{min-width:0}.image-review{display:flex;flex-direction:column;overflow:hidden;border:1px solid var(--line);border-radius:12px;background:#0b121b}.image-toolbar{display:flex;justify-content:space-between;gap:10px;padding:11px 14px;border-bottom:1px solid var(--line);color:#b7c3d3;font-size:11.5px;font-weight:500}.annotated-image{position:relative;display:block;width:100%;aspect-ratio:1.48;padding:0;overflow:hidden;border:0;background:#0a1017;cursor:crosshair}.annotated-image img{width:100%;height:100%;display:block;object-fit:cover;transition:transform .45s}.annotated-image:hover img{transform:scale(1.025)}.annotated-image svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}.annotated-image svg rect{fill:none;stroke-width:2;vector-effect:non-scaling-stroke}.box-a{stroke:#c5db81;stroke-dasharray:7 4}.box-b{stroke:#84d8ff;stroke-dasharray:3 4}.mask-a{fill:url(#segmentation-hatch);stroke:#b7e7c7;stroke-width:2}.mask-b{fill:rgba(134,202,248,.22);stroke:#8fd4f2;stroke-width:2}.annotated-image[data-region=background] .box-a,.annotated-image[data-region=background] .box-b{opacity:.25}.annotated-image[data-region=background] .mask-a,.annotated-image[data-region=background] .mask-b{opacity:.15}.region-label{position:absolute;padding:4px 7px;border-radius:4px;background:rgba(8,17,23,.88);font-size:10.5px;font-weight:700}.label-car-one{left:15%;top:1.5%;color:#d6efa1}.label-car-two{left:35%;top:8%;color:#a1e2ff}.label-car-three{left:47%;top:22%;color:#d6efa1}.image-legend{display:flex;flex-wrap:wrap;gap:14px;padding:11px 14px;color:#aebbc9;font-size:11px}.image-legend span{display:inline-flex;align-items:center;gap:6px}.image-legend span:last-child{margin-left:auto}.image-legend i{width:12px;height:9px;border:1px dashed #cee59c}.image-legend .legend-mask{border-color:#91d6f0;background:rgba(134,202,248,.23)}.annotation-side{display:grid;align-content:start;gap:11px}.review-tabs{display:flex;gap:4px;padding:4px;border:1px solid var(--line);border-radius:9px;background:#0b131b}.review-tabs button{flex:1;min-height:34px;border:0;border-radius:6px;background:transparent;color:#aeb8c7;font-size:11px;font-weight:600;cursor:pointer}.review-tabs button[aria-selected=true]{background:#27313a;color:#eff3f6}.annotation-card,.disagreement-card,.review-card{padding:14px;border:1px solid var(--line);border-radius:10px;background:#17222b}.annotation-card>strong{display:block;margin:8px 0 8px;font-size:15px}.label-chip{display:inline-flex;padding:5px 9px;border:1px solid rgba(178,210,151,.35);border-radius:6px;color:#d3e7b4;background:rgba(133,165,107,.12);font-size:11px;font-weight:600}.annotation-card p,.disagreement-card p{margin:9px 0;color:var(--muted);font-size:12px;line-height:1.5}.confidence-row{display:flex;justify-content:space-between;margin:14px 0 6px;color:#b8c3d1;font-size:11px}.confidence-row b{color:#d9e7c6}.confidence-meter,.agreement-meter{height:6px;overflow:hidden;border-radius:99px;background:#2b3740}.confidence-meter span{display:block;width:91%;height:100%;border-radius:99px;background:#b7d08b;transition:width .25s}.region-actions,.review-actions{display:flex;gap:7px;margin-top:12px}.region-actions button,.review-actions button{min-height:32px;padding:6px 10px;border:1px solid #42504e;border-radius:6px;background:#202d31;color:#d2dcd7;font-size:11px;font-weight:600;cursor:pointer}.region-actions button[aria-pressed=true],.review-actions button:hover{border-color:#b2c68b;color:#e4edcf}.disagreement-card>div:first-child,.review-card>div:first-child{display:flex;justify-content:space-between;gap:8px;align-items:center}.disagreement-card b,.review-card b{font-size:11px;color:#e5c788}.agreement-meter{position:relative;margin-top:11px}.agreement-meter span{display:block;width:82%;height:100%;background:#9bc3a3}.agreement-meter i{position:absolute;left:82%;top:-3px;width:2px;height:12px;background:#e5c788}.review-card b{color:#e1b887}.is-approved .review-card b,.is-approved .disagreement-card b{color:#bde4c4}.annotation-footer{border-top:1px solid var(--line);border-bottom:0;background:#0d151d}.annotation-footer>span{color:#a8b5c2;font-size:11.5px;line-height:1.4}.annotation-footer button{min-height:36px;padding:8px 13px;border:1px solid #b6cf9c;border-radius:7px;background:#c1d5a5;color:#172218;font-size:11.5px;font-weight:700;cursor:pointer}.annotation-workspace :where(button):focus-visible{outline:3px solid #c8dfa7;outline-offset:2px}
+  @media(max-width:780px){.annotation-layout{grid-template-columns:1fr}.annotation-side{grid-template-columns:1fr 1fr}.review-tabs,.annotation-card{grid-column:1/-1}.image-review{min-height:0}}
+  @media(max-width:500px){.annotation-head,.annotation-footer{align-items:flex-start;flex-direction:column;padding:13px}.annotation-layout{padding:10px;gap:10px}.annotation-side{grid-template-columns:1fr}.review-tabs,.annotation-card{grid-column:auto}.image-toolbar{font-size:8px}.image-legend{gap:8px;font-size:8px}.image-legend span:last-child{margin-left:0}.region-actions{flex-wrap:wrap}.annotation-footer button{width:100%}}
+  @media(prefers-reduced-motion:reduce){.annotated-image img,.confidence-meter span{transition:none}}
+</style>
+<style>.annotation-expand{width:31px;height:31px;border:1px solid rgba(191,205,224,.18);border-radius:7px;background:#17222b;color:#edf2f8;font-size:15px;cursor:pointer}.annotation-expand[hidden]{display:none}.annotation-workspace .annotated-image{aspect-ratio:3/2}.annotation-workspace .annotated-image:hover img{transform:none;transition:none}.annotation-workspace .annotated-image[data-region=background] .region-label{opacity:.35}</style>
+<style>
+  .annotated-image .box-a{stroke:#c5db81;stroke-width:2;stroke-dasharray:7 4;vector-effect:non-scaling-stroke}
+  .annotated-image .mask-b{fill:rgba(134,202,248,.16);stroke:#8fd4f2;stroke-width:2;vector-effect:non-scaling-stroke}
+  .annotated-image .box-b,.annotated-image .mask-a{display:none}
+  .annotated-image[data-region=background] .box-a,.annotated-image[data-region=background] .mask-b{opacity:.2}
+  .annotated-image .region-label{z-index:1;border:1px solid rgba(255,255,255,.2);background:rgba(8,17,23,.9)}
+  .annotated-image .label-a{left:46%;top:21%}
+  .annotated-image .label-b{left:66%;top:21%}
+</style>
+<style>
+  .annotation-runbar{display:grid;grid-template-columns:minmax(155px,.7fr) minmax(170px,1fr) auto;align-items:center;gap:16px;padding:12px 19px;border-bottom:1px solid var(--line);background:linear-gradient(100deg,#15201f,#121a21 64%,#17211f)}
+  .run-state{display:flex;align-items:center;gap:9px;min-width:0;color:#dce5dc;font-size:10px;font-weight:600;white-space:nowrap}
+  .run-indicator{width:7px;height:7px;flex:none;border-radius:50%;background:#89968a;box-shadow:0 0 0 4px rgba(162,182,145,.1)}
+  [data-run-state=running] .run-indicator{background:#c7dc98;box-shadow:0 0 0 4px rgba(183,208,139,.1),0 0 15px rgba(183,208,139,.8);animation:run-breathe 1.5s ease-in-out infinite}
+  [data-run-state=complete] .run-indicator{background:#a8d8af;box-shadow:0 0 0 4px rgba(168,216,175,.12)}
+  [data-run-state=paused] .run-indicator{background:#e1be7d}
+  .run-track{--progress:0%;position:relative;display:grid;grid-template-columns:repeat(4,1fr);align-items:center;min-width:0;height:18px}
+  .run-track:before,.run-track>span{position:absolute;top:50%;left:8px;right:8px;height:2px;border-radius:3px;transform:translateY(-50%);content:""}
+  .run-track:before{background:#3b4844}
+  .run-track>span{right:auto;width:calc((100% - 16px)*var(--progress)/100);background:linear-gradient(90deg,#9aad83,#d1dfad);box-shadow:0 0 9px rgba(194,217,157,.35);transition:width .5s ease}
+  .run-track i{z-index:1;width:8px;height:8px;justify-self:center;border:1px solid #69756a;border-radius:50%;background:#18211f;transition:background .3s,border-color .3s,box-shadow .3s}
+  .run-track i.is-active{border-color:#d0dfaa;background:#d0dfaa;box-shadow:0 0 0 4px rgba(196,216,158,.1),0 0 12px rgba(196,216,158,.65)}
+  .run-track i.is-done{border-color:#a8c08e;background:#a8c08e}
+  .run-controls{display:flex;gap:4px;padding:3px;border:1px solid rgba(191,205,224,.13);border-radius:8px;background:rgba(5,11,14,.24)}
+  .run-controls button{min-height:27px;padding:4px 8px;border:0;border-radius:5px;background:transparent;color:#9ca99e;font:600 9px Geist,system-ui,sans-serif;cursor:pointer;transition:background .2s,color .2s}
+  .run-controls button:hover:not(:disabled){background:#293630;color:#ecf1e7}
+  .run-controls button:disabled{opacity:.4;cursor:default}
+  .approval-stamp{position:absolute;right:18px;bottom:18px;display:flex;align-items:center;gap:7px;padding:8px 11px;border:1px solid rgba(229,242,219,.72);border-radius:99px;background:rgba(29,51,37,.85);color:#edf7e5;font-size:9px;letter-spacing:.1em;opacity:0;transform:translateY(6px) scale(.96);transition:opacity .5s,transform .5s;backdrop-filter:blur(10px)}
+  .approval-stamp i{display:grid;width:17px;height:17px;place-items:center;border-radius:50%;background:#d8e9c5;color:#203326;font-size:12px;font-style:normal;font-weight:800}
+  .is-approved .approval-stamp{opacity:1;transform:translateY(0) scale(1)}
+  [data-run-stage=label] .box-a{animation:annotation-dash 4s linear infinite}
+  [data-run-stage=compare] .mask-b{stroke:#e4d6a6;stroke-width:3;filter:drop-shadow(0 0 6px rgba(228,214,166,.7))}
+  [data-corrected=true] .mask-b{fill:rgba(175,213,160,.23);stroke:#c6e4ab;stroke-width:2.5;transition:fill .5s,stroke .5s}
+  .review-actions button:disabled,.annotation-footer button:disabled{opacity:.42;cursor:default}
+  .annotation-workspace.is-approved .annotation-footer button{box-shadow:0 0 22px rgba(186,218,153,.16)}
+  @keyframes run-breathe{50%{transform:scale(.82);opacity:.72}}
+  @keyframes annotation-dash{to{stroke-dashoffset:-44}}
+  @media(max-width:780px){.annotation-runbar{grid-template-columns:minmax(0,1fr) auto;gap:10px 16px}.run-track{grid-column:1/-1;grid-row:2}}
+  @media(max-width:500px){.annotation-runbar{grid-template-columns:1fr;padding:11px 13px;gap:8px}.run-state{grid-row:1}.run-controls{grid-row:2;justify-self:stretch;justify-content:space-between}.run-controls button{flex:1;padding-inline:4px}.run-track{grid-column:1;grid-row:3}.annotation-footer{flex-direction:row;align-items:center}.annotation-footer>span{flex:1}.annotation-footer button{width:auto;flex:none}.approval-stamp{right:10px;bottom:10px;padding:6px 8px;font-size:8px}}
+  @media(prefers-reduced-motion:reduce){[data-run-state=running] .run-indicator,.annotation-workspace [data-run-stage=label] .box-a{animation:none}.run-track>span,.approval-stamp{transition:none}}
+</style>
