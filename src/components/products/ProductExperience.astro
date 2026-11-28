@@ -6,20 +6,20 @@ import { BOOK_DEMO_URL } from '../../consts';
 interface Props { kind: 'agentic' | 'annotation'; }
 const { kind } = Astro.props;
 const agentic = kind === 'agentic';
-const name = agentic ? 'Agentic AI Studio' : 'Annotation & Verification Platform';
+const name = agentic ? 'Agentic AI Studio' : 'LatentVerify';
 const slug = agentic ? 'agentic-ai-platform' : 'annotation-verification';
-const headline = agentic ? 'Make every workflow step visible.' : 'See how every label earns approval.';
+const headline = agentic ? 'Make every agent workflow observable.' : 'See how every label earns approval.';
 const summary = agentic
-  ? 'Design a workflow, inspect each agent’s contribution, and review an answer with its supporting evidence.'
-  : 'Compare independent annotations, resolve disagreements, and export a reviewed sample dataset.';
+  ? 'Build agentic workflows through an intuitive visual canvas or natural-language queries—then inspect every execution trace and require human sign-off backed by source evidence.'
+  : 'Compare independent annotation passes, surface IoU disagreements automatically, and export audit-ready ground truth.';
 const capabilities = agentic ? [
-  { number: '01', title: 'Connected steps', copy: 'A workflow links bounded agents and tools in a visible run.' },
-  { number: '02', title: 'Evidence trail', copy: 'Execution steps keep the source passages behind each finding in view.' },
-  { number: '03', title: 'Human approval', copy: 'A reviewer can check the result before it moves on.' },
+  { number: '01', title: 'Visual UI & natural queries', copy: 'Author multi-agent pipelines by dragging nodes in an intuitive UI or describing the workflow in plain language.' },
+  { number: '02', title: 'Evidence trail', copy: 'Every synthesized claim stays anchored to the exact source passages behind it.' },
+  { number: '03', title: 'Human approval gates', copy: 'Hold high-stakes outputs for domain sign-off before downstream dispatch.' },
 ] : [
-  { number: '01', title: 'Independent copies', copy: 'Annotators label isolated copies of the same source record.' },
-  { number: '02', title: 'Conflict review', copy: 'Differing labels surface for a reviewer to resolve.' },
-  { number: '03', title: 'Reviewed export', copy: 'The final labels can be exported for the next step.' },
+  { number: '01', title: 'Dual-pass consensus', copy: 'Annotators label isolated copies of each frame or record independently.' },
+  { number: '02', title: 'Discrepancy routing', copy: 'IoU and label conflicts below threshold route automatically to senior review.' },
+  { number: '03', title: 'Audit-ready export', copy: 'Lock verified ground truth with provenance hashes ready for model training.' },
 ];
 ---
 
@@ -32,17 +32,17 @@ const capabilities = agentic ? [
       <p>{summary}</p>
       <div class="hero-actions"><a class="action-primary" href={`/demos/#${slug}`}>View demo <span aria-hidden="true">↗</span></a><a class="action-secondary" href={BOOK_DEMO_URL}>Book a demo <span aria-hidden="true">↗</span></a></div>
     </div>
-    <div class="hero-visual"><div class="visual-topline"><span>{name}</span><span>ILLUSTRATIVE PREVIEW</span></div><button class="screen-launch" type="button" data-open-dialog aria-haspopup="dialog" aria-controls={`${slug}-large-walkthrough`} aria-label={`Open enlarged ${name} walkthrough`}>Open interactive workspace ↗</button>{agentic ? <AgenticWorkspace /> : <AnnotationWorkspace />}</div>
+    <div class="hero-visual"><div class="visual-topline"><span>{name}</span><span>INTERACTIVE WORKSPACE</span></div><button class="screen-launch" type="button" data-open-dialog aria-haspopup="dialog" aria-controls={`${slug}-large-walkthrough`} aria-label={`Open enlarged ${name} workspace`}>Open fullscreen workspace ↗</button>{agentic ? <AgenticWorkspace /> : <AnnotationWorkspace />}</div>
   </section>
 
-  <section id="walkthrough" class="walkthrough-section" aria-labelledby="walkthrough-heading"><div class="section-heading"><span class="eyebrow">02 / WHAT TO LOOK FOR</span><h2 id="walkthrough-heading">A clear path from source to decision.</h2><p>Use the sample controls above to inspect contributions, compare states and review the final result.</p></div><div class="capability-section" aria-label={`${name} capabilities`}>{capabilities.map((item) => (<div class="capability"><span>{item.number}</span><h3>{item.title}</h3><p>{item.copy}</p></div>))}</div></section>
+  <section id="walkthrough" class="walkthrough-section" aria-labelledby="walkthrough-heading"><div class="section-heading"><span class="eyebrow">02 / ARCHITECTURE</span><h2 id="walkthrough-heading">A clear path from source to decision.</h2><p>Use the interactive controls above to inspect every agent handoff, consensus check, and approval gate.</p></div><div class="capability-section" aria-label={`${name} capabilities`}>{capabilities.map((item) => (<div class="capability"><span>{item.number}</span><h3>{item.title}</h3><p>{item.copy}</p></div>))}</div></section>
 
-  {agentic && <section class="trust-capabilities" aria-label="Workflow trust and deployment information"><article id="human-approval"><span>01</span><h3>Human approvals</h3><p>Review gates can hold a result for a person to inspect before it proceeds.</p></article><article id="evaluation"><span>02</span><h3>Evaluation</h3><p>Evaluation contracts and human review are represented in the local workflow example.</p></article><article id="observability"><span>03</span><h3>Observability &amp; audit</h3><p>Run state and evidence are visible in the execution trace.</p></article><article id="security"><span>04</span><h3>Security &amp; trust</h3><p>Tool policy and approval boundaries belong to the workflow definition.</p></article><article id="data-foundations"><span>05</span><h3>Data foundations</h3><p>Workflows can retain their inputs, outputs and evidence as run state.</p></article><article id="deployment"><span>06</span><h3>Deployment options</h3><p>Deployment is configuration-specific. On-premises, Google Cloud and AWS are architecture discussions, not advertised preconfigured deployments.</p></article></section>}
+  {agentic && <section class="trust-capabilities" aria-label="Workflow trust and deployment information"><article id="human-approval"><span>01</span><h3>Human approvals</h3><p>Review gates hold high-stakes results for domain sign-off before execution proceeds.</p></article><article id="evaluation"><span>02</span><h3>Evaluation</h3><p>Automated policy checks and human-in-the-loop review run directly inside the pipeline.</p></article><article id="observability"><span>03</span><h3>Observability &amp; audit</h3><p>Every run state, tool call, and evidence link is persisted in the execution trace.</p></article><article id="security"><span>04</span><h3>Security &amp; trust</h3><p>Tool permissions and approval boundaries are enforced directly in the workflow contract.</p></article><article id="data-foundations"><span>05</span><h3>Data foundations</h3><p>Inputs, intermediate signals, and final outputs stay linked as auditable run state.</p></article><article id="deployment"><span>06</span><h3>Deployment options</h3><p>Deploy inside your own VPC on-premises, on Google Cloud, or on AWS.</p></article></section>}
 
-  <section class="last-action" aria-label="Next step"><div><span class="eyebrow">SEE IT IN CONTEXT</span><h2>Walk through a sample or discuss your own workflow.</h2></div><div><a href={`/demos/#${slug}`}>View demo ↗</a><a href={BOOK_DEMO_URL}>Book a demo ↗</a></div></section>
+  <section class="last-action" aria-label="Next step"><div><span class="eyebrow">SEE IT IN CONTEXT</span><h2>Walk through your own production workflow with our team.</h2></div><div><a href={`/demos/#${slug}`}>Interactive demo ↗</a><a href={BOOK_DEMO_URL}>Book a demo ↗</a></div></section>
 
-  <dialog class="walkthrough-dialog" id={`${slug}-large-walkthrough`} data-product-dialog aria-label={`${name} enlarged walkthrough`}>
-    <div class="dialog-shell"><div class="dialog-top"><div><span class="eyebrow">ENLARGED WORKSPACE · SAMPLE DATA</span><h2>{name}</h2></div><button type="button" data-close-dialog aria-label="Close enlarged walkthrough">Close <span aria-hidden="true">×</span></button></div>{agentic ? <AgenticWorkspace /> : <AnnotationWorkspace />}</div>
+  <dialog class="walkthrough-dialog" id={`${slug}-large-walkthrough`} data-product-dialog aria-label={`${name} fullscreen workspace`}>
+    <div class="dialog-shell"><div class="dialog-top"><div><span class="eyebrow">INTERACTIVE WORKSPACE</span><h2>{name}</h2></div><button type="button" data-close-dialog aria-label="Close fullscreen workspace">Close <span aria-hidden="true">×</span></button></div>{agentic ? <AgenticWorkspace /> : <AnnotationWorkspace />}</div>
   </dialog>
 </div>
 

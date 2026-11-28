@@ -32,27 +32,29 @@ html.light-theme-preview main :is(img, video, canvas, svg, iframe, .reading-prog
   filter: invert(1) hue-rotate(180deg);
 }
 
-/* Keep the shared desktop navigation in the light preview palette too. */
+/* Keep the top bar matched to the official logo navy (#050f34) so the logo blends seamlessly. */
 html.light-theme-preview .nav-shell {
-  color: #20283c !important;
-  background: rgba(250, 251, 254, .94) !important;
-  border-bottom-color: #dce1eb !important;
+  color: #f2f3fc !important;
+  background: #050f34 !important;
+  border-bottom-color: rgba(199, 204, 238, .16) !important;
 }
 html.light-theme-preview .nav-link {
-  color: #3b4357 !important;
+  color: rgba(236, 238, 252, .88) !important;
 }
 html.light-theme-preview .nav-link:hover,
 html.light-theme-preview .nav-link:focus-visible,
-html.light-theme-preview .nav-link.is-current {
-  color: #555bc7 !important;
+html.light-theme-preview .nav-link.is-current,
+html.light-theme-preview .nav-item.is-open > .nav-link {
+  color: #c7c4ff !important;
 }
 html.light-theme-preview .nav-cta {
-  color: #f7f8fc !important;
-  background: #10152d !important;
-  border-color: #34394f !important;
+  color: #050f34 !important;
+  background: #f4f6ff !important;
+  border-color: rgba(255, 255, 255, .28) !important;
 }
 html.light-theme-preview .nav-cta:hover {
-  background: #202642 !important;
+  background: #ffffff !important;
+  border-color: #c7c4ff !important;
 }
 html.light-theme-preview .mega-menu {
   color: #20283c !important;

@@ -5,15 +5,15 @@ import AgenticScene from './AgenticScene.astro';
 
 <script>
   const agentStepData: Record<string, { title: string; copy: string; facts: string[]; visual: string }> = {
-    input: { title: 'Input', copy: 'Diagnostic scan and case record.', facts: ['CT scan', 'Case record'], visual: 'input' },
-    document: { title: 'Document', copy: 'Key details extracted.', facts: ['4.2 · interval', '7.1 · owner'], visual: 'document' },
-    analytics: { title: 'Analytics', copy: 'Signals summarized.', facts: ['Trend +12%', '2 changes'], visual: 'analytics' },
-    retrieval: { title: 'Evidence', copy: 'Source matches retrieved.', facts: ['Source 01', 'Source 02'], visual: 'retrieval' },
-    merge: { title: 'Synthesis', copy: 'Agent signals combined.', facts: ['2 findings', '2 sources'], visual: 'merge' },
-    'llm-evaluation': { title: 'AI check', copy: 'Local evaluation passed.', facts: ['3 checks', 'Evidence linked'], visual: 'llm-evaluation' },
-    'manual-evaluation': { title: 'Human review', copy: 'Review the source and result.', facts: ['Source', 'Result'], visual: 'manual-evaluation' },
-    approval: { title: 'Approval', copy: 'Ready for reviewer approval.', facts: ['2 sources', 'Approval required'], visual: 'approval' },
-    output: { title: 'Verified result', copy: 'Reviewed output with evidence.', facts: ['Source 4.2', 'Source 7.1'], visual: 'output' },
+    input: { title: 'Input', copy: 'Diagnostic CT scan and structured clinical case record.', facts: ['DICOM CT series', 'Case record #409'], visual: 'input' },
+    document: { title: 'Document Intelligence', copy: 'Clinical intervals and care-owner metadata extracted.', facts: ['§4.2 · Follow-up interval', '§7.1 · Care owner'], visual: 'document' },
+    analytics: { title: 'Analytics Agent', copy: 'Longitudinal progression signals quantified.', facts: ['Trend +12%', '2 interval changes'], visual: 'analytics' },
+    retrieval: { title: 'RAG Retrieval', copy: 'Grounded clinical guidelines and prior cases retrieved.', facts: ['Guideline §4.2', 'Prior study §7.1'], visual: 'retrieval' },
+    merge: { title: 'Synthesis', copy: 'Parallel specialist findings reconciled with citations.', facts: ['2 findings merged', '2 sources linked'], visual: 'merge' },
+    'llm-evaluation': { title: 'LLM Evaluation', copy: 'Automated policy and citation grounding checks passed.', facts: ['3/3 checks passed', 'Zero unsupported claims'], visual: 'llm-evaluation' },
+    'manual-evaluation': { title: 'Human Review', copy: 'Reviewer inspects cited evidence and synthesized summary.', facts: ['Source citations', 'Clinical summary'], visual: 'manual-evaluation' },
+    approval: { title: 'Approval Gate', copy: 'Held at sign-off checkpoint before downstream dispatch.', facts: ['2 verified sources', 'Sign-off required'], visual: 'approval' },
+    output: { title: 'Verified Result', copy: 'Approved diagnostic summary with full audit provenance.', facts: ['Cited §4.2', 'Cited §7.1'], visual: 'output' },
   };
   document.querySelectorAll<HTMLElement>('[data-agent-workspace]').forEach((root) => {
     const nodes = [...root.querySelectorAll<HTMLButtonElement>('[data-work-node]')];

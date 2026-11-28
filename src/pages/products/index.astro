@@ -8,16 +8,16 @@ const products = [
     kind: 'agentic' as const,
     name: 'Agentic AI Studio',
     headline: 'Keep AI workflows visible.',
-    description: 'Design connected steps, inspect a run, and review the output with its evidence.',
+    description: 'Build agentic workflows in an intuitive visual UI or with natural-language queries, inspect every run, and review outputs with supporting evidence.',
     href: '/products/agentic-ai-platform/',
     demo: '/demos/#agentic-ai-platform',
     id: 'agentic-ai-platform',
   },
   {
     kind: 'annotation' as const,
-    name: 'Annotation & Verification Platform',
+    name: 'LatentVerify',
     headline: 'Review the data behind the model.',
-    description: 'Compare independent labels, resolve conflicts, and export reviewed data.',
+    description: 'Compare independent annotation passes, surface IoU disagreements, and export audit-ready ground truth.',
     href: '/products/annotation-verification/',
     demo: '/demos/#annotation-verification',
     id: 'annotation-verification',
@@ -25,15 +25,15 @@ const products = [
 ];
 ---
 
-<Layout title="Products | Latentsig AI" description="Explore Agentic AI Studio and Annotation & Verification Platform through interactive, illustrative product previews.">
+<Layout title="Products | Latentsig AI" description="Explore Agentic AI Studio and LatentVerify — production workspaces for observable multi-agent orchestration and verified training data.">
   <div class="products-page">
-    <header class="products-intro"><span class="eyebrow">PRODUCTS  /  TWO WORKSPACES</span><h1>See the work, not just the promise.</h1><p>Explore our two product directions through local sample workflows.</p></header>
+    <header class="products-intro"><span class="eyebrow">PRODUCTS  /  TWO WORKSPACES</span><h1>See the work, not just the promise.</h1><p>Explore Agentic AI Studio and LatentVerify through interactive production workspaces.</p></header>
     <div class="product-list">
       {products.map((product, index) => (
         <article class="product-row" data-catalog-product>
-          <div class="product-copy"><span class="product-count">0{index + 1} / 02</span><h2>{product.name}</h2><h3>{product.headline}</h3><p>{product.description}</p><div class="product-actions"><a href={product.href}>Explore product <span aria-hidden="true">↗</span></a><a href={product.demo}>Try demo <span aria-hidden="true">↗</span></a></div></div>
-          <div class="product-visual"><button type="button" class="screen-launch" data-open-preview aria-label={`Open enlarged ${product.name} walkthrough`} aria-haspopup="dialog" aria-controls={`${product.id}-catalog-dialog`}><span>Open interactive preview ↗</span></button>{product.kind === 'agentic' ? <AgenticWorkspace /> : <AnnotationWorkspace />}<small>Illustrative preview · fictional sample data</small></div>
-          <dialog id={`${product.id}-catalog-dialog`} class="catalog-dialog" data-preview-dialog aria-label={`${product.name} enlarged walkthrough`}><div class="dialog-frame"><div class="dialog-head"><div><span class="eyebrow">GUIDED DEMONSTRATION</span><h2>{product.name}</h2></div><button type="button" data-close-preview aria-label="Close enlarged walkthrough">Close ×</button></div>{product.kind === 'agentic' ? <AgenticWorkspace /> : <AnnotationWorkspace />}</div></dialog>
+          <div class="product-copy"><span class="product-count">0{index + 1} / 02</span><h2>{product.name}</h2><h3>{product.headline}</h3><p>{product.description}</p><div class="product-actions"><a href={product.href}>Explore product <span aria-hidden="true">↗</span></a><a href={product.demo}>Launch demo <span aria-hidden="true">↗</span></a></div></div>
+          <div class="product-visual"><button type="button" class="screen-launch" data-open-preview aria-label={`Open enlarged ${product.name} workspace`} aria-haspopup="dialog" aria-controls={`${product.id}-catalog-dialog`}><span>Open fullscreen workspace ↗</span></button>{product.kind === 'agentic' ? <AgenticWorkspace /> : <AnnotationWorkspace />}</div>
+          <dialog id={`${product.id}-catalog-dialog`} class="catalog-dialog" data-preview-dialog aria-label={`${product.name} fullscreen workspace`}><div class="dialog-frame"><div class="dialog-head"><div><span class="eyebrow">INTERACTIVE WORKSPACE</span><h2>{product.name}</h2></div><button type="button" data-close-preview aria-label="Close fullscreen workspace">Close ×</button></div>{product.kind === 'agentic' ? <AgenticWorkspace /> : <AnnotationWorkspace />}</div></dialog>
         </article>
       ))}
     </div>

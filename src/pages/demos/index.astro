@@ -5,13 +5,60 @@ import AnnotationWorkspace from '../../components/products/AnnotationWorkspace.a
 import { BOOK_DEMO_URL } from '../../consts';
 ---
 
-<Layout title="Guided Product Demos | Latentsig AI" description="Try local sample walkthroughs for Annotation & Verification Platform and Agentic AI Studio. No API key is required.">
+<Layout title="Product Demonstrations | Latentsig AI" description="Explore interactive workspaces for LatentVerify (Annotation & Verification Platform) and Agentic AI Studio.">
   <div class="demos-page">
-    <header class="demos-intro"><span class="eyebrow">PRODUCT DEMONSTRATIONS</span><h1>Follow the work from input to review.</h1><p>These local walkthroughs use fictional sample data and do not call an external model.</p><nav aria-label="Choose a guided demonstration"><a href="#annotation-verification">Annotation & Verification Platform ↘</a><a href="#agentic-ai-platform">Agentic AI Studio ↘</a></nav></header>
+    <header class="demos-intro">
+      <span class="eyebrow">PRODUCT DEMONSTRATIONS</span>
+      <h1>Follow the work from input to review.</h1>
+      <p>Step through our two production workspaces — LatentVerify for verified training data and Agentic AI Studio for observable, human-approved multi-agent pipelines.</p>
+      <nav aria-label="Choose a product workspace">
+        <a href="#annotation-verification">LatentVerify · Annotation &amp; Verification ↘</a>
+        <a href="#agentic-ai-platform">Agentic AI Studio · Multi-Agent Orchestration ↘</a>
+      </nav>
+    </header>
 
-    <section id="annotation-verification" class="demo-section" aria-labelledby="annotation-heading"><div class="section-copy"><div><span class="eyebrow">01 / DATA QUALITY</span><h2 id="annotation-heading">Annotation & Verification Platform</h2><p>Inspect image labels, compare independent review and approve a local sample.</p></div><a href="/products/annotation-verification/">Explore product ↗</a></div><AnnotationWorkspace /><div class="below-actions"><a href="/products/annotation-verification/">Product overview ↗</a><a href={BOOK_DEMO_URL}>Book a demo ↗</a></div></section>
+    <section id="annotation-verification" class="demo-section" aria-labelledby="annotation-heading">
+      <div class="section-copy">
+        <div>
+          <span class="eyebrow">01 / LATENTVERIFY · DATA QUALITY</span>
+          <h2 id="annotation-heading">LatentVerify</h2>
+          <p>Catch label drift before it enters training. Compare independent annotators, surface IoU disagreements automatically, and export audited ground truth.</p>
+          <div class="pillar-strip" aria-label="LatentVerify highlights">
+            <span>Dual-pass consensus</span>
+            <span>IoU discrepancy detection</span>
+            <span>Reviewer sign-off &amp; audit export</span>
+          </div>
+        </div>
+        <a href="/products/annotation-verification/">Explore LatentVerify ↗</a>
+      </div>
+      <AnnotationWorkspace />
+      <div class="below-actions">
+        <a href="/products/annotation-verification/">Product overview ↗</a>
+        <a href={BOOK_DEMO_URL}>Book a tailored walkthrough ↗</a>
+      </div>
+    </section>
 
-    <section id="agentic-ai-platform" class="demo-section" aria-labelledby="agentic-heading"><div class="section-copy"><div><span class="eyebrow">02 / WORKFLOWS</span><h2 id="agentic-heading">Agentic AI Studio</h2><p>Run a deterministic workflow through specialist agents, evaluation and human review.</p></div><a href="/products/agentic-ai-platform/">Explore product ↗</a></div><AgenticWorkspace /><div class="below-actions"><a href="/products/agentic-ai-platform/">Product overview ↗</a><a href={BOOK_DEMO_URL}>Book a demo ↗</a></div></section>
+    <section id="agentic-ai-platform" class="demo-section" aria-labelledby="agentic-heading">
+      <div class="section-copy">
+        <div>
+          <span class="eyebrow">02 / AGENTIC AI STUDIO · ORCHESTRATION</span>
+          <h2 id="agentic-heading">Agentic AI Studio</h2>
+          <p>Build agentic workflows in an intuitive visual UI or from natural-language queries—then run parallel specialist agents with full execution traces, grounded evidence, and human approval gates.</p>
+          <div class="pillar-strip" aria-label="Agentic AI Studio highlights">
+            <span>Visual UI &amp; natural-language builder</span>
+            <span>Parallel specialist agents</span>
+            <span>Source-grounded synthesis</span>
+            <span>Automated + human-in-the-loop gates</span>
+          </div>
+        </div>
+        <a href="/products/agentic-ai-platform/">Explore Agentic AI Studio ↗</a>
+      </div>
+      <AgenticWorkspace />
+      <div class="below-actions">
+        <a href="/products/agentic-ai-platform/">Product overview ↗</a>
+        <a href={BOOK_DEMO_URL}>Book a tailored walkthrough ↗</a>
+      </div>
+    </section>
   </div>
 </Layout>
 
@@ -27,7 +74,7 @@ import { BOOK_DEMO_URL } from '../../consts';
 </script>
 
 <style>
-  .demos-page{min-height:100vh;background:#0b1326;color:#e9edff;font-family:Geist,system-ui,sans-serif}.demos-intro,.demo-section{width:min(1320px,100%);margin:auto;padding-left:clamp(20px,4.5vw,72px);padding-right:clamp(20px,4.5vw,72px)}.demos-intro{padding-top:100px;padding-bottom:83px}.eyebrow{color:#aeb2f2;font-size:11px;font-weight:700;letter-spacing:.12em}.demos-intro h1{max-width:870px;margin:19px 0;color:#edf0ff;font-family:'Hanken Grotesk',Geist,sans-serif;font-size:clamp(43px,6vw,76px);font-weight:600;line-height:1.05;letter-spacing:-.045em;text-wrap:balance}.demos-intro p{max-width:570px;margin:0;color:#b7c1d9;font-size:17px;line-height:1.6}.demos-intro nav{display:flex;flex-wrap:wrap;gap:9px;margin-top:31px}.demos-intro nav a{display:inline-flex;align-items:center;min-height:43px;padding:9px 13px;border:1px solid #626b8a;border-radius:7px;color:#e7eaff;background:#18223a;text-decoration:none;font-size:12px;font-weight:650}.demos-intro nav a:hover{background:#2a3453}.demo-section{padding-top:52px;padding-bottom:101px;border-top:1px solid #39445e;scroll-margin-top:90px}.section-copy{display:flex;justify-content:space-between;align-items:end;gap:18px;margin-bottom:25px}.section-copy h2{max-width:760px;margin:10px 0 9px;color:#eff1ff;font-family:'Hanken Grotesk',Geist,sans-serif;font-size:clamp(31px,4.5vw,54px);font-weight:600;letter-spacing:-.035em;line-height:1.1}.section-copy p{max-width:650px;margin:0;color:#b6c0d9;font-size:14px;line-height:1.55}.section-copy>a,.below-actions>a{flex:none;color:#c6c6ff;font-size:12px;font-weight:700;text-decoration:none}.section-copy>a:hover,.below-actions>a:hover{text-decoration:underline}.below-actions{display:flex;justify-content:flex-end;gap:25px;margin-top:18px}
+  .demos-page{min-height:100vh;background:#0b1326;color:#e9edff;font-family:Geist,system-ui,sans-serif}.demos-intro,.demo-section{width:min(1320px,100%);margin:auto;padding-left:clamp(20px,4.5vw,72px);padding-right:clamp(20px,4.5vw,72px)}.demos-intro{padding-top:112px;padding-bottom:72px}.eyebrow{color:#aeb2f2;font-size:11px;font-weight:700;letter-spacing:.12em}.demos-intro h1{max-width:870px;margin:18px 0;color:#edf0ff;font-family:'Hanken Grotesk',Geist,sans-serif;font-size:clamp(43px,6vw,74px);font-weight:600;line-height:1.05;letter-spacing:-.045em;text-wrap:balance}.demos-intro p{max-width:660px;margin:0;color:#b7c1d9;font-size:17px;line-height:1.6}.demos-intro nav{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}.demos-intro nav a{display:inline-flex;align-items:center;min-height:44px;padding:10px 16px;border:1px solid #626b8a;border-radius:8px;color:#e7eaff;background:#18223a;text-decoration:none;font-size:13px;font-weight:600;transition:background .18s ease,border-color .18s ease}.demos-intro nav a:hover{background:#243152;border-color:#9ca3ff}.demo-section{padding-top:56px;padding-bottom:92px;border-top:1px solid #39445e;scroll-margin-top:92px}.section-copy{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:26px}.section-copy h2{max-width:760px;margin:10px 0 9px;color:#eff1ff;font-family:'Hanken Grotesk',Geist,sans-serif;font-size:clamp(31px,4.5vw,52px);font-weight:600;letter-spacing:-.035em;line-height:1.08}.section-copy p{max-width:680px;margin:0;color:#b6c0d9;font-size:15px;line-height:1.58}.pillar-strip{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.pillar-strip span{display:inline-flex;align-items:center;padding:5px 11px;border:1px solid rgba(174,178,242,.26);border-radius:999px;background:rgba(24,34,58,.75);color:#d8ddff;font-size:12px;font-weight:500}.section-copy>a,.below-actions>a{flex:none;color:#c6c6ff;font-size:13px;font-weight:650;text-decoration:none}.section-copy>a:hover,.below-actions>a:hover{text-decoration:underline}.below-actions{display:flex;justify-content:flex-end;gap:24px;margin-top:18px}
   :where(a):focus-visible{outline:3px solid #c0c1ff;outline-offset:4px}
   @media(max-width:700px){.demos-intro{padding-top:56px;padding-bottom:58px}.demos-intro nav{flex-direction:column}.demo-section{padding-top:48px;padding-bottom:75px}.section-copy{align-items:start;flex-direction:column}.below-actions{justify-content:flex-start;flex-wrap:wrap}}
 </style>

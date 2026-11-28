@@ -1,7 +1,7 @@
 <section class="agent-workspace" data-agent-workspace data-execution-state="idle" data-evaluation-mode="llm" data-inspector-open="false" aria-label="Interactive Agentic AI Studio demonstration">
   <header class="workspace-head">
-    <div class="studio-mark"><span class="studio-symbol" aria-hidden="true">✳</span><div><span class="workspace-kicker">AGENTIC AI STUDIO</span><h3>AI workspace</h3></div></div>
-    <span class="run-state" data-run-state aria-live="polite">Auto-ready</span>
+    <div class="studio-mark"><span class="studio-symbol" aria-hidden="true">✳</span><div><span class="workspace-kicker">AGENTIC AI STUDIO · RUN #AS-904</span><h3>Clinical Diagnostics Orchestration</h3></div></div>
+    <span class="run-state" data-run-state aria-live="polite">Ready</span>
     <button class="workspace-expand" type="button" data-open-dialog aria-label="Enter fullscreen">⤢</button>
   </header>
 
@@ -22,7 +22,7 @@
       <circle class="flow-token" data-flow-token="llm-approval" r="4"><animateMotion dur=".7s" begin="indefinite" fill="freeze"/></circle><circle class="flow-token" data-flow-token="manual-approval" r="4"><animateMotion dur=".7s" begin="indefinite" fill="freeze"/></circle><circle class="flow-token" data-flow-token="approval-output" r="4"><animateMotion dur=".75s" begin="indefinite" fill="freeze"/></circle>
     </svg>
 
-    <div class="scene-caption"><span class="live-dot" aria-hidden="true"></span> LOCAL SAMPLE <span class="caption-divider">·</span> NO API</div>
+    <div class="scene-caption"><span class="live-dot" aria-hidden="true"></span> LIVE TRACE <span class="caption-divider">·</span> 3 SPECIALISTS <span class="caption-divider">·</span> AUDIT ON</div>
 
     <div class="scene-flow-grid">
       <div class="input-lane scene-lane">
@@ -55,10 +55,10 @@
       <button class="flow-node output-node" type="button" data-work-node="output" aria-pressed="false" aria-label="Inspect verified output" disabled><span class="output-top"><span class="node-label">Reviewed result</span><i class="node-state" data-node-status>Pending</i></span><span class="output-pending" aria-hidden="true"><i></i><i></i><b>Awaiting review</b></span><span class="output-preview" aria-hidden="true"><span class="output-image"></span><span class="output-sheet"><i></i><i></i><i class="lit"></i><i></i><b>✓</b></span><span class="output-check">✓</span></span><span class="output-meta"><span>2 SOURCES</span><span data-output-verdict>NOT VERIFIED</span></span></button>
     </div>
 
-    <section class="workspace-inspector" aria-live="polite" aria-atomic="true" aria-hidden="true"><button class="inspector-close" type="button" data-close-inspector aria-label="Close visual detail">×</button><div class="inspector-heading"><span class="workspace-kicker">VISUAL DETAIL</span><strong data-detail-title>Input</strong><p data-detail-copy>Sample input</p><ul data-preview-items><li>CT scan</li><li>Case record</li></ul></div><div class="inspector-visual" data-preview-stage aria-label="Selected module visual preview"></div><button class="human-approve" type="button" data-human-approve hidden disabled>Approve <span aria-hidden="true">↗</span></button></section>
+    <section class="workspace-inspector" aria-live="polite" aria-atomic="true" aria-hidden="true"><button class="inspector-close" type="button" data-close-inspector aria-label="Close visual detail">×</button><div class="inspector-heading"><span class="workspace-kicker">EXECUTION TRACE</span><strong data-detail-title>Input</strong><p data-detail-copy>Diagnostic CT scan and structured clinical case record.</p><ul data-preview-items><li>CT scan</li><li>Case record</li></ul></div><div class="inspector-visual" data-preview-stage aria-label="Selected module visual preview"></div><button class="human-approve" type="button" data-human-approve hidden disabled>Approve <span aria-hidden="true">↗</span></button></section>
   </div>
 
-  <footer class="workspace-toolbar"><span>Auto sample · local only</span><div><button type="button" data-run>Run <span aria-hidden="true">→</span></button><button type="button" data-pause disabled>Pause</button><button type="button" data-replay>Replay</button><button type="button" data-reset>Reset</button></div></footer>
+  <footer class="workspace-toolbar"><span>Trace persisted · Evidence links &amp; approval gate enforced</span><div><button type="button" data-run>Run <span aria-hidden="true">→</span></button><button type="button" data-pause disabled>Pause</button><button type="button" data-replay>Replay</button><button type="button" data-reset>Reset</button></div></footer>
 
   <template data-preview-template="input"><div class="preview-document"><span class="preview-caption">SOURCE / CT + CASE</span><div class="detail-photo"><img src="/images/agentic-healthcare-diagnostics.png" alt="Diagnostic scan review"/><span>＋</span></div></div></template>
   <template data-preview-template="document"><div class="preview-document"><span class="preview-caption">DOCUMENT / EXTRACT</span><div class="detail-paper"><i></i><i></i><i class="highlight"></i><i></i><i></i><b>✓</b></div></div></template>

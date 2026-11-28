@@ -7,43 +7,115 @@ import { CALENDLY_URL } from '../consts';
 <Layout title="Latentsig AI" description="Bengaluru-based AI engineering and consulting for enterprise teams: R&D advisory, architecture, implementation, and on-site or remote engagements.">
   <ObservatoryHero />
 
-  <section aria-labelledby="bengaluru-ai-engineering" class="py-16 border-b border-outline-variant/20 bg-surface">
+  <!-- Vertical Logos -->
+  <section class="py-10 border-y border-outline-variant/20 bg-surface-container-lowest">
     <div class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop">
-      <span class="font-label-sm text-label-sm text-primary tracking-widest uppercase">Bengaluru, Karnataka, India</span>
-      <h2 id="bengaluru-ai-engineering" class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mt-4">AI engineering for enterprise teams in Bengaluru</h2>
-      <p class="font-body-lg text-body-lg text-on-surface-variant max-w-4xl mt-4">
-        Latentsig AI helps enterprise teams move AI from research to production through R&amp;D advisory, system architecture and implementation. Local teams can work with us on-site; remote engagements support distributed teams.
-      </p>
+      <p class="font-label-sm text-label-sm text-center text-on-surface-variant mb-7 tracking-[0.2em] uppercase">Built for high-stakes industries</p>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+        <a href="/solutions/healthcare/" class="group flex items-center justify-center gap-3 px-4 py-3.5 rounded-xl border border-outline-variant/20 bg-surface/60 text-on-surface-variant hover:text-on-surface hover:border-primary/50 transition-all duration-200">
+          <span aria-hidden="true" class="material-symbols-outlined text-2xl text-primary/80 group-hover:text-primary transition-colors">biotech</span>
+          <span class="font-label-md text-label-md font-semibold tracking-wider uppercase">Healthcare</span>
+        </a>
+        <a href="/solutions/industry/" class="group flex items-center justify-center gap-3 px-4 py-3.5 rounded-xl border border-outline-variant/20 bg-surface/60 text-on-surface-variant hover:text-on-surface hover:border-primary/50 transition-all duration-200">
+          <span aria-hidden="true" class="material-symbols-outlined text-2xl text-primary/80 group-hover:text-primary transition-colors">precision_manufacturing</span>
+          <span class="font-label-md text-label-md font-semibold tracking-wider uppercase">Industrial AI</span>
+        </a>
+        <a href="/solutions/retail/" class="group flex items-center justify-center gap-3 px-4 py-3.5 rounded-xl border border-outline-variant/20 bg-surface/60 text-on-surface-variant hover:text-on-surface hover:border-primary/50 transition-all duration-200">
+          <span aria-hidden="true" class="material-symbols-outlined text-2xl text-primary/80 group-hover:text-primary transition-colors">shopping_cart</span>
+          <span class="font-label-md text-label-md font-semibold tracking-wider uppercase">Retail</span>
+        </a>
+        <a href="/solutions/education/" class="group flex items-center justify-center gap-3 px-4 py-3.5 rounded-xl border border-outline-variant/20 bg-surface/60 text-on-surface-variant hover:text-on-surface hover:border-primary/50 transition-all duration-200">
+          <span aria-hidden="true" class="material-symbols-outlined text-2xl text-primary/80 group-hover:text-primary transition-colors">school</span>
+          <span class="font-label-md text-label-md font-semibold tracking-wider uppercase">Education</span>
+        </a>
+      </div>
     </div>
   </section>
 
-  <!-- Vertical Logos -->
-  <section class="py-12 border-y border-outline-variant/20 bg-surface-container-lowest">
+  <!-- Flagship Products -->
+  <section class="py-24 bg-surface border-b border-outline-variant/20">
     <div class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop">
-      <p class="font-label-sm text-label-sm text-center text-on-surface-variant mb-10 tracking-[0.2em] uppercase">Trusted by leaders across industries</p>
-      <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-70 grayscale hover:grayscale-0 transition-all duration-500">
-        <div class="flex items-center gap-2">
-          <span aria-hidden="true" class="material-symbols-outlined text-4xl">biotech</span>
-          <span class="font-headline-sm text-headline-sm font-bold">HEALTHCARE</span>
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
+        <div class="flex flex-col gap-3 max-w-2xl">
+          <span class="text-primary font-label-md text-label-md font-bold tracking-widest uppercase">Products</span>
+          <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">Flagship Platforms &amp; Products</h2>
         </div>
-        <div class="flex items-center gap-2">
-          <span aria-hidden="true" class="material-symbols-outlined text-4xl">precision_manufacturing</span>
-          <span class="font-headline-sm text-headline-sm font-bold">INDUSTRIALS</span>
-        </div>
-        <div class="flex items-center gap-2">
-          <span aria-hidden="true" class="material-symbols-outlined text-4xl">shopping_cart</span>
-          <span class="font-headline-sm text-headline-sm font-bold">RETAIL</span>
-        </div>
-        <div class="flex items-center gap-2">
-          <span aria-hidden="true" class="material-symbols-outlined text-4xl">school</span>
-          <span class="font-headline-sm text-headline-sm font-bold">EDUCATION</span>
-        </div>
+        <a href="/demos/" class="inline-flex items-center gap-2 font-label-md text-label-md font-semibold text-primary hover:underline">
+          <span>Explore interactive demos</span>
+          <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-gutter">
+        <article class="group flex flex-col rounded-2xl border border-outline-variant/30 bg-surface-container-low overflow-hidden hover:border-primary/60 transition-all duration-300">
+          <a href="/demos/#agentic-ai-platform" class="block aspect-[16/10] overflow-hidden bg-surface-container-lowest border-b border-outline-variant/20">
+            <img
+              src="/images/nav/product-agentic-menu.webp"
+              alt="Agentic AI Studio connected orchestration nodes"
+              width="720"
+              height="440"
+              loading="lazy"
+              decoding="async"
+              class="w-full h-full object-cover object-center group-hover:scale-[1.03] transition-transform duration-500"
+            />
+          </a>
+          <div class="p-6 sm:p-8 flex flex-col flex-1 gap-4">
+            <div class="flex items-center justify-between gap-3">
+              <span class="font-label-sm text-label-sm text-primary uppercase tracking-widest">Agentic Workflows</span>
+              <span class="font-label-sm text-label-sm text-on-surface-variant">Human checkpoints</span>
+            </div>
+            <h3 class="font-headline-md text-headline-md text-on-surface">Agentic AI Studio</h3>
+            <p class="font-body-md text-body-md text-on-surface-variant">
+              Build agentic workflows through an intuitive visual UI or natural-language queries—with visible execution traces, tool calls, and human approval gates before actions reach production.
+            </p>
+            <div class="mt-auto pt-4 flex flex-wrap items-center gap-5 border-t border-outline-variant/20">
+              <a href="/demos/#agentic-ai-platform" class="inline-flex items-center gap-1.5 font-label-md text-label-md font-semibold text-primary hover:underline">
+                <span>Launch walkthrough</span><span aria-hidden="true">↗</span>
+              </a>
+              <a href="/products/agentic-ai-platform/" class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors">
+                Product overview
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <article class="group flex flex-col rounded-2xl border border-outline-variant/30 bg-surface-container-low overflow-hidden hover:border-primary/60 transition-all duration-300">
+          <a href="/demos/#annotation-verification" class="block aspect-[16/10] overflow-hidden bg-surface-container-lowest border-b border-outline-variant/20">
+            <img
+              src="/images/nav/product-annotation-menu.webp"
+              alt="Annotation and Verification optical inspection and label review"
+              width="720"
+              height="440"
+              loading="lazy"
+              decoding="async"
+              class="w-full h-full object-cover object-center group-hover:scale-[1.03] transition-transform duration-500"
+            />
+          </a>
+          <div class="p-6 sm:p-8 flex flex-col flex-1 gap-4">
+            <div class="flex items-center justify-between gap-3">
+              <span class="font-label-sm text-label-sm text-primary uppercase tracking-widest">Annotation &amp; Verification</span>
+              <span class="font-label-sm text-label-sm text-on-surface-variant">Audited exports</span>
+            </div>
+            <h3 class="font-headline-md text-headline-md text-on-surface">LatentVerify</h3>
+            <p class="font-body-md text-body-md text-on-surface-variant">
+              Surface label disagreements automatically, route edge cases to domain reviewers, and ship verified ground-truth datasets with full provenance.
+            </p>
+            <div class="mt-auto pt-4 flex flex-wrap items-center gap-5 border-t border-outline-variant/20">
+              <a href="/demos/#annotation-verification" class="inline-flex items-center gap-1.5 font-label-md text-label-md font-semibold text-primary hover:underline">
+                <span>Launch walkthrough</span><span aria-hidden="true">↗</span>
+              </a>
+              <a href="/products/annotation-verification/" class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors">
+                Product overview
+              </a>
+            </div>
+          </div>
+        </article>
       </div>
     </div>
   </section>
 
   <!-- Services Bento Grid -->
-  <section class="py-32 bg-surface">
+  <section class="py-24 bg-surface">
     <div class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop">
       <div class="flex flex-col mb-16 gap-4">
         <span class="text-primary font-label-md text-label-md font-bold tracking-widest uppercase">Expertise</span>
@@ -108,7 +180,7 @@ import { CALENDLY_URL } from '../consts';
   </section>
 
   <!-- Why Latentsig AI -->
-  <section class="py-32 bg-surface-container-lowest">
+  <section class="py-24 bg-surface-container-lowest">
     <div class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop grid grid-cols-12 gap-gutter items-center">
       <div class="col-span-12 lg:col-span-5 order-2 lg:order-1">
         <div class="w-full h-[500px] rounded-2xl border border-outline-variant/20 shadow-2xl bg-surface-container-low relative overflow-hidden">
@@ -166,7 +238,7 @@ import { CALENDLY_URL } from '../consts';
   </section>
 
   <!-- CTA -->
-  <section class="py-32 relative overflow-hidden">
+  <section class="py-24 relative overflow-hidden">
     <div class="absolute inset-0 bg-primary/5"></div>
     <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-outline-variant/30 to-transparent"></div>
     <div class="relative max-w-4xl mx-auto px-margin-mobile text-center flex flex-col items-center gap-10">

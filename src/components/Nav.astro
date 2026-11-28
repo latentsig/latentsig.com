@@ -9,23 +9,23 @@ const menus = [
     label: 'Products',
     href: '/products/',
     eyebrow: 'Featured · Demos',
-    description: 'Explore interactive product concepts and review-ready AI workflows.',
+    description: 'Explore LatentVerify and Agentic AI Studio — production workspaces for verified data and observable AI workflows.',
     links: [
-      { href: '/products/', label: 'Explore all products', detail: 'Tools for better data and practical AI workflows' },
-      { href: '/products/annotation-verification/', label: 'Annotation & Verification Platform', detail: 'A product concept for organizing annotation, review, and verification workflows.' },
-      { href: '/demos/#annotation-verification', label: 'Annotation & Verification demo', detail: 'View the interactive product concept' },
-      { href: '/products/agentic-ai-platform/', label: 'Agentic AI Studio', detail: 'A product concept for shaping AI-assisted workflows with visible steps and review points.' },
-      { href: '/demos/#agentic-ai-platform', label: 'Agentic AI Studio walkthrough', detail: 'See AI workflows with clear review points' },
+      { href: '/products/', label: 'Explore all products', detail: 'Tools for verified data and observable AI workflows' },
+      { href: '/products/annotation-verification/', label: 'LatentVerify', detail: 'Dual-pass annotation, IoU consensus checks, and audit-ready ground truth.' },
+      { href: '/demos/#annotation-verification', label: 'LatentVerify demo', detail: 'Inspect the interactive verification workspace' },
+      { href: '/products/agentic-ai-platform/', label: 'Agentic AI Studio', detail: 'Multi-agent orchestration with visible traces and human approval gates.' },
+      { href: '/demos/#agentic-ai-platform', label: 'Agentic AI Studio demo', detail: 'Run an end-to-end multi-agent pipeline' },
     ],
   },
   {
     label: 'Solutions',
     href: '/solutions/',
     eyebrow: 'Digital Solutions',
-    description: 'Applied AI and engineering for healthcare, industry, retail, and education.',
+    description: 'Applied AI and engineering for healthcare, industrial AI, retail, and education.',
     links: [
       { href: '/solutions/healthcare/', label: 'Healthcare', detail: 'Care and clinical workflows' },
-      { href: '/solutions/industry/', label: 'Industry', detail: 'Operations and quality systems' },
+      { href: '/solutions/industry/', label: 'Industrial AI', detail: 'Operations and quality systems' },
       { href: '/solutions/retail/', label: 'Retail', detail: 'Customer and commerce workflows' },
       { href: '/solutions/education/', label: 'Education', detail: 'Learning and knowledge systems' },
     ],
@@ -55,11 +55,11 @@ const menus = [
 ];
 
 const previewImages: Record<string, string> = {
-  '/products/': '/images/nav/products-agentic.webp',
-  '/products/annotation-verification/': '/images/nav/products-agentic.webp',
-  '/demos/#annotation-verification': '/images/nav/products-agentic.webp',
-  '/products/agentic-ai-platform/': '/images/nav/products-agentic.webp',
-  '/demos/#agentic-ai-platform': '/images/nav/products-agentic.webp',
+  '/products/': '/images/nav/product-agentic-menu.webp',
+  '/products/annotation-verification/': '/images/nav/product-annotation-menu.webp',
+  '/demos/#annotation-verification': '/images/nav/product-annotation-menu.webp',
+  '/products/agentic-ai-platform/': '/images/nav/product-agentic-menu.webp',
+  '/demos/#agentic-ai-platform': '/images/nav/product-agentic-menu.webp',
   '/solutions/healthcare/': '/images/nav/solutions-healthcare.webp',
   '/solutions/industry/': '/images/nav/solutions-industry.webp',
   '/solutions/retail/': '/images/nav/solutions-retail.webp',
@@ -118,8 +118,7 @@ const mobileIcon = (href: string) => mobileIcons[mobileIconByHref[href] ?? 'docu
 <header class="site-header">
   <nav aria-label="Main navigation" class="nav-shell">
     <a href="/" class="brand" aria-label="Latentsig home">
-      <Logo height={36} showWordmark={false} class="brand-mark" />
-      <span>latentsig</span>
+      <Logo height={46} class="brand-logo" />
     </a>
 
     <div class="desktop-navigation" aria-label="Site sections">
@@ -140,18 +139,41 @@ const mobileIcon = (href: string) => mobileIcons[mobileIconByHref[href] ?? 'docu
             {menu.label === 'Products' ? (
               <div class="products-mega-layout">
                 <div class="products-mega-feature">
-                  <div class="feature-visual" data-agentic="true">
-                    <img class="feature-image is-active" data-preview-image src="/images/nav/products-agentic.webp" alt="" width="720" height="440" loading="eager" decoding="async" />
-                    <img class="feature-image" data-preview-image src="/images/nav/products-agentic.webp" alt="" width="720" height="440" loading="eager" decoding="async" />
-                    <svg class="agent-flow" data-agent-flow aria-hidden="true" viewBox="0 0 340 260" preserveAspectRatio="none"><path class="agent-flow-path" d="M22 145 C79 68 114 201 167 130 S253 70 318 144" /><circle class="agent-flow-pulse" r="3.5"><animateMotion dur="4.2s" repeatCount="indefinite" path="M22 145 C79 68 114 201 167 130 S253 70 318 144" /></circle></svg>
+                  <div class="feature-visual">
+                    <img class="feature-image is-active" data-preview-image src="/images/nav/product-agentic-menu.webp" alt="Agentic AI Studio modular orchestration preview" width="720" height="440" loading="eager" decoding="async" />
+                    <img class="feature-image" data-preview-image src="/images/nav/product-annotation-menu.webp" alt="Annotation and Verification optical inspection preview" width="720" height="440" loading="eager" decoding="async" />
                   </div>
-                  <span class="menu-overline">Two focused workspaces</span><h2>Workflows, made visible.</h2><p data-feature-copy>Connected agents move a request through review to a sourced result.</p>
+                  <span class="menu-overline" data-feature-overline>Agentic AI Studio</span>
+                  <h2 data-feature-title>Build agentic workflows visually or in plain language.</h2>
+                  <p data-feature-copy>Author multi-agent pipelines in an intuitive UI or via natural queries, with full traces and human checkpoints.</p>
                 </div>
                 <div class="products-mega-list"><span class="menu-overline">Our products</span>
-                  <a class="product-menu-group product-menu-agentic product-demo-card" href="/demos/#agentic-ai-platform" data-preview-src="/images/nav/products-agentic.webp"><h3>Agentic AI Studio</h3><p>Connected agents, visible execution and human review.</p><span class="product-card-arrow" aria-hidden="true">↗</span></a>
-                  <a class="product-menu-group product-menu-annotation product-demo-card" href="/demos/#annotation-verification" data-preview-src="/images/nav/products-agentic.webp"><h3>Annotation &amp; Verification</h3><p>Visual labels reviewed and approved by people.</p><span class="product-card-arrow" aria-hidden="true">↗</span></a>
+                  <a
+                    class="product-menu-group product-menu-agentic product-demo-card is-previewed"
+                    href="/demos/#agentic-ai-platform"
+                    data-preview-src="/images/nav/product-agentic-menu.webp"
+                    data-preview-overline="Agentic AI Studio"
+                    data-preview-title="Build agentic workflows visually or in plain language."
+                    data-preview-copy="Author multi-agent pipelines in an intuitive UI or via natural queries, with full traces and human checkpoints."
+                  >
+                    <h3>Agentic AI Studio</h3>
+                    <p>Build workflows in an intuitive UI or via natural queries, with human review.</p>
+                    <span class="product-card-arrow" aria-hidden="true">↗</span>
+                  </a>
+                  <a
+                    class="product-menu-group product-menu-annotation product-demo-card"
+                    href="/demos/#annotation-verification"
+                    data-preview-src="/images/nav/product-annotation-menu.webp"
+                    data-preview-overline="LatentVerify · Annotation & Verification"
+                    data-preview-title="Ground truth, verified by experts."
+                    data-preview-copy="Detect label disagreements, route edge cases to reviewers, and export audited datasets."
+                  >
+                    <h3>LatentVerify</h3>
+                    <p>Annotation &amp; verification with dual-pass consensus and audit trails.</p>
+                    <span class="product-card-arrow" aria-hidden="true">↗</span>
+                  </a>
                 </div>
-                <div class="products-mega-trust" role="group" aria-label="Trust and capabilities information"><span class="menu-overline">Built for careful work</span><div><i aria-hidden="true">✓</i>Human approvals</div><div><i aria-hidden="true">◇</i>LLM &amp; human evaluation</div><div><i aria-hidden="true">◷</i>Observable, auditable runs</div><div><i aria-hidden="true">⌑</i>Security-minded workflows</div><div><i aria-hidden="true">▤</i>Reliable data foundations</div><div class="deployment-info"><i aria-hidden="true">•</i><span>Deployment fit<br /><small>On-premises, Google Cloud or AWS are discussion options, not preconfigured offers.</small></span></div></div>
+                <div class="products-mega-trust" role="group" aria-label="Trust and capabilities information"><span class="menu-overline">Built for careful work</span><div><i aria-hidden="true">✓</i>Human approvals</div><div><i aria-hidden="true">◇</i>LLM &amp; human evaluation</div><div><i aria-hidden="true">◷</i>Observable, auditable runs</div><div><i aria-hidden="true">⌑</i>Security-minded workflows</div><div><i aria-hidden="true">▤</i>Reliable data foundations</div><div class="deployment-info"><i aria-hidden="true">•</i><span>Deployment fit<br /><small>On-premises, Google Cloud, or AWS discussed per engagement.</small></span></div></div>
               </div>
             ) : (
             <div class="mega-feature" aria-hidden="true">
@@ -205,8 +227,7 @@ const mobileIcon = (href: string) => mobileIcons[mobileIconByHref[href] ?? 'docu
     <section class="mobile-drawer" role="dialog" aria-modal="true" aria-label="Mobile navigation" tabindex="-1">
       <div class="mobile-drawer-header">
         <a href="/" class="mobile-brand" aria-label="Latentsig home">
-          <Logo height={32} showWordmark={false} class="mobile-brand-mark" />
-          <span>latentsig</span>
+          <Logo height={36} class="mobile-brand-logo" />
         </a>
         <button class="mobile-menu-close" type="button" aria-label="Close navigation menu" data-mobile-close>
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg>
@@ -263,7 +284,7 @@ const mobileIcon = (href: string) => mobileIcons[mobileIconByHref[href] ?? 'docu
     border-bottom: 1px solid rgba(200, 204, 231, .16);
     border-radius: 0;
     color: #f2f3fc;
-    background: transparent;
+    background: #050f34;
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
     box-shadow: none;
@@ -272,18 +293,16 @@ const mobileIcon = (href: string) => mobileIcons[mobileIconByHref[href] ?? 'docu
     color: inherit;
     display: inline-flex;
     align-items: center;
-    gap: 10px;
     flex: 0 0 auto;
     padding: 0 10px 0 0;
-    font: 700 21px/1 'Geist', ui-sans-serif, system-ui, sans-serif;
-    letter-spacing: -.055em;
     text-decoration: none;
   }
-  .brand-mark {
+  .brand-logo {
     display: block;
-    border-radius: 12px;
-    background: #10152d;
-    box-shadow: 0 2px 12px rgba(0,0,0,.24);
+    width: auto;
+    height: 46px;
+    max-width: 100%;
+    object-fit: contain;
   }
   .desktop-navigation { display:flex; align-self:stretch; align-items:center; justify-content:center; gap:clamp(4px, 1.1vw, 18px); flex:1; }
   .nav-item { align-self:stretch; display:flex; align-items:center; }
@@ -343,22 +362,22 @@ const mobileIcon = (href: string) => mobileIcons[mobileIconByHref[href] ?? 'docu
   }
   .mega-menu[hidden] { display:none; }
   .mega-menu-products { display:block; }
-  .products-mega-layout{display:grid;grid-template-columns:minmax(250px,.92fr) minmax(330px,1.18fr) minmax(230px,.78fr);gap:24px;align-items:stretch;color:#f2f3f8}
-  .products-mega-feature{display:flex;flex-direction:column;min-width:0;padding:3px 2px 5px}.products-mega-feature .feature-visual{flex:1;min-height:195px;margin-bottom:14px}.products-mega-feature .menu-overline{margin-top:auto}.products-mega-feature h2{margin:7px 0 5px;font:600 20px/1.2 'Geist',ui-sans-serif,system-ui,sans-serif;letter-spacing:-.03em}.products-mega-feature p{max-width:300px;margin:0;color:rgba(223,225,235,.65);font:400 11px/1.45 'Geist',ui-sans-serif,system-ui,sans-serif}
-  .products-mega-list{display:grid;align-content:start;gap:13px}.products-mega-list>.menu-overline,.products-mega-trust>.menu-overline{display:block;margin:3px 0 1px}.product-menu-group{padding:13px 12px 10px;border:1px solid rgba(255,255,255,.11);border-radius:11px;background:rgba(255,255,255,.025)}.product-menu-group h3{margin:0;color:#f2f3f8;font:600 13px/1.3 'Geist',ui-sans-serif,system-ui,sans-serif}.product-menu-group p{margin:4px 0 9px;color:rgba(223,225,235,.57);font:400 10px/1.35 'Geist',ui-sans-serif,system-ui,sans-serif}.product-menu-group>div{display:grid;grid-template-columns:1fr;gap:6px}.product-menu-group .mega-link{min-height:37px;padding:8px;border:1px solid rgba(255,255,255,.1);border-radius:6px;background:rgba(10,14,27,.34)}.product-menu-group .mega-link strong{font-size:9px;font-weight:600}.product-menu-group .mega-link strong span{margin-left:5px;color:#c3c0ff}
-  .mega-menu-products .product-menu-group{position:relative;isolation:isolate;display:flex;min-height:118px;flex-direction:column;justify-content:center;align-items:flex-start;overflow:hidden;padding:13px 15px 12px;border:1px solid rgba(192,201,233,.2);border-radius:14px;background:#111729;color:#fff}
-  .mega-menu-products .product-menu-group::before{position:absolute;inset:0;z-index:-1;content:"";background-size:cover;background-position:center 54%;opacity:.96;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
-  .mega-menu-products .product-menu-agentic::before{background-image:linear-gradient(90deg,rgba(8,13,27,.98) 0%,rgba(8,13,27,.86) 44%,rgba(8,13,27,.2) 100%),url('/images/nav/product-agentic-menu.webp')}
-  .mega-menu-products .product-menu-annotation::before{background-image:linear-gradient(90deg,rgba(8,13,27,.98) 0%,rgba(8,13,27,.86) 44%,rgba(8,13,27,.2) 100%),url('/images/nav/product-annotation-menu.webp')}
-  .mega-menu-products .product-menu-group:hover::before,.mega-menu-products .product-menu-group:focus-within::before{transform:scale(1.04)}
+  .products-mega-layout{display:grid;grid-template-columns:minmax(270px,1fr) minmax(330px,1.15fr) minmax(240px,.82fr);gap:24px;align-items:stretch;color:#f2f3f8}
+  .products-mega-feature{display:flex;flex-direction:column;min-width:0;padding:4px 2px 6px}.products-mega-feature .feature-visual{flex:1;min-height:190px;margin-bottom:14px}.products-mega-feature .menu-overline{margin-top:auto}.products-mega-feature h2{margin:6px 0 6px;font:600 19px/1.22 'Geist',ui-sans-serif,system-ui,sans-serif;letter-spacing:-.025em}.products-mega-feature p{max-width:340px;margin:0;color:rgba(223,225,235,.72);font:400 13px/1.5 'Geist',ui-sans-serif,system-ui,sans-serif}
+  .products-mega-list{display:grid;align-content:start;gap:12px}.products-mega-list>.menu-overline,.products-mega-trust>.menu-overline{display:block;margin:3px 0 2px}.product-menu-group{padding:14px 14px 12px;border:1px solid rgba(255,255,255,.11);border-radius:12px;background:rgba(255,255,255,.025)}.product-menu-group h3{margin:0;color:#f2f3f8;font:600 14.5px/1.3 'Geist',ui-sans-serif,system-ui,sans-serif}.product-menu-group p{margin:5px 0 0;color:rgba(223,225,235,.72);font:400 12.5px/1.45 'Geist',ui-sans-serif,system-ui,sans-serif}.product-menu-group>div{display:grid;grid-template-columns:1fr;gap:6px}.product-menu-group .mega-link{min-height:37px;padding:8px;border:1px solid rgba(255,255,255,.1);border-radius:6px;background:rgba(10,14,27,.34)}.product-menu-group .mega-link strong{font-size:11px;font-weight:600}.product-menu-group .mega-link strong span{margin-left:5px;color:#c3c0ff}
+  .mega-menu-products .product-menu-group{position:relative;isolation:isolate;display:flex;min-height:126px;flex-direction:column;justify-content:center;align-items:flex-start;overflow:hidden;padding:16px 18px;border:1px solid rgba(192,201,233,.22);border-radius:14px;background:#0a1026;color:#fff}
+  .mega-menu-products .product-menu-group::before{position:absolute;inset:0;z-index:-1;content:"";background-size:cover;background-position:center 52%;opacity:.96;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+  .mega-menu-products .product-menu-agentic::before{background-image:linear-gradient(95deg,rgba(5,15,52,.96) 0%,rgba(5,15,52,.84) 48%,rgba(5,15,52,.18) 100%),url('/images/nav/product-agentic-menu.webp')}
+  .mega-menu-products .product-menu-annotation::before{background-image:linear-gradient(95deg,rgba(5,15,52,.96) 0%,rgba(5,15,52,.84) 48%,rgba(5,15,52,.18) 100%),url('/images/nav/product-annotation-menu.webp')}
+  .mega-menu-products .product-menu-group:hover::before,.mega-menu-products .product-menu-group:focus-within::before,.mega-menu-products .product-menu-group.is-previewed::before{transform:scale(1.04)}
   .mega-menu-products .product-menu-group h3,.mega-menu-products .product-menu-group h3 a{position:relative;color:#fff!important;text-decoration:none}
-  .mega-menu-products .product-menu-group p{position:relative;max-width:75%;margin:4px 0 8px;color:rgba(244,246,255,.78)!important}
+  .mega-menu-products .product-menu-group p{position:relative;max-width:74%;margin:5px 0 0;color:rgba(244,246,255,.82)!important}
   .mega-menu-products .product-menu-group>div{position:relative;display:flex;grid-template-columns:none;gap:6px}
   .mega-menu-products .product-menu-group .mega-link{display:inline-flex;width:max-content;min-height:0;align-items:center;padding:2px 0;border:1px solid transparent;border-radius:0;background:transparent;color:#fff}
   .mega-menu-products .product-menu-group .mega-link:hover,.mega-menu-products .product-menu-group .mega-link:focus-visible{border-color:transparent;background:transparent;color:#cbc6ff;transform:none}
-  .mega-menu-products .product-menu-group .mega-link strong{font-size:9px;font-weight:600}
+  .mega-menu-products .product-menu-group .mega-link strong{font-size:11px;font-weight:600}
   .mega-menu-products .product-menu-group .mega-link strong span{color:#cbc6ff}
-  .products-mega-trust{display:grid;align-content:start;gap:7px;padding-left:16px;border-left:1px solid rgba(255,255,255,.12);cursor:default}.products-mega-trust>div{display:flex;align-items:center;gap:9px;min-height:22px;color:#e8eaf4;font:500 10px/1.35 'Geist',ui-sans-serif,system-ui,sans-serif;cursor:default;user-select:none}.products-mega-trust>div>i{width:17px;height:17px;display:grid;place-items:center;border:1px solid rgba(177,178,255,.27);border-radius:5px;color:#c2c0ff;background:rgba(137,131,255,.1);font-size:9px;font-style:normal}.products-mega-trust .deployment-info{align-items:flex-start}.products-mega-trust .deployment-info>span{display:block}.products-mega-trust .deployment-info small{color:#8691aa;font-size:8px}
+  .products-mega-trust{display:grid;align-content:start;gap:10px;padding-left:20px;border-left:1px solid rgba(255,255,255,.12);cursor:default}.products-mega-trust>div{display:flex;align-items:center;gap:10px;min-height:24px;color:#e8eaf4;font:500 12.5px/1.35 'Geist',ui-sans-serif,system-ui,sans-serif;cursor:default;user-select:none}.products-mega-trust>div>i{width:22px;height:22px;flex:none;display:grid;place-items:center;border:1px solid rgba(177,178,255,.27);border-radius:6px;color:#c2c0ff;background:rgba(137,131,255,.1);font-size:11px;font-style:normal}.products-mega-trust .deployment-info{align-items:flex-start;margin-top:4px;padding-top:10px;border-top:1px solid rgba(140,152,184,.2)}.products-mega-trust .deployment-info>span{display:block}.products-mega-trust .deployment-info small{display:block;margin-top:2px;color:#8691aa;font-size:11px;line-height:1.4}
   .mega-feature {
     min-width:0;
     min-height:268px;
@@ -410,10 +429,10 @@ const mobileIcon = (href: string) => mobileIcons[mobileIconByHref[href] ?? 'docu
   .mobile-menu[hidden] { display:none!important; }
   .mobile-menu-backdrop { position:absolute;inset:0;width:100%;height:100%;padding:0;border:0;background:rgba(2,6,18,.64);-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px); }
   .mobile-drawer { position:absolute;inset:0;width:100%;height:100dvh;display:grid;grid-template-rows:68px minmax(0,1fr) auto;overflow:hidden;background:#fff;color:#18181b;box-shadow:0 20px 60px rgba(15,23,42,.14); }
-  .mobile-drawer-header { display:flex;align-items:center;justify-content:space-between;padding:0 max(18px,env(safe-area-inset-right)) 0 max(18px,env(safe-area-inset-left));border-bottom:1px solid #e4e4e7;background:#fff; }
-  .mobile-brand { display:flex;align-items:center;gap:8px;min-height:44px;color:#18181b;text-decoration:none;font:700 20px/1 'Geist',ui-sans-serif,system-ui,sans-serif;letter-spacing:-.055em; }
-  .mobile-brand-mark { display:block;border-radius:10px;background:#10152d;box-shadow:0 2px 12px rgba(0,0,0,.24); }
-  .mobile-menu-close { width:42px;height:42px;display:grid;place-items:center;border:1px solid #e4e4e7;border-radius:50%;background:#f4f4f5;color:#18181b;cursor:pointer; }
+  .mobile-drawer-header { display:flex;align-items:center;justify-content:space-between;padding:0 max(18px,env(safe-area-inset-right)) 0 max(18px,env(safe-area-inset-left));border-bottom:1px solid rgba(199,204,238,.18);background:#050f34; }
+  .mobile-brand { display:inline-flex;align-items:center;min-height:44px;text-decoration:none; }
+  .mobile-brand-logo { display:block;width:auto;height:36px;max-width:100%;object-fit:contain; }
+  .mobile-menu-close { width:42px;height:42px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.18);border-radius:50%;background:rgba(255,255,255,.08);color:#f2f3fc;cursor:pointer; }
   .mobile-menu-close svg { width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round; }
   .mobile-drawer-content { min-height:0;overflow-y:auto;overscroll-behavior:contain;background:#fff;scrollbar-color:#d4d4d8 transparent; }
   .mobile-panel-inner { width:min(100%,560px);margin:0 auto;padding:8px 20px 20px; }
@@ -440,22 +459,21 @@ const mobileIcon = (href: string) => mobileIcons[mobileIconByHref[href] ?? 'docu
   .mobile-demo-cta span { margin-left:5px;font-size:16px; }
   @media(max-width:380px) { .mobile-panel-inner { padding-right:14px;padding-left:14px; }.mobile-drawer-footer { padding-right:12px;padding-left:12px;gap:8px; }.mobile-contact-cta,.mobile-demo-cta { padding:0 8px;font-size:13px; } }
   @keyframes menu-in { from { opacity:0; transform:translateY(-5px); } to { opacity:1; transform:translateY(0); } }
-  @media(max-width:1100px) { .nav-shell { gap:12px; } .desktop-navigation { gap:2px; } .nav-link { padding:0 7px; font-size:13px; } .brand { font-size:19px; } .nav-cta { padding:0 16px; } }
+  @media(max-width:1100px) { .nav-shell { gap:12px; } .desktop-navigation { gap:2px; } .nav-link { padding:0 7px; font-size:13px; } .nav-cta { padding:0 16px; } }
   @media(max-width:1100px) and (min-width:881px){.products-mega-layout{grid-template-columns:minmax(190px,.8fr) minmax(290px,1.2fr) minmax(190px,.8fr);gap:13px}.products-mega-trust{padding-left:10px}.product-menu-group{padding:10px 8px}.product-menu-group>div{grid-template-columns:1fr}.product-menu-group .mega-link{min-height:30px}}
   :global(html.light-theme-preview) .products-mega-layout{color:#20263a}.products-mega-feature h2{color:inherit}.products-mega-feature p{color:#586176!important}.product-menu-group{padding:10px 0;border:0;border-bottom:1px solid #e2e5ec;border-radius:0;background:transparent}.product-menu-group h3{color:#20283c!important}.product-menu-group h3 a{color:inherit;text-decoration:none}.product-menu-group h3 a:hover{color:#555bc7}.product-menu-group p{color:#687188!important}.product-menu-group .mega-link{border:0;border-radius:5px;background:transparent;color:#30394e}.product-menu-group .mega-link:hover{background:#eef0f7}.product-menu-group .mega-link strong span{color:#555bc7}.products-mega-trust{border-left-color:#dce1eb}.products-mega-trust>div{color:#394257}.products-mega-trust>div>i{border-color:#dce1eb;color:#555bc7;background:#f2f4f8}.products-mega-trust .deployment-info small{color:#687188}.mega-menu-products .feature-visual{border:0;border-radius:8px;box-shadow:none}.mega-menu-products .feature-image{object-position:center;background:#e8edf6}
   .mega-menu-products .product-menu-group .mega-link,.mega-menu-products .product-menu-group .mega-link:hover,.mega-menu-products .product-menu-group .mega-link:focus-visible,.mega-menu-products .product-menu-group .mega-link.is-previewed{min-height:0;padding:2px 0;border:0;border-bottom:0;border-radius:0;background:transparent;box-shadow:none;text-decoration:none}
-  .mega-menu-products .product-demo-card{color:#fff;text-decoration:none;cursor:pointer;transition:border-color .2s ease,transform .2s ease}.mega-menu-products .product-demo-card:hover{border-color:rgba(192,201,233,.48);text-decoration:none}.mega-menu-products .product-demo-card:focus-visible{outline:2px solid #cbc6ff;outline-offset:3px}.mega-menu-products .product-demo-card h3{font-size:13px}.mega-menu-products .product-demo-card p{max-width:75%}.mega-menu-products .product-card-arrow{position:absolute;right:15px;bottom:13px;color:#cbc6ff;font:600 14px/1 'Geist',ui-sans-serif,system-ui,sans-serif;transition:transform .18s ease}.mega-menu-products .product-demo-card:hover .product-card-arrow{transform:translate(2px,-2px)}
+  .mega-menu-products .product-demo-card{color:#fff;text-decoration:none;cursor:pointer;transition:border-color .2s ease,transform .2s ease,box-shadow .2s ease}.mega-menu-products .product-demo-card:hover,.mega-menu-products .product-demo-card.is-previewed{border-color:#7c82ff;box-shadow:0 8px 24px rgba(5,15,52,.22);transform:translateY(-1px);text-decoration:none}.mega-menu-products .product-demo-card:focus-visible{outline:2px solid #cbc6ff;outline-offset:3px}.mega-menu-products .product-demo-card h3{font-size:15px}.mega-menu-products .product-demo-card p{max-width:74%}.mega-menu-products .product-card-arrow{position:absolute;right:16px;bottom:14px;color:#cbc6ff;font:600 15px/1 'Geist',ui-sans-serif,system-ui,sans-serif;transition:transform .18s ease}.mega-menu-products .product-demo-card:hover .product-card-arrow,.mega-menu-products .product-demo-card.is-previewed .product-card-arrow{transform:translate(2px,-2px)}
   @media(max-width:880px) {
     .site-header { inset:0 0 auto; }
     .nav-shell { min-height:68px; padding:7px 18px; gap:8px; }
-    .brand { gap:9px; font-size:19px; }
-    .brand-mark { height:34px!important; width:34px!important; }
+    .brand-logo { height:38px!important; width:auto!important; }
     .desktop-navigation { display:none; }
     .nav-cta { margin-left:auto; min-height:44px; padding:0 16px; font-size:13px; }
     #mobile-menu-toggle { display:inline-flex; flex:0 0 auto; }
     .mobile-menu:not([hidden]) { display:block;position:fixed;z-index:100;inset:0;pointer-events:auto; }
   }
-  @media(max-width:460px) { .nav-shell { min-height:62px; padding:6px 12px; } .brand { gap:7px; font-size:17px; } .brand-mark { height:31px!important; width:31px!important; border-radius:10px; } .nav-cta { min-height:40px; padding:0 12px; gap:7px; font-size:12px; } #mobile-menu-toggle { width:40px; height:40px; } }
+  @media(max-width:460px) { .nav-shell { min-height:62px; padding:6px 12px; } .brand-logo { height:34px!important; width:auto!important; } .nav-cta { min-height:40px; padding:0 12px; gap:7px; font-size:12px; } #mobile-menu-toggle { width:40px; height:40px; } }
   @media(prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; animation-duration:.01ms!important; animation-iteration-count:1!important; transition-duration:.01ms!important; } }
 </style>
 
@@ -564,9 +582,13 @@ const mobileIcon = (href: string) => mobileIcons[mobileIconByHref[href] ?? 'docu
         const src = link.dataset.previewSrc;
         if (!src) return;
         const visual = panel?.querySelector<HTMLElement>('.feature-visual');
-        if (visual) visual.dataset.agentic = String(src.endsWith('products-agentic.webp') || src.endsWith('products-agentic-visual.svg'));
+        if (visual) visual.dataset.agentic = String(src.endsWith('product-agentic-menu.webp'));
+        const featureOverline = panel?.querySelector<HTMLElement>('[data-feature-overline]');
+        const featureTitle = panel?.querySelector<HTMLElement>('[data-feature-title]');
         const featureCopy = panel?.querySelector<HTMLElement>('[data-feature-copy]');
-        if (featureCopy) featureCopy.textContent = 'Connected agents move a request through review to a sourced result.';
+        if (featureOverline && link.dataset.previewOverline) featureOverline.textContent = link.dataset.previewOverline;
+        if (featureTitle && link.dataset.previewTitle) featureTitle.textContent = link.dataset.previewTitle;
+        if (featureCopy && link.dataset.previewCopy) featureCopy.textContent = link.dataset.previewCopy;
         const request = ++previewRequest;
         const active = images.find((image) => image.classList.contains('is-active'));
         if (active?.getAttribute('src') === src) return;
